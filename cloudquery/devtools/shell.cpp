@@ -44,6 +44,7 @@
 #include "osquery/devtools/devtools.h"
 #include "osquery/filesystem/fileops.h"
 #include "osquery/sql/virtual_table.h"
+#include "cloudquery/version.h"
 
 #if defined(SQLITE_ENABLE_WHERETRACE)
 extern int sqlite3WhereTrace;
@@ -1139,7 +1140,7 @@ inline void meta_features(struct callback_data* p) {
 }
 
 inline void meta_version(struct callback_data* p) {
-  fprintf(p->out, "osquery %s\n", osquery::kVersion.c_str());
+  fprintf(p->out, "cloudquery %s\n", ::osquery::cloudquery::kCQVersion.c_str());
   fprintf(p->out, "using SQLite %s\n", sqlite3_libversion());
 }
 

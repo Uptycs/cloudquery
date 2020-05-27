@@ -47,6 +47,7 @@ function sysprep(){
       cd third-party/osquery
     MAKELEVEL_TEMP=$MAKELEVEL
     unset MAKELEVEL
+    git checkout master
     git branch -D feature/in_proc_extensions
     git checkout feature/in_proc_extensions
     git pull
