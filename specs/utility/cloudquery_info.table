@@ -1,0 +1,18 @@
+table_name("cloudquery_info")
+description("Top level information about the running version of cloudquery.")
+schema([
+    Column("pid", INTEGER, "Process (or thread/handle) ID"),
+    Column("uuid", TEXT, "Unique ID provided by the system"),
+    Column("instance_id", TEXT, "Unique, long-lived ID per instance of cloudquery"),
+    Column("version", TEXT, "cloudquery toolkit version"),
+    Column("config_hash", TEXT, "Hash of the working configuration state"),
+    Column("config_valid", INTEGER, "1 if the config was loaded and considered valid, else 0"),
+    Column("extensions", TEXT, "cloudquery extensions status"),
+    Column("build_platform", TEXT, "cloudquery toolkit build platform"),
+    Column("build_distro", TEXT, "cloudquery toolkit platform distribution name (os version)"),
+    Column("start_time", INTEGER, "UNIX time in seconds when the process started"),
+    Column("watcher", INTEGER, "Process (or thread/handle) ID of optional watcher process"),
+    Column("platform_mask", INTEGER, "The cloudquery platform bitmask"),
+])
+attributes(utility=True)
+implementation("cloudquery@genCloudqueryInfo")

@@ -1,0 +1,8 @@
+table_name("cloudquery_config")
+description("Current cloudquery configuration applied to cloudquery.")
+schema([
+    Column("node_name", TEXT, "Node name of configuration"),
+	Column("node_config", TEXT, "Node configuration json value"),
+])
+attributes(utility=True)
+implementation("osquery@genCloudqueryConfig")
