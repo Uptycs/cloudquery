@@ -50,7 +50,7 @@ function sysprep(){
     git checkout master
     git branch -D feature/in_proc_extensions || true
     git checkout feature/in_proc_extensions
-    git pull
+    #git pull
     make deps
     make clean
     make -j$THREADS libosquery
