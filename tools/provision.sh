@@ -48,7 +48,7 @@ function sysprep(){
     MAKELEVEL_TEMP=$MAKELEVEL
     unset MAKELEVEL
     git checkout master
-    git branch -D feature/in_proc_extensions
+    git branch -D feature/in_proc_extensions || 0
     git checkout feature/in_proc_extensions
     git pull
     make deps
