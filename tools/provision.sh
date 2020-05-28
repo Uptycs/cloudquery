@@ -51,7 +51,7 @@ function sysprep(){
     git branch -D feature/in_proc_extensions
     git checkout feature/in_proc_extensions
     git pull
-    #make -j$THREADS deps
+    make deps
     make clean
     make -j$THREADS libosquery
     make -j$THREADS libosquery_additional
@@ -81,6 +81,10 @@ function main() {
     DEPS_DIR="$CLOUDQUERY_DEPS"
   else
     DEPS_DIR="/usr/local/cloudquery"
+    if [[ ! -L "$DEPS_DIR" ]]; then
+      log "creating deps dir link : $DEPS_DIR"
+      do_sudo ln -snf /usr/local/osquery $DEPS_DIR
+    fi
   fi
 
   if [[ "$ACTION" = "clean" ]]; then
@@ -89,9 +93,6 @@ function main() {
   fi
 
   export DEPS_DIR=$DEPS_DIR
-  #Link osquery dependency to cloudquery
-  do_sudo ln -snf /usr/local/osquery $DEPS_DIR
-
 
   # Setup the local ./build/DISTRO cmake build directory.
   if [[ ! -z "$SUDO_USER" ]]; then
