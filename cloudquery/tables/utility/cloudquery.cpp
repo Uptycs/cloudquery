@@ -391,6 +391,11 @@ Status serializeObject(JSON& docObject,
   return Status(0, "OK");
 }
 
+QueryData genApiTable(QueryContext& context) {
+  QueryData r;
+  return r;
+}
+
 QueryData genCloudqueryConfig(QueryContext& context) {
   QueryData results;
   Row r;

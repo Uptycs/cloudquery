@@ -1,0 +1,4 @@
+FLAG_FILE="/etc/cloudquery/cloudquery.flags"
+CONFIG_FILE="/etc/cloudquery/cloudquery.conf"
+LOCAL_PIDFILE="/var/cloudquery/cloudqueryd.pidfile"
+PIDFILE="/var/run/cloudqueryd.pidfile"
