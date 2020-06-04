@@ -1,0 +1,19 @@
+table_name("kubernetes_pods")
+description("Kubernetes pods running on a cluster.")
+schema([
+     Column("uid", TEXT, "Unique identiier of the pod"),
+     Column("label_name", TEXT, "lable name of the pod "),
+     Column("creation_time", TEXT, "Creation time of the pod"),
+     Column("app", TEXT, "App corresponding to the pod"),
+     Column("pod_name", TEXT, "Name of the pod"),
+     Column("self_link", TEXT, "Link ro access the pod details "),
+     Column("namespace", TEXT, "namespace of the pod"),
+     Column("node_name", TEXT, "Node on which the pod is running"),
+     Column("service_account", TEXT, "Service account of the pod"),
+     Column("service_account_name", TEXT, "Service account name of the pod"),
+     Column("container_is_privileged", TEXT, "Whether the container is privileged"),
+     Column("phase", TEXT, "Phase eof the pod"),
+     Column("host_ip", TEXT, "host-ip of the pod"),
+     Column("pod_ip", TEXT, "Pod ip of the pod"),
+])
+implementation("apiTable@genApiTable")

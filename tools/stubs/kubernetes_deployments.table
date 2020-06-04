@@ -1,0 +1,17 @@
+table_name("kubernetes_deployments")
+description("Information regarding kubernetes deployments.")
+schema([
+     Column("uid", TEXT, "Unique identiier of the deployment"),
+     Column("name", TEXT, "Deployment name"),
+     Column("k8s_app", TEXT, "kubernetes app related to the deployment "),
+     Column("namespace", TEXT, "Namespace of the deployment"),
+     Column("spec_replicas", TEXT, "Spec replica of the deployment"),
+     Column("satus_replicas", TEXT, "satus replicas of the deployment"),
+     Column("ready_replicas", TEXT, "ready replicas of the deployment"),
+     Column("updated_replicas", TEXT, "updated replicas of the deployment"),
+     Column("generation", TEXT, "generation of the deployment"),
+     Column("creation_timestamp", TEXT, "timestamp of deployment creation"),
+     Column("self_link", TEXT, "Link to access deployment details"),
+     Column("resource_version", TEXT, "Resource version"),
+])
+implementation("apiTable@genApiTable")

@@ -1,0 +1,15 @@
+table_name("kubernetes_daemonsets")
+description("Information regarding kubernetes daemonsets.")
+schema([
+     Column("uid", TEXT, "Unique identiier of the daemonsets"),
+     Column("name", TEXT, "daemonsets name"),
+     Column("k8s_app", TEXT, "kubernetes app related to the daemonsets "),
+     Column("namespace", TEXT, "Namespace of the daemonsets"),
+     Column("containers_image", TEXT, "Container image of daemonset"),
+     Column("containers_name", TEXT, "Container name of daemonset"),
+     Column("service_account", TEXT, "service account of the daemonset"),
+     Column("creation_timestamp", TEXT, "timestamp of daemonset creation"),
+     Column("self_link", TEXT, "Link to access daemonset details"),
+     Column("resource_version", TEXT, "Resource version"),
+])
+implementation("apiTable@genApiTable")
