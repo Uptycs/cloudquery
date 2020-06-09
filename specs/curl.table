@@ -9,6 +9,7 @@ schema([
     Column("round_trip_time", BIGINT, "Time taken to complete the request"),
     Column("bytes", BIGINT, "Number of bytes in the response"),
     Column("result", TEXT, "The HTTP response body"),
+    Column("headers", TEXT, "The request headers in json format", hidden=True),
 ])
 implementation("networking/curl@genCurl")
 examples([
