@@ -501,6 +501,7 @@ endif()
 include_directories("${CMAKE_SOURCE_DIR}/third-party/osquery/third-party/sqlite3")
 include_directories("${CMAKE_SOURCE_DIR}/third-party/osquery/include")
 include_directories("${CMAKE_SOURCE_DIR}/third-party/osquery/")
+include_directories("${CMAKE_SOURCE_DIR}/third-party/curl/include")
 include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_SOURCE_DIR}")
 
@@ -558,6 +559,7 @@ elseif(APPLE)
   list(APPEND OS_LIB_DIRS "${CMAKE_SOURCE_DIR}/third-party/osquery/build/darwin/osquery")
 endif()
 list(APPEND OS_LIB_DIRS "${CMAKE_BINARY_DIR}/cloudquery")
+#list(APPEND OS_LIB_DIRS "${CMAKE_BINARY_DIR}/third-party/curl/lib/.libs")
 
 link_directories(${OS_LIB_DIRS})
 

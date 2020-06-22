@@ -5,6 +5,8 @@
 #include "cloudquery/version.h"
 #ifdef __linux__
 #include <dlfcn.h>
+#include <sys/select.h>
+
 #endif
 
 namespace osquery
@@ -63,3 +65,6 @@ bool loadInProcPlugins()
 }
 
 } // namespace osquery
+
+
+
