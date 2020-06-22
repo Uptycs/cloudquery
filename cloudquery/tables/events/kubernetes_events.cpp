@@ -107,7 +107,8 @@ Status KubernetesEventSubscriber::KubernetesEventCallback(const ECRef& ec,
                                                           const SCRef& sc) {
 
   std::vector<Row> emitted_row_list;
- 
+  VLOG(1)<<ec->sEventJson;
+
   auto status = GetEventRows(emitted_row_list, ec->sEventJson);
   if (!status.ok()) {
     return status;

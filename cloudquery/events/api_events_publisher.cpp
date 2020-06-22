@@ -20,14 +20,15 @@ void threadTrampoline(CURL* curl)
 {
     size_t start_time = getUnixTime();
     size_t end_time = 0;
+    CURLcode curlCode = CURLcode::CURLE_OK;
     do{
         VLOG(1)<<"Started thread with curl " <<curl;
-        curl_easy_perform(curl);
+        curlCode = curl_easy_perform(curl);
         end_time = getUnixTime();
 
     } while (end_time - start_time > 2);
 
-    VLOG(1)<<"Connection ended with curl handle  "<< curl;
+    VLOG(1)<<"Connection ended with curl handle  "<< curl << " error = "<< curlCode;
 }
 
 void APIEventPublisher::configure()
@@ -66,6 +67,7 @@ void APIEventPublisher::SetCurlCallbackData(CURL *curl, APIEventSubscriptionCont
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, list);
 
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, APIEventPublisher::http_get_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)sub_ctx.get());
 }
