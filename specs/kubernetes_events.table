@@ -1,0 +1,24 @@
+table_name("kubernetes_events")
+description("Kubernetes cluster timeline.")
+schema([
+    Column("type", TEXT, "Type of event - like added or deleted"),
+    Column("event_name", TEXT, "Name  of event"),
+    Column("event_uid", TEXT, "Unique identifier of event"),
+    Column("event_namespace", TEXT, "namespace of event"),
+    Column("self_link", TEXT, "link to event details"),
+    Column("timestamp", TEXT, "timestamp as recieved from API server"),
+    Column("object_kind", TEXT, "Type of Kubernetes object this event is related to"),
+    Column("object_name", TEXT, "Name of Kubernetes object this even is related to"),
+    Column("object_uid", TEXT, "uid of Kubernetes object this event is related to"),
+    Column("reason", TEXT, "Reason text of event"),
+    Column("message", TEXT, "Message text of event"),
+    Column("source_component", TEXT, "Source component of event"),
+    Column("source_host", TEXT, "Host where event took place"),
+    Column("first_timestamp", TEXT, "First event timestamp"),
+    Column("last_timestamp", TEXT, "Last event timestamp"),
+    Column("time", BIGINT, "Event time from cloudquery"),
+    Column("count", BIGINT, "Count of the event"),    
+    Column("event_type", TEXT, "Type of the event"),    
+])
+attributes(event_subscriber=True)
+implementation("kubernetes_events@kubernetes_events::genTable")
