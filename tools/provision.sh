@@ -63,7 +63,7 @@ function make_libcurl() {
   cd ../../
 }
 function make_libcurl1() {
-  cp tools/libs/libcurl.a /usr/local/osquery/libs
+  cp tools/libs/libcurl.a /usr/local/osquery/lib/
 }
 
 function make_osquery() {
