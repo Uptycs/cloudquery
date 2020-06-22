@@ -20,7 +20,7 @@ FLAG(bool,
 
 FLAG(string,
      kubernetes_api_server,
-     "https://10.96.0.1/",
+     "https://10.96.0.1/api/v1",
      "Kubernetes API server URL");
 
 FLAG(string,
