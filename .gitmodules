@@ -1,6 +1,3 @@
 [submodule "third-party/osquery"]
 	path = third-party/osquery
 	url = git@github.com:Uptycs/osquery.git
-[submodule "third-party/curl"]
-	path = third-party/curl
-	url = git@github.com:curl/curl.git

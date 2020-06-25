@@ -10,7 +10,6 @@
 
 #include <cstdio>
 #include <cstring>
-
 #ifndef WIN32
 #define BOOST_ASIO_HAS_STD_STRING_VIEW 1
 #define BOOST_ASIO_DISABLE_STD_STRING_VIEW 1

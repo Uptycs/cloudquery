@@ -41,30 +41,6 @@ function platform_darwin_main() {
  function platform_posix_main() {
   echo
 }
-function make_libcurl() {
-  cd third-party/curl
-  env
-  MAKELEVEL_TEMP=$MAKELEVEL
-  unset MAKELEVEL
-  git checkout master
-  git branch -D local/curl_798 || true
-  #git checkout tags/curl-7_9_8 -b local/curl_798
-  git checkout master
-  #git apply -p1 ../../tools/patches/curl_fdlt.patch
-  make clean || true
-  git checkout my_change
-  #export PATH=$PATH:/usr/local/osquery/bin
-  ./buildconf --with-ssl=/usr/local/osquery/opt/openssl
-  ./configure --with-ssl=/usr/local/osquery/opt/openssl --disable-shared
-  make -j$THREADS 
-  cp ./lib/.libs/libcurl.a /usr/local/osquery/lib/
-  git stash
-  export MAKELEVEL=$MAKELEVEL_TEMP
-  cd ../../
-}
-function make_libcurl1() {
-  cp tools/libs/libcurl.a /usr/local/osquery/lib/
-}
 
 function make_osquery() {
   cd third-party/osquery
@@ -84,7 +60,6 @@ function make_osquery() {
 function sysprep(){
   if [[ "$1" = "build" ]]; then
     make_osquery
-    make_libcurl1
   else
     log "your $OS does not use a provision script"
   fi
