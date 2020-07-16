@@ -15,20 +15,18 @@ namespace osquery {
      kubernetes_api_server,
      "https://10.96.0.1/api/v1",
      "Kubernetes API server URL");
+
+  FLAG(string,
+     kubernetes_secret_path,
+     "/run/secrets/kubernetes.io/serviceaccount/token",
+     "Kubernetes service account token");
+
 namespace cloudquery {
 
 FLAG(bool,
      allow_kubernetes_events,
      true,
      "Allow Kubernetes Events");
-
-
-
-FLAG(string,
-     kubernetes_secret_path,
-     "/run/secrets/kubernetes.io/serviceaccount/token",
-     "Kubernetes service account token");
-
 
 Status KubernetesEventSubscriber::init() {
   if (!FLAGS_allow_kubernetes_events) {
