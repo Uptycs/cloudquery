@@ -11,6 +11,10 @@
 if(z.HasMember(#x) && z[#x].IsString())\
       y = z[#x].GetString();
 namespace osquery {
+  FLAG(string,
+     kubernetes_api_server,
+     "https://10.96.0.1/api/v1",
+     "Kubernetes API server URL");
 namespace cloudquery {
 
 FLAG(bool,
@@ -18,10 +22,7 @@ FLAG(bool,
      true,
      "Allow Kubernetes Events");
 
-FLAG(string,
-     kubernetes_api_server,
-     "https://10.96.0.1/api/v1",
-     "Kubernetes API server URL");
+
 
 FLAG(string,
      kubernetes_secret_path,

@@ -171,11 +171,7 @@ endif()
 
 if(POSIX)
   # Hashing methods in core use libcrypto.
-  ADD_CLOUDQUERY_LINK_CORE("curl")
-  ADD_CLOUDQUERY_LINK_CORE("z")
-  ADD_CLOUDQUERY_LINK_CORE("dl")
   ADD_CLOUDQUERY_LINK_CORE("crypto")
-
   ADD_CLOUDQUERY_LINK_CORE("ssl")
   ADD_CLOUDQUERY_LINK_CORE("libpthread")
   ADD_CLOUDQUERY_LINK_CORE("magic")
