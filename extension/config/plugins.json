@@ -1,0 +1,130 @@
+{
+  "osquery_plugins_gcp": [
+    {
+      "name": "GcpComputeInstance",
+      "table_name": "gcp_compute_instance",
+      "imports": [
+        {
+          "name": "compute",
+          "import": "google.golang.org/api/compute/v1"
+        }
+      ],
+      "client_api": "compute.NewService",
+      "service_api": "compute.NewInstancesService",
+      "paging_api_type": "PAGE_INVOCATION",
+      "paging_api": "List",
+      "paging_api_args": ["$PROJECT_ID", "$ZONE"],
+      "page_type": "compute.InstanceList",
+      "page_list_name": "Items",
+      "cols": [
+        {
+          "osq_name": "id",
+          "osq_type": "integer",
+          "src_name": "Id",
+          "src_type": "uint"
+        },
+        {
+          "osq_name": "hostname",
+          "osq_type": "text",
+          "src_name": "Hostname",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "name",
+          "osq_type": "text",
+          "src_name": "Name",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "kind",
+          "osq_type": "text",
+          "src_name": "Kind",
+          "src_type": "string"
+        }
+      ]
+    },
+    {
+      "name": "GcpServiceAccount",
+      "table_name": "gcp_service_account",
+      "imports": [
+        {
+          "name": "iam",
+          "import": "google.golang.org/api/iam/v1"
+        }
+      ],
+      "client_api": "iam.NewService",
+      "service_api": "",
+      "paging_api_type": "PAGE_INVOCATION",
+      "paging_api": "Projects.ServiceAccounts.List",
+      "paging_api_args": ["\"projects/\" + $PROJECT_ID"],
+      "page_type": "iam.ListServiceAccountsResponse",
+      "page_list_name": "Accounts",
+      "cols": [
+        {
+          "osq_name": "description",
+          "osq_type": "text",
+          "src_name": "Description",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "display_name",
+          "osq_type": "text",
+          "src_name": "DisplayName",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "email",
+          "osq_type": "text",
+          "src_name": "Email",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "name",
+          "osq_type": "text",
+          "src_name": "Name",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "project_id",
+          "osq_type": "text",
+          "src_name": "ProjectId",
+          "src_type": "string"
+        },
+        {
+          "osq_name": "unique_id",
+          "osq_type": "text",
+          "src_name": "UniqueId",
+          "src_type": "string"
+        }
+      ]
+    },
+    {
+      "name": "GcpStorageBucket",
+      "table_name": "gcp_storage_bucket",
+      "imports": [
+        {
+          "name": "storage",
+          "import": "cloud.google.com/go/storage"
+        },
+        {
+          "name": "iterator",
+          "import": "google.golang.org/api/iterator"
+        }
+      ],
+      "client_api": "storage.NewClient",
+      "service_api": "",
+      "paging_api_type": "PAGEABLE",
+      "paging_api": "Buckets",
+      "paging_api_args": ["$GO_CONTEXT", "$PROJECT_ID"],
+      "page_type": "storage.BucketAttrs",
+      "cols": [
+        {
+          "osq_name": "name",
+          "osq_type": "text",
+          "src_name": "Name",
+          "src_type": "string"
+        }
+      ]
+    }
+  ]
+}
