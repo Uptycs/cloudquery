@@ -4,6 +4,8 @@ import (
 	"flag"
 	"log"
 	"time"
+
+	"github.com/kolide/osquery-go"
 )
 
 var (

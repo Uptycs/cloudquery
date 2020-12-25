@@ -6,7 +6,6 @@
 
 const { pope } = require('pope');
 const argv = require('optimist').argv;
-const log = require('../../logger')({ logToConsole: true });
 const fs = require('fs');
 const templates = require('./gcpTemplates');
 
@@ -16,11 +15,13 @@ const helpText = `
 
 // We should allow only enable or disable not both
 if (argv.h || argv.help || !argv._ || !argv._.length) {
-  log.info(helpText);
+  console.log(helpText);
   process.exit();
 }
 
-const pluginsConfig = JSON.parse(fs.readFileSync(__dirname + '/osquery_plugins.json', 'utf8'));
+const outDir = argv._[0];
+const configDir = outDir + '/config';
+const pluginsConfig = JSON.parse(fs.readFileSync(configDir + '/plugins.json', 'utf8'));
 
 const osqType2ColumnDef = new Map([
   ['text', 'TextColumn'],
@@ -121,20 +122,20 @@ function writeToFile(filename, outString, tableName) {
   try {
     fs.writeFileSync(filename, outString);
   } catch (err) {
-    log.error(`error saving osquery plugin for ${tableName} to ${filename}`);
+    console.log(`error saving osquery plugin for ${tableName} to ${filename}`);
     return;
   }
-  log.info(`osquery plugin for ${tableName} is saved in ${filename}`);
+  console.log(`osquery plugin for ${tableName} is saved in ${filename}`);
   return;
 }
 
 function generatePlugins(outDir) {
   if (pluginsConfig && pluginsConfig.osquery_plugins_gcp && pluginsConfig.osquery_plugins_gcp.length) {
     pluginsConfig.osquery_plugins_gcp.forEach(apiEntry => {
-      log.info('processing: ' + apiEntry.name);
+      console.log('processing: ' + apiEntry.name);
 
       if (apiEntry.skip) {
-        log.info('skipping: ' + apiEntry.name);
+        console.log('skipping: ' + apiEntry.name);
       } else {
         Object.assign(apiEntry, { expanded_col_list: getExpandedColList(apiEntry) });
         Object.assign(apiEntry, { expanded_col_mapping: getExpandedColMapping(apiEntry) });
@@ -149,7 +150,7 @@ function generatePlugins(outDir) {
       }
     });
   } else {
-    log.error('osquery plugins config not found');
+    console.log('osquery plugins config not found');
   }
 }
 
@@ -166,15 +167,14 @@ function generatePluginHelper(outDir) {
     try {
       fs.writeFileSync(filename, comment + outString);
     } catch (err) {
-      log.error(`error saving osquery plugin helper to ${filename}`);
+      console.log(`error saving osquery plugin helper to ${filename}`);
       return;
     }
-    log.info(`osquery plugin is saved in ${filename}`);
+    console.log(`osquery plugin is saved in ${filename}`);
   }
 }
 
 async function main() {
-  const outDir = argv._[0];
 
   generatePlugins(outDir);
   generatePluginHelper(outDir);
