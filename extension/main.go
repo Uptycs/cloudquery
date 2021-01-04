@@ -3,32 +3,29 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 	"time"
 
 	"github.com/kolide/osquery-go"
 )
 
 var (
-	socket    = flag.String("socket", "", "Path to the extensions UNIX domain socket")
-	keyFile   = flag.String("key-file-path", "", "Path to service account credential file")
-	projectId = flag.String("project-id", "", "Project Id")
-	zone      = flag.String("zone", "us-east4-c", "zone")
-	timeout   = flag.Int("timeout", 3, "Seconds to wait for autoloaded extensions")
-	interval  = flag.Int("interval", 3, "Seconds delay between connectivity checks")
+	socket        = flag.String("socket", "", "Path to the extensions UNIX domain socket")
+	homeDirectory = flag.String("home-directory", "", "Path to the extensions home directory")
+	timeout       = flag.Int("timeout", 3, "Seconds to wait for autoloaded extensions")
+	interval      = flag.Int("interval", 3, "Seconds delay between connectivity checks")
 )
 
-//go:generate node ./../utilities/extension-codegen/generateGcpExtensions.js ${PWD}
 func main() {
 	flag.Parse()
 	if *socket == "" {
 		log.Fatalln("Missing required --socket argument")
 	}
-	if *keyFile == "" {
-		log.Fatalln("Missing required --key-file-path argument")
+
+	if *homeDirectory == "" {
+		log.Fatalln("Missing required --home-directory argument")
 	}
-	if *projectId == "" {
-		log.Fatalln("Missing required --project")
-	}
+
 	serverTimeout := osquery.ServerTimeout(
 		time.Second * time.Duration(*timeout),
 	)
@@ -47,8 +44,9 @@ func main() {
 		log.Fatalf("Error creating extension: %s\n", err)
 	}
 
+	readExtensionConfigurations(*homeDirectory + string(os.PathSeparator) + "extension_config.json")
+	readTableConfigurations()
 	registerPlugins(server)
-
 	if err := server.Run(); err != nil {
 		log.Fatal(err)
 	}

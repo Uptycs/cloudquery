@@ -1,0 +1,21 @@
+{
+  "aws_s3_bucket": {
+    "imports": null,
+    "maxLevel": 4,
+    "api": "",
+    "paginated": false,
+    "templateFile": "",
+    "aws": {
+      "regionAttribute": "Region",
+      "regionCodeAttribute": "RegionCode",
+      "accountIdAttribute": "AccountId"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "Buckets.Name",
+        "targetName": "Name",
+        "targetType": "TEXT"
+      }
+    ]
+  }
+}
