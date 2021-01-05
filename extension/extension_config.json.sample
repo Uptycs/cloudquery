@@ -1,0 +1,16 @@
+{
+  "aws": {
+    "accounts": [
+      {
+        "id": "987654321012",
+        "credentialFile": "/home/xyz/.aws/credentials",
+        "profileName": "dev-profile"
+      },
+      {
+        "id": "123456789012",
+        "credentialFile": "/home/abc/.aws/credentials",
+        "profileName": "qa-profile"
+      }
+    ]
+  }
+}
