@@ -1,0 +1,49 @@
+{
+  "gcp_compute_instance": {
+    "maxLevel": 4,
+    "paginated": true,
+    "aws": {
+      "regionAttribute": "",
+      "regionCodeAttribute": "",
+      "accountIdAttribute": ""
+    },
+    "gcp": {
+      "client_api": "compute.NewService",
+      "service_api": "compute.NewInstancesService",
+      "paging_api_type": "PAGE_INVOCATION",
+      "paging_api": "List",
+      "paging_api_args": [
+        "$PROJECT_ID",
+        "$ZONE"
+      ],
+      "page_type": "compute.InstanceList",
+      "page_list_name": "Items"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "Id",
+        "sourceType": "uint",
+        "targetName": "id",
+        "targetType": "integer"
+      },
+      {
+        "sourceName": "Hostname",
+        "sourceType": "string",
+        "targetName": "hostname",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Name",
+        "sourceType": "string",
+        "targetName": "name",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Kind",
+        "sourceType": "string",
+        "targetName": "kind",
+        "targetType": "text"
+      }
+    ]
+  }
+}

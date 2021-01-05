@@ -1,15 +1,13 @@
 {
   "aws_ec2_instance": {
-    "imports": null,
     "maxLevel": 4,
-    "api": "",
     "paginated": true,
-    "templateFile": "",
     "aws": {
       "regionAttribute": "Region",
       "regionCodeAttribute": "RegionCode",
       "accountIdAttribute": "AccountId"
     },
+    "gcp": {},
     "parsedAttributes": [
       {
         "sourceName": "Reservations.Instances.AmiLaunchIndex",
@@ -219,16 +217,14 @@
     ]
   },
   "aws_ec2_vpc": {
-    "imports": null,
     "maxLevel": 4,
-    "api": "",
     "paginated": true,
-    "templateFile": "",
     "aws": {
       "regionAttribute": "Region",
       "regionCodeAttribute": "RegionCode",
       "accountIdAttribute": "AccountId"
     },
+    "gcp": {},
     "parsedAttributes": [
       {
         "sourceName": "Vpcs.CidrBlock",
