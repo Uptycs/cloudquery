@@ -10,7 +10,7 @@
     "gcp": {},
     "parsedAttributes": [
       {
-        "sourceName": "Buckets.Name",
+        "sourceName": "Buckets_Name",
         "targetName": "Name",
         "targetType": "TEXT"
       }

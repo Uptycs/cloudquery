@@ -84,7 +84,7 @@ func (tab *Table) AddRowsAndFlatten(newRows []map[string]interface{}) {
 
 func getKey(prefix, key string) string {
 	if len(prefix) != 0 {
-		return prefix + "." + key
+		return prefix + "_" + key
 	} else {
 		return key
 	}

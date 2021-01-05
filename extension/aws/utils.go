@@ -2,21 +2,24 @@ package aws
 
 import (
 	"fmt"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 
 	"github.com/Uptycs/cloudquery/utilities"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
 func GetAwsSession(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*session.Session, error) {
 	if account == nil {
+		fmt.Println("Fetching default aws session")
 		return getDefaultAwsSession(regionCode)
 	}
 
 	if len(account.ProfileName) != 0 {
+		var enable bool = true
 		sess, err := session.NewSession(&aws.Config{
+			EnableEndpointDiscovery: &enable,
 			Region:      aws.String(regionCode),
 			Credentials: credentials.NewSharedCredentials(account.CredentialFile, account.ProfileName),
 		})
@@ -56,11 +59,11 @@ func FetchRegions(awsSession *session.Session) ([]*ec2.Region, error) {
 	return awsRegions.Regions, nil
 }
 
-func RowToMap(row map[string]interface{}, region string, tableConfig *utilities.TableConfig) map[string]string {
+func RowToMap(row map[string]interface{}, accountId string, region string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
 	if len(tableConfig.Aws.AccountIdAttribute) != 0 {
-		result["AccountId"] = "1234" // TODO: Fix it
+		result["AccountId"] = accountId
 	}
 	if len(tableConfig.Aws.RegionCodeAttribute) != 0 {
 		result["RegionCode"] = region
