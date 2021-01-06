@@ -63,13 +63,13 @@ func RowToMap(row map[string]interface{}, accountId string, region string, table
 	result := make(map[string]string)
 
 	if len(tableConfig.Aws.AccountIdAttribute) != 0 {
-		result["AccountId"] = accountId
+		result[tableConfig.Aws.AccountIdAttribute] = accountId
 	}
 	if len(tableConfig.Aws.RegionCodeAttribute) != 0 {
-		result["RegionCode"] = region
+		result[tableConfig.Aws.RegionCodeAttribute] = region
 	}
 	if len(tableConfig.Aws.RegionAttribute) != 0 {
-		result["Region"] = region // TODO: Fix it
+		result[tableConfig.Aws.RegionAttribute] = region // TODO: Fix it
 	}
 	for key, value := range tableConfig.GetParsedAttributeConfigMap() {
 		if row[key] != nil {

@@ -3,215 +3,215 @@
     "maxLevel": 4,
     "paginated": true,
     "aws": {
-      "regionAttribute": "Region",
-      "regionCodeAttribute": "RegionCode",
-      "accountIdAttribute": "AccountId"
+      "regionAttribute": "region",
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
     },
     "gcp": {},
     "parsedAttributes": [
       {
         "sourceName": "Reservations_Instances_AmiLaunchIndex",
-        "targetName": "Instances_AmiLaunchIndex",
+        "targetName": "ami_launch_index",
         "targetType": "INTEGER"
       },
       {
         "sourceName": "Reservations_Instances_Architecture",
-        "targetName": "Instances_Architecture",
+        "targetName": "architecture",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_BlockDeviceMappings",
-        "targetName": "Instances_BlockDeviceMappings",
+        "targetName": "block_device_mappings",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_CapacityReservationSpecification",
-        "targetName": "Instances_CapacityReservationSpecification",
+        "targetName": "capacity_reservation_specification",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_ClientToken",
-        "targetName": "Instances_ClientToken",
+        "targetName": "client_token",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_CpuOptions",
-        "targetName": "Instances_CpuOptions",
+        "targetName": "cpu_options",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_EbsOptimized",
-        "targetName": "Instances_EbsOptimized",
+        "targetName": "ebs_optimized",
         "targetType": "INTEGER"
       },
       {
         "sourceName": "Reservations_Instances_EnaSupport",
-        "targetName": "Instances_EnaSupport",
+        "targetName": "ena_support",
         "targetType": "INTEGER"
       },
       {
         "sourceName": "Reservations_Instances_EnclaveOptions",
-        "targetName": "Instances_EnclaveOptions",
+        "targetName": "enclave_options",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_HibernationOptions",
-        "targetName": "Instances_HibernationOptions",
+        "targetName": "hibernation_options",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_Hypervisor",
-        "targetName": "Instances_Hypervisor",
+        "targetName": "hypervisor",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_IamInstanceProfile",
-        "targetName": "Instances_IamInstanceProfile",
+        "targetName": "iam_instance_profile",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_ImageId",
-        "targetName": "Instances_ImageId",
+        "targetName": "image_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_InstanceId",
-        "targetName": "Instances_InstanceId",
+        "targetName": "instance_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_InstanceLifecycle",
-        "targetName": "Instances_InstanceLifecycle",
+        "targetName": "instance_lifecycle",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_InstanceType",
-        "targetName": "Instances_InstanceType",
+        "targetName": "instance_type",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_KeyName",
-        "targetName": "Instances_KeyName",
+        "targetName": "key_name",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_LaunchTime",
-        "targetName": "Instances_LaunchTime",
+        "targetName": "launch_time",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_MetadataOptions",
-        "targetName": "Instances_MetadataOptions",
+        "targetName": "metadata_options",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_Monitoring",
-        "targetName": "Instances_Monitoring",
+        "targetName": "monitoring",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_NetworkInterfaces",
-        "targetName": "Instances_NetworkInterfaces",
+        "targetName": "network_interfaces",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_Placement",
-        "targetName": "Instances_Placement",
+        "targetName": "placement",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_PrivateDnsName",
-        "targetName": "Instances_PrivateDnsName",
+        "targetName": "private_dns_name",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_PrivateIpAddress",
-        "targetName": "Instances_PrivateIpAddress",
+        "targetName": "private_ip_address",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_PublicDnsName",
-        "targetName": "Instances_PublicDnsName",
+        "targetName": "public_dns_name",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_PublicIpAddress",
-        "targetName": "Instances_PublicIpAddress",
+        "targetName": "public_ip_address",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_RootDeviceName",
-        "targetName": "Instances_RootDeviceName",
+        "targetName": "root_device_name",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_RootDeviceType",
-        "targetName": "Instances_RootDeviceType",
+        "targetName": "root_device_type",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_SecurityGroups",
-        "targetName": "Instances_SecurityGroups",
+        "targetName": "security_groups",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_SourceDestCheck",
-        "targetName": "Instances_SourceDestCheck",
+        "targetName": "source_dest_check",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_SpotInstanceRequestId",
-        "targetName": "Instances_SpotInstanceRequestId",
+        "targetName": "spot_instance_request_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_State",
-        "targetName": "Instances_State",
+        "targetName": "state",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_StateReason",
-        "targetName": "Instances_StateReason",
+        "targetName": "state_reason",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_StateTransitionReason",
-        "targetName": "Instances_StateTransitionReason",
+        "targetName": "state_transition_reason",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_SubnetId",
-        "targetName": "Instances_SubnetId",
+        "targetName": "subnet_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_Tags",
-        "targetName": "Instances_Tags",
+        "targetName": "tags",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_VirtualizationType",
-        "targetName": "Instances_VirtualizationType",
+        "targetName": "virtualization_type",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_Instances_VpcId",
-        "targetName": "Instances_VpcId",
+        "targetName": "vpc_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_OwnerId",
-        "targetName": "OwnerId",
+        "targetName": "owner_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_RequesterId",
-        "targetName": "RequesterId",
+        "targetName": "requester_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Reservations_ReservationId",
-        "targetName": "ReservationId",
+        "targetName": "reservation_id",
         "targetType": "TEXT"
       }
     ]
@@ -228,32 +228,32 @@
     "parsedAttributes": [
       {
         "sourceName": "Vpcs_CidrBlock",
-        "targetName": "CidrBlock",
+        "targetName": "cidr_block",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Vpcs_DhcpOptionsId",
-        "targetName": "DhcpOptionsId",
+        "targetName": "dhcp_options_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Vpcs_InstanceTenancy",
-        "targetName": "InstanceTenancy",
+        "targetName": "instance_tenancy",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Vpcs_OwnerId",
-        "targetName": "OwnerId",
+        "targetName": "owner_id",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Vpcs_State",
-        "targetName": "State",
+        "targetName": "state",
         "targetType": "TEXT"
       },
       {
         "sourceName": "Vpcs_VpcId",
-        "targetName": "Id",
+        "targetName": "id",
         "targetType": "TEXT"
       }
     ]

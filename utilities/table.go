@@ -94,13 +94,15 @@ func getKey(prefix, key string) string {
 // by dot-delimited keys.
 func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{}) {
 	for k, v := range m {
-		if level >= tab.MaxLevel {
-			// Don't flatten further
-			// fmt.Printf("Not Flattening map for field %s. Level:%d, MaxLevel:%d\n", prefix, level, tab.MaxLevel)
+		if _, ok := tab.ParsedAttributeConfigMap[getKey(prefix, k)]; ok {
 			byteArr, err := json.Marshal(v)
 			if err == nil {
 				tab.AddAttribute(getKey(prefix, k), string(byteArr))
 			}
+		}
+		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
+			// Don't flatten further
+			// fmt.Printf("Not Flattening map for field %s. Level:%d, MaxLevel:%d\n", prefix, level, tab.MaxLevel)
 			continue
 		}
 		switch child := v.(type) {
@@ -119,15 +121,17 @@ func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{})
 func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 	newTable := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 	for _, value := range list {
-		if level >= tab.MaxLevel {
-			// Don't flatten further
-			//fmt.Println("Not Flattening list for field " + prefix)
+		if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
 			scalarTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			byteArr, err := json.Marshal(value)
 			if err == nil {
 				scalarTab.AddAttribute(prefix, string(byteArr))
 				newTable.AddRows(scalarTab.Rows)
 			}
+		}
+		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
+			// Don't flatten further
+			//fmt.Println("Not Flattening list for field " + prefix)
 			continue
 		}
 		switch child := value.(type) {
@@ -158,13 +162,15 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 		value = value.Elem()
 	}
 
-	if level >= tab.MaxLevel {
-		// Don't flatten further
-		//fmt.Println("Not Flattening value for field " + prefix)
+	if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
 		byteArr, err := json.Marshal(value)
 		if err == nil {
 			tab.AddAttribute(prefix, string(byteArr))
 		}
+	}
+	if tab.MaxLevel > 0 && level >= tab.MaxLevel {
+		// Don't flatten further
+		//fmt.Println("Not Flattening value for field " + prefix)
 		return
 	}
 

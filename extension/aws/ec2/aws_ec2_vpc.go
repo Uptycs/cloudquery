@@ -19,12 +19,12 @@ func DescribeVpcsColumns() []table.ColumnDefinition {
 		table.TextColumn("AccountId"),
 		table.TextColumn("RegionCode"),
 		table.TextColumn("Region"),
-		table.TextColumn("CidrBlock"),
-		table.TextColumn("DhcpOptionsId"),
-		table.TextColumn("InstanceTenancy"),
-		table.TextColumn("OwnerId"),
-		table.TextColumn("State"),
-		table.TextColumn("Id"),
+		table.TextColumn("cidr_block"),
+		table.TextColumn("dhcp_options_id"),
+		table.TextColumn("instance_tenancy"),
+		table.TextColumn("owner_id"),
+		table.TextColumn("state"),
+		table.TextColumn("id"),
 	}
 }
 

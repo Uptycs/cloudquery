@@ -2,15 +2,100 @@
   "aws_s3_bucket": {
     "maxLevel": 4,
     "aws": {
-      "regionAttribute": "Region",
-      "regionCodeAttribute": "RegionCode",
-      "accountIdAttribute": "AccountId"
+      "regionAttribute": "region",
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
     },
     "gcp": {},
     "parsedAttributes": [
       {
-        "sourceName": "Buckets_Name",
-        "targetName": "Name",
+        "sourceName": "Name",
+        "targetName": "name",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "CreationTime",
+        "targetName": "creation_time",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "ServerSideEncryptionConfiguration",
+        "targetName": "server_side_encryption_configuration",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "MfaDelete",
+        "targetName": "mfa_delete",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "VersioningStatus",
+        "targetName": "versioning_status",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "AclOwner",
+        "targetName": "acl_owner",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "AclGrants",
+        "targetName": "acl_grants",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "WebsiteEnabled",
+        "targetName": "website_enabled",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "WebsiteRedirection",
+        "targetName": "website_redirection",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "PublicAccessBlockConfig",
+        "targetName": "public_access_block_config",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "PolicyStatus",
+        "targetName": "policy_status",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "AccelerateConfigurationStatus",
+        "targetName": "accelerate_configuration_status",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "ObjectLockConfigurationEnabled",
+        "targetName": "object_lock_configuration_enabled",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "LifecycleConfigurationEnabled",
+        "targetName": "lifecycle_configuration_enabled",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "NotificationEnabled",
+        "targetName": "notification_enabled",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "CorsEnabled",
+        "targetName": "cors_enabled",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "Policy",
+        "targetName": "policy",
+        "targetType": "TEXT"
+      },
+      {
+        "sourceName": "Tags",
+        "targetName": "tags",
         "targetType": "TEXT"
       }
     ]
