@@ -1,47 +1,45 @@
 {
   "gcp_compute_instance": {
     "maxLevel": 4,
-    "paginated": true,
-    "aws": {
-      "regionAttribute": "",
-      "regionCodeAttribute": "",
-      "accountIdAttribute": ""
-    },
+    "aws": {},
     "gcp": {
-      "client_api": "compute.NewService",
-      "service_api": "compute.NewInstancesService",
-      "paging_api_type": "PAGE_INVOCATION",
-      "paging_api": "List",
-      "paging_api_args": [
-        "$PROJECT_ID",
-        "$ZONE"
-      ],
-      "page_type": "compute.InstanceList",
-      "page_list_name": "Items"
+      "projectIdAttribute": "project_id",
+      "zoneAttribute": "zone",
+      "zones": [
+        "us-east4-a",
+        "us-east4-b",
+        "us-east4-c"
+      ]
     },
     "parsedAttributes": [
       {
-        "sourceName": "Id",
-        "sourceType": "uint",
+        "sourceName": "items_id",
         "targetName": "id",
-        "targetType": "integer"
+        "targetType": "text"
       },
       {
-        "sourceName": "Hostname",
-        "sourceType": "string",
+        "sourceName": "items_hostname",
         "targetName": "hostname",
         "targetType": "text"
       },
       {
-        "sourceName": "Name",
-        "sourceType": "string",
+        "sourceName": "items_name",
         "targetName": "name",
         "targetType": "text"
       },
       {
-        "sourceName": "Kind",
-        "sourceType": "string",
+        "sourceName": "items_status",
+        "targetName": "status",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_kind",
         "targetName": "kind",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_tags",
+        "targetName": "tags",
         "targetType": "text"
       }
     ]

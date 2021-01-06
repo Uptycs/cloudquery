@@ -16,6 +16,13 @@ type AwsConfig struct {
 	RegionCodeAttribute string `json:"regionCodeAttribute"`
 	AccountIdAttribute  string `json:"accountIdAttribute"`
 }
+
+type GcpConfig struct {
+	ProjectIdAttribute string   `json:"projectIdAttribute,omitempty"`
+	ZoneAttribute      string   `json:"zoneAttribute,omitempty"`
+	Zones              []string `json:"zones"`
+}
+
 type TableConfig struct {
 	Imports          []string                `json:"imports"`
 	MaxLevel         int                     `json:"maxLevel"`
@@ -23,6 +30,7 @@ type TableConfig struct {
 	Paginated        bool                    `json:"paginated"`
 	TemplateFile     string                  `json:"templateFile"`
 	Aws              AwsConfig               `json:"aws"`
+	Gcp              GcpConfig               `json:"gcp"`
 	ParsedAttributes []ParsedAttributeConfig `json:"parsedAttributes"`
 
 	parsedAttributeConfigMap map[string]ParsedAttributeConfig
@@ -52,6 +60,24 @@ func (tableConfig *TableConfig) ParseAwsConfig(configInterface interface{}) {
 	if value, ok := config["accountIdAttribute"]; ok {
 		tableConfig.Aws.AccountIdAttribute = GetStringValue(value)
 	}
+}
+
+func (tableConfig *TableConfig) ParseGcpConfig(configInterface interface{}) {
+	config := configInterface.(map[string]interface{})
+	if value, ok := config["zones"]; ok {
+		tableConfig.Gcp.Zones = make([]string, 0)
+		zoneInfcs := value.([]interface{})
+		for _, zn := range zoneInfcs {
+			tableConfig.Gcp.Zones = append(tableConfig.Gcp.Zones, zn.(string))
+		}
+	}
+	if value, ok := config["projectIdAttribute"]; ok {
+		tableConfig.Gcp.ProjectIdAttribute = GetStringValue(value)
+	}
+	if value, ok := config["zoneAttribute"]; ok {
+		tableConfig.Gcp.ZoneAttribute = GetStringValue(value)
+	}
+
 }
 
 func (tableConfig *TableConfig) ParseAttributeConfigs(configInterface interface{}) {
@@ -88,6 +114,9 @@ func (tableConfig *TableConfig) Init(config map[string]interface{}) error {
 	}
 	if value, ok := config["aws"]; ok {
 		tableConfig.ParseAwsConfig(value)
+	}
+	if value, ok := config["gcp"]; ok {
+		tableConfig.ParseGcpConfig(value)
 	}
 	if value, ok := config["parsedAttributes"]; ok {
 		tableConfig.ParseAttributeConfigs(value)

@@ -1,7 +1,6 @@
 {
   "aws_s3_bucket": {
     "maxLevel": 4,
-    "paginated": false,
     "aws": {
       "regionAttribute": "Region",
       "regionCodeAttribute": "RegionCode",

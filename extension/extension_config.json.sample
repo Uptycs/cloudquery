@@ -12,5 +12,13 @@
         "profileName": "qa-profile"
       }
     ]
+  },
+  "gcp": {
+    "accounts": [
+      {
+        "keyFile": "/home/user/gcp/myproject-service-account.json",
+        "projectId": "myProject1"
+      }
+    ]
   }
 }
