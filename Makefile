@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PLATFORM := $(shell uname -s)
 BASH_EXISTS := $(shell which bash)
 CTAGS_EXISTS := $(shell which ctags)
@@ -284,3 +285,14 @@ test: .setup
 	@cd $(BUILD_DIR) && $(CMAKE) && \
 		$(DEFINES) $(MAKE) --no-print-directory $(MAKEFLAGS) $(MAKECMDGOALS)
 
+=======
+all: build
+BIN-DIR=bin
+EXTENSION-DIR=extension
+
+build: extension
+extension: $(shell find . -type f)
+	go build -o ${BIN-DIR} ./${EXTENSION-DIR}
+clean:
+	rm -rf ${BIN-DIR}/*
+>>>>>>> 59f2b682f32a26efb06577bc8074bb355a34db26

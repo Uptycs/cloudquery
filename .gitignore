@@ -1,0 +1,4 @@
+.idea
+bin/
+node_modules/
+extension/extension_config.json
