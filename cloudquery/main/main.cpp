@@ -214,10 +214,12 @@ int startOsquery(int argc, char* argv[], std::function<void()> shutdown) {
   // Begin adhoc io service thread.
   startIOService();
 
-  if (runner.isDaemon()) {
+  if (runner.isDaemon())
+  {
     return startDaemon(runner);
   }
- loadInProcPlugins();
+
+  loadInProcPlugins();
   return startShell(runner, argc, argv);
 }
 } // namespace osquery
