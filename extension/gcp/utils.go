@@ -26,7 +26,7 @@ func GetZones(ctx context.Context, myApiService *compute.InstancesService, proje
 		for _, item := range page.Items {
 			for _, inst := range item.Instances {
 				zonePathSplit := strings.Split(inst.Zone, "/")
-				myZonesMap[zonePathSplit[len(zonePathSplit) - 1]] = true
+				myZonesMap[zonePathSplit[len(zonePathSplit)-1]] = true
 			}
 		}
 		return nil
@@ -35,7 +35,7 @@ func GetZones(ctx context.Context, myApiService *compute.InstancesService, proje
 		return nil
 	}
 	myZones := make([]string, 0)
-	for k, _ := range myZonesMap {
+	for k := range myZonesMap {
 		myZones = append(myZones, k)
 	}
 	return myZones
