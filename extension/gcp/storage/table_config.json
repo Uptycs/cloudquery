@@ -1,0 +1,146 @@
+{
+  "gcp_storage_bucket": {
+    "maxLevel": 4,
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "Items_Kind",
+        "targetName": "kind",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Id",
+        "targetName": "id",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_ProjectNumber",
+        "targetName": "project_number",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Name",
+        "targetName": "name",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_TimeCreated",
+        "targetName": "time_created",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Updated",
+        "targetName": "updated",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_DefaultEventBasedHold",
+        "targetName": "default_event_based_hold",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_RetentionPeriod",
+        "targetName": "retention_policy_retention_period",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_EffectiveTime",
+        "targetName": "retention_policy_effective_time",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_IsLocked",
+        "targetName": "retention_policy_is_locked",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Metageneration",
+        "targetName": "metageneration",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_Enabled",
+        "targetName": "iam_configuration_uniform_bucket_level_access_enabled",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_LockedTime",
+        "targetName": "iam_configuration_uniform_bucket_level_access_locked_time",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Encryption_defaultKmsKeyName",
+        "targetName": "encryption_default_kms_key_name",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Owner_Entity",
+        "targetName": "owner_entity",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Owner_EntityId",
+        "targetName": "owner_entity_id",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Location",
+        "targetName": "location",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_LocationType",
+        "targetName": "location_type",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Website_MainPageSuffix",
+        "targetName": "website_main_page_suffix",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Website_NotFoundPage",
+        "targetName": "website_not_found_page",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Logging_LogBucket",
+        "targetName": "logging_log_bucket",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Logging_LogObjectPrefix",
+        "targetName": "logging_log_object_prefix",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Versioning_Enabled",
+        "targetName": "versioning_enabled",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Labels",
+        "targetName": "labels",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_StorageClass",
+        "targetName": "storage_class",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Billing_RequesterPays",
+        "targetName": "billing_requester_pays",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "Items_Etag",
+        "targetName": "etag",
+        "targetType": "text"
+      }
+    ]
+  }
+}

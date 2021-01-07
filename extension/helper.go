@@ -12,6 +12,7 @@ import (
 
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
+	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
 	"github.com/kolide/osquery-go"
 	"github.com/kolide/osquery-go/plugin/table"
@@ -70,6 +71,8 @@ func readTableConfigurations() {
 	readTableConfig(*homeDirectory + string(os.PathSeparator) + "aws/s3/table_config.json")
 	fmt.Println("Reading config file:" + *homeDirectory + string(os.PathSeparator) + "gcp/compute/table_config.json")
 	readTableConfig(*homeDirectory + string(os.PathSeparator) + "gcp/compute/table_config.json")
+	fmt.Println("Reading config file:" + *homeDirectory + string(os.PathSeparator) + "gcp/storage/table_config.json")
+	readTableConfig(*homeDirectory + string(os.PathSeparator) + "gcp/storage/table_config.json")
 	fmt.Printf("Read config for total %d tables\n", len(utilities.TableConfigurationMap))
 }
 
@@ -78,4 +81,5 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_s3_bucket", s3.ListBucketsColumns(), s3.ListBucketsGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", compute.GcpComputeInstanceColumns(), compute.GcpComputeInstanceGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", storage.GcpStorageBucketColumns(), storage.GcpStorageBucketGenerate))
 }
