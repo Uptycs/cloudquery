@@ -6,164 +6,199 @@
     },
     "parsedAttributes": [
       {
-        "sourceName": "Items_Kind",
+        "sourceName": "items_Kind",
         "targetName": "kind",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Id",
+        "sourceName": "items_Id",
         "targetName": "id",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_ProjectNumber",
+        "sourceName": "items_ProjectNumber",
         "targetName": "project_number",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Name",
+        "sourceName": "items_Name",
         "targetName": "name",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_TimeCreated",
+        "sourceName": "items_TimeCreated",
         "targetName": "time_created",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Updated",
+        "sourceName": "items_Updated",
         "targetName": "updated",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_DefaultEventBasedHold",
+        "sourceName": "items_DefaultEventBasedHold",
         "targetName": "default_event_based_hold",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_RetentionPolicy_RetentionPeriod",
+        "sourceName": "items_RetentionPolicy_RetentionPeriod",
         "targetName": "retention_policy_retention_period",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_RetentionPolicy_EffectiveTime",
+        "sourceName": "items_RetentionPolicy_EffectiveTime",
         "targetName": "retention_policy_effective_time",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_RetentionPolicy_IsLocked",
+        "sourceName": "items_RetentionPolicy_IsLocked",
         "targetName": "retention_policy_is_locked",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Metageneration",
+        "sourceName": "items_Metageneration",
         "targetName": "metageneration",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_Enabled",
+        "sourceName": "items_IamConfiguration_UniformBucketLevelAccess_Enabled",
         "targetName": "iam_configuration_uniform_bucket_level_access_enabled",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_LockedTime",
+        "sourceName": "items_IamConfiguration_UniformBucketLevelAccess_LockedTime",
         "targetName": "iam_configuration_uniform_bucket_level_access_locked_time",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Encryption_defaultKmsKeyName",
+        "sourceName": "items_Encryption_defaultKmsKeyName",
         "targetName": "encryption_default_kms_key_name",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Owner_Entity",
+        "sourceName": "items_Owner_Entity",
         "targetName": "owner_entity",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Owner_EntityId",
+        "sourceName": "items_Owner_EntityId",
         "targetName": "owner_entity_id",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Location",
+        "sourceName": "items_Location",
         "targetName": "location",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_LocationType",
+        "sourceName": "items_LocationType",
         "targetName": "location_type",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Website_MainPageSuffix",
+        "sourceName": "items_Website_MainPageSuffix",
         "targetName": "website_main_page_suffix",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Website_NotFoundPage",
+        "sourceName": "items_Website_NotFoundPage",
         "targetName": "website_not_found_page",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Logging_LogBucket",
+        "sourceName": "items_Logging_LogBucket",
         "targetName": "logging_log_bucket",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Logging_LogObjectPrefix",
+        "sourceName": "items_Logging_LogObjectPrefix",
         "targetName": "logging_log_object_prefix",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Versioning_Enabled",
+        "sourceName": "items_Versioning_Enabled",
         "targetName": "versioning_enabled",
-        "targetType": "text",
-        "enabled": true
+        "targetType": "text"
       },
       {
-        "sourceName": "Items_Labels",
-        "targetName": "labels",
-        "targetType": "text",
-        "enabled": true
-      },
-      {
-        "sourceName": "Items_StorageClass",
+        "sourceName": "items_StorageClass",
         "targetName": "storage_class",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Billing_RequesterPays",
+        "sourceName": "items_Billing_RequesterPays",
         "targetName": "billing_requester_pays",
         "targetType": "text",
         "enabled": true
       },
       {
-        "sourceName": "Items_Etag",
+        "sourceName": "items_Etag",
         "targetName": "etag",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_ACL",
+        "targetName": "acl",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_CORS",
+        "targetName": "cors",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Logging",
+        "targetName": "logging",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules",
+        "targetName": "lifecycle_rules",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_DefaultObjectACL",
+        "targetName": "default_object_acl",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Labels",
+        "targetName": "labels",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_RetentionPolicy",
+        "targetName": "retention_policy",
         "targetType": "text",
         "enabled": true
       }

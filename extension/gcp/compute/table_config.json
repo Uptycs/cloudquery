@@ -210,5 +210,68 @@
         "enabled": true
       }
     ]
+  },
+  "gcp_compute_network": {
+    "maxLevel": 4,
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "items_id",
+        "targetName": "id",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_autoCreateSubnetworks",
+        "targetName": "auto_create_subnetworks",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_creationTimestamp",
+        "targetName": "creation_timestamp",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_routingConfig_routingMode",
+        "targetName": "routing_config_routing_mode",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_selfLink",
+        "targetName": "self_link",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_subnetworks",
+        "targetName": "subnetworks",
+        "targetType": "text",
+        "enabled": true
+      }
+    ]
   }
 }

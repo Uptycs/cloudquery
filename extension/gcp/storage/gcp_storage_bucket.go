@@ -16,7 +16,7 @@ import (
 )
 
 type ItemsContainer struct {
-	Items []*storage.BucketAttrs
+	Items []*storage.BucketAttrs `json:"items"`
 }
 
 func GcpStorageBucketColumns() []table.ColumnDefinition {
@@ -45,10 +45,16 @@ func GcpStorageBucketColumns() []table.ColumnDefinition {
 		table.TextColumn("logging_log_bucket"),
 		table.TextColumn("logging_log_object_prefix"),
 		table.TextColumn("versioning_enabled"),
-		table.TextColumn("labels"),
 		table.TextColumn("storage_class"),
 		table.TextColumn("billing_requester_pays"),
 		table.TextColumn("etag"),
+		table.TextColumn("acl"),
+		table.TextColumn("cors"),
+		table.TextColumn("logging"),
+		table.TextColumn("lifecycle_rules"),
+		table.TextColumn("default_object_acl"),
+		table.TextColumn("labels"),
+		table.TextColumn("retention_policy"),
 	}
 }
 
@@ -71,8 +77,11 @@ func GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryCo
 }
 
 // TODO: Remove this
-var sample1 = storage.BucketAttrs{Name: "Test1", Location: "TestLocation1"}
-var sample2 = storage.BucketAttrs{Name: "Test2", Location: "TestLocation2"}
+var acl = []storage.ACLRule{{Domain: "Test"}}
+var cors = []storage.CORS{{Origins: []string{"origin1"}}}
+var lables map[string]string = map[string]string{"labelKey": "labelVal"}
+var sample1 = storage.BucketAttrs{Name: "Test1", Location: "TestLocation1", ACL: acl, CORS: cors}
+var sample2 = storage.BucketAttrs{Name: "Test2", Location: "TestLocation2", Labels: lables}
 
 func processAccountGcpStorageBucket(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
