@@ -1,3 +1,0 @@
-[submodule "third-party/osquery"]
-	path = third-party/osquery
-	url = git@github.com:Uptycs/osquery.git
