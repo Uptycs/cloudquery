@@ -3,6 +3,7 @@ package utilities
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 )
 
 func GetStringValue(value interface{}) string {
@@ -136,4 +137,95 @@ func GetIntegerValue(value interface{}) int {
 	}
 	// type which we can't operate on.
 	return 0
+}
+
+// Get boolean value of given variable
+func GetBooleanValue(value interface{}) bool {
+	if value == nil {
+		return false
+	}
+
+	switch value.(type) {
+	case bool:
+		return value.(bool)
+	case string:
+		var str = value.(string)
+		if strings.EqualFold(str, "true") || strings.EqualFold(str, "yes") {
+			return true
+		} else {
+			return false
+		}
+		break
+	case int:
+		if value.(int) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case int8:
+		if value.(int8) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case int16:
+		if value.(int16) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case int32:
+		if value.(int32) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case int64:
+		if value.(int64) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case uint:
+		if value.(uint) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case uint8:
+		if value.(uint8) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case uint16:
+		if value.(uint16) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case uint32:
+		if value.(uint32) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	case uint64:
+		if value.(uint64) > 0 {
+			return true
+		} else {
+			return false
+		}
+		break
+	}
+	return true
 }

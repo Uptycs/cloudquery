@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"strconv"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"github.com/Uptycs/cloudquery/utilities"
@@ -17,16 +16,42 @@ import (
 )
 
 func GcpComputeInstanceColumns() []table.ColumnDefinition {
-	var _, _ = strconv.Atoi("123") // Disables warning when strcov is not used
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
-		table.TextColumn("zone"),
-		table.TextColumn("id"),
+		table.BigIntColumn("id"),
 		table.TextColumn("hostname"),
 		table.TextColumn("name"),
 		table.TextColumn("status"),
 		table.TextColumn("kind"),
 		table.TextColumn("tags"),
+		table.TextColumn("creation_timestamp"),
+		table.TextColumn("description"),
+		table.TextColumn("machine_type"),
+		table.TextColumn("status_message"),
+		table.TextColumn("zone"),
+		table.TextColumn("can_ip_forward"),
+		table.TextColumn("cpu_platform"),
+		table.TextColumn("label_fingerprint"),
+		table.TextColumn("min_cpu_platform"),
+		table.TextColumn("start_restricted"),
+		table.TextColumn("deletion_protection"),
+		table.TextColumn("fingerprint"),
+		table.TextColumn("private_ipv6Google_access"),
+		table.TextColumn("last_start_timestamp"),
+		table.TextColumn("last_stop_timestamp"),
+		table.TextColumn("last_suspended_timestamp"),
+		table.TextColumn("display_device_enable_display"),
+		table.TextColumn("reservation_affinity_consume_reservation_type"),
+		table.TextColumn("reservation_affinity_key"),
+		table.TextColumn("scheduling_on_host_maintenance"),
+		table.TextColumn("scheduling_automatic_restart"),
+		table.TextColumn("scheduling_preemptible"),
+		table.TextColumn("scheduling_min_node_cpus"),
+		table.TextColumn("shielded_instance_config_enable_secure_boot"),
+		table.TextColumn("shielded_instance_config_enable_vtpm"),
+		table.TextColumn("shielded_instance_config_enable_integrity_monitoring"),
+		table.TextColumn("shielded_instance_integrity_policy_update_auto_learn_policy"),
+		table.TextColumn("confidential_instance_config_enable_confidential_compute"),
 	}
 }
 
@@ -38,7 +63,7 @@ func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.Query
 	resultMap := make([]map[string]string, 0)
 
 	for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-		results, err := GcpComputeInstanceProcessAccount(ctx, &account)
+		results, err := processAccountGcpComputeInstance(ctx, &account)
 		if err != nil {
 			// TODO: Continue to next account or return error ?
 			continue
@@ -48,7 +73,7 @@ func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.Query
 	return resultMap, nil
 }
 
-func GcpComputeInstanceProcessAccount(ctx context.Context,
+func processAccountGcpComputeInstance(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -70,7 +95,8 @@ func GcpComputeInstanceProcessAccount(ctx context.Context,
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 
-	for _, zone := range tableConfig.Gcp.Zones {
+	zoneList := extgcp.GetZones(ctx, myApiService, account.ProjectId)
+	for _, zone := range zoneList {
 		listCall := myApiService.List(account.ProjectId, zone)
 		if listCall == nil {
 			fmt.Println("listCall is nil")
@@ -79,12 +105,13 @@ func GcpComputeInstanceProcessAccount(ctx context.Context,
 		if err := listCall.Pages(ctx, func(page *compute.InstanceList) error {
 			byteArr, err := json.Marshal(page)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "error: %v\n", err)
+				fmt.Printf("error: %v\n", err)
 				os.Exit(1)
 			}
-			table := utilities.Table{}
-			table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
-			for _, row := range table.Rows {
+			//fmt.Printf("%+v\n", string(byteArr))
+			jsonTable := utilities.Table{}
+			jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+			for _, row := range jsonTable.Rows {
 				result := extgcp.RowToMap(row, account.ProjectId, zone, tableConfig)
 				resultMap = append(resultMap, result)
 			}

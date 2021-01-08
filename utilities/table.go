@@ -14,12 +14,23 @@ type Table struct {
 }
 
 func (tab *Table) Init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap map[string]ParsedAttributeConfig) {
-	var fieldMap map[string]interface{}
-	json.Unmarshal(jsonStr, &fieldMap)
-	tab.MaxLevel = maxLevel
+	var fields interface{}
+	json.Unmarshal(jsonStr, &fields)
+	tab.MaxLevel = maxLevel + 1
 	tab.ParsedAttributeConfigMap = parsedAttributeConfigMap
+	switch fields.(type) {
+	case map[string]interface{}:
+		tab.flattenMap(0, "", fields.(map[string]interface{}))
+	case []interface{}:
+		tab.flattenList(0, "", fields.([]interface{}))
+	case reflect.Value:
+		tab.flattenValue(0, "", fields.(reflect.Value))
+	default:
+		fmt.Printf("Invalid object of type %s and kind %s\n", reflect.TypeOf(fields), reflect.ValueOf(fields).Kind())
+	}
+
 	// fmt.Printf("Flattening fieldMap of size %d\n", len(fieldMap))
-	tab.flattenMap(0, "", fieldMap)
+	//tab.flattenMap(0, "", fieldMap)
 	//tab.Print()
 }
 
@@ -34,6 +45,7 @@ func (tab *Table) Print() {
 
 func (tab *Table) AddAttribute(name string, value interface{}) {
 	// Add attribute only if it is configured
+	//fmt.Println("AttributeName:" + name)
 	if _, ok := tab.ParsedAttributeConfigMap[name]; ok {
 		if len(tab.Rows) == 0 {
 			row := make(map[string]interface{})

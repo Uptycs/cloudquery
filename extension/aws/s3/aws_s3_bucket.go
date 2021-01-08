@@ -318,7 +318,6 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 		result := extaws.RowToMap(row, accountId, region, tableConfig)
 		resultMap = append(resultMap, result)
 	}
-	fmt.Printf("Map size:%d\n", len(resultMap))
 	return resultMap, nil
 }
 

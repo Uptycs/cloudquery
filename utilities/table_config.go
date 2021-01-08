@@ -3,12 +3,14 @@ package utilities
 import (
 	"encoding/json"
 	"io/ioutil"
+	"strings"
 )
 
 type ParsedAttributeConfig struct {
 	SourceName string `json:"sourceName"`
 	TargetName string `json:"targetName"`
 	TargetType string `json:"targetType"`
+	Enabled bool `json:"enabled"`
 }
 
 type AwsConfig struct {
@@ -103,6 +105,19 @@ func (tableConfig *TableConfig) ParseAttributeConfigs(configInterface interface{
 		} else {
 			// Error
 			continue
+		}
+		if value, ok := attrConfig["enabled"]; ok {
+			parsedAttrConfig.Enabled = GetBooleanValue(value)
+		} else {
+			// Error
+			continue
+		}
+		if parsedAttrConfig.Enabled {
+			level := strings.Count(parsedAttrConfig.SourceName, "_")
+			if level > tableConfig.MaxLevel {
+				tableConfig.MaxLevel = level
+				//fmt.Printf("MaxLevel for is %d\n", level)
+			}
 		}
 		tableConfig.parsedAttributeConfigMap[parsedAttrConfig.SourceName] = parsedAttrConfig
 	}

@@ -14,43 +14,43 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
-func DescribeVpcsColumns() []table.ColumnDefinition {
+func DescribeSubnetsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
 		table.TextColumn("region"),
+		table.TextColumn("default_for_az"),
+		table.TextColumn("map_customer_owned_ip_on_launch"),
+		table.TextColumn("customer_owned_ipv4_pool"),
+		table.TextColumn("vpc_id"),
 		table.TextColumn("owner_id"),
-		table.TextColumn("cidr_block_association_set"),
-		//table.TextColumn("cidr_block_association_set_association_id"),
-		//table.TextColumn("cidr_block_association_set_cidr_block"),
-		//table.TextColumn("cidr_block_association_set_cidr_block_state"),
-		//table.TextColumn("cidr_block_association_set_cidr_block_state_state"),
-		//table.TextColumn("cidr_block_association_set_cidr_block_state_status_message"),
+		table.TextColumn("tags"),
+		//table.TextColumn("tags_key"),
+		//table.TextColumn("tags_value"),
+		table.TextColumn("cidr_block"),
+		table.TextColumn("assign_ipv6_address_on_creation"),
+		table.TextColumn("availability_zone"),
+		table.TextColumn("map_public_ip_on_launch"),
+		table.TextColumn("subnet_id"),
+		table.TextColumn("subnet_arn"),
+		table.TextColumn("availability_zone_id"),
+		table.IntegerColumn("available_ip_address_count"),
+		table.TextColumn("state"),
 		table.TextColumn("ipv6_cidr_block_association_set"),
+		//table.TextColumn("ipv6_cidr_block_association_set_association_id"),
 		//table.TextColumn("ipv6_cidr_block_association_set_ipv6_cidr_block"),
 		//table.TextColumn("ipv6_cidr_block_association_set_ipv6_cidr_block_state"),
 		//table.TextColumn("ipv6_cidr_block_association_set_ipv6_cidr_block_state_state"),
 		//table.TextColumn("ipv6_cidr_block_association_set_ipv6_cidr_block_state_status_message"),
-		//table.TextColumn("ipv6_cidr_block_association_set_network_border_group"),
-		//table.TextColumn("ipv6_cidr_block_association_set_ipv6_pool"),
-		//table.TextColumn("ipv6_cidr_block_association_set_association_id"),
-		table.TextColumn("is_default"),
-		table.TextColumn("tags"),
-		//table.TextColumn("tags_value"),
-		//table.TextColumn("tags_key"),
-		table.TextColumn("cidr_block"),
-		table.TextColumn("dhcp_options_id"),
-		table.TextColumn("state"),
-		table.TextColumn("vpc_id"),
-		table.TextColumn("instance_tenancy"),
+		table.TextColumn("outpost_arn"),
 	}
 }
 
-func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		fmt.Println("Processing default account")
-		results, err := processAccountDescribeVpcs(nil)
+		results, err := processAccountDescribeSubnets(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -58,7 +58,7 @@ func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContex
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			fmt.Println("Processing account:" + account.ID)
-			results, err := processAccountDescribeVpcs(&account)
+			results, err := processAccountDescribeSubnets(&account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
 				continue
@@ -70,7 +70,7 @@ func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
+func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
 	fmt.Println("Processing region:" + *region.RegionName + ", EndPoint:" + *region.Endpoint)
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, *region.RegionName)
@@ -84,10 +84,10 @@ func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *util
 		accountId = account.ID
 	}
 	svc := ec2.New(sess)
-	params := &ec2.DescribeVpcsInput{}
+	params := &ec2.DescribeSubnetsInput{}
 
-	err = svc.DescribeVpcsPages(params,
-		func(page *ec2.DescribeVpcsOutput, lastPage bool) bool {
+	err = svc.DescribeSubnetsPages(params,
+		func(page *ec2.DescribeSubnetsOutput, lastPage bool) bool {
 			byteArr, err := json.Marshal(page)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "error: %v\n", err)
@@ -102,14 +102,14 @@ func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *util
 			return lastPage
 		})
 	if err != nil {
-		fmt.Println("processRegion : DescribeVpcs: ", err)
+		fmt.Println("processRegion : DescribeSubnets: ", err)
 		log.Fatal(err)
 		return resultMap, err
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeVpcs(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeSubnets(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
 	if err != nil {
@@ -121,14 +121,14 @@ func processAccountDescribeVpcs(account *utilities.ExtensionConfigurationAwsAcco
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_vpc"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_subnet"]
 	if !ok {
 		fmt.Println("getTableConfig: ", err)
 		log.Fatal(err)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeVpcs(tableConfig, account, region)
+		result, err := processRegionDescribeSubnets(tableConfig, account, region)
 		if err != nil {
 			fmt.Println("processRegion: ", err)
 			log.Fatal(err)

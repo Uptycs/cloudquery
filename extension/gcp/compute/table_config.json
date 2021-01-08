@@ -1,46 +1,213 @@
 {
   "gcp_compute_instance": {
-    "maxLevel": 4,
     "aws": {},
     "gcp": {
-      "projectIdAttribute": "project_id",
-      "zoneAttribute": "zone",
-      "zones": [
-        "us-east4-a",
-        "us-east4-b",
-        "us-east4-c"
-      ]
+      "projectIdAttribute": "project_id"
     },
     "parsedAttributes": [
       {
         "sourceName": "items_id",
         "targetName": "id",
-        "targetType": "text"
+        "targetType": "bigint",
+        "enabled": true
       },
       {
         "sourceName": "items_hostname",
         "targetName": "hostname",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
       },
       {
         "sourceName": "items_name",
         "targetName": "name",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
       },
       {
         "sourceName": "items_status",
         "targetName": "status",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
       },
       {
         "sourceName": "items_kind",
         "targetName": "kind",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
       },
       {
         "sourceName": "items_tags",
         "targetName": "tags",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_creation_timestamp",
+        "targetName": "creation_timestamp",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_machineType",
+        "targetName": "machine_type",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_statusMessage",
+        "targetName": "status_message",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_zone",
+        "targetName": "zone",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_canIpForward",
+        "targetName": "can_ip_forward",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_cpuPlatform",
+        "targetName": "cpu_platform",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_labelFingerprint",
+        "targetName": "label_fingerprint",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_minCpuPlatform",
+        "targetName": "min_cpu_platform",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_startRestricted",
+        "targetName": "start_restricted",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_deletionProtection",
+        "targetName": "deletion_protection",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_fingerprint",
+        "targetName": "fingerprint",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_privateIpv6GoogleAccess",
+        "targetName": "private_ipv6Google_access",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_lastStartTimestamp",
+        "targetName": "last_start_timestamp",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_lastStopTimestamp",
+        "targetName": "last_stop_timestamp",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_lastSuspendedTimestamp",
+        "targetName": "last_suspended_timestamp",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_displayDevice_enableDisplay",
+        "targetName": "display_device_enable_display",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_reservationAffinity_consumeReservationType",
+        "targetName": "reservation_affinity_consume_reservation_type",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_reservationAffinity_key",
+        "targetName": "reservation_affinity_key",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduling_onHostMaintenance",
+        "targetName": "scheduling_on_host_maintenance",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduling_automaticRestart",
+        "targetName": "scheduling_automatic_restart",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduling_preemptible",
+        "targetName": "scheduling_preemptible",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduling_minNodeCpus",
+        "targetName": "scheduling_min_node_cpus",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedInstanceConfig_enableSecureBoot",
+        "targetName": "shielded_instance_config_enable_secure_boot",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedInstanceConfig_enableVtpm",
+        "targetName": "shielded_instance_config_enable_vtpm",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedInstanceConfig_enableIntegrityMonitoring",
+        "targetName": "shielded_instance_config_enable_integrity_monitoring",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedInstanceIntegrityPolicy_updateAutoLearnPolicy",
+        "targetName": "shielded_instance_integrity_policy_update_auto_learn_policy",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_confidentialInstanceConfig_enableConfidentialCompute",
+        "targetName": "confidential_instance_config_enable_confidential_compute",
+        "targetType": "text",
+        "enabled": true
       }
     ]
   }

@@ -1,0 +1,172 @@
+{
+  "gcp_storage_bucket": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "Items_Kind",
+        "targetName": "kind",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Id",
+        "targetName": "id",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_ProjectNumber",
+        "targetName": "project_number",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Name",
+        "targetName": "name",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_TimeCreated",
+        "targetName": "time_created",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Updated",
+        "targetName": "updated",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_DefaultEventBasedHold",
+        "targetName": "default_event_based_hold",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_RetentionPeriod",
+        "targetName": "retention_policy_retention_period",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_EffectiveTime",
+        "targetName": "retention_policy_effective_time",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_RetentionPolicy_IsLocked",
+        "targetName": "retention_policy_is_locked",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Metageneration",
+        "targetName": "metageneration",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_Enabled",
+        "targetName": "iam_configuration_uniform_bucket_level_access_enabled",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_IamConfiguration_UniformBucketLevelAccess_LockedTime",
+        "targetName": "iam_configuration_uniform_bucket_level_access_locked_time",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Encryption_defaultKmsKeyName",
+        "targetName": "encryption_default_kms_key_name",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Owner_Entity",
+        "targetName": "owner_entity",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Owner_EntityId",
+        "targetName": "owner_entity_id",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Location",
+        "targetName": "location",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_LocationType",
+        "targetName": "location_type",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Website_MainPageSuffix",
+        "targetName": "website_main_page_suffix",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Website_NotFoundPage",
+        "targetName": "website_not_found_page",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Logging_LogBucket",
+        "targetName": "logging_log_bucket",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Logging_LogObjectPrefix",
+        "targetName": "logging_log_object_prefix",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Versioning_Enabled",
+        "targetName": "versioning_enabled",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Labels",
+        "targetName": "labels",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_StorageClass",
+        "targetName": "storage_class",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Billing_RequesterPays",
+        "targetName": "billing_requester_pays",
+        "targetType": "text",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Etag",
+        "targetName": "etag",
+        "targetType": "text",
+        "enabled": true
+      }
+    ]
+  }
+}
