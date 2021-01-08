@@ -177,5 +177,59 @@
         "targetType": "text"
       }
     ]
+  },
+  "gcp_compute_network": {
+    "maxLevel": 4,
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "items_id",
+        "targetName": "id",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_autoCreateSubnetworks",
+        "targetName": "auto_create_subnetworks",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_creationTimestamp",
+        "targetName": "creation_timestamp",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_routingConfig_routingMode",
+        "targetName": "routing_config_routing_mode",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_selfLink",
+        "targetName": "self_link",
+        "targetType": "text"
+      },
+      {
+        "sourceName": "items_subnetworks",
+        "targetName": "subnetworks",
+        "targetType": "text"
+      }
+    ]
   }
 }

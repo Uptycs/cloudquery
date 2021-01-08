@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"github.com/Uptycs/cloudquery/utilities"
@@ -14,6 +15,10 @@ import (
 
 	compute "google.golang.org/api/compute/v1"
 )
+
+type myGcpComputeInstanceItemsContainer struct {
+	Items []*compute.Instance `json:"items"`
+}
 
 func GcpComputeInstanceColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
@@ -89,38 +94,44 @@ func processAccountGcpComputeInstance(ctx context.Context,
 		return resultMap, fmt.Errorf("compute.NewInstancesService() returned nil")
 	}
 
+	aggListCall := myApiService.AggregatedList(account.ProjectId)
+	if aggListCall == nil {
+		fmt.Println("aggListCall is nil")
+		return resultMap, nil
+	}
+	itemsContainer := myGcpComputeInstanceItemsContainer{Items: make([]*compute.Instance, 0)}
+	if err := aggListCall.Pages(ctx, func(page *compute.InstanceAggregatedList) error {
+
+		for _, item := range page.Items {
+			for _, inst := range item.Instances {
+				zonePathSplit := strings.Split(inst.Zone, "/")
+				inst.Zone = zonePathSplit[len(zonePathSplit)-1]
+			}
+			itemsContainer.Items = append(itemsContainer.Items, item.Instances...)
+		}
+
+		return nil
+	}); err != nil {
+		fmt.Println("aggListCal.Page: ", err)
+		return resultMap, nil
+	}
+
+	byteArr, err := json.Marshal(itemsContainer)
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		os.Exit(1)
+	}
+	//fmt.Printf("%+v\n", string(byteArr))
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_compute_instance"]
 	if !ok {
 		fmt.Println("getTableConfig: ", err)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-
-	zoneList := extgcp.GetZones(ctx, myApiService, account.ProjectId)
-	for _, zone := range zoneList {
-		listCall := myApiService.List(account.ProjectId, zone)
-		if listCall == nil {
-			fmt.Println("listCall is nil")
-			return resultMap, nil
-		}
-		if err := listCall.Pages(ctx, func(page *compute.InstanceList) error {
-			byteArr, err := json.Marshal(page)
-			if err != nil {
-				fmt.Printf("error: %v\n", err)
-				os.Exit(1)
-			}
-			//fmt.Printf("%+v\n", string(byteArr))
-			jsonTable := utilities.Table{}
-			jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
-			for _, row := range jsonTable.Rows {
-				result := extgcp.RowToMap(row, account.ProjectId, zone, tableConfig)
-				resultMap = append(resultMap, result)
-			}
-			return nil
-		}); err != nil {
-			fmt.Println("listCall.Page: ", err)
-			//log.Fatal(err)
-			return resultMap, err
-		}
+	jsonTable := utilities.Table{}
+	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	for _, row := range jsonTable.Rows {
+		result := extgcp.RowToMap(row, account.ProjectId, "", tableConfig)
+		resultMap = append(resultMap, result)
 	}
 
 	return resultMap, nil

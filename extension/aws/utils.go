@@ -20,8 +20,8 @@ func GetAwsSession(account *utilities.ExtensionConfigurationAwsAccount, regionCo
 		var enable bool = true
 		sess, err := session.NewSession(&aws.Config{
 			EnableEndpointDiscovery: &enable,
-			Region:      aws.String(regionCode),
-			Credentials: credentials.NewSharedCredentials(account.CredentialFile, account.ProfileName),
+			Region:                  aws.String(regionCode),
+			Credentials:             credentials.NewSharedCredentials(account.CredentialFile, account.ProfileName),
 		})
 		if err != nil {
 			fmt.Printf("Failed to create AWS Session. Error:%v\n", err)
