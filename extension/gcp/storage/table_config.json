@@ -140,7 +140,8 @@
       {
         "sourceName": "items_Versioning_Enabled",
         "targetName": "versioning_enabled",
-        "targetType": "text"
+        "targetType": "text",
+        "enabled": true
       },
       {
         "sourceName": "items_StorageClass",

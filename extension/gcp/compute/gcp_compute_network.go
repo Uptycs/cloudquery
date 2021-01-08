@@ -29,7 +29,6 @@ func GcpComputeNetworkColumns() []table.ColumnDefinition {
 		table.TextColumn("auto_create_subnetworks"),
 		table.TextColumn("creation_timestamp"),
 		table.TextColumn("routing_config_routing_mode"),
-		table.TextColumn("self_link"),
 		table.TextColumn("subnetworks"),
 	}
 }

@@ -212,7 +212,6 @@
     ]
   },
   "gcp_compute_network": {
-    "maxLevel": 4,
     "aws": {},
     "gcp": {
       "projectIdAttribute": "project_id"
@@ -257,12 +256,6 @@
       {
         "sourceName": "items_routingConfig_routingMode",
         "targetName": "routing_config_routing_mode",
-        "targetType": "text",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_selfLink",
-        "targetName": "self_link",
         "targetType": "text",
         "enabled": true
       },
