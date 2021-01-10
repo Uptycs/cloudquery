@@ -18,7 +18,6 @@ func DescribeSubnetsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("region"),
 		table.TextColumn("default_for_az"),
 		table.TextColumn("map_customer_owned_ip_on_launch"),
 		table.TextColumn("customer_owned_ipv4_pool"),
