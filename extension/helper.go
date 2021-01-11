@@ -77,5 +77,6 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_s3_bucket", s3.ListBucketsColumns(), s3.ListBucketsGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", compute.GcpComputeInstanceColumns(), compute.GcpComputeInstanceGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", compute.GcpComputeNetworkColumns(), compute.GcpComputeNetworkGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_disk", compute.GcpComputeDiskColumns(), compute.GcpComputeDiskGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", storage.GcpStorageBucketColumns(), storage.GcpStorageBucketGenerate))
 }
