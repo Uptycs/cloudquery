@@ -22,20 +22,20 @@ type myGcpComputeNetworkItemsContainer struct {
 func GcpComputeNetworkColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
-		table.TextColumn("ipv4_range"),
-		table.TextColumn("name"),
-		table.TextColumn("self_link"),
-		table.TextColumn("subnetworks"),
-		table.TextColumn("peerings"),
+		table.TextColumn("i_pv4_range"),
 		table.TextColumn("auto_create_subnetworks"),
 		table.TextColumn("creation_timestamp"),
 		table.TextColumn("description"),
-		table.TextColumn("gateway_ipv4"),
+		table.TextColumn("gateway_i_pv4"),
 		table.TextColumn("id"),
 		table.TextColumn("kind"),
 		table.IntegerColumn("mtu"),
+		table.TextColumn("name"),
+		table.TextColumn("peerings"),
 		//table.TextColumn("routing_config"),
 		table.TextColumn("routing_config_routing_mode"),
+		//table.TextColumn("self_link"),
+		table.TextColumn("subnetworks"),
 	}
 }
 
