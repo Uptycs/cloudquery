@@ -1,7 +1,279 @@
 {
+  "aws_ec2_image": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Images_Architecture",
+        "targetName": "architecture",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_OwnerId",
+        "targetName": "owner_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Platform",
+        "targetName": "platform",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_UsageOperation",
+        "targetName": "usage_operation",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings",
+        "targetName": "block_device_mappings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs",
+        "targetName": "block_device_mappings_ebs",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_VolumeSize",
+        "targetName": "block_device_mappings_ebs_volume_size",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_VolumeType",
+        "targetName": "block_device_mappings_ebs_volume_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_KmsKeyId",
+        "targetName": "block_device_mappings_ebs_kms_key_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_Throughput",
+        "targetName": "block_device_mappings_ebs_throughput",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_Encrypted",
+        "targetName": "block_device_mappings_ebs_encrypted",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_DeleteOnTermination",
+        "targetName": "block_device_mappings_ebs_delete_on_termination",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_Iops",
+        "targetName": "block_device_mappings_ebs_iops",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_Ebs_SnapshotId",
+        "targetName": "block_device_mappings_ebs_snapshot_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_NoDevice",
+        "targetName": "block_device_mappings_no_device",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_DeviceName",
+        "targetName": "block_device_mappings_device_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_BlockDeviceMappings_VirtualName",
+        "targetName": "block_device_mappings_virtual_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_RootDeviceType",
+        "targetName": "root_device_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_ImageId",
+        "targetName": "image_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_ImageType",
+        "targetName": "image_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_ProductCodes",
+        "targetName": "product_codes",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_ProductCodes_ProductCodeId",
+        "targetName": "product_codes_product_code_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_ProductCodes_ProductCodeType",
+        "targetName": "product_codes_product_code_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_RamdiskId",
+        "targetName": "ramdisk_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_RootDeviceName",
+        "targetName": "root_device_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_CreationDate",
+        "targetName": "creation_date",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_ImageLocation",
+        "targetName": "image_location",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_KernelId",
+        "targetName": "kernel_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Hypervisor",
+        "targetName": "hypervisor",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_ImageOwnerAlias",
+        "targetName": "image_owner_alias",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_SriovNetSupport",
+        "targetName": "sriov_net_support",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_StateReason",
+        "targetName": "state_reason",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_StateReason_Code",
+        "targetName": "state_reason_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_StateReason_Message",
+        "targetName": "state_reason_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Images_Public",
+        "targetName": "public",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_PlatformDetails",
+        "targetName": "platform_details",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_EnaSupport",
+        "targetName": "ena_support",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Images_VirtualizationType",
+        "targetName": "virtualization_type",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
   "aws_ec2_instance": {
     "aws": {
-      "regionAttribute": "region",
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
     },
@@ -851,7 +1123,6 @@
   },
   "aws_ec2_subnet": {
     "aws": {
-      "regionAttribute": "region",
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
     },
@@ -1005,7 +1276,6 @@
   },
   "aws_ec2_vpc": {
     "aws": {
-      "regionAttribute": "region",
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
     },

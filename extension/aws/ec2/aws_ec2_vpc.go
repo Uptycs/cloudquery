@@ -18,7 +18,6 @@ func DescribeVpcsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("region"),
 		table.TextColumn("owner_id"),
 		table.TextColumn("cidr_block_association_set"),
 		//table.TextColumn("cidr_block_association_set_association_id"),

@@ -18,7 +18,6 @@ func DescribeInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("region"),
 		table.TextColumn("groups"),
 		//table.TextColumn("groups_group_id"),
 		//table.TextColumn("groups_group_name"),
