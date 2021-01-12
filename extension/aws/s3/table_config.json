@@ -6,6 +6,7 @@
       "accountIdAttribute": "account_id"
     },
     "gcp": {},
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "Name",

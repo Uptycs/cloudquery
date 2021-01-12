@@ -1,0 +1,1853 @@
+{
+  "azure_compute_vm": {
+    "aws": {},
+    "gcp": {},
+    "azure": {
+      "subscriptionIdAttribute": "subscription_id"
+    },
+    "parsedAttributes": [
+      {
+        "sourceName": "id",
+        "targetName": "id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "identity",
+        "targetName": "identity",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "identity_principalId",
+        "targetName": "identity_principal_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "identity_tenantId",
+        "targetName": "identity_tenant_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "identity_type",
+        "targetName": "identity_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "identity_userAssignedIdentities",
+        "targetName": "identity_user_assigned_identities",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "location",
+        "targetName": "location",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "plan",
+        "targetName": "plan",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "plan_name",
+        "targetName": "plan_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "plan_product",
+        "targetName": "plan_product",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "plan_promotionCode",
+        "targetName": "plan_promotion_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "plan_publisher",
+        "targetName": "plan_publisher",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties",
+        "targetName": "properties",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_additionalCapabilities",
+        "targetName": "properties_additional_capabilities",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_additionalCapabilities_ultraSSDEnabled",
+        "targetName": "properties_additional_capabilities_ultra_ssd_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_availabilitySet",
+        "targetName": "properties_availability_set",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_availabilitySet_id",
+        "targetName": "properties_availability_set_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_billingProfile",
+        "targetName": "properties_billing_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_billingProfile_maxPrice",
+        "targetName": "properties_billing_profile_max_price",
+        "targetType": "DOUBLE",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_diagnosticsProfile",
+        "targetName": "properties_diagnostics_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_diagnosticsProfile_bootDiagnostics",
+        "targetName": "properties_diagnostics_profile_boot_diagnostics",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_diagnosticsProfile_bootDiagnostics_enabled",
+        "targetName": "properties_diagnostics_profile_boot_diagnostics_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_diagnosticsProfile_bootDiagnostics_storageUri",
+        "targetName": "properties_diagnostics_profile_boot_diagnostics_storage_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_evictionPolicy",
+        "targetName": "properties_eviction_policy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_extensionsTimeBudget",
+        "targetName": "properties_extensions_time_budget",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_hardwareProfile",
+        "targetName": "properties_hardware_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_hardwareProfile_vmSize",
+        "targetName": "properties_hardware_profile_vm_size",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_host",
+        "targetName": "properties_host",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_hostGroup",
+        "targetName": "properties_host_group",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_hostGroup_id",
+        "targetName": "properties_host_group_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_host_id",
+        "targetName": "properties_host_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView",
+        "targetName": "properties_instance_view",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_instanceView_assignedHost",
+        "targetName": "properties_instance_view_assigned_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics",
+        "targetName": "properties_instance_view_boot_diagnostics",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_consoleScreenshotBlobUri",
+        "targetName": "properties_instance_view_boot_diagnostics_console_screenshot_blob_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_serialConsoleLogBlobUri",
+        "targetName": "properties_instance_view_boot_diagnostics_serial_console_log_blob_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status",
+        "targetName": "properties_instance_view_boot_diagnostics_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status_code",
+        "targetName": "properties_instance_view_boot_diagnostics_status_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status_displayStatus",
+        "targetName": "properties_instance_view_boot_diagnostics_status_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status_level",
+        "targetName": "properties_instance_view_boot_diagnostics_status_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status_message",
+        "targetName": "properties_instance_view_boot_diagnostics_status_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_bootDiagnostics_status_time",
+        "targetName": "properties_instance_view_boot_diagnostics_status_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_computerName",
+        "targetName": "properties_instance_view_computer_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks",
+        "targetName": "properties_instance_view_disks",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings",
+        "targetName": "properties_instance_view_disks_encryption_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_diskEncryptionKey",
+        "targetName": "properties_instance_view_disks_encryption_settings_disk_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_diskEncryptionKey_secretUrl",
+        "targetName": "properties_instance_view_disks_encryption_settings_disk_encryption_key_secret_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_diskEncryptionKey_sourceVault",
+        "targetName": "properties_instance_view_disks_encryption_settings_disk_encryption_key_source_vault",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_diskEncryptionKey_sourceVault_id",
+        "targetName": "properties_instance_view_disks_encryption_settings_disk_encryption_key_source_vault_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_enabled",
+        "targetName": "properties_instance_view_disks_encryption_settings_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_keyEncryptionKey",
+        "targetName": "properties_instance_view_disks_encryption_settings_key_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_keyEncryptionKey_keyUrl",
+        "targetName": "properties_instance_view_disks_encryption_settings_key_encryption_key_key_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_keyEncryptionKey_sourceVault",
+        "targetName": "properties_instance_view_disks_encryption_settings_key_encryption_key_source_vault",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_encryptionSettings_keyEncryptionKey_sourceVault_id",
+        "targetName": "properties_instance_view_disks_encryption_settings_key_encryption_key_source_vault_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_name",
+        "targetName": "properties_instance_view_disks_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses",
+        "targetName": "properties_instance_view_disks_statuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses_code",
+        "targetName": "properties_instance_view_disks_statuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses_displayStatus",
+        "targetName": "properties_instance_view_disks_statuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses_level",
+        "targetName": "properties_instance_view_disks_statuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses_message",
+        "targetName": "properties_instance_view_disks_statuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_disks_statuses_time",
+        "targetName": "properties_instance_view_disks_statuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions",
+        "targetName": "properties_instance_view_extensions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_name",
+        "targetName": "properties_instance_view_extensions_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses",
+        "targetName": "properties_instance_view_extensions_statuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses_code",
+        "targetName": "properties_instance_view_extensions_statuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses_displayStatus",
+        "targetName": "properties_instance_view_extensions_statuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses_level",
+        "targetName": "properties_instance_view_extensions_statuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses_message",
+        "targetName": "properties_instance_view_extensions_statuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_statuses_time",
+        "targetName": "properties_instance_view_extensions_statuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses",
+        "targetName": "properties_instance_view_extensions_substatuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses_code",
+        "targetName": "properties_instance_view_extensions_substatuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses_displayStatus",
+        "targetName": "properties_instance_view_extensions_substatuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses_level",
+        "targetName": "properties_instance_view_extensions_substatuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses_message",
+        "targetName": "properties_instance_view_extensions_substatuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_substatuses_time",
+        "targetName": "properties_instance_view_extensions_substatuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_type",
+        "targetName": "properties_instance_view_extensions_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_extensions_typeHandlerVersion",
+        "targetName": "properties_instance_view_extensions_type_handler_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_hyperVGeneration",
+        "targetName": "properties_instance_view_hyper_v_generation",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus",
+        "targetName": "properties_instance_view_maintenance_redeploy_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_isCustomerInitiatedMaintenanceAllowed",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_is_customer_initiated_maintenance_allowed",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_lastOperationMessage",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_last_operation_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_lastOperationResultCode",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_last_operation_result_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_maintenanceWindowEndTime",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_maintenance_window_end_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_maintenanceWindowStartTime",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_maintenance_window_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_preMaintenanceWindowEndTime",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_pre_maintenance_window_end_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_maintenanceRedeployStatus_preMaintenanceWindowStartTime",
+        "targetName": "properties_instance_view_maintenance_redeploy_status_pre_maintenance_window_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_osName",
+        "targetName": "properties_instance_view_os_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_osVersion",
+        "targetName": "properties_instance_view_os_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus",
+        "targetName": "properties_instance_view_patch_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_assessmentActivityId",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_assessment_activity_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_criticalAndSecurityPatchCount",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_critical_and_security_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_code",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_details",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_details",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_details_code",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_details_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_details_message",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_details_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_details_target",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_details_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_innererror",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_innererror",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_innererror_errordetail",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_innererror_errordetail",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_innererror_exceptiontype",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_innererror_exceptiontype",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_message",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_error_target",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_error_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_lastModifiedTime",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_last_modified_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_otherPatchCount",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_other_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_rebootPending",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_reboot_pending",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_startTime",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_availablePatchSummary_status",
+        "targetName": "properties_instance_view_patch_status_available_patch_summary_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_code",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_details",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_details",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_details_code",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_details_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_details_message",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_details_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_details_target",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_details_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_innererror",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_innererror",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_innererror_errordetail",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_innererror_errordetail",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_innererror_exceptiontype",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_innererror_exceptiontype",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_message",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_error_target",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_error_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_excludedPatchCount",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_excluded_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_failedPatchCount",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_failed_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_installationActivityId",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_installation_activity_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_installedPatchCount",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_installed_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_lastModifiedTime",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_last_modified_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_maintenanceWindowExceeded",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_maintenance_window_exceeded",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_notSelectedPatchCount",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_not_selected_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_pendingPatchCount",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_pending_patch_count",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_rebootStatus",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_reboot_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_startTime",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_startedBy",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_started_by",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_patchStatus_lastPatchInstallationSummary_status",
+        "targetName": "properties_instance_view_patch_status_last_patch_installation_summary_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_platformFaultDomain",
+        "targetName": "properties_instance_view_platform_fault_domain",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_platformUpdateDomain",
+        "targetName": "properties_instance_view_platform_update_domain",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_rdpThumbPrint",
+        "targetName": "properties_instance_view_rdp_thumb_print",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses",
+        "targetName": "properties_instance_view_statuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses_code",
+        "targetName": "properties_instance_view_statuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses_displayStatus",
+        "targetName": "properties_instance_view_statuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses_level",
+        "targetName": "properties_instance_view_statuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses_message",
+        "targetName": "properties_instance_view_statuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_statuses_time",
+        "targetName": "properties_instance_view_statuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent",
+        "targetName": "properties_instance_view_vm_agent",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status_code",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status_displayStatus",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status_level",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status_message",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_status_time",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_status_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_type",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_extensionHandlers_typeHandlerVersion",
+        "targetName": "properties_instance_view_vm_agent_extension_handlers_type_handler_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses",
+        "targetName": "properties_instance_view_vm_agent_statuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses_code",
+        "targetName": "properties_instance_view_vm_agent_statuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses_displayStatus",
+        "targetName": "properties_instance_view_vm_agent_statuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses_level",
+        "targetName": "properties_instance_view_vm_agent_statuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses_message",
+        "targetName": "properties_instance_view_vm_agent_statuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_statuses_time",
+        "targetName": "properties_instance_view_vm_agent_statuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmAgent_vmAgentVersion",
+        "targetName": "properties_instance_view_vm_agent_vm_agent_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth",
+        "targetName": "properties_instance_view_vm_health",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status",
+        "targetName": "properties_instance_view_vm_health_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status_code",
+        "targetName": "properties_instance_view_vm_health_status_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status_displayStatus",
+        "targetName": "properties_instance_view_vm_health_status_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status_level",
+        "targetName": "properties_instance_view_vm_health_status_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status_message",
+        "targetName": "properties_instance_view_vm_health_status_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_instanceView_vmHealth_status_time",
+        "targetName": "properties_instance_view_vm_health_status_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_licenseType",
+        "targetName": "properties_license_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_networkProfile",
+        "targetName": "properties_network_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_networkProfile_networkInterfaces",
+        "targetName": "properties_network_profile_network_interfaces",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_networkProfile_networkInterfaces_id",
+        "targetName": "properties_network_profile_network_interfaces_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_networkProfile_networkInterfaces_properties",
+        "targetName": "properties_network_profile_network_interfaces_properties",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_networkProfile_networkInterfaces_properties_primary",
+        "targetName": "properties_network_profile_network_interfaces_properties_primary",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile",
+        "targetName": "properties_os_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_osProfile_adminPassword",
+        "targetName": "properties_os_profile_admin_password",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_adminUsername",
+        "targetName": "properties_os_profile_admin_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_allowExtensionOperations",
+        "targetName": "properties_os_profile_allow_extension_operations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_computerName",
+        "targetName": "properties_os_profile_computer_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_customData",
+        "targetName": "properties_os_profile_custom_data",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration",
+        "targetName": "properties_os_profile_linux_configuration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_disablePasswordAuthentication",
+        "targetName": "properties_os_profile_linux_configuration_disable_password_authentication",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_provisionVMAgent",
+        "targetName": "properties_os_profile_linux_configuration_provision_vm_agent",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_ssh",
+        "targetName": "properties_os_profile_linux_configuration_ssh",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_ssh_publicKeys",
+        "targetName": "properties_os_profile_linux_configuration_ssh_public_keys",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_ssh_publicKeys_keyData",
+        "targetName": "properties_os_profile_linux_configuration_ssh_public_keys_key_data",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_linuxConfiguration_ssh_publicKeys_path",
+        "targetName": "properties_os_profile_linux_configuration_ssh_public_keys_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_requireGuestProvisionSignal",
+        "targetName": "properties_os_profile_require_guest_provision_signal",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets",
+        "targetName": "properties_os_profile_secrets",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets_sourceVault",
+        "targetName": "properties_os_profile_secrets_source_vault",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets_sourceVault_id",
+        "targetName": "properties_os_profile_secrets_source_vault_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets_vaultCertificates",
+        "targetName": "properties_os_profile_secrets_vault_certificates",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets_vaultCertificates_certificateStore",
+        "targetName": "properties_os_profile_secrets_vault_certificates_certificate_store",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_secrets_vaultCertificates_certificateUrl",
+        "targetName": "properties_os_profile_secrets_vault_certificates_certificate_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration",
+        "targetName": "properties_os_profile_windows_configuration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_additionalUnattendContent",
+        "targetName": "properties_os_profile_windows_configuration_additional_unattend_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_additionalUnattendContent_componentName",
+        "targetName": "properties_os_profile_windows_configuration_additional_unattend_content_component_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_additionalUnattendContent_content",
+        "targetName": "properties_os_profile_windows_configuration_additional_unattend_content_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_additionalUnattendContent_passName",
+        "targetName": "properties_os_profile_windows_configuration_additional_unattend_content_pass_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_additionalUnattendContent_settingName",
+        "targetName": "properties_os_profile_windows_configuration_additional_unattend_content_setting_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_enableAutomaticUpdates",
+        "targetName": "properties_os_profile_windows_configuration_enable_automatic_updates",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_patchSettings",
+        "targetName": "properties_os_profile_windows_configuration_patch_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_patchSettings_patchMode",
+        "targetName": "properties_os_profile_windows_configuration_patch_settings_patch_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_provisionVMAgent",
+        "targetName": "properties_os_profile_windows_configuration_provision_vm_agent",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_timeZone",
+        "targetName": "properties_os_profile_windows_configuration_time_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_winRM",
+        "targetName": "properties_os_profile_windows_configuration_win_rm",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_winRM_listeners",
+        "targetName": "properties_os_profile_windows_configuration_win_rm_listeners",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_winRM_listeners_certificateUrl",
+        "targetName": "properties_os_profile_windows_configuration_win_rm_listeners_certificate_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_osProfile_windowsConfiguration_winRM_listeners_protocol",
+        "targetName": "properties_os_profile_windows_configuration_win_rm_listeners_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_priority",
+        "targetName": "properties_priority",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_provisioningState",
+        "targetName": "properties_provisioning_state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_proximityPlacementGroup",
+        "targetName": "properties_proximity_placement_group",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_proximityPlacementGroup_id",
+        "targetName": "properties_proximity_placement_group_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_securityProfile",
+        "targetName": "properties_security_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_securityProfile_encryptionAtHost",
+        "targetName": "properties_security_profile_encryption_at_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile",
+        "targetName": "properties_storage_profile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks",
+        "targetName": "properties_storage_profile_data_disks",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_caching",
+        "targetName": "properties_storage_profile_data_disks_caching",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_createOption",
+        "targetName": "properties_storage_profile_data_disks_create_option",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_diskIOPSReadWrite",
+        "targetName": "properties_storage_profile_data_disks_disk_iops_read_write",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_diskMBpsReadWrite",
+        "targetName": "properties_storage_profile_data_disks_disk_m_bps_read_write",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_diskSizeGB",
+        "targetName": "properties_storage_profile_data_disks_disk_size_gb",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_image",
+        "targetName": "properties_storage_profile_data_disks_image",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_image_uri",
+        "targetName": "properties_storage_profile_data_disks_image_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_lun",
+        "targetName": "properties_storage_profile_data_disks_lun",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_managedDisk",
+        "targetName": "properties_storage_profile_data_disks_managed_disk",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_managedDisk_diskEncryptionSet",
+        "targetName": "properties_storage_profile_data_disks_managed_disk_disk_encryption_set",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_managedDisk_diskEncryptionSet_id",
+        "targetName": "properties_storage_profile_data_disks_managed_disk_disk_encryption_set_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_managedDisk_id",
+        "targetName": "properties_storage_profile_data_disks_managed_disk_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_managedDisk_storageAccountType",
+        "targetName": "properties_storage_profile_data_disks_managed_disk_storage_account_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_name",
+        "targetName": "properties_storage_profile_data_disks_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_toBeDetached",
+        "targetName": "properties_storage_profile_data_disks_to_be_detached",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_vhd",
+        "targetName": "properties_storage_profile_data_disks_vhd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_vhd_uri",
+        "targetName": "properties_storage_profile_data_disks_vhd_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_dataDisks_writeAcceleratorEnabled",
+        "targetName": "properties_storage_profile_data_disks_write_accelerator_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference",
+        "targetName": "properties_storage_profile_image_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_exactVersion",
+        "targetName": "properties_storage_profile_image_reference_exact_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_id",
+        "targetName": "properties_storage_profile_image_reference_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_offer",
+        "targetName": "properties_storage_profile_image_reference_offer",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_publisher",
+        "targetName": "properties_storage_profile_image_reference_publisher",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_sku",
+        "targetName": "properties_storage_profile_image_reference_sku",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_imageReference_version",
+        "targetName": "properties_storage_profile_image_reference_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk",
+        "targetName": "properties_storage_profile_os_disk",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_caching",
+        "targetName": "properties_storage_profile_os_disk_caching",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_createOption",
+        "targetName": "properties_storage_profile_os_disk_create_option",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_diffDiskSettings",
+        "targetName": "properties_storage_profile_os_disk_diff_disk_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_diffDiskSettings_option",
+        "targetName": "properties_storage_profile_os_disk_diff_disk_settings_option",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_diffDiskSettings_placement",
+        "targetName": "properties_storage_profile_os_disk_diff_disk_settings_placement",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_diskSizeGB",
+        "targetName": "properties_storage_profile_os_disk_disk_size_gb",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_diskEncryptionKey",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_disk_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_diskEncryptionKey_secretUrl",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_disk_encryption_key_secret_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_diskEncryptionKey_sourceVault",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_disk_encryption_key_source_vault",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_diskEncryptionKey_sourceVault_id",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_disk_encryption_key_source_vault_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_enabled",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_keyEncryptionKey",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_key_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_keyEncryptionKey_keyUrl",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_key_encryption_key_key_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_keyEncryptionKey_sourceVault",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_key_encryption_key_source_vault",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_encryptionSettings_keyEncryptionKey_sourceVault_id",
+        "targetName": "properties_storage_profile_os_disk_encryption_settings_key_encryption_key_source_vault_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_image",
+        "targetName": "properties_storage_profile_os_disk_image",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_image_uri",
+        "targetName": "properties_storage_profile_os_disk_image_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_managedDisk",
+        "targetName": "properties_storage_profile_os_disk_managed_disk",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_managedDisk_diskEncryptionSet",
+        "targetName": "properties_storage_profile_os_disk_managed_disk_disk_encryption_set",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_managedDisk_diskEncryptionSet_id",
+        "targetName": "properties_storage_profile_os_disk_managed_disk_disk_encryption_set_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_managedDisk_id",
+        "targetName": "properties_storage_profile_os_disk_managed_disk_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_managedDisk_storageAccountType",
+        "targetName": "properties_storage_profile_os_disk_managed_disk_storage_account_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_name",
+        "targetName": "properties_storage_profile_os_disk_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_osType",
+        "targetName": "properties_storage_profile_os_disk_os_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_vhd",
+        "targetName": "properties_storage_profile_os_disk_vhd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_vhd_uri",
+        "targetName": "properties_storage_profile_os_disk_vhd_uri",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_storageProfile_osDisk_writeAcceleratorEnabled",
+        "targetName": "properties_storage_profile_os_disk_write_accelerator_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_virtualMachineScaleSet",
+        "targetName": "properties_virtual_machine_scale_set",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "properties_virtualMachineScaleSet_id",
+        "targetName": "properties_virtual_machine_scale_set_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "properties_vmId",
+        "targetName": "properties_vm_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "resources",
+        "targetName": "resources",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "resources_id",
+        "targetName": "resources_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_location",
+        "targetName": "resources_location",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_name",
+        "targetName": "resources_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties",
+        "targetName": "resources_properties",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_autoUpgradeMinorVersion",
+        "targetName": "resources_properties_auto_upgrade_minor_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_enableAutomaticUpgrade",
+        "targetName": "resources_properties_enable_automatic_upgrade",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_forceUpdateTag",
+        "targetName": "resources_properties_force_update_tag",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView",
+        "targetName": "resources_properties_instance_view",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_name",
+        "targetName": "resources_properties_instance_view_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses",
+        "targetName": "resources_properties_instance_view_statuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses_code",
+        "targetName": "resources_properties_instance_view_statuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses_displayStatus",
+        "targetName": "resources_properties_instance_view_statuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses_level",
+        "targetName": "resources_properties_instance_view_statuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses_message",
+        "targetName": "resources_properties_instance_view_statuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_statuses_time",
+        "targetName": "resources_properties_instance_view_statuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses",
+        "targetName": "resources_properties_instance_view_substatuses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses_code",
+        "targetName": "resources_properties_instance_view_substatuses_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses_displayStatus",
+        "targetName": "resources_properties_instance_view_substatuses_display_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses_level",
+        "targetName": "resources_properties_instance_view_substatuses_level",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses_message",
+        "targetName": "resources_properties_instance_view_substatuses_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_substatuses_time",
+        "targetName": "resources_properties_instance_view_substatuses_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_type",
+        "targetName": "resources_properties_instance_view_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_instanceView_typeHandlerVersion",
+        "targetName": "resources_properties_instance_view_type_handler_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_protectedSettings",
+        "targetName": "resources_properties_protected_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_provisioningState",
+        "targetName": "resources_properties_provisioning_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_publisher",
+        "targetName": "resources_properties_publisher",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_settings",
+        "targetName": "resources_properties_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_type",
+        "targetName": "resources_properties_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_properties_typeHandlerVersion",
+        "targetName": "resources_properties_type_handler_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_tags",
+        "targetName": "resources_tags",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "resources_type",
+        "targetName": "resources_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "type",
+        "targetName": "type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "zones",
+        "targetName": "zones",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

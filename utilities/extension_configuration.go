@@ -21,7 +21,18 @@ type ExtensionConfigurationGcp struct {
 	Accounts []ExtensionConfigurationGcpAccount `json:"accounts"`
 }
 
+type ExtensionConfigurationAzureAccount struct {
+	SubscriptionId string `json:"subscriptionId"`
+	TenantId       string `json:"tenantId"`
+	AuthFile       string `json:"authFile"`
+}
+
+type ExtensionConfigurationAzure struct {
+	Accounts []ExtensionConfigurationAzureAccount `json:"accounts"`
+}
+
 type ExtensionConfiguration struct {
-	ExtConfAws ExtensionConfigurationAws `json:"aws"`
-	ExtConfGcp ExtensionConfigurationGcp `json:"gcp"`
+	ExtConfAws   ExtensionConfigurationAws   `json:"aws"`
+	ExtConfGcp   ExtensionConfigurationGcp   `json:"gcp"`
+	ExtConfAzure ExtensionConfigurationAzure `json:"azure"`
 }

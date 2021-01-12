@@ -4,6 +4,7 @@
     "gcp": {
       "projectIdAttribute": "project_id"
     },
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "items_Kind",
