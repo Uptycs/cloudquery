@@ -1,8 +1,6 @@
 package utilities
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"strings"
 )
 
@@ -10,7 +8,7 @@ type ParsedAttributeConfig struct {
 	SourceName string `json:"sourceName"`
 	TargetName string `json:"targetName"`
 	TargetType string `json:"targetType"`
-	Enabled bool `json:"enabled"`
+	Enabled    bool   `json:"enabled"`
 }
 
 type AwsConfig struct {
@@ -38,105 +36,17 @@ type TableConfig struct {
 	parsedAttributeConfigMap map[string]ParsedAttributeConfig
 }
 
-func ReadTableConfig(configPath string) (map[string]TableConfig, error) {
-	reader, err := ioutil.ReadFile(configPath)
-	if err != nil {
-		return nil, err
-	}
-	var result map[string]TableConfig
-	errUnmarshal := json.Unmarshal(reader, &result)
-	if errUnmarshal != nil {
-		return nil, errUnmarshal
-	}
-	return result, nil
-}
-
-func (tableConfig *TableConfig) ParseAwsConfig(configInterface interface{}) {
-	config := configInterface.(map[string]interface{})
-	if value, ok := config["regionAttribute"]; ok {
-		tableConfig.Aws.RegionAttribute = GetStringValue(value)
-	}
-	if value, ok := config["regionCodeAttribute"]; ok {
-		tableConfig.Aws.RegionCodeAttribute = GetStringValue(value)
-	}
-	if value, ok := config["accountIdAttribute"]; ok {
-		tableConfig.Aws.AccountIdAttribute = GetStringValue(value)
-	}
-}
-
-func (tableConfig *TableConfig) ParseGcpConfig(configInterface interface{}) {
-	config := configInterface.(map[string]interface{})
-	if value, ok := config["zones"]; ok {
-		tableConfig.Gcp.Zones = make([]string, 0)
-		zoneInfcs := value.([]interface{})
-		for _, zn := range zoneInfcs {
-			tableConfig.Gcp.Zones = append(tableConfig.Gcp.Zones, zn.(string))
-		}
-	}
-	if value, ok := config["projectIdAttribute"]; ok {
-		tableConfig.Gcp.ProjectIdAttribute = GetStringValue(value)
-	}
-	if value, ok := config["zoneAttribute"]; ok {
-		tableConfig.Gcp.ZoneAttribute = GetStringValue(value)
-	}
-
-}
-
-func (tableConfig *TableConfig) ParseAttributeConfigs(configInterface interface{}) {
+func (tableConfig *TableConfig) InitParsedAttributeConfigMap() {
 	tableConfig.parsedAttributeConfigMap = make(map[string]ParsedAttributeConfig)
-	configArr := configInterface.([]interface{})
-	for _, attrConfigInterface := range configArr {
-		attrConfig := attrConfigInterface.(map[string]interface{})
-		parsedAttrConfig := ParsedAttributeConfig{}
-		if value, ok := attrConfig["sourceName"]; ok {
-			parsedAttrConfig.SourceName = GetStringValue(value)
-		} else {
-			// Error
-			continue
-		}
-		if value, ok := attrConfig["targetName"]; ok {
-			parsedAttrConfig.TargetName = GetStringValue(value)
-		} else {
-			// Error
-			continue
-		}
-		if value, ok := attrConfig["targetType"]; ok {
-			parsedAttrConfig.TargetType = GetStringValue(value)
-		} else {
-			// Error
-			continue
-		}
-		if value, ok := attrConfig["enabled"]; ok {
-			parsedAttrConfig.Enabled = GetBooleanValue(value)
-		} else {
-			// Error
-			continue
-		}
-		if parsedAttrConfig.Enabled {
-			level := strings.Count(parsedAttrConfig.SourceName, "_")
+	for _, attr := range tableConfig.ParsedAttributes {
+		if attr.Enabled {
+			level := strings.Count(attr.SourceName, "_")
 			if level > tableConfig.MaxLevel {
 				tableConfig.MaxLevel = level
-				//fmt.Printf("MaxLevel for is %d\n", level)
 			}
 		}
-		tableConfig.parsedAttributeConfigMap[parsedAttrConfig.SourceName] = parsedAttrConfig
+		tableConfig.parsedAttributeConfigMap[attr.SourceName] = attr
 	}
-}
-
-func (tableConfig *TableConfig) Init(config map[string]interface{}) error {
-	if value, ok := config["maxLevel"]; ok {
-		tableConfig.MaxLevel = GetIntegerValue(value)
-	}
-	if value, ok := config["aws"]; ok {
-		tableConfig.ParseAwsConfig(value)
-	}
-	if value, ok := config["gcp"]; ok {
-		tableConfig.ParseGcpConfig(value)
-	}
-	if value, ok := config["parsedAttributes"]; ok {
-		tableConfig.ParseAttributeConfigs(value)
-	}
-	return nil
 }
 
 func (tableConfig *TableConfig) GetAttributeConfig(attrName string) *ParsedAttributeConfig {
