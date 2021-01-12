@@ -39,20 +39,15 @@ func readTableConfig(filePath string) error {
 	if err != nil {
 		return err
 	}
-	var configurations map[string]interface{}
+	var configurations map[string]utilities.TableConfig
 	errUnmarshal := json.Unmarshal(reader, &configurations)
 	if errUnmarshal != nil {
 		return errUnmarshal
 	}
 	for tableName, config := range configurations {
 		fmt.Println("Found configuration for table:" + tableName)
-		configAsMap := config.(map[string]interface{})
-		tableConfig := utilities.TableConfig{}
-		tableConfig.Init(configAsMap)
-		//fmt.Printf("OrigTableConfig:%v\n", tableConfig)
-		//fmt.Printf("OrigTableConfigMap:%v\n", configAsMap)
-		utilities.TableConfigurationMap[tableName] = &tableConfig
-
+		config.InitParsedAttributeConfigMap()
+		utilities.TableConfigurationMap[tableName] = &config
 		//fmt.Printf("So far Read config for %d tables\n", len(utilities.TableConfigurationMap))
 	}
 	return nil
@@ -74,7 +69,7 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_subnet", ec2.DescribeSubnetsColumns(), ec2.DescribeSubnetsGenerate))
-    server.RegisterPlugin(table.NewPlugin("aws_ec2_image", ec2.DescribeImagesColumns(), ec2.DescribeImagesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_ec2_image", ec2.DescribeImagesColumns(), ec2.DescribeImagesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_s3_bucket", s3.ListBucketsColumns(), s3.ListBucketsGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", compute.GcpComputeInstanceColumns(), compute.GcpComputeInstanceGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", compute.GcpComputeNetworkColumns(), compute.GcpComputeNetworkGenerate))
