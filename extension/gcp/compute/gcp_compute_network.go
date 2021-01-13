@@ -88,6 +88,9 @@ func processAccountGcpComputeNetwork(ctx context.Context,
 	resultMap := make([]map[string]string, 0)
 
 	service, projectID := getGcpComputeNetworkNewServiceForAccount(ctx, account)
+	if service == nil {
+		return resultMap, fmt.Errorf("failed to initialize compute.Service")
+	}
 	myApiService := compute.NewNetworksService(service)
 	if myApiService == nil {
 		fmt.Println("compute.NewNetworksService() returned nil")

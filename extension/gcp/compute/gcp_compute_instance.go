@@ -130,6 +130,9 @@ func processAccountGcpComputeInstance(ctx context.Context,
 	resultMap := make([]map[string]string, 0)
 
 	service, projectID := getGcpComputeInstanceNewServiceForAccount(ctx, account)
+	if service == nil {
+		return resultMap, fmt.Errorf("failed to initialize compute.Service")
+	}
 	myApiService := compute.NewInstancesService(service)
 	if myApiService == nil {
 		fmt.Println("compute.NewInstancesService() returned nil")

@@ -119,6 +119,9 @@ func processAccountGcpComputeDisk(ctx context.Context,
 	resultMap := make([]map[string]string, 0)
 
 	service, projectID := getGcpComputeDiskNewServiceForAccount(ctx, account)
+	if service == nil {
+		return resultMap, fmt.Errorf("failed to initialize compute.Service")
+	}
 	myApiService := compute.NewDisksService(service)
 	if myApiService == nil {
 		fmt.Println("compute.NewDisksService() returned nil")

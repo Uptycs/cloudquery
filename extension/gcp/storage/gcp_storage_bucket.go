@@ -110,6 +110,9 @@ func processAccountGcpStorageBucket(ctx context.Context,
 	}
 
 	service, projectID := getGcpStorageBucketNewServiceForAccount(ctx, account)
+	if service == nil {
+		return resultMap, fmt.Errorf("failed to initialize storage.Client")
+	}
 	listCall := service.Buckets(ctx, projectID)
 
 	if listCall == nil {
