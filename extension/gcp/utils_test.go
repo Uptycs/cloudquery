@@ -2,6 +2,7 @@ package gcp
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/Uptycs/cloudquery/utilities"
@@ -26,6 +27,12 @@ var tableConfigJSON = `
 				"targetName": "name",
 				"targetType": "TEXT",
 				"enabled": false
+			},
+			{
+				"sourceName": "ID",
+				"targetName": "id",
+				"targetType": "INTEGER",
+				"enabled": true
 			}
 		]
 	}
@@ -34,10 +41,10 @@ var tableConfigJSON = `
 type rowToMapTestInputType struct {
 	Src string
 	Dst string
-	Val string
+	Val interface{}
 }
 
-var rowToMapTestIput = []rowToMapTestInputType{{"Description", "description", "testDesc"}, {"Name", "name", "testName"}}
+var rowToMapTestIput = []rowToMapTestInputType{{"Description", "description", "testDesc"}, {"Name", "name", "testName"}, {"ID", "id", 1234}}
 
 func getTableConfig() *utilities.TableConfig {
 	var configs map[string]utilities.TableConfig
@@ -57,7 +64,9 @@ func TestRowToMap(t *testing.T) {
 	tabConfig := getTableConfig()
 	outRow := RowToMap(inRow, "test-project", "us-east4", tabConfig)
 	for _, entry := range rowToMapTestIput {
-		if outRow[entry.Dst] != entry.Val {
+		var valStr string
+		valStr = fmt.Sprintf("%v", entry.Val)
+		if outRow[entry.Dst] != valStr {
 			t.Errorf("%+v != %+v", outRow[entry.Dst], entry.Val)
 		}
 	}

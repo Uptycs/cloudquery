@@ -56,7 +56,7 @@
       {
         "sourceName": "items_id",
         "targetName": "id",
-        "targetType": "TEXT",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -116,7 +116,7 @@
       {
         "sourceName": "items_physicalBlockSizeBytes",
         "targetName": "physical_block_size_bytes",
-        "targetType": "TEXT",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -146,7 +146,7 @@
       {
         "sourceName": "items_sizeGb",
         "targetName": "size_gb",
-        "targetType": "TEXT",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -358,7 +358,7 @@
       {
         "sourceName": "items_id",
         "targetName": "id",
-        "targetType": "TEXT",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -494,15 +494,9 @@
         "enabled": true
       },
       {
-        "sourceName": "items_scheduling_locationHint",
-        "targetName": "scheduling_location_hint",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
         "sourceName": "items_scheduling_minNodeCpus",
         "targetName": "scheduling_min_node_cpus",
-        "targetType": "INTEGER",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -593,7 +587,7 @@
         "sourceName": "items_tags",
         "targetName": "tags",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_tags_fingerprint",
@@ -623,7 +617,7 @@
     "parsedAttributes": [
       {
         "sourceName": "items_IPv4Range",
-        "targetName": "i_pv4_range",
+        "targetName": "ipv4_range",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -647,14 +641,14 @@
       },
       {
         "sourceName": "items_gatewayIPv4",
-        "targetName": "gateway_i_pv4",
+        "targetName": "gateway_ipv4",
         "targetType": "TEXT",
         "enabled": true
       },
       {
         "sourceName": "items_id",
         "targetName": "id",
-        "targetType": "TEXT",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
@@ -666,7 +660,7 @@
       {
         "sourceName": "items_mtu",
         "targetName": "mtu",
-        "targetType": "INTEGER",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {

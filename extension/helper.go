@@ -39,7 +39,7 @@ func readTableConfig(filePath string) error {
 	if err != nil {
 		return err
 	}
-	var configurations map[string]utilities.TableConfig
+	var configurations map[string]*utilities.TableConfig
 	errUnmarshal := json.Unmarshal(reader, &configurations)
 	if errUnmarshal != nil {
 		return errUnmarshal
@@ -47,7 +47,7 @@ func readTableConfig(filePath string) error {
 	for tableName, config := range configurations {
 		fmt.Println("Found configuration for table:" + tableName)
 		config.InitParsedAttributeConfigMap()
-		utilities.TableConfigurationMap[tableName] = &config
+		utilities.TableConfigurationMap[tableName] = config
 		//fmt.Printf("So far Read config for %d tables\n", len(utilities.TableConfigurationMap))
 	}
 	return nil
