@@ -18,6 +18,27 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+func readProjectIDFromCredentialFile(filePath string) string {
+	reader, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		fmt.Printf("error reading %s. err:%s\n", filePath, err.Error())
+		return ""
+	}
+	var jsonObj map[string]interface{}
+	errUnmarshal := json.Unmarshal(reader, &jsonObj)
+	if errUnmarshal != nil {
+		fmt.Printf("error unmarshaling json in %s. err:%s\n", filePath, errUnmarshal.Error())
+		return ""
+	}
+
+	if idIntfc, found := jsonObj["project_id"]; found {
+		return idIntfc.(string)
+	}
+
+	fmt.Printf("cannot find \"project_id\" property in file %s. \n", filePath)
+	return ""
+}
+
 func readExtensionConfigurations(filePath string) error {
 	utilities.AwsAccountId = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
@@ -31,6 +52,30 @@ func readExtensionConfigurations(filePath string) error {
 	}
 	//fmt.Printf("Config:%v\n", extConfig)
 	utilities.ExtConfiguration = extConfig
+
+	// Set projectID for GCP accounts
+	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
+		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
+		projectID := readProjectIDFromCredentialFile(keyFilePath)
+		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectId = projectID
+	}
+
+	// Read project ID from ADC
+	adcFilePath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
+	if adcFilePath != "" {
+		utilities.DefaultGcpProjectID = readProjectIDFromCredentialFile(adcFilePath)
+	}
+
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
+		if adcFilePath == "" {
+			fmt.Println("missing env GOOGLE_APPLICATION_CREDENTIALS")
+		} else if utilities.DefaultGcpProjectID == "" {
+			fmt.Println("missing Default Project ID for GCP")
+		} else {
+			fmt.Printf("Gcp accounts not found in extension_config. Falling back to ADC\n")
+		}
+	}
+
 	return nil
 }
 

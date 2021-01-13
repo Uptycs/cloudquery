@@ -63,58 +63,66 @@ func GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryCo
 
 	resultMap := make([]map[string]string, 0)
 
-	for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-		results, err := processAccountGcpStorageBucket(ctx, &account)
-		if err != nil {
-			// TODO: Continue to next account or return error ?
-			continue
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
+		results, err := processAccountGcpStorageBucket(ctx, nil)
+		if err == nil {
+			resultMap = append(resultMap, results...)
 		}
-		resultMap = append(resultMap, results...)
+	} else {
+		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
+			results, err := processAccountGcpStorageBucket(ctx, &account)
+			if err != nil {
+				// TODO: Continue to next account or return error ?
+				continue
+			}
+			resultMap = append(resultMap, results...)
+		}
 	}
 	return resultMap, nil
 }
 
-// TODO: Remove this
-var acl = []storage.ACLRule{{Domain: "Test"}}
-var cors = []storage.CORS{{Origins: []string{"origin1"}}}
-var lables map[string]string = map[string]string{"labelKey": "labelVal"}
-var sample1 = storage.BucketAttrs{Name: "Test1", Location: "TestLocation1", ACL: acl, CORS: cors}
-var sample2 = storage.BucketAttrs{Name: "Test2", Location: "TestLocation2", Labels: lables}
+func getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*storage.Client, string) {
+	var projectID = ""
+	var service *storage.Client
+	var err error
+	if account != nil {
+		projectID = account.ProjectId
+		service, err = storage.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else {
+		projectID = utilities.DefaultGcpProjectID
+		service, err = storage.NewClient(ctx)
+	}
+	if err != nil {
+		fmt.Println("NewClient() error: ", err)
+		return nil, ""
+	}
+	return service, projectID
+}
 
 func processAccountGcpStorageBucket(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
-
 	resultMap := make([]map[string]string, 0)
-
-	service, err := storage.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
-	if err != nil {
-		fmt.Println("storage.NewClient() error: ", err)
-		return resultMap, err
-	}
 
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_storage_bucket"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
+		fmt.Println("getTableConfig failed for gcp_storage_bucket")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 
-	listCall := service.Buckets(ctx, account.ProjectId)
+	service, projectID := getGcpStorageBucketNewServiceForAccount(ctx, account)
+	listCall := service.Buckets(ctx, projectID)
 
 	if listCall == nil {
 		fmt.Println("listCall is nil")
 		return resultMap, nil
 	}
-	p := iterator.NewPager(listCall, 10, "") // TODO:: fix me
+	p := iterator.NewPager(listCall, 10, "")
 	for {
 		var container = ItemsContainer{}
 		pageToken, err := p.NextPage(&container.Items)
 		if err != nil {
 			fmt.Println("NextPage() error: ", err)
 			return resultMap, err
-		}
-		if len(container.Items) == 0 { // TODO: remove it
-			container.Items = append(container.Items, &sample1)
-			container.Items = append(container.Items, &sample2)
 		}
 
 		byteArr, err := json.Marshal(&container)
@@ -126,7 +134,7 @@ func processAccountGcpStorageBucket(ctx context.Context,
 		jsonTable := utilities.Table{}
 		jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
 		for _, row := range jsonTable.Rows {
-			result := extgcp.RowToMap(row, account.ProjectId, "", tableConfig)
+			result := extgcp.RowToMap(row, projectID, "", tableConfig)
 			resultMap = append(resultMap, result)
 		}
 

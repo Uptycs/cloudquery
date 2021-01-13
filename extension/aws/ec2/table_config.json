@@ -5,6 +5,7 @@
       "accountIdAttribute": "account_id"
     },
     "gcp": {},
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "Images_Architecture",
@@ -278,6 +279,7 @@
       "accountIdAttribute": "account_id"
     },
     "gcp": {},
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "Reservations_Groups",
@@ -1127,6 +1129,7 @@
       "accountIdAttribute": "account_id"
     },
     "gcp": {},
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "Subnets_DefaultForAz",
@@ -1280,6 +1283,7 @@
       "accountIdAttribute": "account_id"
     },
     "gcp": {},
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "Vpcs_OwnerId",

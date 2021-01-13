@@ -46,15 +46,40 @@ func GcpComputeNetworkGenerate(osqCtx context.Context, queryContext table.QueryC
 
 	resultMap := make([]map[string]string, 0)
 
-	for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-		results, err := processAccountGcpComputeNetwork(ctx, &account)
-		if err != nil {
-			// TODO: Continue to next account or return error ?
-			continue
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
+		results, err := processAccountGcpComputeNetwork(ctx, nil)
+		if err == nil {
+			resultMap = append(resultMap, results...)
 		}
-		resultMap = append(resultMap, results...)
+	} else {
+		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
+			results, err := processAccountGcpComputeNetwork(ctx, &account)
+			if err != nil {
+				// TODO: Continue to next account or return error ?
+				continue
+			}
+			resultMap = append(resultMap, results...)
+		}
 	}
 	return resultMap, nil
+}
+
+func getGcpComputeNetworkNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
+	var projectID = ""
+	var service *compute.Service
+	var err error
+	if account != nil {
+		projectID = account.ProjectId
+		service, err = compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else {
+		projectID = utilities.DefaultGcpProjectID
+		service, err = compute.NewService(ctx)
+	}
+	if err != nil {
+		fmt.Println("NewService() error: ", err)
+		return nil, ""
+	}
+	return service, projectID
 }
 
 func processAccountGcpComputeNetwork(ctx context.Context,
@@ -62,18 +87,14 @@ func processAccountGcpComputeNetwork(ctx context.Context,
 
 	resultMap := make([]map[string]string, 0)
 
-	service, err := compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	if err != nil {
-		fmt.Println("NewService() error: ", err)
-		return resultMap, err
-	}
+	service, projectID := getGcpComputeNetworkNewServiceForAccount(ctx, account)
 	myApiService := compute.NewNetworksService(service)
 	if myApiService == nil {
 		fmt.Println("compute.NewNetworksService() returned nil")
 		return resultMap, fmt.Errorf("compute.NewNetworksService() returned nil")
 	}
 
-	aggListCall := myApiService.List(account.ProjectId)
+	aggListCall := myApiService.List(projectID)
 	if aggListCall == nil {
 		fmt.Println("aggListCall is nil")
 		return resultMap, nil
@@ -103,7 +124,7 @@ func processAccountGcpComputeNetwork(ctx context.Context,
 	jsonTable := utilities.Table{}
 	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
 	for _, row := range jsonTable.Rows {
-		result := extgcp.RowToMap(row, account.ProjectId, "", tableConfig)
+		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}
 
