@@ -1132,60 +1132,6 @@
     "azure": {},
     "parsedAttributes": [
       {
-        "sourceName": "Subnets_DefaultForAz",
-        "targetName": "default_for_az",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_MapCustomerOwnedIpOnLaunch",
-        "targetName": "map_customer_owned_ip_on_launch",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_CustomerOwnedIpv4Pool",
-        "targetName": "customer_owned_ipv4_pool",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_VpcId",
-        "targetName": "vpc_id",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_OwnerId",
-        "targetName": "owner_id",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_Tags",
-        "targetName": "tags",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_Tags_Key",
-        "targetName": "tags_key",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Subnets_Tags_Value",
-        "targetName": "tags_value",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Subnets_CidrBlock",
-        "targetName": "cidr_block",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
         "sourceName": "Subnets_AssignIpv6AddressOnCreation",
         "targetName": "assign_ipv6_address_on_creation",
         "targetType": "TEXT",
@@ -1198,38 +1144,32 @@
         "enabled": true
       },
       {
-        "sourceName": "Subnets_MapPublicIpOnLaunch",
-        "targetName": "map_public_ip_on_launch",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_SubnetId",
-        "targetName": "subnet_id",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Subnets_SubnetArn",
-        "targetName": "subnet_arn",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
         "sourceName": "Subnets_AvailabilityZoneId",
         "targetName": "availability_zone_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Subnets_AvailableIpAddressCount",
         "targetName": "available_ip_address_count",
-        "targetType": "INTEGER",
+        "targetType": "BIGINT",
         "enabled": true
       },
       {
-        "sourceName": "Subnets_State",
-        "targetName": "state",
+        "sourceName": "Subnets_CidrBlock",
+        "targetName": "cidr_block",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_CustomerOwnedIpv4Pool",
+        "targetName": "customer_owned_ipv4_pool",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_DefaultForAz",
+        "targetName": "default_for_az",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -1270,8 +1210,68 @@
         "enabled": false
       },
       {
+        "sourceName": "Subnets_MapCustomerOwnedIpOnLaunch",
+        "targetName": "map_customer_owned_ip_on_launch",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_MapPublicIpOnLaunch",
+        "targetName": "map_public_ip_on_launch",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
         "sourceName": "Subnets_OutpostArn",
         "targetName": "outpost_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_OwnerId",
+        "targetName": "owner_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_SubnetArn",
+        "targetName": "subnet_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_SubnetId",
+        "targetName": "subnet_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Subnets_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Subnets_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Subnets_VpcId",
+        "targetName": "vpc_id",
         "targetType": "TEXT",
         "enabled": true
       }
@@ -1286,8 +1286,8 @@
     "azure": {},
     "parsedAttributes": [
       {
-        "sourceName": "Vpcs_OwnerId",
-        "targetName": "owner_id",
+        "sourceName": "Vpcs_CidrBlock",
+        "targetName": "cidr_block",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -1328,10 +1328,28 @@
         "enabled": false
       },
       {
+        "sourceName": "Vpcs_DhcpOptionsId",
+        "targetName": "dhcp_options_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Vpcs_InstanceTenancy",
+        "targetName": "instance_tenancy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
         "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet",
         "targetName": "ipv6_cidr_block_association_set",
         "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_AssociationId",
+        "targetName": "ipv6_cidr_block_association_set_association_id",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_Ipv6CidrBlock",
@@ -1358,20 +1376,14 @@
         "enabled": false
       },
       {
-        "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_NetworkBorderGroup",
-        "targetName": "ipv6_cidr_block_association_set_network_border_group",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
         "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_Ipv6Pool",
         "targetName": "ipv6_cidr_block_association_set_ipv6_pool",
         "targetType": "TEXT",
         "enabled": false
       },
       {
-        "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_AssociationId",
-        "targetName": "ipv6_cidr_block_association_set_association_id",
+        "sourceName": "Vpcs_Ipv6CidrBlockAssociationSet_NetworkBorderGroup",
+        "targetName": "ipv6_cidr_block_association_set_network_border_group",
         "targetType": "TEXT",
         "enabled": false
       },
@@ -1382,32 +1394,8 @@
         "enabled": true
       },
       {
-        "sourceName": "Vpcs_Tags",
-        "targetName": "tags",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Vpcs_Tags_Value",
-        "targetName": "tags_value",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Vpcs_Tags_Key",
-        "targetName": "tags_key",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Vpcs_CidrBlock",
-        "targetName": "cidr_block",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Vpcs_DhcpOptionsId",
-        "targetName": "dhcp_options_id",
+        "sourceName": "Vpcs_OwnerId",
+        "targetName": "owner_id",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -1418,14 +1406,26 @@
         "enabled": true
       },
       {
-        "sourceName": "Vpcs_VpcId",
-        "targetName": "vpc_id",
+        "sourceName": "Vpcs_Tags",
+        "targetName": "tags",
         "targetType": "TEXT",
         "enabled": true
       },
       {
-        "sourceName": "Vpcs_InstanceTenancy",
-        "targetName": "instance_tenancy",
+        "sourceName": "Vpcs_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Vpcs_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Vpcs_VpcId",
+        "targetName": "vpc_id",
         "targetType": "TEXT",
         "enabled": true
       }

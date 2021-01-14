@@ -83,5 +83,6 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", compute.GcpComputeNetworkColumns(), compute.GcpComputeNetworkGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_disk", compute.GcpComputeDiskColumns(), compute.GcpComputeDiskGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", storage.GcpStorageBucketColumns(), storage.GcpStorageBucketGenerate))
-	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.ComputeVmColumns(), azurecompute.ComputeVmGenerate))
+	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
+    server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
 }
