@@ -23,6 +23,12 @@ type GcpConfig struct {
 	Zones              []string `json:"zones"`
 }
 
+type AzureConfig struct {
+	SubscriptionIdAttribute string `json:"subscriptionIdAttribute,omitempty"`
+	TenantIdAttribute       string `json:"tenantIdAttribute,omitempty"`
+	ResourceGroupAttribute  string `json:"resourceGroupAttribute,omitempty"`
+}
+
 type TableConfig struct {
 	Imports          []string                `json:"imports"`
 	MaxLevel         int                     `json:"maxLevel"`
@@ -31,6 +37,7 @@ type TableConfig struct {
 	TemplateFile     string                  `json:"templateFile"`
 	Aws              AwsConfig               `json:"aws"`
 	Gcp              GcpConfig               `json:"gcp"`
+	Azure            AzureConfig             `json:"azure"`
 	ParsedAttributes []ParsedAttributeConfig `json:"parsedAttributes"`
 
 	parsedAttributeConfigMap map[string]ParsedAttributeConfig

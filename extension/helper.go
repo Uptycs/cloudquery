@@ -11,6 +11,7 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
+	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
@@ -98,11 +99,13 @@ func readTableConfig(filePath string) error {
 	return nil
 }
 
-var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json"}
-var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json"}
-var configFileList = append(awsConfigFileList, gcpConfigFileList...)
-
 func readTableConfigurations() {
+	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json"}
+	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json"}
+	var azureConfigFileList = []string{"azure/compute/table_config.json"}
+	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
+	configFileList = append(configFileList, azureConfigFileList...)
+
 	for _, fileName := range configFileList {
 		fmt.Println("Reading config file:" + *homeDirectory + string(os.PathSeparator) + fileName)
 		readTableConfig(*homeDirectory + string(os.PathSeparator) + fileName)
@@ -120,4 +123,6 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", compute.GcpComputeNetworkColumns(), compute.GcpComputeNetworkGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_disk", compute.GcpComputeDiskColumns(), compute.GcpComputeDiskGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", storage.GcpStorageBucketColumns(), storage.GcpStorageBucketGenerate))
+	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
+    server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
 }
