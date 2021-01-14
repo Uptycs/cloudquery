@@ -14,7 +14,7 @@ type ExtensionConfigurationAws struct {
 
 type ExtensionConfigurationGcpAccount struct {
 	KeyFile   string `json:"keyFile"`
-	ProjectId string `json:"projectId"`
+	ProjectId string `json:"-"`
 }
 
 type ExtensionConfigurationGcp struct {

@@ -88,15 +88,40 @@ func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.Query
 
 	resultMap := make([]map[string]string, 0)
 
-	for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-		results, err := processAccountGcpComputeInstance(ctx, &account)
-		if err != nil {
-			// TODO: Continue to next account or return error ?
-			continue
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
+		results, err := processAccountGcpComputeInstance(ctx, nil)
+		if err == nil {
+			resultMap = append(resultMap, results...)
 		}
-		resultMap = append(resultMap, results...)
+	} else {
+		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
+			results, err := processAccountGcpComputeInstance(ctx, &account)
+			if err != nil {
+				// TODO: Continue to next account or return error ?
+				continue
+			}
+			resultMap = append(resultMap, results...)
+		}
 	}
 	return resultMap, nil
+}
+
+func getGcpComputeInstanceNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
+	var projectID = ""
+	var service *compute.Service
+	var err error
+	if account != nil {
+		projectID = account.ProjectId
+		service, err = compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else {
+		projectID = utilities.DefaultGcpProjectID
+		service, err = compute.NewService(ctx)
+	}
+	if err != nil {
+		fmt.Println("NewService() error: ", err)
+		return nil, ""
+	}
+	return service, projectID
 }
 
 func processAccountGcpComputeInstance(ctx context.Context,
@@ -104,10 +129,9 @@ func processAccountGcpComputeInstance(ctx context.Context,
 
 	resultMap := make([]map[string]string, 0)
 
-	service, err := compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	if err != nil {
-		fmt.Println("NewService() error: ", err)
-		return resultMap, err
+	service, projectID := getGcpComputeInstanceNewServiceForAccount(ctx, account)
+	if service == nil {
+		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
 	myApiService := compute.NewInstancesService(service)
 	if myApiService == nil {
@@ -115,7 +139,7 @@ func processAccountGcpComputeInstance(ctx context.Context,
 		return resultMap, fmt.Errorf("compute.NewInstancesService() returned nil")
 	}
 
-	aggListCall := myApiService.AggregatedList(account.ProjectId)
+	aggListCall := myApiService.AggregatedList(projectID)
 	if aggListCall == nil {
 		fmt.Println("aggListCall is nil")
 		return resultMap, nil
@@ -151,7 +175,7 @@ func processAccountGcpComputeInstance(ctx context.Context,
 	jsonTable := utilities.Table{}
 	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
 	for _, row := range jsonTable.Rows {
-		result := extgcp.RowToMap(row, account.ProjectId, "", tableConfig)
+		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}
 

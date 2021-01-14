@@ -4,6 +4,7 @@
     "gcp": {
       "projectIdAttribute": "project_id"
     },
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "items_creationTimestamp",
@@ -276,6 +277,7 @@
     "gcp": {
       "projectIdAttribute": "project_id"
     },
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "items_canIpForward",
@@ -614,6 +616,7 @@
     "gcp": {
       "projectIdAttribute": "project_id"
     },
+    "azure": {},
     "parsedAttributes": [
       {
         "sourceName": "items_IPv4Range",
