@@ -19,7 +19,7 @@ your cloud accounts. You can add multiple accounts for each cloud provider
 #### With osqueryi
 - Start osqueryi  
 `osqueryi  --nodisable_extensions`
-- Note down the socket path
+- Note down the socket path  
 `.socket`
 - Start extension  
 `./bin/extension --socket /path/to/socket --home-directory /home/user/work/code/cloudquery/extension`
