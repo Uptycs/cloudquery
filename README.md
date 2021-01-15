@@ -7,13 +7,14 @@ one can add support for new tables easily, and configurable so that one can chan
 
 ### Build
 - Checkout the code  
+- Install prerequisites  
+  - `go 1.13`
 - Set environment varibale for extension home (it shoud be path-to-repo/cloudquery/extension)  
 `export CLOUDQUERY_EXT_HOME=/home/user/work/code/cloudquery/extension`  
-- Copy extension/extension_config.json.sample as CLOUDQUERY_EXT_HOME/extension_config.json and add configurations for  
-your cloud accounts. You can add multiple accounts for each cloud provider  
-- `make`  
-- To install at default osquery directory (/etc/osquery/), run:  
-`make install`  
+- Build extension binary.  
+  `make`  
+- To install at default osquery directory (`/etc/osquery/`), run:  
+  `make install`  
 
 ### Test
 #### With osqueryi
@@ -21,23 +22,28 @@ your cloud accounts. You can add multiple accounts for each cloud provider
 `osqueryi  --nodisable_extensions`
 - Note down the socket path  
 `.socket`
+- `cp ${CLOUDQUERY_EXT_HOME}/extension_config.json.sample ${CLOUDQUERY_EXT_HOME}/extension_config.json`
+- Edit `${CLOUDQUERY_EXT_HOME}/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider  
 - Start extension  
-`./bin/extension --socket /path/to/socket --home-directory /home/user/work/code/cloudquery/extension`
+`./bin/extension --socket /path/to/socket --home-directory ${CLOUDQUERY_EXT_HOME}`
 - Query data  
 `select account_id, region_code,image_id,image_type from aws_ec2_image;`
 
 #### With osquery
 - Build and install cloudquery  
-- Create a file /etc/osquery/extensions.load and add following line to it:  
+- Edit (or create if does't exist) file `/etc/osquery/extensions.load` and add the following line:  
 - `/etc/osquery/cloudquery.ext`  
-- Add following lines to /etc/osquery/osquery.flags  
+- Add following lines to `/etc/osquery/osquery.flags`  
 `--disable_extensions=false`  
 `--extensions_autoload=/etc/osquery/extensions.load`  
 `--extensions_timeout=3`  
 `--extensions_interval=3`  
-- Copy extension/extension_config.json.sample as /etc/osquery/cloudquery/extension_config.json and add configurations for  
-your cloud accounts. You can add multiple accounts for each cloud provider  
-- Restart osquery service. `sudo service osqueryd restart`  
+- Copy extension config file to `/etc/osquery/cloudquery`  
+  - `sudo cp ${CLOUDQUERY_EXT_HOME}/extension_config.json.sample /etc/osquery/cloudquery/extension_config.json`   
+- Edit `/etc/osquery/cloudquery/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider  
+  - `sudo vi /etc/osquery/cloudquery/extension_config.json`
+- Restart osquery service.  
+  - `sudo service osqueryd restart`  
 
 ### Supported tables
 #### AWS
