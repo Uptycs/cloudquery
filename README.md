@@ -26,6 +26,11 @@ your cloud accounts. You can add multiple accounts for each cloud provider
 - Build and install cloudquery
 - Create a file /etc/osquery/extensions.load and add following line to it:
 - `/etc/osquery/cloudquery.ext`
+- Add following lines to /etc/osquery/osquery.flags
+`--disable_extensions=false
+--extensions_autoload=/etc/osquery/extensions.load
+--extensions_timeout=3
+--extensions_interval=3`
 - Copy extension/extension_config.json.sample as /etc/osquery/cloudquery/extension_config.json and add configurations for
 your cloud accounts. You can add multiple accounts for each cloud provider
 - Restart osquery service. `sudo service osqueryd restart`
