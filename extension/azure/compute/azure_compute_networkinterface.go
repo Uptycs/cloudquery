@@ -95,7 +95,7 @@ func processAccountInterfaces(account *utilities.ExtensionConfigurationAzureAcco
 
 	wg.Add(len(groups))
 
-	tableConfig, ok := utilities.TableConfigurationMap["azure_compute_networkinterfaces"]
+	tableConfig, ok := utilities.TableConfigurationMap["azure_compute_networkinterface"]
 	if !ok {
 		fmt.Println("getTableConfig: ", err)
 		log.Fatal(err)

@@ -1,5 +1,5 @@
 {
-  "azure_compute_networkinterfaces": {
+  "azure_compute_networkinterface": {
     "aws": {},
     "gcp": {},
     "azure": {
