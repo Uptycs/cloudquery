@@ -12,7 +12,6 @@ import (
 	"google.golang.org/api/option"
 
 	storage "cloud.google.com/go/storage"
-	iterator "google.golang.org/api/iterator"
 )
 
 type ItemsContainer struct {
@@ -56,7 +55,7 @@ func GcpStorageBucketColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -64,13 +63,13 @@ func GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryCo
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpStorageBucket(ctx, nil)
+		results, err := handler.processAccountGcpStorageBucket(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpStorageBucket(ctx, &account)
+			results, err := handler.processAccountGcpStorageBucket(ctx, &account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
 				continue
@@ -81,16 +80,16 @@ func GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryCo
 	return resultMap, nil
 }
 
-func getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*storage.Client, string) {
+func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*storage.Client, string) {
 	var projectID = ""
 	var service *storage.Client
 	var err error
 	if account != nil {
 		projectID = account.ProjectId
-		service, err = storage.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
+		service, err = handler.svcInterface.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
-		service, err = storage.NewClient(ctx)
+		service, err = handler.svcInterface.NewClient(ctx)
 	}
 	if err != nil {
 		fmt.Println("NewClient() error: ", err)
@@ -99,7 +98,7 @@ func getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utili
 	return service, projectID
 }
 
-func processAccountGcpStorageBucket(ctx context.Context,
+func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 
@@ -109,17 +108,17 @@ func processAccountGcpStorageBucket(ctx context.Context,
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 
-	service, projectID := getGcpStorageBucketNewServiceForAccount(ctx, account)
+	service, projectID := handler.getGcpStorageBucketNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize storage.Client")
 	}
-	listCall := service.Buckets(ctx, projectID)
+	listCall := handler.svcInterface.Buckets(ctx, service, projectID)
 
 	if listCall == nil {
 		fmt.Println("listCall is nil")
 		return resultMap, nil
 	}
-	p := iterator.NewPager(listCall, 10, "")
+	p := handler.svcInterface.BucketsNewPager(listCall, 10, "")
 	for {
 		var container = ItemsContainer{}
 		pageToken, err := p.NextPage(&container.Items)
