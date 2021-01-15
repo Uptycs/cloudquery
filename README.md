@@ -8,7 +8,7 @@ one can add support for new tables easily, and configurable so that one can chan
 ### Build
 - Checkout the code  
 - Set environment varibale for extension home (it shoud be path-to-repo/cloudquery/extension)  
-`export CLOUDQUERY_EXT_HOME=/home/apatil/work/code/cloudquery/extension`  
+`export CLOUDQUERY_EXT_HOME=/home/user/work/code/cloudquery/extension`  
 - Copy extension/extension_config.json.sample as CLOUDQUERY_EXT_HOME/extension_config.json and add configurations for  
 your cloud accounts. You can add multiple accounts for each cloud provider  
 - `make`  
@@ -19,8 +19,10 @@ your cloud accounts. You can add multiple accounts for each cloud provider
 #### With osqueryi
 - Start osqueryi  
 `osqueryi  --nodisable_extensions`
+- Note down the socket path
+`.socket`
 - Start extension  
-`./bin/extension --socket /home/xyz/.osquery/shell.em`
+`./bin/extension --socket /path/to/socket --home-directory /home/user/work/code/cloudquery/extension`
 - Query data  
 `select account_id, region_code,image_id,image_type from aws_ec2_image;`
 
