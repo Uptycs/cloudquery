@@ -23,7 +23,12 @@ func main() {
 	}
 
 	if *homeDirectory == "" {
-		log.Fatalln("Missing required --home-directory argument")
+		// read from environment
+		homeDir := os.Getenv("CLOUDQUERY_EXT_HOME")
+		if homeDir == "" {
+			log.Fatalln("home-directory is not set.")
+		}
+		homeDirectory = &homeDir
 	}
 
 	serverTimeout := osquery.ServerTimeout(
