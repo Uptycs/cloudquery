@@ -4,6 +4,7 @@ EXTENSION-DIR=extension
 
 build: extension
 extension: $(shell find . -type f)
+	mkdir -p ${BIN-DIR}
 	go build -o ${BIN-DIR} ./${EXTENSION-DIR}
 install:
 	mkdir -p /etc/osquery/cloudquery/aws/ec2
