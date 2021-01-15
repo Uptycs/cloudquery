@@ -11,6 +11,7 @@ import (
 
 var (
 	socket        = flag.String("socket", "", "Path to the extensions UNIX domain socket")
+	verbose       = flag.Bool("verbose", false, "Enable verbose logging")
 	homeDirectory = flag.String("home-directory", "", "Path to the extensions home directory")
 	timeout       = flag.Int("timeout", 3, "Seconds to wait for autoloaded extensions")
 	interval      = flag.Int("interval", 3, "Seconds delay between connectivity checks")
@@ -26,7 +27,8 @@ func main() {
 		// read from environment
 		homeDir := os.Getenv("CLOUDQUERY_EXT_HOME")
 		if homeDir == "" {
-			log.Fatalln("home-directory is not set.")
+			//log.Fatalln("home-directory is not set. Using default")
+			homeDir = "/etc/osquery/cloudquery"
 		}
 		homeDirectory = &homeDir
 	}
