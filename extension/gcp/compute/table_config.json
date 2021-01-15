@@ -22,7 +22,7 @@
         "sourceName": "items_diskEncryptionKey",
         "targetName": "disk_encryption_key",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_diskEncryptionKey_kmsKeyName",
@@ -53,6 +53,12 @@
         "targetName": "guest_os_features",
         "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "items_guestOsFeatures_type",
+        "targetName": "guest_os_features_type",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "items_id",
@@ -172,7 +178,7 @@
         "sourceName": "items_sourceImageEncryptionKey",
         "targetName": "source_image_encryption_key",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_sourceImageEncryptionKey_kmsKeyName",
@@ -289,13 +295,13 @@
         "sourceName": "items_confidentialInstanceConfig",
         "targetName": "confidential_instance_config",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_confidentialInstanceConfig_enableConfidentialCompute",
         "targetName": "confidential_instance_config_enable_confidential_compute",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_cpuPlatform",
@@ -328,16 +334,322 @@
         "enabled": true
       },
       {
+        "sourceName": "items_disks_autoDelete",
+        "targetName": "disks_auto_delete",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_boot",
+        "targetName": "disks_boot",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_deviceName",
+        "targetName": "disks_device_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskEncryptionKey",
+        "targetName": "disks_disk_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskEncryptionKey_kmsKeyName",
+        "targetName": "disks_disk_encryption_key_kms_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskEncryptionKey_kmsKeyServiceAccount",
+        "targetName": "disks_disk_encryption_key_kms_key_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskEncryptionKey_rawKey",
+        "targetName": "disks_disk_encryption_key_raw_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskEncryptionKey_sha256",
+        "targetName": "disks_disk_encryption_key_sha256",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_diskSizeGb",
+        "targetName": "disks_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_guestOsFeatures",
+        "targetName": "disks_guest_os_features",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_guestOsFeatures_type",
+        "targetName": "disks_guest_os_features_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_index",
+        "targetName": "disks_index",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams",
+        "targetName": "disks_initialize_params",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_description",
+        "targetName": "disks_initialize_params_description",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_diskName",
+        "targetName": "disks_initialize_params_disk_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_diskSizeGb",
+        "targetName": "disks_initialize_params_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_diskType",
+        "targetName": "disks_initialize_params_disk_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_labels",
+        "targetName": "disks_initialize_params_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_onUpdateAction",
+        "targetName": "disks_initialize_params_on_update_action",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_resourcePolicies",
+        "targetName": "disks_initialize_params_resource_policies",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImage",
+        "targetName": "disks_initialize_params_source_image",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImageEncryptionKey",
+        "targetName": "disks_initialize_params_source_image_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImageEncryptionKey_kmsKeyName",
+        "targetName": "disks_initialize_params_source_image_encryption_key_kms_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImageEncryptionKey_kmsKeyServiceAccount",
+        "targetName": "disks_initialize_params_source_image_encryption_key_kms_key_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImageEncryptionKey_rawKey",
+        "targetName": "disks_initialize_params_source_image_encryption_key_raw_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceImageEncryptionKey_sha256",
+        "targetName": "disks_initialize_params_source_image_encryption_key_sha256",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshot",
+        "targetName": "disks_initialize_params_source_snapshot",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshotEncryptionKey",
+        "targetName": "disks_initialize_params_source_snapshot_encryption_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshotEncryptionKey_kmsKeyName",
+        "targetName": "disks_initialize_params_source_snapshot_encryption_key_kms_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshotEncryptionKey_kmsKeyServiceAccount",
+        "targetName": "disks_initialize_params_source_snapshot_encryption_key_kms_key_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshotEncryptionKey_rawKey",
+        "targetName": "disks_initialize_params_source_snapshot_encryption_key_raw_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_initializeParams_sourceSnapshotEncryptionKey_sha256",
+        "targetName": "disks_initialize_params_source_snapshot_encryption_key_sha256",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_interface",
+        "targetName": "disks_interface",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_kind",
+        "targetName": "disks_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_licenses",
+        "targetName": "disks_licenses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_mode",
+        "targetName": "disks_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState",
+        "targetName": "disks_shielded_instance_initial_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbs",
+        "targetName": "disks_shielded_instance_initial_state_dbs",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbs_content",
+        "targetName": "disks_shielded_instance_initial_state_dbs_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbs_fileType",
+        "targetName": "disks_shielded_instance_initial_state_dbs_file_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbxs",
+        "targetName": "disks_shielded_instance_initial_state_dbxs",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbxs_content",
+        "targetName": "disks_shielded_instance_initial_state_dbxs_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_dbxs_fileType",
+        "targetName": "disks_shielded_instance_initial_state_dbxs_file_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_keks",
+        "targetName": "disks_shielded_instance_initial_state_keks",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_keks_content",
+        "targetName": "disks_shielded_instance_initial_state_keks_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_keks_fileType",
+        "targetName": "disks_shielded_instance_initial_state_keks_file_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_pk",
+        "targetName": "disks_shielded_instance_initial_state_pk",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_pk_content",
+        "targetName": "disks_shielded_instance_initial_state_pk_content",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_shieldedInstanceInitialState_pk_fileType",
+        "targetName": "disks_shielded_instance_initial_state_pk_file_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_source",
+        "targetName": "disks_source",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_disks_type",
+        "targetName": "disks_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
         "sourceName": "items_displayDevice",
         "targetName": "display_device",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_displayDevice_enableDisplay",
         "targetName": "display_device_enable_display",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_fingerprint",
@@ -350,6 +662,18 @@
         "targetName": "guest_accelerators",
         "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "items_guestAccelerators_acceleratorCount",
+        "targetName": "guest_accelerators_accelerator_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_guestAccelerators_acceleratorType",
+        "targetName": "guest_accelerators_accelerator_type",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "items_hostname",
@@ -409,25 +733,37 @@
         "sourceName": "items_metadata",
         "targetName": "metadata",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_metadata_fingerprint",
         "targetName": "metadata_fingerprint",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_metadata_items",
         "targetName": "metadata_items",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_items_key",
+        "targetName": "metadata_items_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_items_value",
+        "targetName": "metadata_items_value",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "items_metadata_kind",
         "targetName": "metadata_kind",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_minCpuPlatform",
@@ -448,6 +784,114 @@
         "enabled": true
       },
       {
+        "sourceName": "items_networkInterfaces_accessConfigs",
+        "targetName": "network_interfaces_access_configs",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_kind",
+        "targetName": "network_interfaces_access_configs_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_name",
+        "targetName": "network_interfaces_access_configs_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_natIP",
+        "targetName": "network_interfaces_access_configs_nat_ip",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_networkTier",
+        "targetName": "network_interfaces_access_configs_network_tier",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_publicPtrDomainName",
+        "targetName": "network_interfaces_access_configs_public_ptr_domain_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_setPublicPtr",
+        "targetName": "network_interfaces_access_configs_set_public_ptr",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_accessConfigs_type",
+        "targetName": "network_interfaces_access_configs_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_aliasIpRanges",
+        "targetName": "network_interfaces_alias_ip_ranges",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_aliasIpRanges_ipCidrRange",
+        "targetName": "network_interfaces_alias_ip_ranges_ip_cidr_range",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_aliasIpRanges_subnetworkRangeName",
+        "targetName": "network_interfaces_alias_ip_ranges_subnetwork_range_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_fingerprint",
+        "targetName": "network_interfaces_fingerprint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_ipv6Address",
+        "targetName": "network_interfaces_ipv6_address",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_kind",
+        "targetName": "network_interfaces_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_name",
+        "targetName": "network_interfaces_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_network",
+        "targetName": "network_interfaces_network",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_networkIP",
+        "targetName": "network_interfaces_network_ip",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkInterfaces_subnetwork",
+        "targetName": "network_interfaces_subnetwork",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
         "sourceName": "items_privateIpv6GoogleAccess",
         "targetName": "private_ipv6_google_access",
         "targetType": "TEXT",
@@ -457,25 +901,25 @@
         "sourceName": "items_reservationAffinity",
         "targetName": "reservation_affinity",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_reservationAffinity_consumeReservationType",
         "targetName": "reservation_affinity_consume_reservation_type",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_reservationAffinity_key",
         "targetName": "reservation_affinity_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_reservationAffinity_values",
         "targetName": "reservation_affinity_values",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_resourcePolicies",
@@ -487,37 +931,55 @@
         "sourceName": "items_scheduling",
         "targetName": "scheduling",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_scheduling_automaticRestart",
         "targetName": "scheduling_automatic_restart",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_scheduling_minNodeCpus",
         "targetName": "scheduling_min_node_cpus",
         "targetType": "BIGINT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_scheduling_nodeAffinities",
         "targetName": "scheduling_node_affinities",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
+      },
+      {
+        "sourceName": "items_scheduling_nodeAffinities_key",
+        "targetName": "scheduling_node_affinities_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_scheduling_nodeAffinities_operator",
+        "targetName": "scheduling_node_affinities_operator",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_scheduling_nodeAffinities_values",
+        "targetName": "scheduling_node_affinities_values",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "items_scheduling_onHostMaintenance",
         "targetName": "scheduling_on_host_maintenance",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_scheduling_preemptible",
         "targetName": "scheduling_preemptible",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_selfLink",
@@ -532,6 +994,18 @@
         "enabled": true
       },
       {
+        "sourceName": "items_serviceAccounts_email",
+        "targetName": "service_accounts_email",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serviceAccounts_scopes",
+        "targetName": "service_accounts_scopes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
         "sourceName": "items_shieldedInstanceConfig",
         "targetName": "shielded_instance_config",
         "targetType": "TEXT",
@@ -541,19 +1015,19 @@
         "sourceName": "items_shieldedInstanceConfig_enableIntegrityMonitoring",
         "targetName": "shielded_instance_config_enable_integrity_monitoring",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_shieldedInstanceConfig_enableSecureBoot",
         "targetName": "shielded_instance_config_enable_secure_boot",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_shieldedInstanceConfig_enableVtpm",
         "targetName": "shielded_instance_config_enable_vtpm",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_shieldedInstanceIntegrityPolicy",
@@ -565,7 +1039,7 @@
         "sourceName": "items_shieldedInstanceIntegrityPolicy_updateAutoLearnPolicy",
         "targetName": "shielded_instance_integrity_policy_update_auto_learn_policy",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_startRestricted",
@@ -595,13 +1069,13 @@
         "sourceName": "items_tags_fingerprint",
         "targetName": "tags_fingerprint",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_tags_items",
         "targetName": "tags_items",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_zone",
@@ -679,16 +1153,82 @@
         "enabled": true
       },
       {
+        "sourceName": "items_peerings_autoCreateRoutes",
+        "targetName": "peerings_auto_create_routes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_exchangeSubnetRoutes",
+        "targetName": "peerings_exchange_subnet_routes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_exportCustomRoutes",
+        "targetName": "peerings_export_custom_routes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_exportSubnetRoutesWithPublicIp",
+        "targetName": "peerings_export_subnet_routes_with_public_ip",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_importCustomRoutes",
+        "targetName": "peerings_import_custom_routes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_importSubnetRoutesWithPublicIp",
+        "targetName": "peerings_import_subnet_routes_with_public_ip",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_name",
+        "targetName": "peerings_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_network",
+        "targetName": "peerings_network",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_peerMtu",
+        "targetName": "peerings_peer_mtu",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_state",
+        "targetName": "peerings_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_peerings_stateDetails",
+        "targetName": "peerings_state_details",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
         "sourceName": "items_routingConfig",
         "targetName": "routing_config",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_routingConfig_routingMode",
         "targetName": "routing_config_routing_mode",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_selfLink",

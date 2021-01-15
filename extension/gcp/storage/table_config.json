@@ -7,16 +7,58 @@
     "azure": {},
     "parsedAttributes": [
       {
-        "sourceName": "items_Name",
-        "targetName": "name",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
         "sourceName": "items_ACL",
         "targetName": "acl",
         "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "items_ACL_Domain",
+        "targetName": "acl_domain",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_Email",
+        "targetName": "acl_email",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_Entity",
+        "targetName": "acl_entity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_EntityID",
+        "targetName": "acl_entity_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_ProjectTeam",
+        "targetName": "acl_project_team",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_ProjectTeam_ProjectNumber",
+        "targetName": "acl_project_team_project_number",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_ProjectTeam_Team",
+        "targetName": "acl_project_team_team",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ACL_Role",
+        "targetName": "acl_role",
+        "targetType": "TEXT",
+        "enabled": false
       },
       {
         "sourceName": "items_BucketPolicyOnly",
@@ -25,8 +67,284 @@
         "enabled": true
       },
       {
-        "sourceName": "items_UniformBucketLevelAccess",
-        "targetName": "uniform_bucket_level_access",
+        "sourceName": "items_BucketPolicyOnly_Enabled",
+        "targetName": "bucket_policy_only_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime",
+        "targetName": "bucket_policy_only_locked_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_ext",
+        "targetName": "bucket_policy_only_locked_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc",
+        "targetName": "bucket_policy_only_locked_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheEnd",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheStart",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheZone",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheZone_isDST",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheZone_name",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_cacheZone_offset",
+        "targetName": "bucket_policy_only_locked_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_name",
+        "targetName": "bucket_policy_only_locked_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_tx",
+        "targetName": "bucket_policy_only_locked_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_tx_index",
+        "targetName": "bucket_policy_only_locked_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_tx_isstd",
+        "targetName": "bucket_policy_only_locked_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_tx_isutc",
+        "targetName": "bucket_policy_only_locked_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_tx_when",
+        "targetName": "bucket_policy_only_locked_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_zone",
+        "targetName": "bucket_policy_only_locked_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_zone_isDST",
+        "targetName": "bucket_policy_only_locked_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_zone_name",
+        "targetName": "bucket_policy_only_locked_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_loc_zone_offset",
+        "targetName": "bucket_policy_only_locked_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_BucketPolicyOnly_LockedTime_wall",
+        "targetName": "bucket_policy_only_locked_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_CORS",
+        "targetName": "cors",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_CORS_MaxAge",
+        "targetName": "cors_max_age",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_CORS_Methods",
+        "targetName": "cors_methods",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_CORS_Origins",
+        "targetName": "cors_origins",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_CORS_ResponseHeaders",
+        "targetName": "cors_response_headers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created",
+        "targetName": "created",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Created_ext",
+        "targetName": "created_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc",
+        "targetName": "created_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheEnd",
+        "targetName": "created_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheStart",
+        "targetName": "created_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheZone",
+        "targetName": "created_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheZone_isDST",
+        "targetName": "created_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheZone_name",
+        "targetName": "created_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_cacheZone_offset",
+        "targetName": "created_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_name",
+        "targetName": "created_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_tx",
+        "targetName": "created_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_tx_index",
+        "targetName": "created_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_tx_isstd",
+        "targetName": "created_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_tx_isutc",
+        "targetName": "created_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_tx_when",
+        "targetName": "created_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_zone",
+        "targetName": "created_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_zone_isDST",
+        "targetName": "created_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_zone_name",
+        "targetName": "created_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_loc_zone_offset",
+        "targetName": "created_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Created_wall",
+        "targetName": "created_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultEventBasedHold",
+        "targetName": "default_event_based_hold",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -37,8 +355,296 @@
         "enabled": true
       },
       {
-        "sourceName": "items_DefaultEventBasedHold",
-        "targetName": "default_event_based_hold",
+        "sourceName": "items_DefaultObjectACL_Domain",
+        "targetName": "default_object_acl_domain",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_Email",
+        "targetName": "default_object_acl_email",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_Entity",
+        "targetName": "default_object_acl_entity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_EntityID",
+        "targetName": "default_object_acl_entity_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_ProjectTeam",
+        "targetName": "default_object_acl_project_team",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_ProjectTeam_ProjectNumber",
+        "targetName": "default_object_acl_project_team_project_number",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_ProjectTeam_Team",
+        "targetName": "default_object_acl_project_team_team",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_DefaultObjectACL_Role",
+        "targetName": "default_object_acl_role",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Encryption",
+        "targetName": "encryption",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Encryption_DefaultKMSKeyName",
+        "targetName": "encryption_default_kms_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Labels",
+        "targetName": "labels",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Lifecycle",
+        "targetName": "lifecycle",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules",
+        "targetName": "lifecycle_rules",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Action",
+        "targetName": "lifecycle_rules_action",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Action_StorageClass",
+        "targetName": "lifecycle_rules_action_storage_class",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Action_Type",
+        "targetName": "lifecycle_rules_action_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition",
+        "targetName": "lifecycle_rules_condition",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_AgeInDays",
+        "targetName": "lifecycle_rules_condition_age_in_days",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore",
+        "targetName": "lifecycle_rules_condition_created_before",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_ext",
+        "targetName": "lifecycle_rules_condition_created_before_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc",
+        "targetName": "lifecycle_rules_condition_created_before_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheEnd",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheStart",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheZone",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheZone_isDST",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheZone_name",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_cacheZone_offset",
+        "targetName": "lifecycle_rules_condition_created_before_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_name",
+        "targetName": "lifecycle_rules_condition_created_before_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_tx",
+        "targetName": "lifecycle_rules_condition_created_before_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_tx_index",
+        "targetName": "lifecycle_rules_condition_created_before_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_tx_isstd",
+        "targetName": "lifecycle_rules_condition_created_before_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_tx_isutc",
+        "targetName": "lifecycle_rules_condition_created_before_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_tx_when",
+        "targetName": "lifecycle_rules_condition_created_before_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_zone",
+        "targetName": "lifecycle_rules_condition_created_before_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_zone_isDST",
+        "targetName": "lifecycle_rules_condition_created_before_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_zone_name",
+        "targetName": "lifecycle_rules_condition_created_before_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_loc_zone_offset",
+        "targetName": "lifecycle_rules_condition_created_before_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_CreatedBefore_wall",
+        "targetName": "lifecycle_rules_condition_created_before_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_Liveness",
+        "targetName": "lifecycle_rules_condition_liveness",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_MatchesStorageClasses",
+        "targetName": "lifecycle_rules_condition_matches_storage_classes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Lifecycle_Rules_Condition_NumNewerVersions",
+        "targetName": "lifecycle_rules_condition_num_newer_versions",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Location",
+        "targetName": "location",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_LocationType",
+        "targetName": "location_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Logging",
+        "targetName": "logging",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Logging_LogBucket",
+        "targetName": "logging_log_bucket",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_Logging_LogObjectPrefix",
+        "targetName": "logging_log_object_prefix",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_MetaGeneration",
+        "targetName": "meta_generation",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_Name",
+        "targetName": "name",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -55,16 +661,148 @@
         "enabled": true
       },
       {
-        "sourceName": "items_Location",
-        "targetName": "location",
+        "sourceName": "items_RequesterPays",
+        "targetName": "requester_pays",
         "targetType": "TEXT",
         "enabled": true
       },
       {
-        "sourceName": "items_MetaGeneration",
-        "targetName": "meta_generation",
-        "targetType": "BIGINT",
+        "sourceName": "items_RetentionPolicy",
+        "targetName": "retention_policy",
+        "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime",
+        "targetName": "retention_policy_effective_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_ext",
+        "targetName": "retention_policy_effective_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc",
+        "targetName": "retention_policy_effective_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheEnd",
+        "targetName": "retention_policy_effective_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheStart",
+        "targetName": "retention_policy_effective_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheZone",
+        "targetName": "retention_policy_effective_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheZone_isDST",
+        "targetName": "retention_policy_effective_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheZone_name",
+        "targetName": "retention_policy_effective_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_cacheZone_offset",
+        "targetName": "retention_policy_effective_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_name",
+        "targetName": "retention_policy_effective_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_tx",
+        "targetName": "retention_policy_effective_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_tx_index",
+        "targetName": "retention_policy_effective_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_tx_isstd",
+        "targetName": "retention_policy_effective_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_tx_isutc",
+        "targetName": "retention_policy_effective_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_tx_when",
+        "targetName": "retention_policy_effective_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_zone",
+        "targetName": "retention_policy_effective_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_zone_isDST",
+        "targetName": "retention_policy_effective_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_zone_name",
+        "targetName": "retention_policy_effective_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_loc_zone_offset",
+        "targetName": "retention_policy_effective_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_EffectiveTime_wall",
+        "targetName": "retention_policy_effective_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_IsLocked",
+        "targetName": "retention_policy_is_locked",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_RetentionPolicy_RetentionPeriod",
+        "targetName": "retention_policy_retention_period",
+        "targetType": "BIGINT",
+        "enabled": false
       },
       {
         "sourceName": "items_StorageClass",
@@ -73,10 +811,136 @@
         "enabled": true
       },
       {
-        "sourceName": "items_Created",
-        "targetName": "created",
+        "sourceName": "items_UniformBucketLevelAccess",
+        "targetName": "uniform_bucket_level_access",
         "targetType": "TEXT",
         "enabled": true
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_Enabled",
+        "targetName": "uniform_bucket_level_access_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime",
+        "targetName": "uniform_bucket_level_access_locked_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_ext",
+        "targetName": "uniform_bucket_level_access_locked_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc",
+        "targetName": "uniform_bucket_level_access_locked_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheEnd",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheStart",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheZone",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheZone_isDST",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheZone_name",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_cacheZone_offset",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_name",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_tx",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_tx_index",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_tx_isstd",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_tx_isutc",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_tx_when",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_zone",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_zone_isDST",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_zone_name",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_loc_zone_offset",
+        "targetName": "uniform_bucket_level_access_locked_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_UniformBucketLevelAccess_LockedTime_wall",
+        "targetName": "uniform_bucket_level_access_locked_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
       },
       {
         "sourceName": "items_VersioningEnabled",
@@ -85,112 +949,22 @@
         "enabled": true
       },
       {
-        "sourceName": "items_Labels",
-        "targetName": "labels",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_RequesterPays",
-        "targetName": "requester_pays",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_Lifecycle",
-        "targetName": "lifecycle",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_RetentionPolicy",
-        "targetName": "retention_policy",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "items_RetentionPolicy_RetentionPeriod",
-        "targetName": "retention_policy_retention_period",
-        "targetType": "BIGINT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_RetentionPolicy_EffectiveTime",
-        "targetName": "retention_policy_effective_time",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_RetentionPolicy_IsLocked",
-        "targetName": "retention_policy_is_locked",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_CORS",
-        "targetName": "cors",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_Encryption",
-        "targetName": "encryption",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "items_Encryption_DefaultKMSKeyName",
-        "targetName": "encryption_default_kms_key_name",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "items_Logging",
-        "targetName": "logging",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "items_Logging_LogBucket",
-        "targetName": "logging_log_bucket",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_Logging_LogObjectPrefix",
-        "targetName": "logging_log_object_prefix",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
         "sourceName": "items_Website",
         "targetName": "website",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       },
       {
         "sourceName": "items_Website_MainPageSuffix",
         "targetName": "website_main_page_suffix",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "items_Website_NotFoundPage",
         "targetName": "website_not_found_page",
         "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_Etag",
-        "targetName": "etag",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "items_LocationType",
-        "targetName": "location_type",
-        "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       }
     ]
   }
