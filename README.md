@@ -9,9 +9,10 @@ one can add support for new tables easily, and configurable so that one can chan
 - Checkout the code
 - Set environment varibale for extension home (it shoud be path-to-repo/cloudquery/extension) 
 `export CLOUDQUERY_EXT_HOME=/home/apatil/work/code/cloudquery/extension`
-- Copy extension/extension_config.json.sample as extension/extension_config.json and add configurations for
+- Copy extension/extension_config.json.sample as CLOUDQUERY_EXT_HOME/extension_config.json and add configurations for
 your cloud accounts. You can add multiple accounts for each cloud provider
 - `make`
+- To install at default osquery directory (/etc/osquery/), run: `make install`
 
 ### Test
 #### With osqueryi
@@ -22,7 +23,12 @@ your cloud accounts. You can add multiple accounts for each cloud provider
 - Query data
 `select account_id, region_code,image_id,image_type from aws_ec2_image;`
 #### With osquery
-TODO
+- Build and install cloudquery
+- Create a file /etc/osquery/extensions.load and add following line to it:
+- `/etc/osquery/cloudquery.ext`
+- Copy extension/extension_config.json.sample as /etc/osquery/cloudquery/extension_config.json and add configurations for
+your cloud accounts. You can add multiple accounts for each cloud provider
+- Restart osquery service. `sudo service osqueryd restart`
 
 ### Supported tables
 #### AWS
