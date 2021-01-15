@@ -20,5 +20,19 @@
         "projectId": "myProject1"
       }
     ]
+  },
+  "azure": {
+    "accounts": [
+      {
+        "subscriptionId": "your-subscription-id1",
+        "tenantId": "your-tenant-id1",
+        "authFile": "/your/authfile/location/yourfile1.json"
+      },
+      {
+        "subscriptionId": "your-subscription-id2",
+        "tenantId": "your-tenant-id2",
+        "authFile": "/your/authfile/location/yourfile2.json"
+      }
+    ]
   }
 }
