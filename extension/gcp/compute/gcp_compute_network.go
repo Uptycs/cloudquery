@@ -15,11 +15,11 @@ import (
 	compute "google.golang.org/api/compute/v1"
 )
 
-type myGcpComputeNetworkItemsContainer struct {
+type myGcpComputeNetworksItemsContainer struct {
 	Items []*compute.Network `json:"items"`
 }
 
-func GcpComputeNetworkColumns() []table.ColumnDefinition {
+func (handler *GcpComputeHandler) GcpComputeNetworksColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("ipv4_range"),
@@ -39,7 +39,7 @@ func GcpComputeNetworkColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpComputeNetworkGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+func (handler *GcpComputeHandler) GcpComputeNetworksGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -47,13 +47,13 @@ func GcpComputeNetworkGenerate(osqCtx context.Context, queryContext table.QueryC
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpComputeNetwork(ctx, nil)
+		results, err := handler.processAccountGcpComputeNetworks(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpComputeNetwork(ctx, &account)
+			results, err := handler.processAccountGcpComputeNetworks(ctx, &account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
 				continue
@@ -64,16 +64,16 @@ func GcpComputeNetworkGenerate(osqCtx context.Context, queryContext table.QueryC
 	return resultMap, nil
 }
 
-func getGcpComputeNetworkNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
+func (handler *GcpComputeHandler) getGcpComputeNetworksNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
 	var projectID = ""
 	var service *compute.Service
 	var err error
 	if account != nil {
 		projectID = account.ProjectId
-		service, err = compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
-		service, err = compute.NewService(ctx)
+		service, err = handler.svcInterface.NewService(ctx)
 	}
 	if err != nil {
 		fmt.Println("NewService() error: ", err)
@@ -82,28 +82,28 @@ func getGcpComputeNetworkNewServiceForAccount(ctx context.Context, account *util
 	return service, projectID
 }
 
-func processAccountGcpComputeNetwork(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpComputeNetworkNewServiceForAccount(ctx, account)
+	service, projectID := handler.getGcpComputeNetworksNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := compute.NewNetworksService(service)
+	myApiService := handler.svcInterface.NewNetworksService(service)
 	if myApiService == nil {
-		fmt.Println("compute.NewNetworksService() returned nil")
-		return resultMap, fmt.Errorf("compute.NewNetworksService() returned nil")
+		fmt.Println("NewNetworksService() returned nil")
+		return resultMap, fmt.Errorf("NewNetworksService() returned nil")
 	}
 
-	aggListCall := myApiService.List(projectID)
+	aggListCall := handler.svcInterface.NetworksList(myApiService, projectID)
 	if aggListCall == nil {
 		fmt.Println("aggListCall is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpComputeNetworkItemsContainer{Items: make([]*compute.Network, 0)}
-	if err := aggListCall.Pages(ctx, func(page *compute.NetworkList) error {
+	itemsContainer := myGcpComputeNetworksItemsContainer{Items: make([]*compute.Network, 0)}
+	if err := handler.svcInterface.NetworksPages(aggListCall, ctx, func(page *compute.NetworkList) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)
 

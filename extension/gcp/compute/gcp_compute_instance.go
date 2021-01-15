@@ -16,11 +16,11 @@ import (
 	compute "google.golang.org/api/compute/v1"
 )
 
-type myGcpComputeInstanceItemsContainer struct {
+type myGcpComputeInstancesItemsContainer struct {
 	Items []*compute.Instance `json:"items"`
 }
 
-func GcpComputeInstanceColumns() []table.ColumnDefinition {
+func (handler *GcpComputeHandler) GcpComputeInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("can_ip_forward"),
@@ -81,7 +81,7 @@ func GcpComputeInstanceColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+func (handler *GcpComputeHandler) GcpComputeInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -89,13 +89,13 @@ func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.Query
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpComputeInstance(ctx, nil)
+		results, err := handler.processAccountGcpComputeInstances(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpComputeInstance(ctx, &account)
+			results, err := handler.processAccountGcpComputeInstances(ctx, &account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
 				continue
@@ -106,16 +106,16 @@ func GcpComputeInstanceGenerate(osqCtx context.Context, queryContext table.Query
 	return resultMap, nil
 }
 
-func getGcpComputeInstanceNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
+func (handler *GcpComputeHandler) getGcpComputeInstancesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
 	var projectID = ""
 	var service *compute.Service
 	var err error
 	if account != nil {
 		projectID = account.ProjectId
-		service, err = compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
-		service, err = compute.NewService(ctx)
+		service, err = handler.svcInterface.NewService(ctx)
 	}
 	if err != nil {
 		fmt.Println("NewService() error: ", err)
@@ -124,28 +124,28 @@ func getGcpComputeInstanceNewServiceForAccount(ctx context.Context, account *uti
 	return service, projectID
 }
 
-func processAccountGcpComputeInstance(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeInstances(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpComputeInstanceNewServiceForAccount(ctx, account)
+	service, projectID := handler.getGcpComputeInstancesNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := compute.NewInstancesService(service)
+	myApiService := handler.svcInterface.NewInstancesService(service)
 	if myApiService == nil {
-		fmt.Println("compute.NewInstancesService() returned nil")
-		return resultMap, fmt.Errorf("compute.NewInstancesService() returned nil")
+		fmt.Println("NewInstancesService() returned nil")
+		return resultMap, fmt.Errorf("NewInstancesService() returned nil")
 	}
 
-	aggListCall := myApiService.AggregatedList(projectID)
+	aggListCall := handler.svcInterface.InstancesAggregatedList(myApiService, projectID)
 	if aggListCall == nil {
 		fmt.Println("aggListCall is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpComputeInstanceItemsContainer{Items: make([]*compute.Instance, 0)}
-	if err := aggListCall.Pages(ctx, func(page *compute.InstanceAggregatedList) error {
+	itemsContainer := myGcpComputeInstancesItemsContainer{Items: make([]*compute.Instance, 0)}
+	if err := handler.svcInterface.InstancesPages(aggListCall, ctx, func(page *compute.InstanceAggregatedList) error {
 
 		for _, item := range page.Items {
 			for _, inst := range item.Instances {

@@ -16,11 +16,11 @@ import (
 	compute "google.golang.org/api/compute/v1"
 )
 
-type myGcpComputeDiskItemsContainer struct {
+type myGcpComputeDisksItemsContainer struct {
 	Items []*compute.Disk `json:"items"`
 }
 
-func GcpComputeDiskColumns() []table.ColumnDefinition {
+func (handler *GcpComputeHandler) GcpComputeDisksColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("creation_timestamp"),
@@ -70,7 +70,7 @@ func GcpComputeDiskColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpComputeDiskGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+func (handler *GcpComputeHandler) GcpComputeDisksGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -78,13 +78,13 @@ func GcpComputeDiskGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpComputeDisk(ctx, nil)
+		results, err := handler.processAccountGcpComputeDisks(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpComputeDisk(ctx, &account)
+			results, err := handler.processAccountGcpComputeDisks(ctx, &account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
 				continue
@@ -95,16 +95,16 @@ func GcpComputeDiskGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func getGcpComputeDiskNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
+func (handler *GcpComputeHandler) getGcpComputeDisksNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
 	var projectID = ""
 	var service *compute.Service
 	var err error
 	if account != nil {
 		projectID = account.ProjectId
-		service, err = compute.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
-		service, err = compute.NewService(ctx)
+		service, err = handler.svcInterface.NewService(ctx)
 	}
 	if err != nil {
 		fmt.Println("NewService() error: ", err)
@@ -113,28 +113,28 @@ func getGcpComputeDiskNewServiceForAccount(ctx context.Context, account *utiliti
 	return service, projectID
 }
 
-func processAccountGcpComputeDisk(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeDisks(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpComputeDiskNewServiceForAccount(ctx, account)
+	service, projectID := handler.getGcpComputeDisksNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := compute.NewDisksService(service)
+	myApiService := handler.svcInterface.NewDisksService(service)
 	if myApiService == nil {
-		fmt.Println("compute.NewDisksService() returned nil")
-		return resultMap, fmt.Errorf("compute.NewDisksService() returned nil")
+		fmt.Println("NewDisksService() returned nil")
+		return resultMap, fmt.Errorf("NewDisksService() returned nil")
 	}
 
-	aggListCall := myApiService.AggregatedList(projectID)
+	aggListCall := handler.svcInterface.DisksAggregatedList(myApiService, projectID)
 	if aggListCall == nil {
 		fmt.Println("aggListCall is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpComputeDiskItemsContainer{Items: make([]*compute.Disk, 0)}
-	if err := aggListCall.Pages(ctx, func(page *compute.DiskAggregatedList) error {
+	itemsContainer := myGcpComputeDisksItemsContainer{Items: make([]*compute.Disk, 0)}
+	if err := handler.svcInterface.DisksPages(aggListCall, ctx, func(page *compute.DiskAggregatedList) error {
 
 		for _, item := range page.Items {
 			for _, inst := range item.Disks {
