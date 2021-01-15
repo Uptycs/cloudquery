@@ -18,7 +18,7 @@ type ItemsContainer struct {
 	Items []*storage.BucketAttrs `json:"items"`
 }
 
-func GcpStorageBucketColumns() []table.ColumnDefinition {
+func (handler *GcpStorageHandler) GcpStorageBucketColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("name"),
