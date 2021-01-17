@@ -12,6 +12,12 @@ func GetStringValue(value interface{}) string {
 	}
 	switch value.(type) {
 	case string:
+		strIn := []rune(value.(string))
+		if len(strIn) >= 2 && strIn[0] == '"' && strIn[len(strIn)-1] == '"' {
+			// Remove quotes
+			noLeadingQuotes := strIn[1:]
+			return string(noLeadingQuotes[:len(noLeadingQuotes)-1])
+		}
 		return value.(string)
 	case int:
 		return strconv.FormatFloat(float64(value.(int)), 'g', -1, 64)

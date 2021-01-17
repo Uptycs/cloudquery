@@ -132,8 +132,8 @@ func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.C
 	//fmt.Printf("%+v\n", string(byteArr))
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_compute_network"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
-		return resultMap, fmt.Errorf("table configuration not found")
+		fmt.Println("table configuration not found for \"gcp_compute_network\"")
+		return resultMap, fmt.Errorf("table configuration not found for \"gcp_compute_network\"")
 	}
 	jsonTable := utilities.Table{}
 	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
