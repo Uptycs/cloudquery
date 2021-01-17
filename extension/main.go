@@ -10,11 +10,12 @@ import (
 )
 
 var (
-	socket        = flag.String("socket", "", "Path to the extensions UNIX domain socket")
-	verbose       = flag.Bool("verbose", false, "Enable verbose logging")
-	homeDirectory = flag.String("home-directory", "", "Path to the extensions home directory")
-	timeout       = flag.Int("timeout", 3, "Seconds to wait for autoloaded extensions")
-	interval      = flag.Int("interval", 3, "Seconds delay between connectivity checks")
+	socket          = flag.String("socket", "", "Path to the extensions UNIX domain socket")
+	verbose         = flag.Bool("verbose", false, "Enable verbose logging")
+	homeDirectory   = flag.String("home-directory", "", "Path to the extensions home directory")
+	timeout         = flag.Int("timeout", 3, "Seconds to wait for autoloaded extensions")
+	interval        = flag.Int("interval", 3, "Seconds delay between connectivity checks")
+	configDirectory = flag.String("cfg-directory", "/cloudquery/config", "Path to the cloudquery config")
 )
 
 func main() {
@@ -51,7 +52,7 @@ func main() {
 		log.Fatalf("Error creating extension: %s\n", err)
 	}
 
-	readExtensionConfigurations(*homeDirectory + string(os.PathSeparator) + "extension_config.json")
+	readExtensionConfigurations(*configDirectory + string(os.PathSeparator) + "extension_config.json")
 	readTableConfigurations(*homeDirectory)
 	registerPlugins(server)
 	if err := server.Run(); err != nil {
