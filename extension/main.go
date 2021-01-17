@@ -52,7 +52,7 @@ func main() {
 	}
 
 	readExtensionConfigurations(*homeDirectory + string(os.PathSeparator) + "extension_config.json")
-	readTableConfigurations()
+	readTableConfigurations(*homeDirectory)
 	registerPlugins(server)
 	if err := server.Run(); err != nil {
 		log.Fatal(err)

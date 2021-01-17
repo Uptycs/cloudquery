@@ -3,9 +3,11 @@ BIN-DIR=bin
 EXTENSION-DIR=extension
 
 build: extension
+
 extension: $(shell find . -type f)
 	mkdir -p ${BIN-DIR}
 	go build -o ${BIN-DIR} ./${EXTENSION-DIR}
+
 install:
 	mkdir -p /etc/osquery/cloudquery/aws/ec2
 	mkdir -p /etc/osquery/cloudquery/aws/s3
@@ -18,5 +20,11 @@ install:
 	cp extension/gcp/compute/table_config.json /etc/osquery/cloudquery/gcp/compute
 	cp extension/gcp/storage/table_config.json /etc/osquery/cloudquery/gcp/storage
 	cp extension/azure/compute/table_config.json /etc/osquery/cloudquery/azure/compute
+
+test:
+	@set -x; \
+	cd ${EXTENSION-DIR}; \
+	go test ./...
+
 clean:
 	rm -rf ${BIN-DIR}/*

@@ -234,8 +234,8 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_storage_bucket"]
 	if !ok {
-		fmt.Println("getTableConfig failed for gcp_storage_bucket")
-		return resultMap, fmt.Errorf("table configuration not found")
+		fmt.Println("table configuration not found for \"gcp_storage_bucket\"")
+		return resultMap, fmt.Errorf("table configuration not found for \"gcp_storage_bucket\"")
 	}
 
 	service, projectID := handler.getGcpStorageBucketNewServiceForAccount(ctx, account)
