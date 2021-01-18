@@ -312,8 +312,7 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		return resultMap, err
 	}
-	table := utilities.Table{}
-	table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
 		result := extaws.RowToMap(row, accountId, region, tableConfig)
 		resultMap = append(resultMap, result)

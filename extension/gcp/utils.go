@@ -5,6 +5,7 @@ import (
 )
 
 // RowToMap converts JSON row into osquery row
+// If configured it will copy some metadata values into appropriate columns
 func RowToMap(row map[string]interface{}, projectID string, zone string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
@@ -14,10 +15,7 @@ func RowToMap(row map[string]interface{}, projectID string, zone string, tableCo
 	if len(tableConfig.Gcp.ZoneAttribute) != 0 {
 		result[tableConfig.Gcp.ZoneAttribute] = zone
 	}
-	for key, value := range tableConfig.GetParsedAttributeConfigMap() {
-		if row[key] != nil {
-			result[value.TargetName] = utilities.GetStringValue(row[key])
-		}
-	}
+
+	result = utilities.RowToMap(result, row, tableConfig)
 	return result
 }

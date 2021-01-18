@@ -111,8 +111,7 @@ func processDescribeImages(tableConfig *utilities.TableConfig, accountId string,
 		log.Fatal(err)
 		return resultMap, err
 	}
-	table := utilities.Table{}
-	table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)

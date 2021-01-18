@@ -162,8 +162,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeDisks(ctx context.Cont
 		fmt.Println("table configuration not found for \"gcp_compute_disk\"")
 		return resultMap, fmt.Errorf("table configuration not found for \"gcp_compute_disk\"")
 	}
-	jsonTable := utilities.Table{}
-	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)

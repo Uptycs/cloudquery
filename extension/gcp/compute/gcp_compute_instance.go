@@ -250,8 +250,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeInstances(ctx context.
 		fmt.Println("table configuration not found for \"gcp_compute_instance\"")
 		return resultMap, fmt.Errorf("table configuration not found for \"gcp_compute_instance\"")
 	}
-	jsonTable := utilities.Table{}
-	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)

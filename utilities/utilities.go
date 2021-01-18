@@ -3,8 +3,6 @@ package utilities
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 )
 
 var (
@@ -14,35 +12,29 @@ var (
 	DefaultGcpProjectID   string
 )
 
-func readTableConfig(filePath string) error {
-	reader, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
+// ReadTableConfig parses json encoded data to read list TableConfig entries
+// These are available for reading from utilities.TableConfigurationMap[]
+func ReadTableConfig(jsonEncoded []byte) error {
 	var configurations map[string]*TableConfig
-	errUnmarshal := json.Unmarshal(reader, &configurations)
+	errUnmarshal := json.Unmarshal(jsonEncoded, &configurations)
 	if errUnmarshal != nil {
 		return errUnmarshal
 	}
 	for tableName, config := range configurations {
 		fmt.Println("Found configuration for table:" + tableName)
-		config.InitParsedAttributeConfigMap()
+		config.initParsedAttributeConfigMap()
 		TableConfigurationMap[tableName] = config
 		//fmt.Printf("So far Read config for %d tables\n", len(utilities.TableConfigurationMap))
 	}
 	return nil
 }
 
-func ReadTableConfigurations(extensionHomeDir string) {
-	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json"}
-	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json"}
-	var azureConfigFileList = []string{"azure/compute/table_config.json"}
-	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
-	configFileList = append(configFileList, azureConfigFileList...)
-
-	for _, fileName := range configFileList {
-		fmt.Println("Reading config file:" + extensionHomeDir + string(os.PathSeparator) + fileName)
-		readTableConfig(extensionHomeDir + string(os.PathSeparator) + fileName)
+// RowToMap converts JSON row into osquery row
+func RowToMap(inMap map[string]string, row map[string]interface{}, tableConfig *TableConfig) map[string]string {
+	for key, value := range tableConfig.getParsedAttributeConfigMap() {
+		if row[key] != nil {
+			inMap[value.TargetName] = getStringValue(row[key])
+		}
 	}
-	fmt.Printf("Read config for total %d tables\n", len(TableConfigurationMap))
+	return inMap
 }

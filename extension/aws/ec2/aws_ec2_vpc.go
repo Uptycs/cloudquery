@@ -92,8 +92,7 @@ func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *util
 				fmt.Fprintf(os.Stderr, "error: %v\n", err)
 				os.Exit(1)
 			}
-			table := utilities.Table{}
-			table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+			table := utilities.NewTable(byteArr, tableConfig)
 			for _, row := range table.Rows {
 				result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 				resultMap = append(resultMap, result)

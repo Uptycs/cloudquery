@@ -2,6 +2,7 @@ package aws
 
 import (
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws/credentials"
 
 	"github.com/Uptycs/cloudquery/utilities"
@@ -59,6 +60,8 @@ func FetchRegions(awsSession *session.Session) ([]*ec2.Region, error) {
 	return awsRegions.Regions, nil
 }
 
+// RowToMap converts JSON row into osquery row.
+// If configured it will copy some metadata vaues into appropriate columns
 func RowToMap(row map[string]interface{}, accountId string, region string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
@@ -71,10 +74,7 @@ func RowToMap(row map[string]interface{}, accountId string, region string, table
 	if len(tableConfig.Aws.RegionAttribute) != 0 {
 		result[tableConfig.Aws.RegionAttribute] = region // TODO: Fix it
 	}
-	for key, value := range tableConfig.GetParsedAttributeConfigMap() {
-		if row[key] != nil {
-			result[value.TargetName] = utilities.GetStringValue(row[key])
-		}
-	}
+
+	result = utilities.RowToMap(result, row, tableConfig)
 	return result
 }

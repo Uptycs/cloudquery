@@ -263,8 +263,7 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 			os.Exit(1)
 		}
 		//fmt.Printf("%+v\n", string(byteArr))
-		jsonTable := utilities.Table{}
-		jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+		jsonTable := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range jsonTable.Rows {
 			result := extgcp.RowToMap(row, projectID, "", tableConfig)
 			resultMap = append(resultMap, result)
