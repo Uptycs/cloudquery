@@ -19,9 +19,9 @@ RUN set -ex; \
 FROM ubuntu:20.04
 
 LABEL \
-  com.uptycs.description="Uptycs Kubernetes Osquery daemonset image" \
-  com.uptycs.name="k8sosquery" \
-  com.uptycs.version="$OSQUERY_VERSION" \
+  com.uptycs.description="Uptycs cloudquery container image" \
+  com.uptycs.name="cloudquery" \
+  com.uptycs.version="1.0" \
   com.uptycs.schema-version="1.0" \
   com.uptycs.url="https://www.uptycs.com" \
   com.uptycs.vendor="Uptycs Inc"
