@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -17,18 +16,31 @@ import (
 
 	"github.com/kolide/osquery-go"
 	"github.com/kolide/osquery-go/plugin/table"
+	log "github.com/sirupsen/logrus"
 )
+
+func initializeLogger() {
+	utilities.CreateLogger(*verbose, utilities.ExtConfiguration.ExtConfLog.MaxSize,
+		utilities.ExtConfiguration.ExtConfLog.MaxBackups, utilities.ExtConfiguration.ExtConfLog.MaxAge,
+		utilities.ExtConfiguration.ExtConfLog.FileName)
+}
 
 func readProjectIDFromCredentialFile(filePath string) string {
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		fmt.Printf("error reading %s. err:%s\n", filePath, err.Error())
+		utilities.GetLogger().WithFields(log.Fields{
+			"fileName":  filePath,
+			"errString": err.Error(),
+		}).Info("failed to read default gcp credentials file")
 		return ""
 	}
 	var jsonObj map[string]interface{}
 	errUnmarshal := json.Unmarshal(reader, &jsonObj)
 	if errUnmarshal != nil {
-		fmt.Printf("error unmarshaling json in %s. err:%s\n", filePath, errUnmarshal.Error())
+		utilities.GetLogger().WithFields(log.Fields{
+			"fileName":  filePath,
+			"errString": errUnmarshal.Error(),
+		}).Error("failed to unmarshal json")
 		return ""
 	}
 
@@ -36,7 +48,9 @@ func readProjectIDFromCredentialFile(filePath string) string {
 		return idIntfc.(string)
 	}
 
-	fmt.Printf("cannot find \"project_id\" property in file %s. \n", filePath)
+	utilities.GetLogger().WithFields(log.Fields{
+		"fileName": filePath,
+	}).Error("failed to find project_id")
 	return ""
 }
 
@@ -51,9 +65,9 @@ func readExtensionConfigurations(filePath string) error {
 	if errUnmarshal != nil {
 		return errUnmarshal
 	}
-	//fmt.Printf("Config:%v\n", extConfig)
 	utilities.ExtConfiguration = extConfig
 
+	initializeLogger()
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
@@ -69,11 +83,11 @@ func readExtensionConfigurations(filePath string) error {
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
 		if adcFilePath == "" {
-			fmt.Println("missing env GOOGLE_APPLICATION_CREDENTIALS")
+			utilities.GetLogger().Warn("missing env GOOGLE_APPLICATION_CREDENTIALS")
 		} else if utilities.DefaultGcpProjectID == "" {
-			fmt.Println("missing Default Project ID for GCP")
+			utilities.GetLogger().Warn("missing Default Project ID for GCP")
 		} else {
-			fmt.Printf("Gcp accounts not found in extension_config. Falling back to ADC\n")
+			utilities.GetLogger().Warn("Gcp accounts not found in extension_config. Falling back to ADC\n")
 		}
 	}
 

@@ -2,9 +2,10 @@ package utilities
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -25,7 +26,10 @@ func readTableConfig(filePath string) error {
 		return errUnmarshal
 	}
 	for tableName, config := range configurations {
-		fmt.Println("Found configuration for table:" + tableName)
+		GetLogger().WithFields(log.Fields{
+			"tableName": tableName,
+		}).Debug("found table configuration")
+
 		config.InitParsedAttributeConfigMap()
 		TableConfigurationMap[tableName] = config
 		//fmt.Printf("So far Read config for %d tables\n", len(utilities.TableConfigurationMap))
@@ -41,8 +45,11 @@ func ReadTableConfigurations(extensionHomeDir string) {
 	configFileList = append(configFileList, azureConfigFileList...)
 
 	for _, fileName := range configFileList {
-		fmt.Println("Reading config file:" + extensionHomeDir + string(os.PathSeparator) + fileName)
+		GetLogger().WithFields(log.Fields{
+			"fileName": extensionHomeDir + string(os.PathSeparator) + fileName,
+		}).Debug("reading config file")
+
 		readTableConfig(extensionHomeDir + string(os.PathSeparator) + fileName)
 	}
-	fmt.Printf("Read config for total %d tables\n", len(TableConfigurationMap))
+	GetLogger().Info("read table configurations for ", len(TableConfigurationMap), " tables")
 }

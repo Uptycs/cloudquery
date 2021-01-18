@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Table struct {
@@ -26,7 +28,10 @@ func (tab *Table) Init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap ma
 	case reflect.Value:
 		tab.flattenValue(0, "", fields.(reflect.Value))
 	default:
-		fmt.Printf("Invalid object of type %s and kind %s\n", reflect.TypeOf(fields), reflect.ValueOf(fields).Kind())
+		GetLogger().WithFields(log.Fields{
+			"type": reflect.TypeOf(fields),
+			"kind": reflect.ValueOf(fields).Kind(),
+		}).Warn("Invalid object")
 	}
 
 	// fmt.Printf("Flattening fieldMap of size %d\n", len(fieldMap))
@@ -35,17 +40,17 @@ func (tab *Table) Init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap ma
 }
 
 func (tab *Table) Print() {
-	for index, row := range tab.Rows {
-		fmt.Printf("[%d] =========================== \n", index)
+	for _, row := range tab.Rows {
+		GetLogger().Info("===========================")
 		for key, value := range row {
-			fmt.Printf("%s=%v\n", key, value)
+			logStr := fmt.Sprintf("%s=%v", key, value)
+			GetLogger().Info(logStr)
 		}
 	}
 }
 
 func (tab *Table) AddAttribute(name string, value interface{}) {
 	// Add attribute only if it is configured
-	//fmt.Printf("name:%s, value:%+v\n", name, value)
 	if _, ok := tab.ParsedAttributeConfigMap[name]; ok {
 		if len(tab.Rows) == 0 {
 			row := make(map[string]interface{})
@@ -114,7 +119,6 @@ func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{})
 		}
 		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 			// Don't flatten further
-			// fmt.Printf("Not Flattening map for field %s. Level:%d, MaxLevel:%d\n", prefix, level, tab.MaxLevel)
 			continue
 		}
 		switch child := v.(type) {
@@ -143,7 +147,6 @@ func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 		}
 		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 			// Don't flatten further
-			//fmt.Println("Not Flattening list for field " + prefix)
 			continue
 		}
 		switch child := value.(type) {
@@ -182,7 +185,6 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 	}
 	if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 		// Don't flatten further
-		//fmt.Println("Not Flattening value for field " + prefix)
 		return
 	}
 

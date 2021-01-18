@@ -1,4 +1,10 @@
 {
+  "logging": {
+    "fileName": "/var/log/cloudquery.log",
+    "maxSize": 20,
+    "maxBackups": 1,
+    "maxAge": 30
+  },
   "aws": {
     "accounts": [
       {
