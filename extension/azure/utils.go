@@ -1,16 +1,16 @@
 package azure
 
 import (
-    "context"
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"os"
 	"sync"
 
+	"github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2018-02-01/resources"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/azure/auth"
-    "github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2018-02-01/resources"
 	"github.com/Uptycs/cloudquery/utilities"
 	"github.com/pkg/errors"
 )
@@ -85,18 +85,18 @@ func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string
 }
 
 func GetGroups(session *AzureSession) ([]string, error) {
-    tab := make([]string, 0)
-    var err error
+	tab := make([]string, 0)
+	var err error
 
-    grClient := resources.NewGroupsClient(session.SubscriptionId)
-    grClient.Authorizer = session.Authorizer
+	grClient := resources.NewGroupsClient(session.SubscriptionId)
+	grClient.Authorizer = session.Authorizer
 
-    for list, err := grClient.ListComplete(context.Background(), "", nil); list.NotDone(); err = list.Next() {
-        if err != nil {
-            return nil, errors.Wrap(err, "error traverising resource group list")
-        }
-        rgName := *list.Value().Name
-        tab = append(tab, rgName)
-    }
-    return tab, err
+	for list, err := grClient.ListComplete(context.Background(), "", nil); list.NotDone(); err = list.Next() {
+		if err != nil {
+			return nil, errors.Wrap(err, "error traverising resource group list")
+		}
+		rgName := *list.Value().Name
+		tab = append(tab, rgName)
+	}
+	return tab, err
 }

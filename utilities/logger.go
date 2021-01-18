@@ -27,7 +27,7 @@ func CreateLogger(isDebug bool, maxSize int, maxBackups int, maxAge int, fileNam
 				if isDebug {
 					stdoutLogSingleton.SetLevel(log.DebugLevel)
 				} else {
-					stdoutLogSingleton.SetLevel(log.WarnLevel)
+					stdoutLogSingleton.SetLevel(log.InfoLevel)
 				}
 			})
 		}
@@ -54,7 +54,7 @@ func createLogger(isDebug bool, maxSize int, maxBackups int, maxAge int, logFile
 	if isDebug {
 		newInstance.SetLevel(log.DebugLevel)
 	} else {
-		newInstance.SetLevel(log.WarnLevel)
+		newInstance.SetLevel(log.InfoLevel)
 	}
 	newInstance.Info("Logger created")
 	return newInstance

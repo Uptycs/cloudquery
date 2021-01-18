@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -58,6 +59,7 @@ func readExtensionConfigurations(filePath string) error {
 	utilities.AwsAccountId = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
+		fmt.Printf("failed to read configuration file %s. err:%v\n", filePath, err)
 		return err
 	}
 	extConfig := utilities.ExtensionConfiguration{}

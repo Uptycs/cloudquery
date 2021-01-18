@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Uptycs/cloudquery/utilities"
-	"log"
-	"os"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -73,7 +73,10 @@ func ListBucketsColumns() []table.ColumnDefinition {
 func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_s3_bucket",
+			"account":   "default",
+		}).Info("processing account")
 		results, err := processAccountListBuckets(nil)
 		if err != nil {
 			return resultMap, err
@@ -81,10 +84,12 @@ func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			fmt.Println("Processing account:" + account.ID)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_s3_bucket",
+				"account":   account.ID,
+			}).Info("processing account")
 			results, err := processAccountListBuckets(&account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -98,8 +103,11 @@ func getBucketLocation(svc *s3.S3, bucketName *string) (string, error) {
 	bucketLocationInput := s3.GetBucketLocationInput{Bucket: bucketName}
 	getBucketLocationOutput, err := svc.GetBucketLocation(&bucketLocationInput)
 	if err != nil {
-		fmt.Println("Failed to get bucket location ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_s3_bucket",
+			"bucket":    *bucketName,
+			"errString": err.Error(),
+		}).Error("failed to get bucket location")
 		return "", err
 	}
 	if getBucketLocationOutput.LocationConstraint == nil || len(*getBucketLocationOutput.LocationConstraint) == 0 {
@@ -135,7 +143,6 @@ func (bucket *s3BucketInfo) getBucketEncryption(svc *s3.S3) {
 	input := s3.GetBucketEncryptionInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketEncryption(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket encryption ", err)
 		return
 	}
 	bucket.ServerSideEncryptionConfiguration = output.ServerSideEncryptionConfiguration
@@ -145,7 +152,6 @@ func (bucket *s3BucketInfo) getBucketVersioning(svc *s3.S3) {
 	input := s3.GetBucketVersioningInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketVersioning(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket versioning ", err)
 		return
 	}
 	bucket.MfaDelete = output.MFADelete
@@ -156,7 +162,6 @@ func (bucket *s3BucketInfo) getBucketAcl(svc *s3.S3) {
 	input := s3.GetBucketAclInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketAcl(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket ACL ", err)
 		return
 	}
 	bucket.AclOwner = output.Owner
@@ -168,7 +173,6 @@ func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.S3) {
 	input := s3.GetBucketWebsiteInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketWebsite(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket website ", err)
 		return
 	}
 	if output != nil {
@@ -181,7 +185,6 @@ func (bucket *s3BucketInfo) getBucketPublicAccessBlock(svc *s3.S3) {
 	input := s3.GetPublicAccessBlockInput{Bucket: &bucket.Name}
 	output, err := svc.GetPublicAccessBlock(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket public access block ", err)
 		return
 	}
 	bucket.PublicAccessBlockConfig = output.PublicAccessBlockConfiguration
@@ -191,7 +194,6 @@ func (bucket *s3BucketInfo) getBucketPolicyStatus(svc *s3.S3) {
 	input := s3.GetBucketPolicyStatusInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketPolicyStatus(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket policy status ", err)
 		return
 	}
 	bucket.PolicyStatus = output.PolicyStatus
@@ -201,7 +203,6 @@ func (bucket *s3BucketInfo) getBucketAccelerateConfiguration(svc *s3.S3) {
 	input := s3.GetBucketAccelerateConfigurationInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketAccelerateConfiguration(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket accelerate configuration ", err)
 		return
 	}
 	bucket.AccelerateConfigurationStatus = output.Status
@@ -212,7 +213,6 @@ func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.S3) {
 	input := s3.GetObjectLockConfigurationInput{Bucket: &bucket.Name}
 	output, err := svc.GetObjectLockConfiguration(&input)
 	if err != nil {
-		// fmt.Println("Failed to get object lock configuration ", err)
 		return
 	}
 	if output != nil && output.ObjectLockConfiguration != nil {
@@ -225,7 +225,6 @@ func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.S3) {
 	input := s3.GetBucketLifecycleConfigurationInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketLifecycleConfiguration(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket lifecycle configuration ", err)
 		return
 	}
 	if output != nil && len(output.Rules) > 0 {
@@ -237,7 +236,6 @@ func (bucket *s3BucketInfo) getBucketTags(svc *s3.S3) {
 	input := s3.GetBucketTaggingInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketTagging(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket tags ", err)
 		return
 	}
 	bucket.Tags = output.TagSet
@@ -248,7 +246,6 @@ func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.S3) {
 	input := s3.GetBucketNotificationConfigurationRequest{Bucket: &bucket.Name}
 	output, err := svc.GetBucketNotificationConfiguration(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket notification configuration ", err)
 		return
 	}
 	if output != nil {
@@ -261,7 +258,6 @@ func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.S3) {
 	input := s3.GetBucketCorsInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketCors(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket cors configuration ", err)
 		return
 	}
 	if output != nil && len(output.CORSRules) > 0 {
@@ -273,7 +269,6 @@ func (bucket *s3BucketInfo) getBucketPolicy(svc *s3.S3) {
 	input := s3.GetBucketPolicyInput{Bucket: &bucket.Name}
 	output, err := svc.GetBucketPolicy(&input)
 	if err != nil {
-		// fmt.Println("Failed to get bucket policy ", err)
 		return
 	}
 	bucket.Policy = output.Policy
@@ -283,15 +278,17 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, region)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	accountId := utilities.AwsAccountId
 	if account != nil {
 		accountId = account.ID
 	}
 	svc := s3.New(sess)
-	fmt.Println("Processing bucket:" + bucket.Name)
+	utilities.GetLogger().WithFields(log.Fields{
+		"tableName": "aws_s3_bucket",
+		"bucket":    bucket.Name,
+	}).Debug("processing bucket")
 	bucket.getBucketAccelerateConfiguration(svc)
 	bucket.getBucketAcl(svc)
 	bucket.getBucketCorsConfiguration(svc)
@@ -305,11 +302,15 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 	bucket.getBucketVersioning(svc)
 	bucket.getBucketWebsite(svc)
 	bucket.getObjectLockConfiguration(svc)
-	//byteArr, _ := json.MarshalIndent(bucket, "", "  ")
-	//fmt.Printf("%s\n", string(byteArr))
 	byteArr, err := json.Marshal(bucket)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_s3_bucket",
+			"account":   accountId,
+			"region":    region,
+			"bucket":    bucket.Name,
+			"errString": err.Error(),
+		}).Error("failed to marshal response")
 		return resultMap, err
 	}
 	table := utilities.Table{}
@@ -325,18 +326,25 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, "us-west-1")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 
 	svc := s3.New(sess)
 	params := &s3.ListBucketsInput{}
 
+	accountId := utilities.AwsAccountId
+	if account != nil {
+		accountId = account.ID
+	}
+
 	// Get list of buckets
 	output, err := svc.ListBuckets(params)
 	if err != nil {
-		fmt.Println("ListBuckets.Page: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_s3_bucket",
+			"account":   accountId,
+			"errString": err.Error(),
+		}).Error("failed to get bucket list")
 		return resultMap, err
 	}
 	regionBuckets = make(map[string]s3BucketInfoList)
@@ -360,12 +368,13 @@ func processAccountListBuckets(account *utilities.ExtensionConfigurationAwsAccou
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_s3_bucket"]
 	if !ok {
-		fmt.Println("failed to get TableConfig")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_s3_bucket",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	result, err := processListBuckets(tableConfig, account)
 	if err != nil {
-		log.Fatal(err)
 		return resultMap, err
 	}
 	resultMap = append(resultMap, result...)

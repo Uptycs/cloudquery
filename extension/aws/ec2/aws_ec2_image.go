@@ -4,8 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/Uptycs/cloudquery/utilities"
 
@@ -68,7 +67,10 @@ func DescribeImagesColumns() []table.ColumnDefinition {
 func DescribeImagesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_image",
+			"account":   "default",
+		}).Info("processing account")
 		results, err := processAccountDescribeImages(nil)
 		if err != nil {
 			return resultMap, err
@@ -76,10 +78,12 @@ func DescribeImagesGenerate(osqCtx context.Context, queryContext table.QueryCont
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			fmt.Println("Processing account:" + account.ID)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_ec2_image",
+				"account":   account.ID,
+			}).Info("processing account")
 			results, err := processAccountDescribeImages(&account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -101,14 +105,22 @@ func processDescribeImages(tableConfig *utilities.TableConfig, accountId string,
 	resultMap := make([]map[string]string, 0)
 	output, err := svc.DescribeImages(params)
 	if err != nil {
-		fmt.Println("getImages: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_image",
+			"account":   accountId,
+			"region":    *region.RegionName,
+			"errString": err.Error(),
+		}).Error("failed to get images")
 		return resultMap, err
 	}
 	byteArr, err := json.Marshal(output)
 	if err != nil {
-		fmt.Println("getImages marshal: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_image",
+			"account":   accountId,
+			"region":    *region.RegionName,
+			"errString": err.Error(),
+		}).Error("failed to marshal response")
 		return resultMap, err
 	}
 	table := utilities.Table{}
@@ -128,8 +140,6 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC
 		if len(params.ImageIds) >= 50 {
 			result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
 			if err != nil {
-				fmt.Println("processDescribeImages: ", err)
-				log.Fatal(err)
 				return resultMap, err
 			}
 			resultMap = append(resultMap, result...)
@@ -140,8 +150,6 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC
 	if len(params.ImageIds) > 0 {
 		result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
 		if err != nil {
-			fmt.Println("processDescribeImages: ", err)
-			log.Fatal(err)
 			return resultMap, err
 		}
 		resultMap = append(resultMap, result...)
@@ -150,12 +158,10 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC
 }
 
 func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
-	fmt.Println("Processing region:" + *region.RegionName + ", EndPoint:" + *region.Endpoint)
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, *region.RegionName)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 
 	accountId := utilities.AwsAccountId
@@ -172,8 +178,12 @@ func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *ut
 			return lastPage
 		})
 	if err != nil {
-		fmt.Println("processRegion : DescribeInstances: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_image",
+			"account":   accountId,
+			"region":    *region.RegionName,
+			"errString": err.Error(),
+		}).Error("failed to get image list")
 		return resultMap, err
 	}
 	resultMap, err = getImages(tableConfig, accountId, svc, region, filters)
@@ -184,25 +194,22 @@ func processAccountDescribeImages(account *utilities.ExtensionConfigurationAwsAc
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	regions, err := extaws.FetchRegions(awsSession)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_image"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_image",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
 		result, err := processRegionDescribeImages(tableConfig, account, region)
 		if err != nil {
-			fmt.Println("processRegion: ", err)
-			log.Fatal(err)
 			return resultMap, err
 		}
 		resultMap = append(resultMap, result...)

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/Uptycs/cloudquery/utilities"
 
@@ -48,7 +48,10 @@ func DescribeSubnetsColumns() []table.ColumnDefinition {
 func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_subnet",
+			"account":   "default",
+		}).Info("processing account")
 		results, err := processAccountDescribeSubnets(nil)
 		if err != nil {
 			return resultMap, err
@@ -56,10 +59,12 @@ func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryCon
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			fmt.Println("Processing account:" + account.ID)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_ec2_subnet",
+				"account":   account.ID,
+			}).Info("processing account")
 			results, err := processAccountDescribeSubnets(&account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -70,18 +75,23 @@ func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryCon
 }
 
 func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
-	fmt.Println("Processing region:" + *region.RegionName + ", EndPoint:" + *region.Endpoint)
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, *region.RegionName)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 
 	accountId := utilities.AwsAccountId
 	if account != nil {
 		accountId = account.ID
 	}
+
+	utilities.GetLogger().WithFields(log.Fields{
+		"tableName": "aws_ec2_subnet",
+		"account":   accountId,
+		"region":    *region.RegionName,
+	}).Debug("processing region")
+
 	svc := ec2.New(sess)
 	params := &ec2.DescribeSubnetsInput{}
 
@@ -89,8 +99,13 @@ func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *u
 		func(page *ec2.DescribeSubnetsOutput, lastPage bool) bool {
 			byteArr, err := json.Marshal(page)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "error: %v\n", err)
-				os.Exit(1)
+				utilities.GetLogger().WithFields(log.Fields{
+					"tableName": "aws_ec2_subnet",
+					"account":   accountId,
+					"region":    *region.RegionName,
+					"errString": err.Error(),
+				}).Error("failed to marshal response")
+				return lastPage
 			}
 			table := utilities.Table{}
 			table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
@@ -101,8 +116,13 @@ func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *u
 			return lastPage
 		})
 	if err != nil {
-		fmt.Println("processRegion : DescribeSubnets: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_subnet",
+			"account":   accountId,
+			"region":    *region.RegionName,
+			"task":      "DescribeSubnets",
+			"errString": err.Error(),
+		}).Error("failed to process region")
 		return resultMap, err
 	}
 	return resultMap, nil
@@ -112,25 +132,22 @@ func processAccountDescribeSubnets(account *utilities.ExtensionConfigurationAwsA
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	regions, err := extaws.FetchRegions(awsSession)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_subnet"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "aws_ec2_subnet",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
 		result, err := processRegionDescribeSubnets(tableConfig, account, region)
 		if err != nil {
-			fmt.Println("processRegion: ", err)
-			log.Fatal(err)
 			return resultMap, err
 		}
 		resultMap = append(resultMap, result...)
