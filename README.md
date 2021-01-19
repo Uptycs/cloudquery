@@ -199,7 +199,7 @@ And identify list of scheduled queries and their intervals and place them in `os
       "interval": 120
     },
     "AZURE_COMPUTE_VM": {
-      "query": "SELECT * FROM aws_s3_bucket;",
+      "query": "SELECT * FROM azure_compute_vm;",
       "interval": 120
     }
   }
