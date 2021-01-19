@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 echo "$1" 
-echo "daya sankar"
 
 
 
