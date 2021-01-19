@@ -211,6 +211,6 @@ Once all all the required files under config, run the following commands.
 
 `mkdir ~/query-results` on your host
 
-`sudo docker run -d --rm -v ~/config:/cloudquery/config -v ~/query-results:/var/log/osqueryd --name cloudquery uptycsdev/cloudconnector:t7 osqueryd`
+`sudo docker run -d --rm -v ~/config:/cloudquery/config -v ~/query-results:/var/log/osquery --name cloudquery uptycsdev/cloudconnector:t7 osqueryd`
 
 Now query results can be seen in ~/query-results
