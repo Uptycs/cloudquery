@@ -49,7 +49,7 @@ one can add support for new tables easily, and configurable so that one can chan
 - Restart osquery service.
   - `sudo service osqueryd restart`
 
-### Docker Container
+### Clodquery with osqueryi Docker Container
 
 #### Create cloud configurations directory
 
