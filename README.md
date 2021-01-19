@@ -59,7 +59,7 @@ one can add support for new tables easily, and configurable so that one can chan
   - `mkdir ~/config` on the machine where docker container is started
   - ~/config from the host would be mounted to /cloudquery/config inside container 
 - Copy `extension_config.json.sample` to your new config directory on your host:
-  - `cp extension/extension_config.json.sample ~/config/extension_config.json` [extension_config.json.sample]: https://github.com/Uptycs/cloudquery/blob/master/entrypoint.sh
+  - `cp extension/extension_config.json.sample ~/config/extension_config.json` [example extension_config.json.sample]: https://github.com/Uptycs/cloudquery/blob/master/extension_config_template.json
 
 - If using aws, copy your aws credentials:
   - `cp ~/.aws/credentials ~/config`
