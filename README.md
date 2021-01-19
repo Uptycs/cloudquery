@@ -209,7 +209,7 @@ And identify list of scheduled queries and their intervals and place them in `os
 
 Once all all the required files under config, run the following commands.
 
-`mkdir ~/query-results`
+`mkdir ~/query-results` on your host
 
 `sudo docker run -it --rm -v ~/config:/cloudquery/config -v ~/query-results:/var/log/osqueryd --name cloudquery uptycsdev/cloudconnector:t7 osqueryd`
 
