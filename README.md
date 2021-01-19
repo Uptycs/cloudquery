@@ -49,23 +49,72 @@ one can add support for new tables easily, and configurable so that one can chan
 - Restart osquery service.
   - `sudo service osqueryd restart`
 
-### Docker Container
+### Clodquery with osqueryi Docker Container
 
 #### Create cloud configurations directory
 
-- Create a config directory to hold the credentials for your cloud accounts (~/config is an example, but this could be any directory):
-  - `mkdir ~/config`
-- Copy `extension_config.json.sample` to your new config directory:
+- Create a config directory on host to hold the credentials for your cloud accounts (~/config is an example, but this could be any directory):
+
+
+  - `mkdir ~/config` on the machine where docker container is started
+  - ~/config from the host would be mounted to /cloudquery/config inside container 
+- Copy `extension_config.json.sample` to your new config directory on your host:
   - `cp extension/extension_config.json.sample ~/config/extension_config.json`
+
 - If using aws, copy your aws credentials:
   - `cp ~/.aws/credentials ~/config`
-- If using Google Cloud, copy your json key file for your service account to `~/config`
-- If using Azure, copy the .auth file for you account to `~/config`
-- Edit fields in `extension_config.json` to point to the corresponding credential files in `~/config`
+  - Edit credentialFile field  under aws section inside ~/config/extension_config.json and set to /cloudquery/config/credentials
+
+- If using Google Cloud, copy your json key file cloudConnectorsTrial-serviceAccount.json (cloud be any name) for your service account to `~/config`
+  - `cp ~/cloudConnectorsTrial-serviceAccount.json ~/config`
+  - Edit keyFile field under gcp section inside ~/config/extension_config.json and set to /cloudquery/config/cloudConnectorsTrial-serviceAccount.json 
+
+- If using Azure, copy the my.auth (cloud be any name) file for you account to `~/config`
+  - `cp ~/my.auth ~/config`
+  - Edit authFile  field under azure section inside ~/config/extension_config.json and set to /cloudquery/config/my.auth
+
+
+- After  editing, your  ~/config/extension_config.json  would be looking like as following
+
+```json
+
+{
+  "aws": {
+    "accounts": [
+      {
+        "id": "405961147016",
+        "credentialFile": "/cloudquery/config/credentials",
+        "profileName": "default"
+      }
+    ]
+  },
+  "gcp": {
+    "accounts": [
+      {
+        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json",
+        "projectId": "cloudconnectorstrial"
+      }
+    ]
+  },
+  "azure": {
+    "accounts": [
+      {
+        "subscriptionId": "1af19495-3527-485c-a649-3d158c72d783",
+        "tenantId": "071365e8-8044-4288-9871-883490325e17",
+        "authFile": "/cloudquery/config/my.auth"
+      }
+    ]
+  }
+}
+
+```
+
+
+
 
 #### Run container with osqueryi
 
-`sudo docker run -it --rm -v ~/config:/cloudquery/config --name cloudquery uptycsdev/cloudconnector:t6`
+`sudo docker run -it --rm -v ~/config:/cloudquery/config --name cloudquery uptycsdev/cloudconnector:t7`
 
 ### Supported tables
 
