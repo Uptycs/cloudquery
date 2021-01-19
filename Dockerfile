@@ -42,7 +42,10 @@ COPY --from=build ${OLD_DIR}/gcp/compute/table_config.json ${CLOUDQUERY_DIR}/gcp
 COPY --from=build ${OLD_DIR}/gcp/storage/table_config.json ${CLOUDQUERY_DIR}/gcp/storage/
 COPY --from=build ${OLD_DIR}/azure/compute/table_config.json ${CLOUDQUERY_DIR}/azure/compute/
 
+    
+
 WORKDIR ${CLOUDQUERY_DIR}
+COPY  entrypoint.sh ${CLOUDQUERY_DIR}/
 RUN set -ex; \
   DEBIAN_FRONTEND=noninteractive apt-get update -y && \
   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
@@ -56,6 +59,11 @@ RUN set -ex; \
   mkdir -p /cloudquery/config; \
   chmod 700 ${CLOUDQUERY_EXE}; \
   apt-get purge -y wget; \
+  apt-get install -y supervisor; \
+  chmod 755 ${CLOUDQUERY_DIR}/entrypoint.sh; \ 
   rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/*;
 
+COPY osquery.flags ${SOFTWARE_DIR}/ 
+COPY osqueryd_script.conf /etc/supervisor/conf.d/
+ENTRYPOINT ["/cloudquery/extension/entrypoint.sh"]
 CMD ["osqueryi", "--nodisable_extensions", "--extension", "/cloudquery/bin/extension"]
