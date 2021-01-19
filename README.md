@@ -100,9 +100,9 @@ one can add support for new tables easily, and configurable so that one can chan
   - Edit profileName  field under aws section inside ~/config/extension_config.json and set to your  profile name
   - Guide to create AWS credentials: https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html
 
-- If using Google Cloud, copy your json key file cloudConnectorsTrial-serviceAccount.json (cloud be any name) for your service account to `~/config`
-  - `cp ~/cloudConnectorsTrial-serviceAccount.json ~/config`
-  - Edit keyFile field under gcp section inside ~/config/extension_config.json and set to /cloudquery/config/cloudConnectorsTrial-serviceAccount.json
+- If using Google Cloud, copy your json key file your-serviceAccount.json (cloud be any name) for your service account to `~/config`
+  - `cp ~/your-serviceAccount.json ~/config`
+  - Edit keyFile field under gcp section inside ~/config/extension_config.json and set to /cloudquery/config/your-serviceAccount.json
   - Guide to create GCP credentials: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 
 - If using Azure, copy the my.auth (cloud be any name) file for you account to `~/config`
@@ -129,7 +129,7 @@ one can add support for new tables easily, and configurable so that one can chan
   "gcp": {
     "accounts": [
       {
-        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json"
+        "keyFile": "/cloudquery/config/your-serviceAccount.json"
       }
     ]
   },
