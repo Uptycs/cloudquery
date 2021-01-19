@@ -82,6 +82,7 @@ var tableConfigJSON = `
 `
 
 func TestMain(m *testing.M) {
+	utilities.CreateLogger(true, 20, 1, 30)
 	readErr := utilities.ReadTableConfig([]byte(tableConfigJSON))
 	if readErr != nil {
 		os.Exit(1)
