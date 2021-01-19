@@ -4,9 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
-
 	"github.com/Uptycs/cloudquery/utilities"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 

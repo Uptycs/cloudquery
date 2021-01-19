@@ -104,20 +104,30 @@ func readTableConfigurations(homeDir string) {
 	configFileList = append(configFileList, azureConfigFileList...)
 
 	for _, fileName := range configFileList {
-		fmt.Println("Reading config file:" + homeDir + string(os.PathSeparator) + fileName)
+		utilities.GetLogger().WithFields(log.Fields{
+			"fileName": homeDir + string(os.PathSeparator) + fileName,
+		}).Info("reading config file")
 		filePath := homeDir + string(os.PathSeparator) + fileName
 		jsonEncoded, err := ioutil.ReadFile(filePath)
 		if err != nil {
-			fmt.Println("error reading config file:" + homeDir + string(os.PathSeparator) + fileName)
+			utilities.GetLogger().WithFields(log.Fields{
+				"fileName":  homeDir + string(os.PathSeparator) + fileName,
+				"errString": err.Error(),
+			}).Error("failed to read config file")
 			continue
 		}
 		readErr := utilities.ReadTableConfig(jsonEncoded)
 		if readErr != nil {
-			fmt.Println("error parsing json from file:" + homeDir + string(os.PathSeparator) + fileName)
+			utilities.GetLogger().WithFields(log.Fields{
+				"fileName":  homeDir + string(os.PathSeparator) + fileName,
+				"errString": readErr.Error(),
+			}).Error("failed to parse config file")
 			continue
 		}
 	}
-	fmt.Printf("Read config for total %d tables\n", len(utilities.TableConfigurationMap))
+	utilities.GetLogger().WithFields(log.Fields{
+		"totalTables": len(utilities.TableConfigurationMap),
+	}).Info("read all config files")
 }
 
 var gcpComputeHandler = compute.NewGcpComputeHandler(compute.NewGcpComputeImpl())

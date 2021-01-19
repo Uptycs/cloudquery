@@ -6,7 +6,7 @@ import (
 	"fmt"
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"github.com/Uptycs/cloudquery/utilities"
-	"os"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/kolide/osquery-go/plugin/table"
 	"google.golang.org/api/option"
@@ -201,7 +201,6 @@ func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Contex
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 			results, err := handler.processAccountGcpStorageBucket(ctx, &account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -222,7 +221,11 @@ func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx co
 		service, err = handler.svcInterface.NewClient(ctx)
 	}
 	if err != nil {
-		fmt.Println("NewClient() error: ", err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_storage_bucket",
+			"projectId": projectID,
+			"errString": err.Error(),
+		}).Error("failed to create client")
 		return nil, ""
 	}
 	return service, projectID
@@ -234,7 +237,9 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_storage_bucket"]
 	if !ok {
-		fmt.Println("table configuration not found for \"gcp_storage_bucket\"")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_storage_bucket",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found for \"gcp_storage_bucket\"")
 	}
 
@@ -245,7 +250,10 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 	listCall := handler.svcInterface.Buckets(ctx, service, projectID)
 
 	if listCall == nil {
-		fmt.Println("listCall is nil")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_storage_bucket",
+			"projectId": projectID,
+		}).Debug("listCall is nil")
 		return resultMap, nil
 	}
 	p := handler.svcInterface.BucketsNewPager(listCall, 10, "")
@@ -253,16 +261,21 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 		var container = ItemsContainer{}
 		pageToken, err := p.NextPage(&container.Items)
 		if err != nil {
-			fmt.Println("NextPage() error: ", err)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "gcp_storage_bucket",
+				"projectId": projectID,
+				"errString": err.Error(),
+			}).Error("failed to get next page")
 			return resultMap, err
 		}
 
 		byteArr, err := json.Marshal(&container)
 		if err != nil {
-			fmt.Printf("error: %v\n", err)
-			os.Exit(1)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "gcp_storage_bucket",
+				"errString": err.Error(),
+			}).Error("failed to marshal response")
 		}
-		//fmt.Printf("%+v\n", string(byteArr))
 		jsonTable := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range jsonTable.Rows {
 			result := extgcp.RowToMap(row, projectID, "", tableConfig)

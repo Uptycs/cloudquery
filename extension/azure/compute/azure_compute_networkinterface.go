@@ -4,8 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
+	log "github.com/sirupsen/logrus"
 	"sync"
 
 	"github.com/Uptycs/cloudquery/extension/azure"
@@ -57,7 +56,10 @@ func InterfacesColumns() []table.ColumnDefinition {
 func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAzure.Accounts) == 0 {
-		//fmt.Println("Processing default account")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "azure_compute_networkinterface",
+			"account":   "default",
+		}).Info("processing account")
 		results, err := processAccountInterfaces(nil)
 		if err != nil {
 			return resultMap, err
@@ -65,10 +67,12 @@ func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext)
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
-			//fmt.Println("Processing account:" + account.SubscriptionId)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "azure_compute_networkinterface",
+				"account":   account.SubscriptionId,
+			}).Info("processing account")
 			results, err := processAccountInterfaces(&account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -83,22 +87,21 @@ func processAccountInterfaces(account *utilities.ExtensionConfigurationAzureAcco
 	var wg sync.WaitGroup
 	session, err := azure.GetAuthSession(account)
 	if err != nil {
-		fmt.Printf("%v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 	groups, err := azure.GetGroups(session)
 
 	if err != nil {
-		fmt.Printf("%v\n", err)
-		os.Exit(1)
+		return resultMap, err
 	}
 
 	wg.Add(len(groups))
 
 	tableConfig, ok := utilities.TableConfigurationMap["azure_compute_networkinterface"]
 	if !ok {
-		//fmt.Println("getTableConfig: ", err)
-		log.Fatal(err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "azure_compute_networkinterface",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 
@@ -117,14 +120,22 @@ func getInterfaces(session *azure.AzureSession, rg string, wg *sync.WaitGroup, r
 
 	for resourceItr, err := svcClient.ListComplete(context.Background(), rg); resourceItr.NotDone(); err = resourceItr.Next() {
 		if err != nil {
-			log.Print("got error while traverising RG list: ", err)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName":     "azure_compute_networkinterface",
+				"resourceGroup": rg,
+				"errString":     err.Error(),
+			}).Error("failed to get resource list")
+			continue
 		}
 
 		resource := resourceItr.Value()
 		byteArr, err := json.Marshal(resource)
 		if err != nil {
-			fmt.Println("Interfaces marshal: ", err)
-			log.Fatal(err)
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName":     "azure_compute_networkinterface",
+				"resourceGroup": rg,
+				"errString":     err.Error(),
+			}).Error("failed to marshal response")
 			continue
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
