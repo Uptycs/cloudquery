@@ -60,10 +60,44 @@ one can add support for new tables easily, and configurable so that one can chan
   - ~/config from the host would be mounted to /cloudquery/config inside container 
 - Copy `extension_config.json.sample` to your new config directory on your host:
   - `cp extension/extension_config.json.sample ~/config/extension_config.json`
+  -  example extension_config.json.sample is given below.
+
+```json
+{
+  "aws": {
+    "accounts": [
+      {
+        "id": "12712753535",
+        "credentialFile": "/cloudquery/config/credentials",
+        "profileName": "default"
+      }
+    ]
+  },
+  "gcp": {
+    "accounts": [
+      {
+        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json"
+      }
+    ]
+  },
+  "azure": {
+    "accounts": [
+      {
+        "subscriptionId": "3636-3322-dddd-sss-2343444",
+        "tenantId": "2377-456-123-266-128635",
+        "authFile": "/cloudquery/config/my.auth"
+      }
+    ]
+  }
+}
+
+```
 
 - If using aws, copy your aws credentials:
   - `cp ~/.aws/credentials ~/config`
   - Edit credentialFile field  under aws section inside ~/config/extension_config.json and set to /cloudquery/config/credentials
+  - Edit id field under aws section inside ~/config/extension_config.json and set to your account id
+  - Edit profileName  field under aws section inside ~/config/extension_config.json and set to your  profile name
 
 - If using Google Cloud, copy your json key file cloudConnectorsTrial-serviceAccount.json (cloud be any name) for your service account to `~/config`
   - `cp ~/cloudConnectorsTrial-serviceAccount.json ~/config`
@@ -72,6 +106,7 @@ one can add support for new tables easily, and configurable so that one can chan
 - If using Azure, copy the my.auth (cloud be any name) file for you account to `~/config`
   - `cp ~/my.auth ~/config`
   - Edit authFile  field under azure section inside ~/config/extension_config.json and set to /cloudquery/config/my.auth
+  - Edit subscriptionId and tenantId fields under azure section inside ~/config/extension_config.json and set to actual values
 
 
 - After  editing, your  ~/config/extension_config.json  would be looking like as following
@@ -114,6 +149,8 @@ one can add support for new tables easily, and configurable so that one can chan
 #### Run container with osqueryi
 
 `sudo docker run -it --rm -v ~/config:/cloudquery/config --name cloudquery uptycsdev/cloudconnector:t7`
+
+Press enter to get to query prompt
 
 ### Supported tables
 
