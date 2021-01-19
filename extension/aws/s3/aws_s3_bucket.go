@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/Uptycs/cloudquery/utilities"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -73,7 +74,7 @@ func ListBucketsColumns() []table.ColumnDefinition {
 func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		//fmt.Println("Processing default account")
 		results, err := processAccountListBuckets(nil)
 		if err != nil {
 			return resultMap, err
@@ -81,7 +82,7 @@ func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			fmt.Println("Processing account:" + account.ID)
+			//fmt.Println("Processing account:" + account.ID)
 			results, err := processAccountListBuckets(&account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
@@ -98,7 +99,7 @@ func getBucketLocation(svc *s3.S3, bucketName *string) (string, error) {
 	bucketLocationInput := s3.GetBucketLocationInput{Bucket: bucketName}
 	getBucketLocationOutput, err := svc.GetBucketLocation(&bucketLocationInput)
 	if err != nil {
-		fmt.Println("Failed to get bucket location ", err)
+		//fmt.Println("Failed to get bucket location ", err)
 		log.Fatal(err)
 		return "", err
 	}
@@ -291,7 +292,7 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 		accountId = account.ID
 	}
 	svc := s3.New(sess)
-	fmt.Println("Processing bucket:" + bucket.Name)
+	//fmt.Println("Processing bucket:" + bucket.Name)
 	bucket.getBucketAccelerateConfiguration(svc)
 	bucket.getBucketAcl(svc)
 	bucket.getBucketCorsConfiguration(svc)
@@ -335,7 +336,7 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	// Get list of buckets
 	output, err := svc.ListBuckets(params)
 	if err != nil {
-		fmt.Println("ListBuckets.Page: ", err)
+		//fmt.Println("ListBuckets.Page: ", err)
 		log.Fatal(err)
 		return resultMap, err
 	}
@@ -360,7 +361,7 @@ func processAccountListBuckets(account *utilities.ExtensionConfigurationAwsAccou
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_s3_bucket"]
 	if !ok {
-		fmt.Println("failed to get TableConfig")
+		//fmt.Println("failed to get TableConfig")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	result, err := processListBuckets(tableConfig, account)

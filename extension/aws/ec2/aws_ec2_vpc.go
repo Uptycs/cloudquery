@@ -48,7 +48,7 @@ func DescribeVpcsColumns() []table.ColumnDefinition {
 func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		//fmt.Println("Processing default account")
 		results, err := processAccountDescribeVpcs(nil)
 		if err != nil {
 			return resultMap, err
@@ -56,7 +56,7 @@ func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContex
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			fmt.Println("Processing account:" + account.ID)
+			//fmt.Println("Processing account:" + account.ID)
 			results, err := processAccountDescribeVpcs(&account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
@@ -70,7 +70,7 @@ func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContex
 }
 
 func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
-	fmt.Println("Processing region:" + *region.RegionName + ", EndPoint:" + *region.Endpoint)
+	//fmt.Println("Processing region:" + *region.RegionName + ", EndPoint:" + *region.Endpoint)
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, *region.RegionName)
 	if err != nil {
@@ -101,7 +101,7 @@ func processRegionDescribeVpcs(tableConfig *utilities.TableConfig, account *util
 			return lastPage
 		})
 	if err != nil {
-		fmt.Println("processRegion : DescribeVpcs: ", err)
+		//fmt.Println("processRegion : DescribeVpcs: ", err)
 		log.Fatal(err)
 		return resultMap, err
 	}
@@ -122,14 +122,14 @@ func processAccountDescribeVpcs(account *utilities.ExtensionConfigurationAwsAcco
 	}
 	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_vpc"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
+		//fmt.Println("getTableConfig: ", err)
 		log.Fatal(err)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
 		result, err := processRegionDescribeVpcs(tableConfig, account, region)
 		if err != nil {
-			fmt.Println("processRegion: ", err)
+			//fmt.Println("processRegion: ", err)
 			log.Fatal(err)
 			return resultMap, err
 		}

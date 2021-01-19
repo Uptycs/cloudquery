@@ -57,7 +57,7 @@ func InterfacesColumns() []table.ColumnDefinition {
 func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAzure.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		//fmt.Println("Processing default account")
 		results, err := processAccountInterfaces(nil)
 		if err != nil {
 			return resultMap, err
@@ -65,7 +65,7 @@ func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext)
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
-			fmt.Println("Processing account:" + account.SubscriptionId)
+			//fmt.Println("Processing account:" + account.SubscriptionId)
 			results, err := processAccountInterfaces(&account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
@@ -97,7 +97,7 @@ func processAccountInterfaces(account *utilities.ExtensionConfigurationAzureAcco
 
 	tableConfig, ok := utilities.TableConfigurationMap["azure_compute_networkinterface"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
+		//fmt.Println("getTableConfig: ", err)
 		log.Fatal(err)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
