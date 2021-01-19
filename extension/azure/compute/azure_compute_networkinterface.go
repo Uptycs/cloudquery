@@ -18,6 +18,7 @@ import (
 
 func InterfacesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
+		table.TextColumn("subscription_id"),
 		table.TextColumn("etag"),
 		table.TextColumn("id"),
 		table.TextColumn("location"),

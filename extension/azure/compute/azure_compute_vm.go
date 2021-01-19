@@ -18,6 +18,7 @@ import (
 
 func VirtualMachinesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
+		table.TextColumn("subscription_id"),
 		table.TextColumn("id"),
 		table.TextColumn("identity"),
 		//table.TextColumn("identity_principal_id"),
