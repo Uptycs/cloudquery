@@ -1,4 +1,4 @@
-# CloudQuery
+# CloudQuery powered by Osquery
 
 CloudQuery is OsQuery extension to fetch cloud telemetry from AWS, GCP, and Azure. It is extensible so that  
 one can add support for new tables easily, and configurable so that one can change the table schema as well.
