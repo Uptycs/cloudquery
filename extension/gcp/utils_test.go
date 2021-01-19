@@ -1,6 +1,7 @@
 package gcp
 
 import (
+	"os"
 	"testing"
 
 	"github.com/Uptycs/cloudquery/utilities"
@@ -17,6 +18,11 @@ var tableConfigJSON = `
     	"parsedAttributes": []
 	}
 }`
+
+func TestMain(m *testing.M) {
+	utilities.CreateLogger(true, 20, 1, 30)
+	os.Exit(m.Run())
+}
 
 func TestRowToMap(t *testing.T) {
 	err := utilities.ReadTableConfig([]byte(tableConfigJSON))

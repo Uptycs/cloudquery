@@ -2,6 +2,7 @@ package utilities
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -61,6 +62,11 @@ var rowToMapTestIput = []rowToMapTestInputType{
 	{"Description", "description", "testDesc"},
 	{"Item_Object_Name", "name", "testName"},
 	{"ID", "id", 1234},
+}
+
+func TestMain(m *testing.M) {
+	CreateLogger(true, 20, 1, 30)
+	os.Exit(m.Run())
 }
 
 func TestReadTableConfig(t *testing.T) {
