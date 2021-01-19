@@ -61,8 +61,8 @@ one can add support for new tables easily, and configurable so that one can chan
 - Copy `extension_config.json.sample` to your new config directory on your host:
   - `cp extension/extension_config.json.sample ~/config/extension_config.json`
   -  example extension_config.json.sample is given below.
-   ```json
 
+```json
 {
   "aws": {
     "accounts": [
