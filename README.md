@@ -115,6 +115,8 @@ one can add support for new tables easily, and configurable so that one can chan
 
 `sudo docker run -it --rm -v ~/config:/cloudquery/config --name cloudquery uptycsdev/cloudconnector:t7`
 
+Press enter to get osquery prompt
+
 ### Supported tables
 
 #### AWS
