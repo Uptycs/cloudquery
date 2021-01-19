@@ -2,6 +2,7 @@ package aws
 
 import (
 	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws/credentials"
 
 	"github.com/Uptycs/cloudquery/utilities"

@@ -51,13 +51,15 @@ func (tab *Table) Print() {
 
 func (tab *Table) AddAttribute(name string, value interface{}) {
 	// Add attribute only if it is configured
-	if _, ok := tab.ParsedAttributeConfigMap[name]; ok {
-		if len(tab.Rows) == 0 {
-			row := make(map[string]interface{})
-			tab.Rows = append(tab.Rows, row)
-		}
-		for _, item := range tab.Rows {
-			item[name] = value
+	if attrConfig, ok := tab.ParsedAttributeConfigMap[name]; ok {
+		if attrConfig.Enabled {
+			if len(tab.Rows) == 0 {
+				row := make(map[string]interface{})
+				tab.Rows = append(tab.Rows, row)
+			}
+			for _, item := range tab.Rows {
+				item[name] = value
+			}
 		}
 	}
 }
