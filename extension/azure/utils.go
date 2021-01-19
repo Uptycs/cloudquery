@@ -65,6 +65,8 @@ func GetAuthSession(account *utilities.ExtensionConfigurationAzureAccount) (*Azu
 	return &session, nil
 }
 
+// RowToMap converts JSON row into osquery row.
+// If configured it will copy some metadata vaues into appropriate columns
 func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string, resourceGroup string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 	if len(tableConfig.Azure.SubscriptionIdAttribute) != 0 {
@@ -76,11 +78,8 @@ func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string
 	if len(tableConfig.Azure.ResourceGroupAttribute) != 0 {
 		result[tableConfig.Azure.ResourceGroupAttribute] = resourceGroup
 	}
-	for key, value := range tableConfig.GetParsedAttributeConfigMap() {
-		if row[key] != nil {
-			result[value.TargetName] = utilities.GetStringValue(row[key])
-		}
-	}
+
+	result = utilities.RowToMap(result, row, tableConfig)
 	return result
 }
 

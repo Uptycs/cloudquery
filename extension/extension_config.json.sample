@@ -22,8 +22,7 @@
   "gcp": {
     "accounts": [
       {
-        "keyFile": "/home/user/gcp/myproject-service-account.json",
-        "projectId": "myProject1"
+        "keyFile": "/home/user/gcp/myproject-service-account.json"
       }
     ]
   },

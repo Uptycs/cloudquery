@@ -97,7 +97,27 @@ func readExtensionConfigurations(filePath string) error {
 }
 
 func readTableConfigurations(homeDir string) {
-	utilities.ReadTableConfigurations(homeDir)
+	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json"}
+	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json"}
+	var azureConfigFileList = []string{"azure/compute/table_config.json"}
+	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
+	configFileList = append(configFileList, azureConfigFileList...)
+
+	for _, fileName := range configFileList {
+		fmt.Println("Reading config file:" + homeDir + string(os.PathSeparator) + fileName)
+		filePath := homeDir + string(os.PathSeparator) + fileName
+		jsonEncoded, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			fmt.Println("error reading config file:" + homeDir + string(os.PathSeparator) + fileName)
+			continue
+		}
+		readErr := utilities.ReadTableConfig(jsonEncoded)
+		if readErr != nil {
+			fmt.Println("error parsing json from file:" + homeDir + string(os.PathSeparator) + fileName)
+			continue
+		}
+	}
+	fmt.Printf("Read config for total %d tables\n", len(utilities.TableConfigurationMap))
 }
 
 var gcpComputeHandler = compute.NewGcpComputeHandler(compute.NewGcpComputeImpl())

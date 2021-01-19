@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/kolide/osquery-go/plugin/table"
+	"github.com/stretchr/testify/assert"
 	"google.golang.org/api/compute/v1"
 )
 
@@ -19,35 +20,21 @@ func TestGcpComputeDiskGenerate(t *testing.T) {
 	// TODO: Test more attributes
 	diskList := []*compute.Disk{
 		{
-			Name:   "Test1",
-			SizeGb: 20,
+			Description: "Test1",
+			SizeGb:      20,
 		},
 		{
-			Name: "Test2",
+			Description: "Test2",
 		},
 	}
 	mockSvc.AddDisks(diskList)
 
 	result, err := myGcpTest.GcpComputeDisksGenerate(ctx, qCtx)
-	if err != nil {
-		t.Errorf("err: %s", err.Error())
-		return
-	}
+	assert.Nil(t, err)
 
-	if len(result) != len(diskList) {
-		t.Errorf("Unexpected result length. expected %d. got %d", len(diskList), len(result))
-		return
-	}
+	assert.Equal(t, len(diskList), len(result))
+	assert.Equal(t, diskList[0].Name, result[0]["name"])
+	assert.Equal(t, strconv.FormatInt(diskList[0].SizeGb, 10), result[0]["size_gb"])
 
-	if result[0]["name"] != diskList[0].Name {
-		t.Errorf("Unexpected attribute value: %s != %s", diskList[0].Name, result[0]["name"])
-		return
-	}
-
-	if result[0]["size_gb"] != strconv.FormatInt(diskList[0].SizeGb, 10) {
-		t.Errorf("Unexpected attribute value")
-		return
-	}
-
-	mockSvc.ClearInstances()
+	mockSvc.ClearDisks()
 }

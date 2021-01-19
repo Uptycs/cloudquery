@@ -1,4 +1,4 @@
-package gcp
+package azure
 
 import (
 	"testing"
@@ -11,9 +11,11 @@ var tableConfigJSON = `
 {
 	"test_table_1": {
     	"aws": {},
-    	"gcp": {
-      		"projectIdAttribute": "project_id"
-    	},
+		"gcp": {},
+		"azure": {
+			"subscriptionIdAttribute": "subscription_id",
+			"tenantIdAttribute": "abc"
+		},
     	"parsedAttributes": []
 	}
 }`
@@ -22,11 +24,11 @@ func TestRowToMap(t *testing.T) {
 	err := utilities.ReadTableConfig([]byte(tableConfigJSON))
 	assert.Nil(t, err)
 
-	projName, zone := "test-project", "us-east4-zone1"
+	subID, tenantID, rscGroup := "test-account", "us-east4", ""
 	inRow := make(map[string]interface{})
 	tabConfig := utilities.TableConfigurationMap["test_table_1"]
-	outRow := RowToMap(inRow, projName, zone, tabConfig)
+	outRow := RowToMap(inRow, subID, tenantID, rscGroup, tabConfig)
 
-	assert.Equal(t, projName, outRow["project_id"])
-	assert.Equal(t, "", outRow["zone"])
+	assert.Equal(t, subID, outRow["subscription_id"])
+	assert.Equal(t, tenantID, outRow["abc"])
 }

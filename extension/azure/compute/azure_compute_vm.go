@@ -296,8 +296,7 @@ func getVirtualMachines(session *azure.AzureSession, rg string, wg *sync.WaitGro
 			log.Fatal(err)
 			continue
 		}
-		table := utilities.Table{}
-		table.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
 			result := extazure.RowToMap(row, session.SubscriptionId, "", rg, tableConfig)
 			*resultMap = append(*resultMap, result)

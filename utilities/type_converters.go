@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GetStringValue(value interface{}) string {
+func getStringValue(value interface{}) string {
 	if value == nil {
 		return ""
 	}
@@ -53,7 +53,7 @@ func GetStringValue(value interface{}) string {
 	return ""
 }
 
-func GetFloat64Value(value interface{}) float64 {
+func getFloat64Value(value interface{}) float64 {
 	if value == nil {
 		return 0
 	}
@@ -99,7 +99,7 @@ func GetFloat64Value(value interface{}) float64 {
 	return 0
 }
 
-func GetIntegerValue(value interface{}) int {
+func getIntegerValue(value interface{}) int {
 	if value == nil {
 		return 0
 	}
@@ -146,7 +146,7 @@ func GetIntegerValue(value interface{}) int {
 }
 
 // Get boolean value of given variable
-func GetBooleanValue(value interface{}) bool {
+func getBooleanValue(value interface{}) bool {
 	if value == nil {
 		return false
 	}

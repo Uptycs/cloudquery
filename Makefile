@@ -26,7 +26,10 @@ install:
 test:
 	@set -x; \
 	cd ${EXTENSION-DIR}; \
-	go test ./...
+	go test -v ./...
+	@set -x; \
+	cd utilities; \
+	go test -v ./...
 
 clean:
 	rm -rf ${BIN-DIR}/*
