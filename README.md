@@ -76,6 +76,7 @@ one can add support for new tables easily, and configurable so that one can chan
 
 - After  editing, your  ~/config/extension_config.json  would be looking like as following
 
+```json
 
 {
   "aws": {
@@ -105,6 +106,8 @@ one can add support for new tables easily, and configurable so that one can chan
     ]
   }
 }
+
+```
 
 
 
