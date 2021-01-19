@@ -18,8 +18,8 @@ type AwsConfig struct {
 }
 
 type GcpConfig struct {
-	ProjectIdAttribute string   `json:"projectIdAttribute,omitempty"`
-	ZoneAttribute      string   `json:"zoneAttribute,omitempty"`
+	ProjectIdAttribute string `json:"projectIdAttribute,omitempty"`
+	ZoneAttribute      string `json:"zoneAttribute,omitempty"`
 }
 
 type AzureConfig struct {

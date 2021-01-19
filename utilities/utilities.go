@@ -22,6 +22,11 @@ func ReadTableConfig(jsonEncoded []byte) error {
 	}
 	for tableName, config := range configurations {
 		fmt.Println("Found configuration for table:" + tableName)
+		for _, attr := range config.ParsedAttributes {
+			if attr.SourceName == "" || attr.TargetName == "" || attr.TargetType == "" {
+				return fmt.Errorf("invalid parsedAttribute entry: %+v", attr)
+			}
+		}
 		config.initParsedAttributeConfigMap()
 		TableConfigurationMap[tableName] = config
 		//fmt.Printf("So far Read config for %d tables\n", len(utilities.TableConfigurationMap))
