@@ -59,7 +59,39 @@ one can add support for new tables easily, and configurable so that one can chan
   - `mkdir ~/config` on the machine where docker container is started
   - ~/config from the host would be mounted to /cloudquery/config inside container 
 - Copy `extension_config.json.sample` to your new config directory on your host:
-  - `cp extension/extension_config.json.sample ~/config/extension_config.json` [example extension_config.json.sample]: https://github.com/Uptycs/cloudquery/blob/master/extension_config_template.json
+  - `cp extension/extension_config.json.sample ~/config/extension_config.json`
+  -  example extension_config.json.sample is given below.
+   ```json
+
+{
+  "aws": {
+    "accounts": [
+      {
+        "id": "12712753535",
+        "credentialFile": "/cloudquery/config/credentials",
+        "profileName": "default"
+      }
+    ]
+  },
+  "gcp": {
+    "accounts": [
+      {
+        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json"
+      }
+    ]
+  },
+  "azure": {
+    "accounts": [
+      {
+        "subscriptionId": "3636-3322-dddd-sss-2343444",
+        "tenantId": "2377-456-123-266-128635",
+        "authFile": "/cloudquery/config/my.auth"
+      }
+    ]
+  }
+}
+
+```
 
 - If using aws, copy your aws credentials:
   - `cp ~/.aws/credentials ~/config`
