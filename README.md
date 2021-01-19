@@ -153,11 +153,7 @@ one can add support for new tables easily, and configurable so that one can chan
 
 `sudo docker run -it --rm -v ~/config:/cloudquery/config --name cloudquery uptycsdev/cloudconnector:t7`
 
-<<<<<<< HEAD
 Press enter to get osquery prompt
-=======
-Press enter to get to query prompt
->>>>>>> 20b615dcd03b006011f6c92f44bf02a3347019b0
 
 ### Supported tables
 
@@ -187,7 +183,7 @@ TODO
 
 ### Clodquery with osqueryd Docker Container
 
-#### Repeat Cinfiguration under `"Create cloud configurations directory"`
+#### Repeat Configuration under `"Create cloud configurations directory"`
 
 And identify list of scheduled queries and their intervals and place them in `osqyery.conf` inside ~/config on the host. Example osquery.conf is given below.
 
@@ -216,3 +212,5 @@ Once all all the required files under config, run the following commands.
 `mkdir ~/query-results`
 
 `sudo docker run -it --rm -v ~/config:/cloudquery/config -v ~/query-results:/var/log/osqueryd --name cloudquery uptycsdev/cloudconnector:t7 osqueryd`
+
+Now query results can be seen in ~/query-results
