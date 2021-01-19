@@ -184,3 +184,35 @@ Press enter to get to query prompt
 ### Re-configuring a table
 
 TODO
+
+### Clodquery with osqueryd Docker Container
+
+#### Repeat Cinfiguration under `"Create cloud configurations directory"`
+
+And identify list of scheduled queries and their intervals and place them in `osqyery.conf` inside ~/config on the host. Example osquery.conf is given below.
+
+```json
+{
+  "schedule": {
+    "GCP_COMP_NET": {
+      "query": "SELECT * FROM  gcp_compute_network;",
+      "interval": 120
+    },
+    "AWS_S3_BUCK": {
+      "query": "SELECT * FROM aws_s3_bucket;",
+      "interval": 120
+    },
+    "AZURE_COMPUTE_VM": {
+      "query": "SELECT * FROM aws_s3_bucket;",
+      "interval": 120
+    }
+  }
+}
+```
+
+
+Once all all the required files under config, run the following commands.
+
+`mkdir ~/query-results`
+
+`sudo docker run -it --rm -v ~/config:/cloudquery/config -v ~/query-results:/var/log/osqueryd --name cloudquery uptycsdev/cloudconnector:t7 osqueryd`
