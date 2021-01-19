@@ -56,7 +56,7 @@ RUN set -ex; \
   apt-get update; \
   dpkg -i /tmp/osquery.deb && \
   /etc/init.d/osqueryd stop && \
-  mkdir -p /cloudquery/config; \
+  mkdir -p /cloudquery/extension/config; \
   chmod 700 ${CLOUDQUERY_EXE}; \
   apt-get purge -y wget; \
   apt-get install -y supervisor; \
