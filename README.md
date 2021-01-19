@@ -82,7 +82,7 @@ one can add support for new tables easily, and configurable so that one can chan
   "aws": {
     "accounts": [
       {
-        "id": "405961147016",
+        "id": "xxxxxxxxxxxx",
         "credentialFile": "/cloudquery/config/credentials",
         "profileName": "default"
       }
@@ -91,16 +91,15 @@ one can add support for new tables easily, and configurable so that one can chan
   "gcp": {
     "accounts": [
       {
-        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json",
-        "projectId": "cloudconnectorstrial"
+        "keyFile": "/cloudquery/config/cloudConnectorsTrial-serviceAccount.json"
       }
     ]
   },
   "azure": {
     "accounts": [
       {
-        "subscriptionId": "1af19495-3527-485c-a649-3d158c72d783",
-        "tenantId": "071365e8-8044-4288-9871-883490325e17",
+        "subscriptionId": "dfffe-3322-dddd-sss-2343444",
+        "tenantId": "3333-dfs-333-sfe-121124",
         "authFile": "/cloudquery/config/my.auth"
       }
     ]
