@@ -59,11 +59,13 @@ one can add support for new tables easily, and configurable so that one can chan
   - `mkdir ~/config` on the machine where docker container is started
   - ~/config from the host would be mounted to /cloudquery/config inside container 
 - Copy `extension_config.json.sample` to your new config directory on your host:
-  - `cp extension/extension_config.json.sample ~/config/extension_config.json`
+  - `cp extension/extension_config.json.sample ~/config/extension_config.json` [extension_config.json.sample]: https://github.com/Uptycs/cloudquery/blob/master/entrypoint.sh
 
 - If using aws, copy your aws credentials:
   - `cp ~/.aws/credentials ~/config`
   - Edit credentialFile field  under aws section inside ~/config/extension_config.json and set to /cloudquery/config/credentials
+  - Edit id field under aws section inside ~/config/extension_config.json and set to your account id
+  - Edit profileName  field under aws section inside ~/config/extension_config.json and set to your  profile name
 
 - If using Google Cloud, copy your json key file cloudConnectorsTrial-serviceAccount.json (cloud be any name) for your service account to `~/config`
   - `cp ~/cloudConnectorsTrial-serviceAccount.json ~/config`
@@ -72,6 +74,7 @@ one can add support for new tables easily, and configurable so that one can chan
 - If using Azure, copy the my.auth (cloud be any name) file for you account to `~/config`
   - `cp ~/my.auth ~/config`
   - Edit authFile  field under azure section inside ~/config/extension_config.json and set to /cloudquery/config/my.auth
+  - Edit subscriptionId and tenantId fields under azure section inside ~/config/extension_config.json and set to actual values
 
 
 - After  editing, your  ~/config/extension_config.json  would be looking like as following
