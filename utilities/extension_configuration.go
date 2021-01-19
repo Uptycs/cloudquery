@@ -1,5 +1,11 @@
 package utilities
 
+type ExtensionConfigurationLogging struct {
+	FileName   string `json:"fileName"`
+	MaxSize    int    `json:"maxSize"`
+	MaxBackups int    `json:"maxBackups"`
+	MaxAge     int    `json:"maxAge"`
+}
 type ExtensionConfigurationAwsAccount struct {
 	ID             string `json:"id"`
 	CredentialFile string `json:"credentialFile"`
@@ -32,7 +38,8 @@ type ExtensionConfigurationAzure struct {
 }
 
 type ExtensionConfiguration struct {
-	ExtConfAws   ExtensionConfigurationAws   `json:"aws"`
-	ExtConfGcp   ExtensionConfigurationGcp   `json:"gcp"`
-	ExtConfAzure ExtensionConfigurationAzure `json:"azure"`
+	ExtConfLog   ExtensionConfigurationLogging `json:"logging"`
+	ExtConfAws   ExtensionConfigurationAws     `json:"aws"`
+	ExtConfGcp   ExtensionConfigurationGcp     `json:"gcp"`
+	ExtConfAzure ExtensionConfigurationAzure   `json:"azure"`
 }

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func GetStringValue(value interface{}) string {
+func getStringValue(value interface{}) string {
 	if value == nil {
 		return ""
 	}
@@ -53,7 +53,7 @@ func GetStringValue(value interface{}) string {
 	return ""
 }
 
-func GetFloat64Value(value interface{}) float64 {
+func getFloat64Value(value interface{}) float64 {
 	if value == nil {
 		return 0
 	}
@@ -99,7 +99,7 @@ func GetFloat64Value(value interface{}) float64 {
 	return 0
 }
 
-func GetIntegerValue(value interface{}) int {
+func getIntegerValue(value interface{}) int {
 	if value == nil {
 		return 0
 	}
@@ -146,7 +146,7 @@ func GetIntegerValue(value interface{}) int {
 }
 
 // Get boolean value of given variable
-func GetBooleanValue(value interface{}) bool {
+func getBooleanValue(value interface{}) bool {
 	if value == nil {
 		return false
 	}
@@ -161,77 +161,66 @@ func GetBooleanValue(value interface{}) bool {
 		} else {
 			return false
 		}
-		break
 	case int:
 		if value.(int) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case int8:
 		if value.(int8) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case int16:
 		if value.(int16) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case int32:
 		if value.(int32) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case int64:
 		if value.(int64) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case uint:
 		if value.(uint) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case uint8:
 		if value.(uint8) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case uint16:
 		if value.(uint16) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case uint32:
 		if value.(uint32) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	case uint64:
 		if value.(uint64) > 0 {
 			return true
 		} else {
 			return false
 		}
-		break
 	}
 	return true
 }

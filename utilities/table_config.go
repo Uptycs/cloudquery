@@ -18,9 +18,8 @@ type AwsConfig struct {
 }
 
 type GcpConfig struct {
-	ProjectIdAttribute string   `json:"projectIdAttribute,omitempty"`
-	ZoneAttribute      string   `json:"zoneAttribute,omitempty"`
-	Zones              []string `json:"zones"`
+	ProjectIdAttribute string `json:"projectIdAttribute,omitempty"`
+	ZoneAttribute      string `json:"zoneAttribute,omitempty"`
 }
 
 type AzureConfig struct {
@@ -43,7 +42,7 @@ type TableConfig struct {
 	parsedAttributeConfigMap map[string]ParsedAttributeConfig
 }
 
-func (tableConfig *TableConfig) InitParsedAttributeConfigMap() {
+func (tableConfig *TableConfig) initParsedAttributeConfigMap() {
 	tableConfig.parsedAttributeConfigMap = make(map[string]ParsedAttributeConfig)
 	for _, attr := range tableConfig.ParsedAttributes {
 		if attr.Enabled {
@@ -56,14 +55,6 @@ func (tableConfig *TableConfig) InitParsedAttributeConfigMap() {
 	}
 }
 
-func (tableConfig *TableConfig) GetAttributeConfig(attrName string) *ParsedAttributeConfig {
-	if value, ok := tableConfig.parsedAttributeConfigMap[attrName]; ok {
-		return &value
-	} else {
-		return nil
-	}
-}
-
-func (tableConfig *TableConfig) GetParsedAttributeConfigMap() map[string]ParsedAttributeConfig {
+func (tableConfig *TableConfig) getParsedAttributeConfigMap() map[string]ParsedAttributeConfig {
 	return tableConfig.parsedAttributeConfigMap
 }

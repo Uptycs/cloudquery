@@ -12,5 +12,8 @@ require (
 	github.com/aws/aws-sdk-go v1.36.15
 	github.com/kolide/osquery-go v0.0.0-20200604192029-b019be7063ac
 	github.com/pkg/errors v0.9.1
+	github.com/sirupsen/logrus v1.7.0
+	github.com/stretchr/testify v1.4.0
 	google.golang.org/api v0.36.0
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )

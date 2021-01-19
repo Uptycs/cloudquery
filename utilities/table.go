@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type Table struct {
@@ -13,7 +15,13 @@ type Table struct {
 	ParsedAttributeConfigMap map[string]ParsedAttributeConfig
 }
 
-func (tab *Table) Init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap map[string]ParsedAttributeConfig) {
+func NewTable(jsonStr []byte, tableConfig *TableConfig) Table {
+	tab := Table{}
+	tab.init(jsonStr, tableConfig.MaxLevel, tableConfig.getParsedAttributeConfigMap())
+	return tab
+}
+
+func (tab *Table) init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap map[string]ParsedAttributeConfig) {
 	var fields interface{}
 	json.Unmarshal(jsonStr, &fields)
 	tab.MaxLevel = maxLevel + 1
@@ -26,26 +34,29 @@ func (tab *Table) Init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap ma
 	case reflect.Value:
 		tab.flattenValue(0, "", fields.(reflect.Value))
 	default:
-		fmt.Printf("Invalid object of type %s and kind %s\n", reflect.TypeOf(fields), reflect.ValueOf(fields).Kind())
+		GetLogger().WithFields(log.Fields{
+			"type": reflect.TypeOf(fields),
+			"kind": reflect.ValueOf(fields).Kind(),
+		}).Warn("Invalid object")
 	}
 
 	// fmt.Printf("Flattening fieldMap of size %d\n", len(fieldMap))
 	//tab.flattenMap(0, "", fieldMap)
-	//tab.Print()
+	//tab.print()
 }
 
-func (tab *Table) Print() {
-	for index, row := range tab.Rows {
-		fmt.Printf("[%d] =========================== \n", index)
+func (tab *Table) print() {
+	for _, row := range tab.Rows {
+		GetLogger().Info("===========================")
 		for key, value := range row {
-			fmt.Printf("%s=%v\n", key, value)
+			logStr := fmt.Sprintf("%s=%v", key, value)
+			GetLogger().Info(logStr)
 		}
 	}
 }
 
-func (tab *Table) AddAttribute(name string, value interface{}) {
+func (tab *Table) addAttribute(name string, value interface{}) {
 	// Add attribute only if it is configured
-	//fmt.Printf("name:%s, value:%+v\n", name, value)
 	if attrConfig, ok := tab.ParsedAttributeConfigMap[name]; ok {
 		if attrConfig.Enabled {
 			if len(tab.Rows) == 0 {
@@ -59,7 +70,7 @@ func (tab *Table) AddAttribute(name string, value interface{}) {
 	}
 }
 
-func (tab *Table) AddRows(newRows []map[string]interface{}) {
+func (tab *Table) addRows(newRows []map[string]interface{}) {
 	if len(newRows) == 0 {
 		// nothing to add
 		return
@@ -70,7 +81,7 @@ func (tab *Table) AddRows(newRows []map[string]interface{}) {
 	}
 }
 
-func (tab *Table) AddRowsAndFlatten(newRows []map[string]interface{}) {
+func (tab *Table) addRowsAndFlatten(newRows []map[string]interface{}) {
 	if len(tab.Rows) == 0 {
 		tab.Rows = newRows
 		return
@@ -111,12 +122,11 @@ func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{})
 		if _, ok := tab.ParsedAttributeConfigMap[getKey(prefix, k)]; ok {
 			byteArr, err := json.Marshal(v)
 			if err == nil {
-				tab.AddAttribute(getKey(prefix, k), string(byteArr))
+				tab.addAttribute(getKey(prefix, k), string(byteArr))
 			}
 		}
 		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 			// Don't flatten further
-			// fmt.Printf("Not Flattening map for field %s. Level:%d, MaxLevel:%d\n", prefix, level, tab.MaxLevel)
 			continue
 		}
 		switch child := v.(type) {
@@ -127,7 +137,7 @@ func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{})
 		case reflect.Value:
 			tab.flattenValue(level, getKey(prefix, k), child)
 		default:
-			tab.AddAttribute(getKey(prefix, k), v)
+			tab.addAttribute(getKey(prefix, k), v)
 		}
 	}
 }
@@ -139,36 +149,35 @@ func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 			scalarTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			byteArr, err := json.Marshal(value)
 			if err == nil {
-				scalarTab.AddAttribute(prefix, string(byteArr))
-				newTable.AddRows(scalarTab.Rows)
+				scalarTab.addAttribute(prefix, string(byteArr))
+				newTable.addRows(scalarTab.Rows)
 			}
 		}
 		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 			// Don't flatten further
-			//fmt.Println("Not Flattening list for field " + prefix)
 			continue
 		}
 		switch child := value.(type) {
 		case map[string]interface{}:
 			mapTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			mapTab.flattenMap(level+1, prefix, child)
-			newTable.AddRows(mapTab.Rows)
-			//tab.AddRowsAndFlatten(newTab.Rows)
+			newTable.addRows(mapTab.Rows)
+			//tab.addRowsAndFlatten(newTab.Rows)
 		case []interface{}:
 			listTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			listTab.flattenList(level+1, prefix, child)
-			newTable.AddRows(listTab.Rows)
+			newTable.addRows(listTab.Rows)
 		case reflect.Value:
 			valTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			valTab.flattenValue(level, prefix, child)
-			newTable.AddRows(valTab.Rows)
+			newTable.addRows(valTab.Rows)
 		default:
 			scalarTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
-			scalarTab.AddAttribute(prefix, value)
-			newTable.AddRows(scalarTab.Rows)
+			scalarTab.addAttribute(prefix, value)
+			newTable.addRows(scalarTab.Rows)
 		}
 	}
-	tab.AddRowsAndFlatten(newTable.Rows)
+	tab.addRowsAndFlatten(newTable.Rows)
 }
 
 func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
@@ -179,12 +188,11 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 	if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
 		byteArr, err := json.Marshal(value)
 		if err == nil {
-			tab.AddAttribute(prefix, string(byteArr))
+			tab.addAttribute(prefix, string(byteArr))
 		}
 	}
 	if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 		// Don't flatten further
-		//fmt.Println("Not Flattening value for field " + prefix)
 		return
 	}
 
@@ -221,6 +229,6 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 		}
 		tab.flattenMap(level+1, prefix, fieldMap)
 	default:
-		tab.AddAttribute(prefix, value.Interface())
+		tab.addAttribute(prefix, value.Interface())
 	}
 }

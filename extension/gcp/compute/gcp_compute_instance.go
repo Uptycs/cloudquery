@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
+	log "github.com/sirupsen/logrus"
 	"strings"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
@@ -175,7 +175,6 @@ func (handler *GcpComputeHandler) GcpComputeInstancesGenerate(osqCtx context.Con
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 			results, err := handler.processAccountGcpComputeInstances(ctx, &account)
 			if err != nil {
-				// TODO: Continue to next account or return error ?
 				continue
 			}
 			resultMap = append(resultMap, results...)
@@ -196,7 +195,11 @@ func (handler *GcpComputeHandler) getGcpComputeInstancesNewServiceForAccount(ctx
 		service, err = handler.svcInterface.NewService(ctx)
 	}
 	if err != nil {
-		fmt.Println("NewService() error: ", err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_compute_instance",
+			"projectId": projectID,
+			"errString": err.Error(),
+		}).Error("failed to create service")
 		return nil, ""
 	}
 	return service, projectID
@@ -213,13 +216,15 @@ func (handler *GcpComputeHandler) processAccountGcpComputeInstances(ctx context.
 	}
 	myApiService := handler.svcInterface.NewInstancesService(service)
 	if myApiService == nil {
-		fmt.Println("NewInstancesService() returned nil")
 		return resultMap, fmt.Errorf("NewInstancesService() returned nil")
 	}
 
 	aggListCall := handler.svcInterface.InstancesAggregatedList(myApiService, projectID)
 	if aggListCall == nil {
-		fmt.Println("aggListCall is nil")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_compute_instance",
+			"projectId": projectID,
+		}).Debug("aggregate list call is nil")
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeInstancesItemsContainer{Items: make([]*compute.Instance, 0)}
@@ -235,23 +240,30 @@ func (handler *GcpComputeHandler) processAccountGcpComputeInstances(ctx context.
 
 		return nil
 	}); err != nil {
-		fmt.Println("aggListCal.Page: ", err)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_compute_instance",
+			"projectId": projectID,
+			"errString": err.Error(),
+		}).Error("failed to get aggregate list page")
 		return resultMap, nil
 	}
 
 	byteArr, err := json.Marshal(itemsContainer)
 	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		os.Exit(1)
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_compute_instance",
+			"errString": err.Error(),
+		}).Error("failed to marshal response")
+		return resultMap, err
 	}
-	//fmt.Printf("%+v\n", string(byteArr))
 	tableConfig, ok := utilities.TableConfigurationMap["gcp_compute_instance"]
 	if !ok {
-		fmt.Println("table configuration not found for \"gcp_compute_instance\"")
+		utilities.GetLogger().WithFields(log.Fields{
+			"tableName": "gcp_compute_instance",
+		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found for \"gcp_compute_instance\"")
 	}
-	jsonTable := utilities.Table{}
-	jsonTable.Init(byteArr, tableConfig.MaxLevel, tableConfig.GetParsedAttributeConfigMap())
+	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
