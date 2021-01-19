@@ -226,7 +226,7 @@ func VirtualMachinesColumns() []table.ColumnDefinition {
 func VirtualMachinesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAzure.Accounts) == 0 {
-		fmt.Println("Processing default account")
+		//fmt.Println("Processing default account")
 		results, err := processAccountVirtualMachines(nil)
 		if err != nil {
 			return resultMap, err
@@ -234,7 +234,7 @@ func VirtualMachinesGenerate(osqCtx context.Context, queryContext table.QueryCon
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
-			fmt.Println("Processing account:" + account.SubscriptionId)
+			//fmt.Println("Processing account:" + account.SubscriptionId)
 			results, err := processAccountVirtualMachines(&account)
 			if err != nil {
 				// TODO: Continue to next account or return error ?
@@ -266,7 +266,7 @@ func processAccountVirtualMachines(account *utilities.ExtensionConfigurationAzur
 
 	tableConfig, ok := utilities.TableConfigurationMap["azure_compute_vm"]
 	if !ok {
-		fmt.Println("getTableConfig: ", err)
+		//fmt.Println("getTableConfig: ", err)
 		log.Fatal(err)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
@@ -292,7 +292,7 @@ func getVirtualMachines(session *azure.AzureSession, rg string, wg *sync.WaitGro
 		resource := resourceItr.Value()
 		byteArr, err := json.Marshal(resource)
 		if err != nil {
-			fmt.Println("VirtualMachines marshal: ", err)
+			//fmt.Println("VirtualMachines marshal: ", err)
 			log.Fatal(err)
 			continue
 		}
