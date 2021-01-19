@@ -33,3 +33,5 @@ test:
 
 clean:
 	rm -rf ${BIN-DIR}/*
+
+.PHONY: all
