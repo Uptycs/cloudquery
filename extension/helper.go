@@ -152,6 +152,13 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_disk", gcpComputeHandler.GcpComputeDisksColumns(), gcpComputeHandler.GcpComputeDisksGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_image", gcpComputeHandler.GcpComputeImagesColumns(), gcpComputeHandler.GcpComputeImagesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_interconnect", gcpComputeHandler.GcpComputeInterconnectsColumns(), gcpComputeHandler.GcpComputeInterconnectsGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_route", gcpComputeHandler.GcpComputeRoutesColumns(), gcpComputeHandler.GcpComputeRoutesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_reservation", gcpComputeHandler.GcpComputeReservationsColumns(), gcpComputeHandler.GcpComputeReservationsGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_router", gcpComputeHandler.GcpComputeRoutersColumns(), gcpComputeHandler.GcpComputeRoutersGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_vpn_tunnel", gcpComputeHandler.GcpComputeVpnTunnelsColumns(), gcpComputeHandler.GcpComputeVpnTunnelsGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_compute_vpn_gateway", gcpComputeHandler.GcpComputeVpnGatewaysColumns(), gcpComputeHandler.GcpComputeVpnGatewaysGenerate))
 	// GCP Storage
 	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", gcpStorageHandler.GcpStorageBucketColumns(), gcpStorageHandler.GcpStorageBucketGenerate))
 	// Azure Compute
