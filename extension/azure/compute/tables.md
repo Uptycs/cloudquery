@@ -1,0 +1,2 @@
+- azure_compute_vm
+- azure_compute_networkinterface

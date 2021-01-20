@@ -1,0 +1,10 @@
+- gcp_compute_image
+- gcp_compute_route
+- gcp_compute_reservation
+- gcp_compute_vpn_tunnel
+- gcp_compute_instance
+- gcp_compute_disk
+- gcp_compute_interconnect
+- gcp_compute_router
+- gcp_compute_vpn_gateway
+- gcp_compute_network
