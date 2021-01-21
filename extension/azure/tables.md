@@ -1,0 +1,3 @@
+* AZURE
+  - azure_compute_networkinterface
+  - azure_compute_vm
