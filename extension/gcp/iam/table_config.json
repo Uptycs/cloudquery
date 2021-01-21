@@ -1,0 +1,114 @@
+{
+  "gcp_iam_role": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_deleted",
+        "targetName": "deleted",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_includedPermissions",
+        "targetName": "included_permissions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_stage",
+        "targetName": "stage",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_title",
+        "targetName": "title",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
+  "gcp_iam_service_account": {
+    "aws": {},
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_disabled",
+        "targetName": "disabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_displayName",
+        "targetName": "display_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_email",
+        "targetName": "email",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_oauth2ClientId",
+        "targetName": "oauth2_client_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_projectId",
+        "targetName": "project_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_uniqueId",
+        "targetName": "unique_id",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

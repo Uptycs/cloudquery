@@ -13,6 +13,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
+	gcpiam "github.com/Uptycs/cloudquery/extension/gcp/iam"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
 	"github.com/kolide/osquery-go"
@@ -98,7 +99,7 @@ func readExtensionConfigurations(filePath string) error {
 
 func readTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json"}
-	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json"}
+	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json", "gcp/iam/table_config.json"}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
 	configFileList = append(configFileList, azureConfigFileList...)
@@ -161,6 +162,9 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_vpn_gateway", gcpComputeHandler.GcpComputeVpnGatewaysColumns(), gcpComputeHandler.GcpComputeVpnGatewaysGenerate))
 	// GCP Storage
 	server.RegisterPlugin(table.NewPlugin("gcp_storage_bucket", gcpStorageHandler.GcpStorageBucketColumns(), gcpStorageHandler.GcpStorageBucketGenerate))
+	// GCP IAM
+	server.RegisterPlugin(table.NewPlugin("gcp_iam_role", gcpiam.GcpIamRolesColumns(), gcpiam.GcpIamRolesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_iam_service_account", gcpiam.GcpIamServiceAccountsColumns(), gcpiam.GcpIamServiceAccountsGenerate))
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
