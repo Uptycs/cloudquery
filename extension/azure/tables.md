@@ -1,3 +1,3 @@
-* AZURE
+* Azure
   - azure_compute_networkinterface
   - azure_compute_vm
