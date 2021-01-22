@@ -1,0 +1,902 @@
+{
+  "gcp_sql_database": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_charset",
+        "targetName": "charset",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_collation",
+        "targetName": "collation",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_instance",
+        "targetName": "instance",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_project",
+        "targetName": "project",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_selfLink",
+        "targetName": "self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sqlserverDatabaseDetails",
+        "targetName": "sqlserver_database_details",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sqlserverDatabaseDetails_compatibilityLevel",
+        "targetName": "sqlserver_database_details_compatibility_level",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sqlserverDatabaseDetails_recoveryModel",
+        "targetName": "sqlserver_database_details_recovery_model",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  },
+  "gcp_sql_instance": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_backendType",
+        "targetName": "backend_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_connectionName",
+        "targetName": "connection_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_currentDiskSize",
+        "targetName": "current_disk_size",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_databaseVersion",
+        "targetName": "database_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_diskEncryptionConfiguration",
+        "targetName": "disk_encryption_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_diskEncryptionConfiguration_kind",
+        "targetName": "disk_encryption_configuration_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_diskEncryptionConfiguration_kmsKeyName",
+        "targetName": "disk_encryption_configuration_kms_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_diskEncryptionStatus",
+        "targetName": "disk_encryption_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_diskEncryptionStatus_kind",
+        "targetName": "disk_encryption_status_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_diskEncryptionStatus_kmsKeyVersionName",
+        "targetName": "disk_encryption_status_kms_key_version_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_failoverReplica",
+        "targetName": "failover_replica",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_failoverReplica_available",
+        "targetName": "failover_replica_available",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_failoverReplica_name",
+        "targetName": "failover_replica_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_gceZone",
+        "targetName": "gce_zone",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_instanceType",
+        "targetName": "instance_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_ipAddresses",
+        "targetName": "ip_addresses",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_ipAddresses_ipAddress",
+        "targetName": "ip_addresses_ip_address",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAddresses_timeToRetire",
+        "targetName": "ip_addresses_time_to_retire",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAddresses_type",
+        "targetName": "ip_addresses_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipv6Address",
+        "targetName": "ipv6_address",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_masterInstanceName",
+        "targetName": "master_instance_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_maxDiskSize",
+        "targetName": "max_disk_size",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration",
+        "targetName": "on_premises_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_caCertificate",
+        "targetName": "on_premises_configuration_ca_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_clientCertificate",
+        "targetName": "on_premises_configuration_client_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_clientKey",
+        "targetName": "on_premises_configuration_client_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_dumpFilePath",
+        "targetName": "on_premises_configuration_dump_file_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_hostPort",
+        "targetName": "on_premises_configuration_host_port",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_kind",
+        "targetName": "on_premises_configuration_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_password",
+        "targetName": "on_premises_configuration_password",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_onPremisesConfiguration_username",
+        "targetName": "on_premises_configuration_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_project",
+        "targetName": "project",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_region",
+        "targetName": "region",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_replicaConfiguration",
+        "targetName": "replica_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_replicaConfiguration_failoverTarget",
+        "targetName": "replica_configuration_failover_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_kind",
+        "targetName": "replica_configuration_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration",
+        "targetName": "replica_configuration_mysql_replica_configuration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_caCertificate",
+        "targetName": "replica_configuration_mysql_replica_configuration_ca_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_clientCertificate",
+        "targetName": "replica_configuration_mysql_replica_configuration_client_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_clientKey",
+        "targetName": "replica_configuration_mysql_replica_configuration_client_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_connectRetryInterval",
+        "targetName": "replica_configuration_mysql_replica_configuration_connect_retry_interval",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_dumpFilePath",
+        "targetName": "replica_configuration_mysql_replica_configuration_dump_file_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_kind",
+        "targetName": "replica_configuration_mysql_replica_configuration_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_masterHeartbeatPeriod",
+        "targetName": "replica_configuration_mysql_replica_configuration_master_heartbeat_period",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_password",
+        "targetName": "replica_configuration_mysql_replica_configuration_password",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_sslCipher",
+        "targetName": "replica_configuration_mysql_replica_configuration_ssl_cipher",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_username",
+        "targetName": "replica_configuration_mysql_replica_configuration_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaConfiguration_mysqlReplicaConfiguration_verifyServerCertificate",
+        "targetName": "replica_configuration_mysql_replica_configuration_verify_server_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_replicaNames",
+        "targetName": "replica_names",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_rootPassword",
+        "targetName": "root_password",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_satisfiesPzs",
+        "targetName": "satisfies_pzs",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduledMaintenance",
+        "targetName": "scheduled_maintenance",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_scheduledMaintenance_canDefer",
+        "targetName": "scheduled_maintenance_can_defer",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_scheduledMaintenance_canReschedule",
+        "targetName": "scheduled_maintenance_can_reschedule",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_scheduledMaintenance_startTime",
+        "targetName": "scheduled_maintenance_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_secondaryGceZone",
+        "targetName": "secondary_gce_zone",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_selfLink",
+        "targetName": "self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert",
+        "targetName": "server_ca_cert",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_cert",
+        "targetName": "server_ca_cert_cert",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_certSerialNumber",
+        "targetName": "server_ca_cert_cert_serial_number",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_commonName",
+        "targetName": "server_ca_cert_common_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_createTime",
+        "targetName": "server_ca_cert_create_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_expirationTime",
+        "targetName": "server_ca_cert_expiration_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_instance",
+        "targetName": "server_ca_cert_instance",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_kind",
+        "targetName": "server_ca_cert_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_selfLink",
+        "targetName": "server_ca_cert_self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serverCaCert_sha1Fingerprint",
+        "targetName": "server_ca_cert_sha1_fingerprint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_serviceAccountEmailAddress",
+        "targetName": "service_account_email_address",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings",
+        "targetName": "settings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_settings_activationPolicy",
+        "targetName": "settings_activation_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_activeDirectoryConfig",
+        "targetName": "settings_active_directory_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_activeDirectoryConfig_domain",
+        "targetName": "settings_active_directory_config_domain",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_activeDirectoryConfig_kind",
+        "targetName": "settings_active_directory_config_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_authorizedGaeApplications",
+        "targetName": "settings_authorized_gae_applications",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_availabilityType",
+        "targetName": "settings_availability_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration",
+        "targetName": "settings_backup_configuration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_backupRetentionSettings",
+        "targetName": "settings_backup_configuration_backup_retention_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_backupRetentionSettings_retainedBackups",
+        "targetName": "settings_backup_configuration_backup_retention_settings_retained_backups",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_backupRetentionSettings_retentionUnit",
+        "targetName": "settings_backup_configuration_backup_retention_settings_retention_unit",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_binaryLogEnabled",
+        "targetName": "settings_backup_configuration_binary_log_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_enabled",
+        "targetName": "settings_backup_configuration_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_kind",
+        "targetName": "settings_backup_configuration_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_location",
+        "targetName": "settings_backup_configuration_location",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_pointInTimeRecoveryEnabled",
+        "targetName": "settings_backup_configuration_point_in_time_recovery_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_replicationLogArchivingEnabled",
+        "targetName": "settings_backup_configuration_replication_log_archiving_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_startTime",
+        "targetName": "settings_backup_configuration_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_backupConfiguration_transactionLogRetentionDays",
+        "targetName": "settings_backup_configuration_transaction_log_retention_days",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_collation",
+        "targetName": "settings_collation",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_crashSafeReplicationEnabled",
+        "targetName": "settings_crash_safe_replication_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_dataDiskSizeGb",
+        "targetName": "settings_data_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_dataDiskType",
+        "targetName": "settings_data_disk_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_databaseFlags",
+        "targetName": "settings_database_flags",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_databaseFlags_name",
+        "targetName": "settings_database_flags_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_databaseFlags_value",
+        "targetName": "settings_database_flags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_databaseReplicationEnabled",
+        "targetName": "settings_database_replication_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_denyMaintenancePeriods",
+        "targetName": "settings_deny_maintenance_periods",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_denyMaintenancePeriods_endDate",
+        "targetName": "settings_deny_maintenance_periods_end_date",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_denyMaintenancePeriods_startDate",
+        "targetName": "settings_deny_maintenance_periods_start_date",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_denyMaintenancePeriods_time",
+        "targetName": "settings_deny_maintenance_periods_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_insightsConfig",
+        "targetName": "settings_insights_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_insightsConfig_queryInsightsEnabled",
+        "targetName": "settings_insights_config_query_insights_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_insightsConfig_queryStringLength",
+        "targetName": "settings_insights_config_query_string_length",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_insightsConfig_recordApplicationTags",
+        "targetName": "settings_insights_config_record_application_tags",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_insightsConfig_recordClientAddress",
+        "targetName": "settings_insights_config_record_client_address",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration",
+        "targetName": "settings_ip_configuration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_authorizedNetworks",
+        "targetName": "settings_ip_configuration_authorized_networks",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_authorizedNetworks_expirationTime",
+        "targetName": "settings_ip_configuration_authorized_networks_expiration_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_authorizedNetworks_kind",
+        "targetName": "settings_ip_configuration_authorized_networks_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_authorizedNetworks_name",
+        "targetName": "settings_ip_configuration_authorized_networks_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_authorizedNetworks_value",
+        "targetName": "settings_ip_configuration_authorized_networks_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_ipv4Enabled",
+        "targetName": "settings_ip_configuration_ipv4_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_privateNetwork",
+        "targetName": "settings_ip_configuration_private_network",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_ipConfiguration_requireSsl",
+        "targetName": "settings_ip_configuration_require_ssl",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_kind",
+        "targetName": "settings_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_locationPreference",
+        "targetName": "settings_location_preference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_locationPreference_followGaeApplication",
+        "targetName": "settings_location_preference_follow_gae_application",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_locationPreference_kind",
+        "targetName": "settings_location_preference_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_locationPreference_secondaryZone",
+        "targetName": "settings_location_preference_secondary_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_locationPreference_zone",
+        "targetName": "settings_location_preference_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_maintenanceWindow",
+        "targetName": "settings_maintenance_window",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_maintenanceWindow_day",
+        "targetName": "settings_maintenance_window_day",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_maintenanceWindow_hour",
+        "targetName": "settings_maintenance_window_hour",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_maintenanceWindow_kind",
+        "targetName": "settings_maintenance_window_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_maintenanceWindow_updateTrack",
+        "targetName": "settings_maintenance_window_update_track",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_pricingPlan",
+        "targetName": "settings_pricing_plan",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_replicationType",
+        "targetName": "settings_replication_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_settingsVersion",
+        "targetName": "settings_settings_version",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_storageAutoResize",
+        "targetName": "settings_storage_auto_resize",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_storageAutoResizeLimit",
+        "targetName": "settings_storage_auto_resize_limit",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_tier",
+        "targetName": "settings_tier",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_settings_userLabels",
+        "targetName": "settings_user_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_state",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_suspensionReason",
+        "targetName": "suspension_reason",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}
