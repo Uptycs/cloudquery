@@ -14,6 +14,8 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
+	gcpdns "github.com/Uptycs/cloudquery/extension/gcp/dns"
+	gcpfile "github.com/Uptycs/cloudquery/extension/gcp/file"
 	gcpiam "github.com/Uptycs/cloudquery/extension/gcp/iam"
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
@@ -101,7 +103,7 @@ func readExtensionConfigurations(filePath string) error {
 
 func readTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
-	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json", "gcp/iam/table_config.json", "gcp/sql/table_config.json"}
+	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json", "gcp/iam/table_config.json", "gcp/sql/table_config.json", "gcp/dns/table_config.json", "gcp/file/table_config.json"}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
 	configFileList = append(configFileList, azureConfigFileList...)
@@ -176,6 +178,12 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	// GCP SQL
 	server.RegisterPlugin(table.NewPlugin("gcp_sql_instance", gcpsql.GcpSqlInstancesColumns(), gcpsql.GcpSqlInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_sql_database", gcpsql.GcpSqlDatabasesColumns(), gcpsql.GcpSqlDatabasesGenerate))
+	// GCP DNS
+	server.RegisterPlugin(table.NewPlugin("gcp_dns_managed_zone", gcpdns.GcpDnsManagedZonesColumns(), gcpdns.GcpDnsManagedZonesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_dns_policy", gcpdns.GcpDnsPoliciesColumns(), gcpdns.GcpDnsPoliciesGenerate))
+	// GCP File
+	server.RegisterPlugin(table.NewPlugin("gcp_file_instance", gcpfile.GcpFileInstancesColumns(), gcpfile.GcpFileInstancesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_file_backup", gcpfile.GcpFileBackupsColumns(), gcpfile.GcpFileBackupsGenerate))
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))

@@ -1,0 +1,224 @@
+{
+  "gcp_file_backup": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_capacityGb",
+        "targetName": "capacity_gb",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_createTime",
+        "targetName": "create_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_downloadBytes",
+        "targetName": "download_bytes",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_labels",
+        "targetName": "labels",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceFileShare",
+        "targetName": "source_file_share",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceInstance",
+        "targetName": "source_instance",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceInstanceTier",
+        "targetName": "source_instance_tier",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_state",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_storageBytes",
+        "targetName": "storage_bytes",
+        "targetType": "BIGINT",
+        "enabled": true
+      }
+    ]
+  },
+  "gcp_file_instance": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_createTime",
+        "targetName": "create_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_etag",
+        "targetName": "etag",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_fileShares",
+        "targetName": "file_shares",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_fileShares_capacityGb",
+        "targetName": "file_shares_capacity_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_name",
+        "targetName": "file_shares_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions",
+        "targetName": "file_shares_nfs_export_options",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions_accessMode",
+        "targetName": "file_shares_nfs_export_options_access_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions_anonGid",
+        "targetName": "file_shares_nfs_export_options_anon_gid",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions_anonUid",
+        "targetName": "file_shares_nfs_export_options_anon_uid",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions_ipRanges",
+        "targetName": "file_shares_nfs_export_options_ip_ranges",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_nfsExportOptions_squashMode",
+        "targetName": "file_shares_nfs_export_options_squash_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_fileShares_sourceBackup",
+        "targetName": "file_shares_source_backup",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_labels",
+        "targetName": "labels",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_networks",
+        "targetName": "networks",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_networks_ipAddresses",
+        "targetName": "networks_ip_addresses",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networks_modes",
+        "targetName": "networks_modes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networks_network",
+        "targetName": "networks_network",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networks_reservedIpRange",
+        "targetName": "networks_reserved_ip_range",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_state",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_statusMessage",
+        "targetName": "status_message",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_tier",
+        "targetName": "tier",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+- gcp_dns_managed_zone
+- gcp_dns_policy

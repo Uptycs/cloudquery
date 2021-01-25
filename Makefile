@@ -16,6 +16,8 @@ install:
 	mkdir -p ${INSTALL-DIR}/gcp/storage
 	mkdir -p ${INSTALL-DIR}/gcp/iam
 	mkdir -p ${INSTALL-DIR}/gcp/sql
+	mkdir -p ${INSTALL-DIR}/gcp/dns
+	mkdir -p ${INSTALL-DIR}/gcp/file
 	mkdir -p ${INSTALL-DIR}/azure/compute
 	mkdir -p ${INSTALL-DIR}/config
 	cp ${BIN-DIR}/extension ${INSTALL-DIR}/cloudquery.ext
@@ -25,6 +27,8 @@ install:
 	cp extension/gcp/storage/table_config.json ${INSTALL-DIR}/gcp/storage
 	cp extension/gcp/iam/table_config.json ${INSTALL-DIR}/gcp/iam
 	cp extension/gcp/sql/table_config.json ${INSTALL-DIR}/gcp/sql
+	cp extension/gcp/dns/table_config.json ${INSTALL-DIR}/gcp/dns
+	cp extension/gcp/file/table_config.json ${INSTALL-DIR}/gcp/file
 	cp extension/azure/compute/table_config.json ${INSTALL-DIR}/azure/compute
 
 test:
