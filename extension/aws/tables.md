@@ -1,4 +1,5 @@
 * AWS
+  - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
   - aws_ec2_image
   - aws_ec2_instance
@@ -10,4 +11,8 @@
   - aws_ec2_subnet
   - aws_ec2_tag
   - aws_ec2_vpc
+  - aws_iam_group
+  - aws_iam_policy
+  - aws_iam_role
+  - aws_iam_user
   - aws_s3_bucket

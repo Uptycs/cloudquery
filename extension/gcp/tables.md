@@ -9,4 +9,12 @@
   - gcp_compute_router
   - gcp_compute_vpn_gateway
   - gcp_compute_vpn_tunnel
+  - gcp_dns_managed_zone
+  - gcp_dns_policy
+  - gcp_file_backup
+  - gcp_file_instance
+  - gcp_iam_role
+  - gcp_iam_service_account
+  - gcp_sql_database
+  - gcp_sql_instance
   - gcp_storage_bucket
