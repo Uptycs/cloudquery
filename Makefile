@@ -20,6 +20,7 @@ install:
 	mkdir -p ${INSTALL-DIR}/gcp/file
 	mkdir -p ${INSTALL-DIR}/gcp/container
 	mkdir -p ${INSTALL-DIR}/gcp/function
+	mkdir -p ${INSTALL-DIR}/gcp/run
 	mkdir -p ${INSTALL-DIR}/azure/compute
 	mkdir -p ${INSTALL-DIR}/config
 	cp ${BIN-DIR}/extension ${INSTALL-DIR}/cloudquery.ext
@@ -33,6 +34,7 @@ install:
 	cp extension/gcp/file/table_config.json ${INSTALL-DIR}/gcp/file
 	cp extension/gcp/container/table_config.json ${INSTALL-DIR}/gcp/container
 	cp extension/gcp/function/table_config.json ${INSTALL-DIR}/gcp/function
+	cp extension/gcp/run/table_config.json ${INSTALL-DIR}/gcp/run
 	cp extension/azure/compute/table_config.json ${INSTALL-DIR}/azure/compute
 
 test:

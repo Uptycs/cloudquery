@@ -1,0 +1,2000 @@
+{
+  "gcp_cloud_run_revision": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_apiVersion",
+        "targetName": "api_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_metadata",
+        "targetName": "metadata",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_metadata_annotations",
+        "targetName": "metadata_annotations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_clusterName",
+        "targetName": "metadata_cluster_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_creationTimestamp",
+        "targetName": "metadata_creation_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_deletionGracePeriodSeconds",
+        "targetName": "metadata_deletion_grace_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_deletionTimestamp",
+        "targetName": "metadata_deletion_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_finalizers",
+        "targetName": "metadata_finalizers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_generateName",
+        "targetName": "metadata_generate_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_generation",
+        "targetName": "metadata_generation",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_labels",
+        "targetName": "metadata_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_name",
+        "targetName": "metadata_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_namespace",
+        "targetName": "metadata_namespace",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences",
+        "targetName": "metadata_owner_references",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_apiVersion",
+        "targetName": "metadata_owner_references_api_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_blockOwnerDeletion",
+        "targetName": "metadata_owner_references_block_owner_deletion",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_controller",
+        "targetName": "metadata_owner_references_controller",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_kind",
+        "targetName": "metadata_owner_references_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_name",
+        "targetName": "metadata_owner_references_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_uid",
+        "targetName": "metadata_owner_references_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_resourceVersion",
+        "targetName": "metadata_resource_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_selfLink",
+        "targetName": "metadata_self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_uid",
+        "targetName": "metadata_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec",
+        "targetName": "spec",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_spec_containerConcurrency",
+        "targetName": "spec_container_concurrency",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers",
+        "targetName": "spec_containers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_args",
+        "targetName": "spec_containers_args",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_command",
+        "targetName": "spec_containers_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env",
+        "targetName": "spec_containers_env",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom",
+        "targetName": "spec_containers_env_from",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_configMapRef",
+        "targetName": "spec_containers_env_from_config_map_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_configMapRef_localObjectReference",
+        "targetName": "spec_containers_env_from_config_map_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_configMapRef_localObjectReference_name",
+        "targetName": "spec_containers_env_from_config_map_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_configMapRef_name",
+        "targetName": "spec_containers_env_from_config_map_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_configMapRef_optional",
+        "targetName": "spec_containers_env_from_config_map_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_prefix",
+        "targetName": "spec_containers_env_from_prefix",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_secretRef",
+        "targetName": "spec_containers_env_from_secret_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_secretRef_localObjectReference",
+        "targetName": "spec_containers_env_from_secret_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_secretRef_localObjectReference_name",
+        "targetName": "spec_containers_env_from_secret_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_secretRef_name",
+        "targetName": "spec_containers_env_from_secret_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_envFrom_secretRef_optional",
+        "targetName": "spec_containers_env_from_secret_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_name",
+        "targetName": "spec_containers_env_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_value",
+        "targetName": "spec_containers_env_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom",
+        "targetName": "spec_containers_env_value_from",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef_key",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef_localObjectReference",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef_localObjectReference_name",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef_name",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_configMapKeyRef_optional",
+        "targetName": "spec_containers_env_value_from_config_map_key_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef",
+        "targetName": "spec_containers_env_value_from_secret_key_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef_key",
+        "targetName": "spec_containers_env_value_from_secret_key_ref_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef_localObjectReference",
+        "targetName": "spec_containers_env_value_from_secret_key_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef_localObjectReference_name",
+        "targetName": "spec_containers_env_value_from_secret_key_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef_name",
+        "targetName": "spec_containers_env_value_from_secret_key_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_env_valueFrom_secretKeyRef_optional",
+        "targetName": "spec_containers_env_value_from_secret_key_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_image",
+        "targetName": "spec_containers_image",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_imagePullPolicy",
+        "targetName": "spec_containers_image_pull_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe",
+        "targetName": "spec_containers_liveness_probe",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_exec",
+        "targetName": "spec_containers_liveness_probe_exec",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_exec_command",
+        "targetName": "spec_containers_liveness_probe_exec_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_failureThreshold",
+        "targetName": "spec_containers_liveness_probe_failure_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet",
+        "targetName": "spec_containers_liveness_probe_http_get",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_host",
+        "targetName": "spec_containers_liveness_probe_http_get_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_httpHeaders",
+        "targetName": "spec_containers_liveness_probe_http_get_http_headers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_httpHeaders_name",
+        "targetName": "spec_containers_liveness_probe_http_get_http_headers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_httpHeaders_value",
+        "targetName": "spec_containers_liveness_probe_http_get_http_headers_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_path",
+        "targetName": "spec_containers_liveness_probe_http_get_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_httpGet_scheme",
+        "targetName": "spec_containers_liveness_probe_http_get_scheme",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_initialDelaySeconds",
+        "targetName": "spec_containers_liveness_probe_initial_delay_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_periodSeconds",
+        "targetName": "spec_containers_liveness_probe_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_successThreshold",
+        "targetName": "spec_containers_liveness_probe_success_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_tcpSocket",
+        "targetName": "spec_containers_liveness_probe_tcp_socket",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_tcpSocket_host",
+        "targetName": "spec_containers_liveness_probe_tcp_socket_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_tcpSocket_port",
+        "targetName": "spec_containers_liveness_probe_tcp_socket_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_livenessProbe_timeoutSeconds",
+        "targetName": "spec_containers_liveness_probe_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_name",
+        "targetName": "spec_containers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_ports",
+        "targetName": "spec_containers_ports",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_ports_containerPort",
+        "targetName": "spec_containers_ports_container_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_ports_name",
+        "targetName": "spec_containers_ports_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_ports_protocol",
+        "targetName": "spec_containers_ports_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe",
+        "targetName": "spec_containers_readiness_probe",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_exec",
+        "targetName": "spec_containers_readiness_probe_exec",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_exec_command",
+        "targetName": "spec_containers_readiness_probe_exec_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_failureThreshold",
+        "targetName": "spec_containers_readiness_probe_failure_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet",
+        "targetName": "spec_containers_readiness_probe_http_get",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_host",
+        "targetName": "spec_containers_readiness_probe_http_get_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_httpHeaders",
+        "targetName": "spec_containers_readiness_probe_http_get_http_headers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_httpHeaders_name",
+        "targetName": "spec_containers_readiness_probe_http_get_http_headers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_httpHeaders_value",
+        "targetName": "spec_containers_readiness_probe_http_get_http_headers_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_path",
+        "targetName": "spec_containers_readiness_probe_http_get_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_httpGet_scheme",
+        "targetName": "spec_containers_readiness_probe_http_get_scheme",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_initialDelaySeconds",
+        "targetName": "spec_containers_readiness_probe_initial_delay_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_periodSeconds",
+        "targetName": "spec_containers_readiness_probe_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_successThreshold",
+        "targetName": "spec_containers_readiness_probe_success_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_tcpSocket",
+        "targetName": "spec_containers_readiness_probe_tcp_socket",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_tcpSocket_host",
+        "targetName": "spec_containers_readiness_probe_tcp_socket_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_tcpSocket_port",
+        "targetName": "spec_containers_readiness_probe_tcp_socket_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_readinessProbe_timeoutSeconds",
+        "targetName": "spec_containers_readiness_probe_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_resources",
+        "targetName": "spec_containers_resources",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_resources_limits",
+        "targetName": "spec_containers_resources_limits",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_resources_requests",
+        "targetName": "spec_containers_resources_requests",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_securityContext",
+        "targetName": "spec_containers_security_context",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_securityContext_runAsUser",
+        "targetName": "spec_containers_security_context_run_as_user",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_terminationMessagePath",
+        "targetName": "spec_containers_termination_message_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_terminationMessagePolicy",
+        "targetName": "spec_containers_termination_message_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_volumeMounts",
+        "targetName": "spec_containers_volume_mounts",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_volumeMounts_mountPath",
+        "targetName": "spec_containers_volume_mounts_mount_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_volumeMounts_name",
+        "targetName": "spec_containers_volume_mounts_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_volumeMounts_readOnly",
+        "targetName": "spec_containers_volume_mounts_read_only",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_volumeMounts_subPath",
+        "targetName": "spec_containers_volume_mounts_sub_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_containers_workingDir",
+        "targetName": "spec_containers_working_dir",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_serviceAccountName",
+        "targetName": "spec_service_account_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_timeoutSeconds",
+        "targetName": "spec_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes",
+        "targetName": "spec_volumes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap",
+        "targetName": "spec_volumes_config_map",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_defaultMode",
+        "targetName": "spec_volumes_config_map_default_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_items",
+        "targetName": "spec_volumes_config_map_items",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_items_key",
+        "targetName": "spec_volumes_config_map_items_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_items_mode",
+        "targetName": "spec_volumes_config_map_items_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_items_path",
+        "targetName": "spec_volumes_config_map_items_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_name",
+        "targetName": "spec_volumes_config_map_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_configMap_optional",
+        "targetName": "spec_volumes_config_map_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_name",
+        "targetName": "spec_volumes_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret",
+        "targetName": "spec_volumes_secret",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_defaultMode",
+        "targetName": "spec_volumes_secret_default_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_items",
+        "targetName": "spec_volumes_secret_items",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_items_key",
+        "targetName": "spec_volumes_secret_items_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_items_mode",
+        "targetName": "spec_volumes_secret_items_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_items_path",
+        "targetName": "spec_volumes_secret_items_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_optional",
+        "targetName": "spec_volumes_secret_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_volumes_secret_secretName",
+        "targetName": "spec_volumes_secret_secret_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_status_conditions",
+        "targetName": "status_conditions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_lastTransitionTime",
+        "targetName": "status_conditions_last_transition_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_message",
+        "targetName": "status_conditions_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_reason",
+        "targetName": "status_conditions_reason",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_severity",
+        "targetName": "status_conditions_severity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_status",
+        "targetName": "status_conditions_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_type",
+        "targetName": "status_conditions_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_imageDigest",
+        "targetName": "status_image_digest",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_logUrl",
+        "targetName": "status_log_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_observedGeneration",
+        "targetName": "status_observed_generation",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_serviceName",
+        "targetName": "status_service_name",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  },
+  "gcp_cloud_run_service": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_apiVersion",
+        "targetName": "api_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_kind",
+        "targetName": "kind",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_metadata",
+        "targetName": "metadata",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_metadata_annotations",
+        "targetName": "metadata_annotations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_clusterName",
+        "targetName": "metadata_cluster_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_creationTimestamp",
+        "targetName": "metadata_creation_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_deletionGracePeriodSeconds",
+        "targetName": "metadata_deletion_grace_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_deletionTimestamp",
+        "targetName": "metadata_deletion_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_finalizers",
+        "targetName": "metadata_finalizers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_generateName",
+        "targetName": "metadata_generate_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_generation",
+        "targetName": "metadata_generation",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_labels",
+        "targetName": "metadata_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_name",
+        "targetName": "metadata_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_namespace",
+        "targetName": "metadata_namespace",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences",
+        "targetName": "metadata_owner_references",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_apiVersion",
+        "targetName": "metadata_owner_references_api_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_blockOwnerDeletion",
+        "targetName": "metadata_owner_references_block_owner_deletion",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_controller",
+        "targetName": "metadata_owner_references_controller",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_kind",
+        "targetName": "metadata_owner_references_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_name",
+        "targetName": "metadata_owner_references_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_ownerReferences_uid",
+        "targetName": "metadata_owner_references_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_resourceVersion",
+        "targetName": "metadata_resource_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_selfLink",
+        "targetName": "metadata_self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_metadata_uid",
+        "targetName": "metadata_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec",
+        "targetName": "spec",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_spec_template",
+        "targetName": "spec_template",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata",
+        "targetName": "spec_template_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_annotations",
+        "targetName": "spec_template_metadata_annotations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_clusterName",
+        "targetName": "spec_template_metadata_cluster_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_creationTimestamp",
+        "targetName": "spec_template_metadata_creation_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_deletionGracePeriodSeconds",
+        "targetName": "spec_template_metadata_deletion_grace_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_deletionTimestamp",
+        "targetName": "spec_template_metadata_deletion_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_finalizers",
+        "targetName": "spec_template_metadata_finalizers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_generateName",
+        "targetName": "spec_template_metadata_generate_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_generation",
+        "targetName": "spec_template_metadata_generation",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_labels",
+        "targetName": "spec_template_metadata_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_name",
+        "targetName": "spec_template_metadata_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_namespace",
+        "targetName": "spec_template_metadata_namespace",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences",
+        "targetName": "spec_template_metadata_owner_references",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_apiVersion",
+        "targetName": "spec_template_metadata_owner_references_api_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_blockOwnerDeletion",
+        "targetName": "spec_template_metadata_owner_references_block_owner_deletion",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_controller",
+        "targetName": "spec_template_metadata_owner_references_controller",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_kind",
+        "targetName": "spec_template_metadata_owner_references_kind",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_name",
+        "targetName": "spec_template_metadata_owner_references_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_ownerReferences_uid",
+        "targetName": "spec_template_metadata_owner_references_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_resourceVersion",
+        "targetName": "spec_template_metadata_resource_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_selfLink",
+        "targetName": "spec_template_metadata_self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_metadata_uid",
+        "targetName": "spec_template_metadata_uid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec",
+        "targetName": "spec_template_spec",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containerConcurrency",
+        "targetName": "spec_template_spec_container_concurrency",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers",
+        "targetName": "spec_template_spec_containers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_args",
+        "targetName": "spec_template_spec_containers_args",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_command",
+        "targetName": "spec_template_spec_containers_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env",
+        "targetName": "spec_template_spec_containers_env",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom",
+        "targetName": "spec_template_spec_containers_env_from",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_configMapRef",
+        "targetName": "spec_template_spec_containers_env_from_config_map_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_configMapRef_localObjectReference",
+        "targetName": "spec_template_spec_containers_env_from_config_map_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_configMapRef_localObjectReference_name",
+        "targetName": "spec_template_spec_containers_env_from_config_map_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_configMapRef_name",
+        "targetName": "spec_template_spec_containers_env_from_config_map_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_configMapRef_optional",
+        "targetName": "spec_template_spec_containers_env_from_config_map_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_prefix",
+        "targetName": "spec_template_spec_containers_env_from_prefix",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_secretRef",
+        "targetName": "spec_template_spec_containers_env_from_secret_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_secretRef_localObjectReference",
+        "targetName": "spec_template_spec_containers_env_from_secret_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_secretRef_localObjectReference_name",
+        "targetName": "spec_template_spec_containers_env_from_secret_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_secretRef_name",
+        "targetName": "spec_template_spec_containers_env_from_secret_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_envFrom_secretRef_optional",
+        "targetName": "spec_template_spec_containers_env_from_secret_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_name",
+        "targetName": "spec_template_spec_containers_env_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_value",
+        "targetName": "spec_template_spec_containers_env_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom",
+        "targetName": "spec_template_spec_containers_env_value_from",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef_key",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef_localObjectReference",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef_localObjectReference_name",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef_name",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_configMapKeyRef_optional",
+        "targetName": "spec_template_spec_containers_env_value_from_config_map_key_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef_key",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef_localObjectReference",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref_local_object_reference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef_localObjectReference_name",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref_local_object_reference_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef_name",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_env_valueFrom_secretKeyRef_optional",
+        "targetName": "spec_template_spec_containers_env_value_from_secret_key_ref_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_image",
+        "targetName": "spec_template_spec_containers_image",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_imagePullPolicy",
+        "targetName": "spec_template_spec_containers_image_pull_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe",
+        "targetName": "spec_template_spec_containers_liveness_probe",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_exec",
+        "targetName": "spec_template_spec_containers_liveness_probe_exec",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_exec_command",
+        "targetName": "spec_template_spec_containers_liveness_probe_exec_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_failureThreshold",
+        "targetName": "spec_template_spec_containers_liveness_probe_failure_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_host",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_httpHeaders",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_http_headers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_httpHeaders_name",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_http_headers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_httpHeaders_value",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_http_headers_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_path",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_httpGet_scheme",
+        "targetName": "spec_template_spec_containers_liveness_probe_http_get_scheme",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_initialDelaySeconds",
+        "targetName": "spec_template_spec_containers_liveness_probe_initial_delay_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_periodSeconds",
+        "targetName": "spec_template_spec_containers_liveness_probe_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_successThreshold",
+        "targetName": "spec_template_spec_containers_liveness_probe_success_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_tcpSocket",
+        "targetName": "spec_template_spec_containers_liveness_probe_tcp_socket",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_tcpSocket_host",
+        "targetName": "spec_template_spec_containers_liveness_probe_tcp_socket_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_tcpSocket_port",
+        "targetName": "spec_template_spec_containers_liveness_probe_tcp_socket_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_livenessProbe_timeoutSeconds",
+        "targetName": "spec_template_spec_containers_liveness_probe_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_name",
+        "targetName": "spec_template_spec_containers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_ports",
+        "targetName": "spec_template_spec_containers_ports",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_ports_containerPort",
+        "targetName": "spec_template_spec_containers_ports_container_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_ports_name",
+        "targetName": "spec_template_spec_containers_ports_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_ports_protocol",
+        "targetName": "spec_template_spec_containers_ports_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe",
+        "targetName": "spec_template_spec_containers_readiness_probe",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_exec",
+        "targetName": "spec_template_spec_containers_readiness_probe_exec",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_exec_command",
+        "targetName": "spec_template_spec_containers_readiness_probe_exec_command",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_failureThreshold",
+        "targetName": "spec_template_spec_containers_readiness_probe_failure_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_host",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_httpHeaders",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_http_headers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_httpHeaders_name",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_http_headers_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_httpHeaders_value",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_http_headers_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_path",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_httpGet_scheme",
+        "targetName": "spec_template_spec_containers_readiness_probe_http_get_scheme",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_initialDelaySeconds",
+        "targetName": "spec_template_spec_containers_readiness_probe_initial_delay_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_periodSeconds",
+        "targetName": "spec_template_spec_containers_readiness_probe_period_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_successThreshold",
+        "targetName": "spec_template_spec_containers_readiness_probe_success_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_tcpSocket",
+        "targetName": "spec_template_spec_containers_readiness_probe_tcp_socket",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_tcpSocket_host",
+        "targetName": "spec_template_spec_containers_readiness_probe_tcp_socket_host",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_tcpSocket_port",
+        "targetName": "spec_template_spec_containers_readiness_probe_tcp_socket_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_readinessProbe_timeoutSeconds",
+        "targetName": "spec_template_spec_containers_readiness_probe_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_resources",
+        "targetName": "spec_template_spec_containers_resources",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_resources_limits",
+        "targetName": "spec_template_spec_containers_resources_limits",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_resources_requests",
+        "targetName": "spec_template_spec_containers_resources_requests",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_securityContext",
+        "targetName": "spec_template_spec_containers_security_context",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_securityContext_runAsUser",
+        "targetName": "spec_template_spec_containers_security_context_run_as_user",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_terminationMessagePath",
+        "targetName": "spec_template_spec_containers_termination_message_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_terminationMessagePolicy",
+        "targetName": "spec_template_spec_containers_termination_message_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_volumeMounts",
+        "targetName": "spec_template_spec_containers_volume_mounts",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_volumeMounts_mountPath",
+        "targetName": "spec_template_spec_containers_volume_mounts_mount_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_volumeMounts_name",
+        "targetName": "spec_template_spec_containers_volume_mounts_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_volumeMounts_readOnly",
+        "targetName": "spec_template_spec_containers_volume_mounts_read_only",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_volumeMounts_subPath",
+        "targetName": "spec_template_spec_containers_volume_mounts_sub_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_containers_workingDir",
+        "targetName": "spec_template_spec_containers_working_dir",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_serviceAccountName",
+        "targetName": "spec_template_spec_service_account_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_timeoutSeconds",
+        "targetName": "spec_template_spec_timeout_seconds",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes",
+        "targetName": "spec_template_spec_volumes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap",
+        "targetName": "spec_template_spec_volumes_config_map",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_defaultMode",
+        "targetName": "spec_template_spec_volumes_config_map_default_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_items",
+        "targetName": "spec_template_spec_volumes_config_map_items",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_items_key",
+        "targetName": "spec_template_spec_volumes_config_map_items_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_items_mode",
+        "targetName": "spec_template_spec_volumes_config_map_items_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_items_path",
+        "targetName": "spec_template_spec_volumes_config_map_items_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_name",
+        "targetName": "spec_template_spec_volumes_config_map_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_configMap_optional",
+        "targetName": "spec_template_spec_volumes_config_map_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_name",
+        "targetName": "spec_template_spec_volumes_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret",
+        "targetName": "spec_template_spec_volumes_secret",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_defaultMode",
+        "targetName": "spec_template_spec_volumes_secret_default_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_items",
+        "targetName": "spec_template_spec_volumes_secret_items",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_items_key",
+        "targetName": "spec_template_spec_volumes_secret_items_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_items_mode",
+        "targetName": "spec_template_spec_volumes_secret_items_mode",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_items_path",
+        "targetName": "spec_template_spec_volumes_secret_items_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_optional",
+        "targetName": "spec_template_spec_volumes_secret_optional",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_template_spec_volumes_secret_secretName",
+        "targetName": "spec_template_spec_volumes_secret_secret_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic",
+        "targetName": "spec_traffic",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_configurationName",
+        "targetName": "spec_traffic_configuration_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_latestRevision",
+        "targetName": "spec_traffic_latest_revision",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_percent",
+        "targetName": "spec_traffic_percent",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_revisionName",
+        "targetName": "spec_traffic_revision_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_tag",
+        "targetName": "spec_traffic_tag",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_spec_traffic_url",
+        "targetName": "spec_traffic_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_status_address",
+        "targetName": "status_address",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_address_url",
+        "targetName": "status_address_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions",
+        "targetName": "status_conditions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_lastTransitionTime",
+        "targetName": "status_conditions_last_transition_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_message",
+        "targetName": "status_conditions_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_reason",
+        "targetName": "status_conditions_reason",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_severity",
+        "targetName": "status_conditions_severity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_status",
+        "targetName": "status_conditions_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_conditions_type",
+        "targetName": "status_conditions_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_latestCreatedRevisionName",
+        "targetName": "status_latest_created_revision_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_latestReadyRevisionName",
+        "targetName": "status_latest_ready_revision_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_observedGeneration",
+        "targetName": "status_observed_generation",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic",
+        "targetName": "status_traffic",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_configurationName",
+        "targetName": "status_traffic_configuration_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_latestRevision",
+        "targetName": "status_traffic_latest_revision",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_percent",
+        "targetName": "status_traffic_percent",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_revisionName",
+        "targetName": "status_traffic_revision_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_tag",
+        "targetName": "status_traffic_tag",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_traffic_url",
+        "targetName": "status_traffic_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status_url",
+        "targetName": "status_url",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,1829 @@
+{
+  "gcp_container_cluster": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_addonsConfig",
+        "targetName": "addons_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_addonsConfig_cloudRunConfig",
+        "targetName": "addons_config_cloud_run_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_cloudRunConfig_disabled",
+        "targetName": "addons_config_cloud_run_config_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_cloudRunConfig_loadBalancerType",
+        "targetName": "addons_config_cloud_run_config_load_balancer_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_configConnectorConfig",
+        "targetName": "addons_config_config_connector_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_configConnectorConfig_enabled",
+        "targetName": "addons_config_config_connector_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_dnsCacheConfig",
+        "targetName": "addons_config_dns_cache_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_dnsCacheConfig_enabled",
+        "targetName": "addons_config_dns_cache_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_gcePersistentDiskCsiDriverConfig",
+        "targetName": "addons_config_gce_persistent_disk_csi_driver_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_gcePersistentDiskCsiDriverConfig_enabled",
+        "targetName": "addons_config_gce_persistent_disk_csi_driver_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_horizontalPodAutoscaling",
+        "targetName": "addons_config_horizontal_pod_autoscaling",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_horizontalPodAutoscaling_disabled",
+        "targetName": "addons_config_horizontal_pod_autoscaling_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_httpLoadBalancing",
+        "targetName": "addons_config_http_load_balancing",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_httpLoadBalancing_disabled",
+        "targetName": "addons_config_http_load_balancing_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_istioConfig",
+        "targetName": "addons_config_istio_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_istioConfig_auth",
+        "targetName": "addons_config_istio_config_auth",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_istioConfig_disabled",
+        "targetName": "addons_config_istio_config_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_kalmConfig",
+        "targetName": "addons_config_kalm_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_kalmConfig_enabled",
+        "targetName": "addons_config_kalm_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_kubernetesDashboard",
+        "targetName": "addons_config_kubernetes_dashboard",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_kubernetesDashboard_disabled",
+        "targetName": "addons_config_kubernetes_dashboard_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_networkPolicyConfig",
+        "targetName": "addons_config_network_policy_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_addonsConfig_networkPolicyConfig_disabled",
+        "targetName": "addons_config_network_policy_config_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_authenticatorGroupsConfig",
+        "targetName": "authenticator_groups_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_authenticatorGroupsConfig_enabled",
+        "targetName": "authenticator_groups_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_authenticatorGroupsConfig_securityGroup",
+        "targetName": "authenticator_groups_config_security_group",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling",
+        "targetName": "autoscaling",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningLocations",
+        "targetName": "autoscaling_autoprovisioning_locations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_bootDiskKmsKey",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_boot_disk_kms_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_diskSizeGb",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_diskType",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_disk_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management_autoRepair",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management_auto_repair",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management_autoUpgrade",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management_auto_upgrade",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management_upgradeOptions",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management_upgrade_options",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management_upgradeOptions_autoUpgradeStartTime",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management_upgrade_options_auto_upgrade_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_management_upgradeOptions_description",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_management_upgrade_options_description",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_minCpuPlatform",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_min_cpu_platform",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_oauthScopes",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_oauth_scopes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_serviceAccount",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_shieldedInstanceConfig",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_shielded_instance_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_shieldedInstanceConfig_enableIntegrityMonitoring",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_shielded_instance_config_enable_integrity_monitoring",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_shieldedInstanceConfig_enableSecureBoot",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_shielded_instance_config_enable_secure_boot",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_upgradeSettings",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_upgrade_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_upgradeSettings_maxSurge",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_upgrade_settings_max_surge",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoprovisioningNodePoolDefaults_upgradeSettings_maxUnavailable",
+        "targetName": "autoscaling_autoprovisioning_node_pool_defaults_upgrade_settings_max_unavailable",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_autoscalingProfile",
+        "targetName": "autoscaling_autoscaling_profile",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_enableNodeAutoprovisioning",
+        "targetName": "autoscaling_enable_node_autoprovisioning",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_resourceLimits",
+        "targetName": "autoscaling_resource_limits",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_resourceLimits_maximum",
+        "targetName": "autoscaling_resource_limits_maximum",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_resourceLimits_minimum",
+        "targetName": "autoscaling_resource_limits_minimum",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_autoscaling_resourceLimits_resourceType",
+        "targetName": "autoscaling_resource_limits_resource_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_binaryAuthorization",
+        "targetName": "binary_authorization",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_binaryAuthorization_enabled",
+        "targetName": "binary_authorization_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_clusterIpv4Cidr",
+        "targetName": "cluster_ipv4_cidr",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_clusterTelemetry",
+        "targetName": "cluster_telemetry",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_clusterTelemetry_type",
+        "targetName": "cluster_telemetry_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_conditions",
+        "targetName": "conditions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_conditions_canonicalCode",
+        "targetName": "conditions_canonical_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_conditions_code",
+        "targetName": "conditions_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_conditions_message",
+        "targetName": "conditions_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_confidentialNodes",
+        "targetName": "confidential_nodes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_confidentialNodes_enabled",
+        "targetName": "confidential_nodes_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_createTime",
+        "targetName": "create_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_currentMasterVersion",
+        "targetName": "current_master_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_currentNodeCount",
+        "targetName": "current_node_count",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_currentNodeVersion",
+        "targetName": "current_node_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_databaseEncryption",
+        "targetName": "database_encryption",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_databaseEncryption_keyName",
+        "targetName": "database_encryption_key_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_databaseEncryption_state",
+        "targetName": "database_encryption_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_defaultMaxPodsConstraint",
+        "targetName": "default_max_pods_constraint",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_defaultMaxPodsConstraint_maxPodsPerNode",
+        "targetName": "default_max_pods_constraint_max_pods_per_node",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_enableKubernetesAlpha",
+        "targetName": "enable_kubernetes_alpha",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_enableTpu",
+        "targetName": "enable_tpu",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_endpoint",
+        "targetName": "endpoint",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_expireTime",
+        "targetName": "expire_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_initialClusterVersion",
+        "targetName": "initial_cluster_version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_initialNodeCount",
+        "targetName": "initial_node_count",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_instanceGroupUrls",
+        "targetName": "instance_group_urls",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy",
+        "targetName": "ip_allocation_policy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_allowRouteOverlap",
+        "targetName": "ip_allocation_policy_allow_route_overlap",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_clusterIpv4Cidr",
+        "targetName": "ip_allocation_policy_cluster_ipv4_cidr",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_clusterIpv4CidrBlock",
+        "targetName": "ip_allocation_policy_cluster_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_clusterSecondaryRangeName",
+        "targetName": "ip_allocation_policy_cluster_secondary_range_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_createSubnetwork",
+        "targetName": "ip_allocation_policy_create_subnetwork",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_nodeIpv4Cidr",
+        "targetName": "ip_allocation_policy_node_ipv4_cidr",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_nodeIpv4CidrBlock",
+        "targetName": "ip_allocation_policy_node_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_servicesIpv4Cidr",
+        "targetName": "ip_allocation_policy_services_ipv4_cidr",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_servicesIpv4CidrBlock",
+        "targetName": "ip_allocation_policy_services_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_servicesSecondaryRangeName",
+        "targetName": "ip_allocation_policy_services_secondary_range_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_subnetworkName",
+        "targetName": "ip_allocation_policy_subnetwork_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_tpuIpv4CidrBlock",
+        "targetName": "ip_allocation_policy_tpu_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_useIpAliases",
+        "targetName": "ip_allocation_policy_use_ip_aliases",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_ipAllocationPolicy_useRoutes",
+        "targetName": "ip_allocation_policy_use_routes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_labelFingerprint",
+        "targetName": "label_fingerprint",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_legacyAbac",
+        "targetName": "legacy_abac",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_legacyAbac_enabled",
+        "targetName": "legacy_abac_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_location",
+        "targetName": "location",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_locations",
+        "targetName": "locations",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_loggingService",
+        "targetName": "logging_service",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_maintenancePolicy",
+        "targetName": "maintenance_policy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_maintenancePolicy_resourceVersion",
+        "targetName": "maintenance_policy_resource_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window",
+        "targetName": "maintenance_policy_window",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_dailyMaintenanceWindow",
+        "targetName": "maintenance_policy_window_daily_maintenance_window",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_dailyMaintenanceWindow_duration",
+        "targetName": "maintenance_policy_window_daily_maintenance_window_duration",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_dailyMaintenanceWindow_startTime",
+        "targetName": "maintenance_policy_window_daily_maintenance_window_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_maintenanceExclusions",
+        "targetName": "maintenance_policy_window_maintenance_exclusions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_recurringWindow",
+        "targetName": "maintenance_policy_window_recurring_window",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_recurringWindow_recurrence",
+        "targetName": "maintenance_policy_window_recurring_window_recurrence",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_recurringWindow_window",
+        "targetName": "maintenance_policy_window_recurring_window_window",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_recurringWindow_window_endTime",
+        "targetName": "maintenance_policy_window_recurring_window_window_end_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_maintenancePolicy_window_recurringWindow_window_startTime",
+        "targetName": "maintenance_policy_window_recurring_window_window_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_master",
+        "targetName": "master",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_masterAuth",
+        "targetName": "master_auth",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_masterAuth_clientCertificate",
+        "targetName": "master_auth_client_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_clientCertificateConfig",
+        "targetName": "master_auth_client_certificate_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_clientCertificateConfig_issueClientCertificate",
+        "targetName": "master_auth_client_certificate_config_issue_client_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_clientKey",
+        "targetName": "master_auth_client_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_clusterCaCertificate",
+        "targetName": "master_auth_cluster_ca_certificate",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_password",
+        "targetName": "master_auth_password",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuth_username",
+        "targetName": "master_auth_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuthorizedNetworksConfig",
+        "targetName": "master_authorized_networks_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuthorizedNetworksConfig_cidrBlocks",
+        "targetName": "master_authorized_networks_config_cidr_blocks",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuthorizedNetworksConfig_cidrBlocks_cidrBlock",
+        "targetName": "master_authorized_networks_config_cidr_blocks_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuthorizedNetworksConfig_cidrBlocks_displayName",
+        "targetName": "master_authorized_networks_config_cidr_blocks_display_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterAuthorizedNetworksConfig_enabled",
+        "targetName": "master_authorized_networks_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_masterIpv4CidrBlock",
+        "targetName": "master_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_monitoringService",
+        "targetName": "monitoring_service",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_network",
+        "targetName": "network",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_networkConfig",
+        "targetName": "network_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_networkConfig_datapathProvider",
+        "targetName": "network_config_datapath_provider",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkConfig_defaultSnatStatus",
+        "targetName": "network_config_default_snat_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkConfig_defaultSnatStatus_disabled",
+        "targetName": "network_config_default_snat_status_disabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkConfig_enableIntraNodeVisibility",
+        "targetName": "network_config_enable_intra_node_visibility",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkConfig_network",
+        "targetName": "network_config_network",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkConfig_subnetwork",
+        "targetName": "network_config_subnetwork",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkPolicy",
+        "targetName": "network_policy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_networkPolicy_enabled",
+        "targetName": "network_policy_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_networkPolicy_provider",
+        "targetName": "network_policy_provider",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig",
+        "targetName": "node_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_nodeConfig_accelerators",
+        "targetName": "node_config_accelerators",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_accelerators_acceleratorCount",
+        "targetName": "node_config_accelerators_accelerator_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_accelerators_acceleratorType",
+        "targetName": "node_config_accelerators_accelerator_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_bootDiskKmsKey",
+        "targetName": "node_config_boot_disk_kms_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_diskSizeGb",
+        "targetName": "node_config_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_diskType",
+        "targetName": "node_config_disk_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_ephemeralStorageConfig",
+        "targetName": "node_config_ephemeral_storage_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_ephemeralStorageConfig_localSsdCount",
+        "targetName": "node_config_ephemeral_storage_config_local_ssd_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_imageType",
+        "targetName": "node_config_image_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_kubeletConfig",
+        "targetName": "node_config_kubelet_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_kubeletConfig_cpuCfsQuota",
+        "targetName": "node_config_kubelet_config_cpu_cfs_quota",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_kubeletConfig_cpuCfsQuotaPeriod",
+        "targetName": "node_config_kubelet_config_cpu_cfs_quota_period",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_kubeletConfig_cpuManagerPolicy",
+        "targetName": "node_config_kubelet_config_cpu_manager_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_labels",
+        "targetName": "node_config_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_linuxNodeConfig",
+        "targetName": "node_config_linux_node_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_linuxNodeConfig_sysctls",
+        "targetName": "node_config_linux_node_config_sysctls",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_localSsdCount",
+        "targetName": "node_config_local_ssd_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_machineType",
+        "targetName": "node_config_machine_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_metadata",
+        "targetName": "node_config_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_minCpuPlatform",
+        "targetName": "node_config_min_cpu_platform",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_nodeGroup",
+        "targetName": "node_config_node_group",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_oauthScopes",
+        "targetName": "node_config_oauth_scopes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_preemptible",
+        "targetName": "node_config_preemptible",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_reservationAffinity",
+        "targetName": "node_config_reservation_affinity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_reservationAffinity_consumeReservationType",
+        "targetName": "node_config_reservation_affinity_consume_reservation_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_reservationAffinity_key",
+        "targetName": "node_config_reservation_affinity_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_reservationAffinity_values",
+        "targetName": "node_config_reservation_affinity_values",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_sandboxConfig",
+        "targetName": "node_config_sandbox_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_sandboxConfig_sandboxType",
+        "targetName": "node_config_sandbox_config_sandbox_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_sandboxConfig_type",
+        "targetName": "node_config_sandbox_config_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_serviceAccount",
+        "targetName": "node_config_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_shieldedInstanceConfig",
+        "targetName": "node_config_shielded_instance_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_shieldedInstanceConfig_enableIntegrityMonitoring",
+        "targetName": "node_config_shielded_instance_config_enable_integrity_monitoring",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_shieldedInstanceConfig_enableSecureBoot",
+        "targetName": "node_config_shielded_instance_config_enable_secure_boot",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_tags",
+        "targetName": "node_config_tags",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_taints",
+        "targetName": "node_config_taints",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_taints_effect",
+        "targetName": "node_config_taints_effect",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_taints_key",
+        "targetName": "node_config_taints_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_taints_value",
+        "targetName": "node_config_taints_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_workloadMetadataConfig",
+        "targetName": "node_config_workload_metadata_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_workloadMetadataConfig_mode",
+        "targetName": "node_config_workload_metadata_config_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeConfig_workloadMetadataConfig_nodeMetadata",
+        "targetName": "node_config_workload_metadata_config_node_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodeIpv4CidrSize",
+        "targetName": "node_ipv4_cidr_size",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_nodePools",
+        "targetName": "node_pools",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_nodePools_autoscaling",
+        "targetName": "node_pools_autoscaling",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_autoscaling_autoprovisioned",
+        "targetName": "node_pools_autoscaling_autoprovisioned",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_autoscaling_enabled",
+        "targetName": "node_pools_autoscaling_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_autoscaling_maxNodeCount",
+        "targetName": "node_pools_autoscaling_max_node_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_autoscaling_minNodeCount",
+        "targetName": "node_pools_autoscaling_min_node_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_conditions",
+        "targetName": "node_pools_conditions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_conditions_canonicalCode",
+        "targetName": "node_pools_conditions_canonical_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_conditions_code",
+        "targetName": "node_pools_conditions_code",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_conditions_message",
+        "targetName": "node_pools_conditions_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config",
+        "targetName": "node_pools_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_accelerators",
+        "targetName": "node_pools_config_accelerators",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_accelerators_acceleratorCount",
+        "targetName": "node_pools_config_accelerators_accelerator_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_accelerators_acceleratorType",
+        "targetName": "node_pools_config_accelerators_accelerator_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_bootDiskKmsKey",
+        "targetName": "node_pools_config_boot_disk_kms_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_diskSizeGb",
+        "targetName": "node_pools_config_disk_size_gb",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_diskType",
+        "targetName": "node_pools_config_disk_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_ephemeralStorageConfig",
+        "targetName": "node_pools_config_ephemeral_storage_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_ephemeralStorageConfig_localSsdCount",
+        "targetName": "node_pools_config_ephemeral_storage_config_local_ssd_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_imageType",
+        "targetName": "node_pools_config_image_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_kubeletConfig",
+        "targetName": "node_pools_config_kubelet_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_kubeletConfig_cpuCfsQuota",
+        "targetName": "node_pools_config_kubelet_config_cpu_cfs_quota",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_kubeletConfig_cpuCfsQuotaPeriod",
+        "targetName": "node_pools_config_kubelet_config_cpu_cfs_quota_period",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_kubeletConfig_cpuManagerPolicy",
+        "targetName": "node_pools_config_kubelet_config_cpu_manager_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_labels",
+        "targetName": "node_pools_config_labels",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_linuxNodeConfig",
+        "targetName": "node_pools_config_linux_node_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_linuxNodeConfig_sysctls",
+        "targetName": "node_pools_config_linux_node_config_sysctls",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_localSsdCount",
+        "targetName": "node_pools_config_local_ssd_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_machineType",
+        "targetName": "node_pools_config_machine_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_metadata",
+        "targetName": "node_pools_config_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_minCpuPlatform",
+        "targetName": "node_pools_config_min_cpu_platform",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_nodeGroup",
+        "targetName": "node_pools_config_node_group",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_oauthScopes",
+        "targetName": "node_pools_config_oauth_scopes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_preemptible",
+        "targetName": "node_pools_config_preemptible",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_reservationAffinity",
+        "targetName": "node_pools_config_reservation_affinity",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_reservationAffinity_consumeReservationType",
+        "targetName": "node_pools_config_reservation_affinity_consume_reservation_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_reservationAffinity_key",
+        "targetName": "node_pools_config_reservation_affinity_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_reservationAffinity_values",
+        "targetName": "node_pools_config_reservation_affinity_values",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_sandboxConfig",
+        "targetName": "node_pools_config_sandbox_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_sandboxConfig_sandboxType",
+        "targetName": "node_pools_config_sandbox_config_sandbox_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_sandboxConfig_type",
+        "targetName": "node_pools_config_sandbox_config_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_serviceAccount",
+        "targetName": "node_pools_config_service_account",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_shieldedInstanceConfig",
+        "targetName": "node_pools_config_shielded_instance_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_shieldedInstanceConfig_enableIntegrityMonitoring",
+        "targetName": "node_pools_config_shielded_instance_config_enable_integrity_monitoring",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_shieldedInstanceConfig_enableSecureBoot",
+        "targetName": "node_pools_config_shielded_instance_config_enable_secure_boot",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_tags",
+        "targetName": "node_pools_config_tags",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_taints",
+        "targetName": "node_pools_config_taints",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_taints_effect",
+        "targetName": "node_pools_config_taints_effect",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_taints_key",
+        "targetName": "node_pools_config_taints_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_taints_value",
+        "targetName": "node_pools_config_taints_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_workloadMetadataConfig",
+        "targetName": "node_pools_config_workload_metadata_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_workloadMetadataConfig_mode",
+        "targetName": "node_pools_config_workload_metadata_config_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_config_workloadMetadataConfig_nodeMetadata",
+        "targetName": "node_pools_config_workload_metadata_config_node_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_initialNodeCount",
+        "targetName": "node_pools_initial_node_count",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_instanceGroupUrls",
+        "targetName": "node_pools_instance_group_urls",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_locations",
+        "targetName": "node_pools_locations",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management",
+        "targetName": "node_pools_management",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management_autoRepair",
+        "targetName": "node_pools_management_auto_repair",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management_autoUpgrade",
+        "targetName": "node_pools_management_auto_upgrade",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management_upgradeOptions",
+        "targetName": "node_pools_management_upgrade_options",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management_upgradeOptions_autoUpgradeStartTime",
+        "targetName": "node_pools_management_upgrade_options_auto_upgrade_start_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_management_upgradeOptions_description",
+        "targetName": "node_pools_management_upgrade_options_description",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_maxPodsConstraint",
+        "targetName": "node_pools_max_pods_constraint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_maxPodsConstraint_maxPodsPerNode",
+        "targetName": "node_pools_max_pods_constraint_max_pods_per_node",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_name",
+        "targetName": "node_pools_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_podIpv4CidrSize",
+        "targetName": "node_pools_pod_ipv4_cidr_size",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_selfLink",
+        "targetName": "node_pools_self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_status",
+        "targetName": "node_pools_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_statusMessage",
+        "targetName": "node_pools_status_message",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_upgradeSettings",
+        "targetName": "node_pools_upgrade_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_upgradeSettings_maxSurge",
+        "targetName": "node_pools_upgrade_settings_max_surge",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_upgradeSettings_maxUnavailable",
+        "targetName": "node_pools_upgrade_settings_max_unavailable",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_nodePools_version",
+        "targetName": "node_pools_version",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_notificationConfig",
+        "targetName": "notification_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_notificationConfig_pubsub",
+        "targetName": "notification_config_pubsub",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_notificationConfig_pubsub_enabled",
+        "targetName": "notification_config_pubsub_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_notificationConfig_pubsub_topic",
+        "targetName": "notification_config_pubsub_topic",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_podSecurityPolicyConfig",
+        "targetName": "pod_security_policy_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_podSecurityPolicyConfig_enabled",
+        "targetName": "pod_security_policy_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateCluster",
+        "targetName": "private_cluster",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_privateClusterConfig",
+        "targetName": "private_cluster_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_privateClusterConfig_enablePrivateEndpoint",
+        "targetName": "private_cluster_config_enable_private_endpoint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_enablePrivateNodes",
+        "targetName": "private_cluster_config_enable_private_nodes",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_masterGlobalAccessConfig",
+        "targetName": "private_cluster_config_master_global_access_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_masterGlobalAccessConfig_enabled",
+        "targetName": "private_cluster_config_master_global_access_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_masterIpv4CidrBlock",
+        "targetName": "private_cluster_config_master_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_peeringName",
+        "targetName": "private_cluster_config_peering_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_privateEndpoint",
+        "targetName": "private_cluster_config_private_endpoint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_privateClusterConfig_publicEndpoint",
+        "targetName": "private_cluster_config_public_endpoint",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_releaseChannel",
+        "targetName": "release_channel",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_releaseChannel_channel",
+        "targetName": "release_channel_channel",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_resourceLabels",
+        "targetName": "resource_labels",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig",
+        "targetName": "resource_usage_export_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig_bigqueryDestination",
+        "targetName": "resource_usage_export_config_bigquery_destination",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig_bigqueryDestination_datasetId",
+        "targetName": "resource_usage_export_config_bigquery_destination_dataset_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig_consumptionMeteringConfig",
+        "targetName": "resource_usage_export_config_consumption_metering_config",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig_consumptionMeteringConfig_enabled",
+        "targetName": "resource_usage_export_config_consumption_metering_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_resourceUsageExportConfig_enableNetworkEgressMetering",
+        "targetName": "resource_usage_export_config_enable_network_egress_metering",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_selfLink",
+        "targetName": "self_link",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_servicesIpv4Cidr",
+        "targetName": "services_ipv4_cidr",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedNodes",
+        "targetName": "shielded_nodes",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_shieldedNodes_enabled",
+        "targetName": "shielded_nodes_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_statusMessage",
+        "targetName": "status_message",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_subnetwork",
+        "targetName": "subnetwork",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_tpuConfig",
+        "targetName": "tpu_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_tpuConfig_enabled",
+        "targetName": "tpu_config_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_tpuConfig_ipv4CidrBlock",
+        "targetName": "tpu_config_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_tpuConfig_useServiceNetworking",
+        "targetName": "tpu_config_use_service_networking",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_tpuIpv4CidrBlock",
+        "targetName": "tpu_ipv4_cidr_block",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_verticalPodAutoscaling",
+        "targetName": "vertical_pod_autoscaling",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_verticalPodAutoscaling_enabled",
+        "targetName": "vertical_pod_autoscaling_enabled",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_workloadIdentityConfig",
+        "targetName": "workload_identity_config",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_workloadIdentityConfig_identityNamespace",
+        "targetName": "workload_identity_config_identity_namespace",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_workloadIdentityConfig_identityProvider",
+        "targetName": "workload_identity_config_identity_provider",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_workloadIdentityConfig_workloadPool",
+        "targetName": "workload_identity_config_workload_pool",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_zone",
+        "targetName": "zone",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

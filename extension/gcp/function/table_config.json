@@ -1,0 +1,209 @@
+{
+  "gcp_cloud_function": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "items_availableMemoryMb",
+        "targetName": "available_memory_mb",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_entryPoint",
+        "targetName": "entry_point",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_environmentVariables",
+        "targetName": "environment_variables",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_eventTrigger",
+        "targetName": "event_trigger",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_eventTrigger_eventType",
+        "targetName": "event_trigger_event_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_eventTrigger_failurePolicy",
+        "targetName": "event_trigger_failure_policy",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_eventTrigger_failurePolicy_retry",
+        "targetName": "event_trigger_failure_policy_retry",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_eventTrigger_resource",
+        "targetName": "event_trigger_resource",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_eventTrigger_service",
+        "targetName": "event_trigger_service",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_httpsTrigger",
+        "targetName": "https_trigger",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_httpsTrigger_url",
+        "targetName": "https_trigger_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_labels",
+        "targetName": "labels",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_latestOperation",
+        "targetName": "latest_operation",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_maxInstances",
+        "targetName": "max_instances",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_network",
+        "targetName": "network",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_runtime",
+        "targetName": "runtime",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_serviceAccount",
+        "targetName": "service_account",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceArchiveUrl",
+        "targetName": "source_archive_url",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceRepository",
+        "targetName": "source_repository",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceRepositoryUrl",
+        "targetName": "source_repository_url",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_sourceRepository_branch",
+        "targetName": "source_repository_branch",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceRepository_deployedRevision",
+        "targetName": "source_repository_deployed_revision",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceRepository_repositoryUrl",
+        "targetName": "source_repository_repository_url",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceRepository_revision",
+        "targetName": "source_repository_revision",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceRepository_sourcePath",
+        "targetName": "source_repository_source_path",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceRepository_tag",
+        "targetName": "source_repository_tag",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "items_sourceUploadUrl",
+        "targetName": "source_upload_url",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_timeout",
+        "targetName": "timeout",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_updateTime",
+        "targetName": "update_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_versionId",
+        "targetName": "version_id",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "items_vpcConnector",
+        "targetName": "vpc_connector",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

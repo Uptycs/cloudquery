@@ -14,11 +14,12 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
+	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
 	gcpdns "github.com/Uptycs/cloudquery/extension/gcp/dns"
 	gcpfile "github.com/Uptycs/cloudquery/extension/gcp/file"
-	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
 	gcpfunction "github.com/Uptycs/cloudquery/extension/gcp/function"
 	gcpiam "github.com/Uptycs/cloudquery/extension/gcp/iam"
+	gcprun "github.com/Uptycs/cloudquery/extension/gcp/run"
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
@@ -114,6 +115,7 @@ func readTableConfigurations(homeDir string) {
 		"gcp/file/table_config.json",
 		"gcp/container/table_config.json",
 		"gcp/function/table_config.json",
+		"gcp/run/table_config.json",
 	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
@@ -199,6 +201,9 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpcontainer.GcpContainerClustersColumns(), gcpcontainer.GcpContainerClustersGenerate))
 	// GCP Cloud Function
 	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpfunction.GcpCloudFunctionsColumns(), gcpfunction.GcpCloudFunctionsGenerate))
+	// GCP Cloud Run
+	server.RegisterPlugin(table.NewPlugin("gcp_cloud_run_service", gcprun.GcpCloudRunServicesColumns(), gcprun.GcpCloudRunServicesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_cloud_run_revision", gcprun.GcpCloudRunRevisionsColumns(), gcprun.GcpCloudRunRevisionsGenerate))
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))

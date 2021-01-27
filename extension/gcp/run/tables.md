@@ -1,0 +1,2 @@
+- gcp_cloud_run_revision
+- gcp_cloud_run_service
