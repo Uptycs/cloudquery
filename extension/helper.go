@@ -16,6 +16,8 @@ import (
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	gcpdns "github.com/Uptycs/cloudquery/extension/gcp/dns"
 	gcpfile "github.com/Uptycs/cloudquery/extension/gcp/file"
+	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
+	gcpfunction "github.com/Uptycs/cloudquery/extension/gcp/function"
 	gcpiam "github.com/Uptycs/cloudquery/extension/gcp/iam"
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
@@ -103,7 +105,16 @@ func readExtensionConfigurations(filePath string) error {
 
 func readTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
-	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json", "gcp/iam/table_config.json", "gcp/sql/table_config.json", "gcp/dns/table_config.json", "gcp/file/table_config.json"}
+	var gcpConfigFileList = []string{
+		"gcp/compute/table_config.json",
+		"gcp/storage/table_config.json",
+		"gcp/iam/table_config.json",
+		"gcp/sql/table_config.json",
+		"gcp/dns/table_config.json",
+		"gcp/file/table_config.json",
+		"gcp/container/table_config.json",
+		"gcp/function/table_config.json",
+	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
 	configFileList = append(configFileList, azureConfigFileList...)
@@ -184,6 +195,10 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	// GCP File
 	server.RegisterPlugin(table.NewPlugin("gcp_file_instance", gcpfile.GcpFileInstancesColumns(), gcpfile.GcpFileInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_file_backup", gcpfile.GcpFileBackupsColumns(), gcpfile.GcpFileBackupsGenerate))
+	// GCP Container
+	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpcontainer.GcpContainerClustersColumns(), gcpcontainer.GcpContainerClustersGenerate))
+	// GCP Cloud Function
+	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpfunction.GcpCloudFunctionsColumns(), gcpfunction.GcpCloudFunctionsGenerate))
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
