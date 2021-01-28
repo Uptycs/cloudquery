@@ -173,3 +173,26 @@ func TestReadTableConfig_missingAttrProperties(t *testing.T) {
 		assert.NotNil(t, readErr)
 	}
 }
+
+type myTest struct {
+	In       interface{}
+	Expected string
+}
+
+func TestGetStringValue(t *testing.T) {
+	list := []myTest{
+		{12, "12"},
+		{1000002, "1.000002e+06"},
+		{10.00002, "10.00002"},
+		{"astring", "astring"},
+		{true, "true"},
+		{0.1, "0.1"},
+		{-10.1, "-10.1"},
+		{+10.1, "10.1"},
+		{"\"withquotes\"", "withquotes"},
+	}
+	for _, entry := range list {
+		strVal := getStringValue(entry.In)
+		assert.Equal(t, entry.Expected, strVal)
+	}
+}
