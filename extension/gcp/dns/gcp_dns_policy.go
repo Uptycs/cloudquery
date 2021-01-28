@@ -68,7 +68,7 @@ func GcpDNSPoliciesGenerate(osqCtx context.Context, queryContext table.QueryCont
 }
 
 func getGcpDNSPoliciesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpdns.Service
 	var err error
 	if account != nil {

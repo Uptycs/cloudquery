@@ -76,7 +76,7 @@ func (handler *GcpComputeHandler) GcpComputeRoutesGenerate(osqCtx context.Contex
 }
 
 func (handler *GcpComputeHandler) getGcpComputeRoutesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {

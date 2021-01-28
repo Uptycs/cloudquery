@@ -64,7 +64,7 @@ func GcpSQLDatabasesGenerate(osqCtx context.Context, queryContext table.QueryCon
 }
 
 func getGcpSQLDatabasesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpsql.Service
 	var err error
 	if account != nil {

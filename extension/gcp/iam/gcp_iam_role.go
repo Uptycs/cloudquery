@@ -59,7 +59,7 @@ func GcpIamRolesGenerate(osqCtx context.Context, queryContext table.QueryContext
 }
 
 func getGcpIamRolesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpiam.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpiam.Service
 	var err error
 	if account != nil {

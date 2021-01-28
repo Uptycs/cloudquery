@@ -85,7 +85,7 @@ func (handler *GcpComputeHandler) GcpComputeInterconnectsGenerate(osqCtx context
 }
 
 func (handler *GcpComputeHandler) getGcpComputeInterconnectsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {

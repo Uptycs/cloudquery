@@ -212,7 +212,7 @@ func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Contex
 }
 
 func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*storage.Client, string) {
-	var projectID = ""
+	var projectID string
 	var service *storage.Client
 	var err error
 	if account != nil {

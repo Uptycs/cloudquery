@@ -60,7 +60,7 @@ func GcpIamServiceAccountsGenerate(osqCtx context.Context, queryContext table.Qu
 }
 
 func getGcpIamServiceAccountsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpiam.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpiam.Service
 	var err error
 	if account != nil {

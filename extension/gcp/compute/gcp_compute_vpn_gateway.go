@@ -66,7 +66,7 @@ func (handler *GcpComputeHandler) GcpComputeVpnGatewaysGenerate(osqCtx context.C
 }
 
 func (handler *GcpComputeHandler) getGcpComputeVpnGatewaysNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {

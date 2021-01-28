@@ -63,7 +63,7 @@ func GcpFileBackupsGenerate(osqCtx context.Context, queryContext table.QueryCont
 }
 
 func getGcpFileBackupsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpfile.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpfile.Service
 	var err error
 	if account != nil {

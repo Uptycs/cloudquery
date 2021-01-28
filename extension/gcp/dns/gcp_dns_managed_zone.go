@@ -96,7 +96,7 @@ func GcpDNSManagedZonesGenerate(osqCtx context.Context, queryContext table.Query
 }
 
 func getGcpDNSManagedZonesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpdns.Service
 	var err error
 	if account != nil {

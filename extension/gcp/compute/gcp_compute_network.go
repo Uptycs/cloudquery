@@ -77,7 +77,7 @@ func (handler *GcpComputeHandler) GcpComputeNetworksGenerate(osqCtx context.Cont
 }
 
 func (handler *GcpComputeHandler) getGcpComputeNetworksNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {

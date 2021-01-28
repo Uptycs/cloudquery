@@ -188,7 +188,7 @@ func GcpSQLInstancesGenerate(osqCtx context.Context, queryContext table.QueryCon
 }
 
 func getGcpSQLInstancesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpsql.Service
 	var err error
 	if account != nil {

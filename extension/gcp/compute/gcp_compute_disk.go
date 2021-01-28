@@ -98,7 +98,7 @@ func (handler *GcpComputeHandler) GcpComputeDisksGenerate(osqCtx context.Context
 }
 
 func (handler *GcpComputeHandler) getGcpComputeDisksNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {

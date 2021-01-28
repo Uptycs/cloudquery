@@ -75,7 +75,7 @@ func (handler *GcpComputeHandler) GcpComputeReservationsGenerate(osqCtx context.
 }
 
 func (handler *GcpComputeHandler) getGcpComputeReservationsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {
