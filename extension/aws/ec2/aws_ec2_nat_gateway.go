@@ -14,6 +14,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeNatGatewaysColumns returns the list of columns in the table
 func DescribeNatGatewaysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -119,6 +120,7 @@ func DescribeNatGatewaysColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeNatGatewaysGenerate returns the rows in the table for all configured accounts
 func DescribeNatGatewaysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

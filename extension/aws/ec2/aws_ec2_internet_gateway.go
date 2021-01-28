@@ -14,6 +14,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeInternetGatewaysColumns returns the list of columns in the table
 func DescribeInternetGatewaysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -30,6 +31,7 @@ func DescribeInternetGatewaysColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeInternetGatewaysGenerate returns the rows in the table for all configured accounts
 func DescribeInternetGatewaysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

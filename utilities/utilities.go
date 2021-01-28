@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	// TableConfigurationMap is the map of tableName->TableConfig
 	TableConfigurationMap = map[string]*TableConfig{}
 	AwsAccountId          string
 	ExtConfiguration      ExtensionConfiguration

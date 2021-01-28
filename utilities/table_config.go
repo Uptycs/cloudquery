@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// ParsedAttributeConfig represents the attributes for a table
 type ParsedAttributeConfig struct {
 	SourceName string `json:"sourceName"`
 	TargetName string `json:"targetName"`
@@ -11,23 +12,27 @@ type ParsedAttributeConfig struct {
 	Enabled    bool   `json:"enabled"`
 }
 
+// AwsConfig represents the additional attributes for AWS table
 type AwsConfig struct {
 	RegionAttribute     string `json:"regionAttribute"`
 	RegionCodeAttribute string `json:"regionCodeAttribute"`
 	AccountIdAttribute  string `json:"accountIdAttribute"`
 }
 
+// GcpConfig represents the additional attributes for GCP table
 type GcpConfig struct {
 	ProjectIdAttribute string `json:"projectIdAttribute,omitempty"`
 	ZoneAttribute      string `json:"zoneAttribute,omitempty"`
 }
 
+// AzureConfig represents the additional attributes for Azure table
 type AzureConfig struct {
 	SubscriptionIdAttribute string `json:"subscriptionIdAttribute,omitempty"`
 	TenantIdAttribute       string `json:"tenantIdAttribute,omitempty"`
 	ResourceGroupAttribute  string `json:"resourceGroupAttribute,omitempty"`
 }
 
+// TableConfig represents the configuration of a table
 type TableConfig struct {
 	Imports          []string                `json:"imports"`
 	MaxLevel         int                     `json:"maxLevel"`

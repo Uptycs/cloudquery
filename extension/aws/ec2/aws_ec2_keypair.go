@@ -14,24 +14,14 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
-// DescribeAddressesColumns returns the list of columns in the table
-func DescribeAddressesColumns() []table.ColumnDefinition {
+// DescribeKeyPairsColumns returns the list of columns in the table
+func DescribeKeyPairsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("allocation_id"),
-		table.TextColumn("association_id"),
-		table.TextColumn("carrier_ip"),
-		table.TextColumn("customer_owned_ip"),
-		table.TextColumn("customer_owned_ipv4_pool"),
-		table.TextColumn("domain"),
-		table.TextColumn("instance_id"),
-		table.TextColumn("network_border_group"),
-		table.TextColumn("network_interface_id"),
-		table.TextColumn("network_interface_owner_id"),
-		table.TextColumn("private_ip_address"),
-		table.TextColumn("public_ip"),
-		table.TextColumn("public_ipv4_pool"),
+		table.TextColumn("key_fingerprint"),
+		table.TextColumn("key_name"),
+		table.TextColumn("key_pair_id"),
 		table.TextColumn("tags"),
 		//table.TextColumn("tags_key"),
 		//table.TextColumn("tags_value"),
@@ -39,15 +29,15 @@ func DescribeAddressesColumns() []table.ColumnDefinition {
 	}
 }
 
-// DescribeAddressesGenerate returns the rows in the table for all configured accounts
-func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// DescribeKeyPairsGenerate returns the rows in the table for all configured accounts
+func DescribeKeyPairsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_address",
+			"tableName": "aws_ec2_keypair",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeAddresses(nil)
+		results, err := processAccountDescribeKeyPairs(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -55,10 +45,10 @@ func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryC
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ec2_address",
+				"tableName": "aws_ec2_keypair",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeAddresses(&account)
+			results, err := processAccountDescribeKeyPairs(&account)
 			if err != nil {
 				continue
 			}
@@ -69,7 +59,7 @@ func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryC
 	return resultMap, nil
 }
 
-func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
+func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsSession(account, *region.RegionName)
 	if err != nil {
@@ -82,21 +72,21 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_ec2_address",
+		"tableName": "aws_ec2_keypair",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
 	svc := ec2.New(sess)
-	params := &ec2.DescribeAddressesInput{}
+	params := &ec2.DescribeKeyPairsInput{}
 
-	result, err := svc.DescribeAddresses(params)
+	result, err := svc.DescribeKeyPairs(params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_address",
+			"tableName": "aws_ec2_keypair",
 			"account":   accountId,
 			"region":    *region.RegionName,
-			"task":      "DescribeAddresses",
+			"task":      "DescribeKeyPairs",
 			"errString": err.Error(),
 		}).Error("failed to process region")
 		return resultMap, err
@@ -105,7 +95,7 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_address",
+			"tableName": "aws_ec2_keypair",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"errString": err.Error(),
@@ -120,7 +110,7 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 	return resultMap, nil
 }
 
-func processAccountDescribeAddresses(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeKeyPairs(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
 	if err != nil {
@@ -130,15 +120,15 @@ func processAccountDescribeAddresses(account *utilities.ExtensionConfigurationAw
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_address"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_keypair"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_address",
+			"tableName": "aws_ec2_keypair",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeAddresses(tableConfig, account, region)
+		result, err := processRegionDescribeKeyPairs(tableConfig, account, region)
 		if err != nil {
 			return resultMap, err
 		}

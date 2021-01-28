@@ -16,6 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/services/compute/mgmt/2018-06-01/compute"
 )
 
+// VirtualMachinesColumns returns the list of columns in the table
 func VirtualMachinesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("subscription_id"),
@@ -223,6 +224,7 @@ func VirtualMachinesColumns() []table.ColumnDefinition {
 	}
 }
 
+// VirtualMachinesGenerate returns the rows in the table for all configured accounts
 func VirtualMachinesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAzure.Accounts) == 0 {

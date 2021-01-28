@@ -17,6 +17,12 @@ var (
 	stdoutLogSingleton *log.Logger
 )
 
+// CreateLogger create a new logger with given configuration
+// isDebug = true, will set the log level to be Debug
+// maxSize is the maximum size of the file (in MB) before it is rotated
+// maxBackups is the number of backups to keep
+// maxAge is the number of days after which log file will be deleted
+// fileName is the name of log file. If fileName is empty, it will create logger for stdout.
 func CreateLogger(isDebug bool, maxSize int, maxBackups int, maxAge int, fileName ...string) *log.Logger {
 
 	if len(fileName) == 0 && logsingleton == nil {
@@ -60,6 +66,7 @@ func createLogger(isDebug bool, maxSize int, maxBackups int, maxAge int, logFile
 	return newInstance
 }
 
+// GetLogger returns the (already created) logger
 func GetLogger() *log.Logger {
 	if logsingleton != nil {
 		return logsingleton

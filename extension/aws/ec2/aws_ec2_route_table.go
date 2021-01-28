@@ -14,6 +14,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeRouteTablesColumns returns the list of columns in the table
 func DescribeRouteTablesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -54,6 +55,7 @@ func DescribeRouteTablesColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeRouteTablesGenerate returns the rows in the table for all configured accounts
 func DescribeRouteTablesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

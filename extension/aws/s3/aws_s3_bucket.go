@@ -44,6 +44,7 @@ var (
 	regionBuckets map[string]s3BucketInfoList
 )
 
+// ListBucketsColumns returns the list of columns in the table
 func ListBucketsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -70,6 +71,7 @@ func ListBucketsColumns() []table.ColumnDefinition {
 	}
 }
 
+// ListBucketsGenerate returns the rows in the table for all configured accounts
 func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

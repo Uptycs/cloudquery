@@ -14,6 +14,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeVpcsColumns returns the list of columns in the table
 func DescribeVpcsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -45,6 +46,7 @@ func DescribeVpcsColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeVpcsGenerate returns the rows in the table for all configured accounts
 func DescribeVpcsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

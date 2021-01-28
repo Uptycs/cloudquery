@@ -12,6 +12,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// GetAwsSession creates an AWS session for given account.
+// If account is nil, it creates a default session
 func GetAwsSession(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*session.Session, error) {
 	if account == nil {
 		utilities.GetLogger().Debug("creating default session")
@@ -66,6 +68,7 @@ func getDefaultAwsSession(regionCode string) (*session.Session, error) {
 	return sess, nil
 }
 
+// FetchRegions returns the list of regions for given AWS session
 func FetchRegions(awsSession *session.Session) ([]*ec2.Region, error) {
 	svc := ec2.New(awsSession)
 	awsRegions, err := svc.DescribeRegions(&ec2.DescribeRegionsInput{})

@@ -158,69 +158,58 @@ func getBooleanValue(value interface{}) bool {
 		var str = value.(string)
 		if strings.EqualFold(str, "true") || strings.EqualFold(str, "yes") {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case int:
 		if value.(int) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case int8:
 		if value.(int8) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case int16:
 		if value.(int16) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case int32:
 		if value.(int32) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case int64:
 		if value.(int64) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case uint:
 		if value.(uint) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case uint8:
 		if value.(uint8) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case uint16:
 		if value.(uint16) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case uint32:
 		if value.(uint32) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	case uint64:
 		if value.(uint64) > 0 {
 			return true
-		} else {
-			return false
 		}
+		return false
 	}
 	return true
 }

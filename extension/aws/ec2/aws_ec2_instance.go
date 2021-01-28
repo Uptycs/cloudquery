@@ -14,6 +14,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeInstancesColumns returns the list of columns in the table
 func DescribeInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -161,6 +162,7 @@ func DescribeInstancesColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeInstancesGenerate returns the rows in the table for all configured accounts
 func DescribeInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {

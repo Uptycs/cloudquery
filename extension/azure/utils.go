@@ -42,6 +42,9 @@ func readJSON(path string) (*map[string]interface{}, error) {
 	return &contents, err
 }
 
+// GetAuthSession creates an authorizer for the given account
+// If account is nil, it creates an authorizer for the default account,
+// by locating the auth file by reading "AZURE_AUTH_LOCATION" env variable
 func GetAuthSession(account *utilities.ExtensionConfigurationAzureAccount) (*AzureSession, error) {
 	authGeneratorMutex.Lock()
 	defer authGeneratorMutex.Unlock()
@@ -83,6 +86,7 @@ func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string
 	return result
 }
 
+// GetGroups returns the list of resource groups for given azure session
 func GetGroups(session *AzureSession) ([]string, error) {
 	tab := make([]string, 0)
 	var err error

@@ -9,12 +9,14 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// Each row is map of key->value pair
 type Table struct {
 	Rows                     []map[string]interface{}
 	MaxLevel                 int
 	ParsedAttributeConfigMap map[string]ParsedAttributeConfig
 }
 
+// NewTable creates a table from given data (in json form) and table configuration
 func NewTable(jsonStr []byte, tableConfig *TableConfig) Table {
 	tab := Table{}
 	tab.init(jsonStr, tableConfig.MaxLevel, tableConfig.getParsedAttributeConfigMap())
