@@ -10,16 +10,19 @@ import (
 
 //type callbackDisksPages func(*storage.DiskAggregatedList) error
 
+// GcpStorageInterface abstracts storage APIs accessed by gcp_storage_* tables
 type GcpStorageInterface interface {
 	NewClient(ctx context.Context, opts ...option.ClientOption) (*storage.Client, error)
 	Buckets(ctx context.Context, client *storage.Client, projectID string) *storage.BucketIterator
 	BucketsNewPager(itr *storage.BucketIterator, pageSize int, pageToken string) *iterator.Pager
 }
 
+// GcpStorageHandler encloses GcpStorageInterface's instance (mock or otherwise)
 type GcpStorageHandler struct {
 	svcInterface GcpStorageInterface
 }
 
+// NewGcpStorageHandler returns a new instance of GcpStorageHandler with provided intf
 func NewGcpStorageHandler(intf GcpStorageInterface) GcpStorageHandler {
 	return GcpStorageHandler{svcInterface: intf}
 }

@@ -282,7 +282,7 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 	if err != nil {
 		return resultMap, err
 	}
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}
@@ -333,7 +333,7 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	svc := s3.New(sess)
 	params := &s3.ListBucketsInput{}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

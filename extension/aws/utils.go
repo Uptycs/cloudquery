@@ -86,8 +86,8 @@ func FetchRegions(awsSession *session.Session) ([]*ec2.Region, error) {
 func RowToMap(row map[string]interface{}, accountId string, region string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
-	if len(tableConfig.Aws.AccountIdAttribute) != 0 {
-		result[tableConfig.Aws.AccountIdAttribute] = accountId
+	if len(tableConfig.Aws.AccountIDAttribute) != 0 {
+		result[tableConfig.Aws.AccountIDAttribute] = accountId
 	}
 	if len(tableConfig.Aws.RegionCodeAttribute) != 0 {
 		result[tableConfig.Aws.RegionCodeAttribute] = region

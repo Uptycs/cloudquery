@@ -72,7 +72,7 @@ func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext)
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "azure_compute_networkinterface",
-				"account":   account.SubscriptionId,
+				"account":   account.SubscriptionID,
 			}).Info("processing account")
 			results, err := processAccountInterfaces(&account)
 			if err != nil {

@@ -19,6 +19,7 @@ type myGcpFileInstancesItemsContainer struct {
 	Items []*gcpfile.Instance `json:"items"`
 }
 
+// GcpFileInstancesColumns returns the list of columns for gcp_file_instance
 func GcpFileInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -48,6 +49,7 @@ func GcpFileInstancesColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpFileInstancesGenerate returns the rows in the table for all configured accounts
 func GcpFileInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -77,7 +79,7 @@ func getGcpFileInstancesNewServiceForAccount(ctx context.Context, account *utili
 	var service *gcpfile.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpfile.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

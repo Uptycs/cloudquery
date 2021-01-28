@@ -19,6 +19,7 @@ type myGcpComputeInterconnectsItemsContainer struct {
 	Items []*compute.Interconnect `json:"items"`
 }
 
+// GcpComputeInterconnectsColumns returns the list of columns for gcp_compute_interconnect
 func (handler *GcpComputeHandler) GcpComputeInterconnectsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -58,6 +59,7 @@ func (handler *GcpComputeHandler) GcpComputeInterconnectsColumns() []table.Colum
 	}
 }
 
+// GcpComputeInterconnectsGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeInterconnectsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -87,7 +89,7 @@ func (handler *GcpComputeHandler) getGcpComputeInterconnectsNewServiceForAccount
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -113,12 +115,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeInterconnects(ctx cont
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewInterconnectsService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewInterconnectsService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewInterconnectsService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.InterconnectsList(myApiService, projectID)
+	aggListCall := handler.svcInterface.InterconnectsList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_interconnect",
@@ -127,7 +129,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeInterconnects(ctx cont
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeInterconnectsItemsContainer{Items: make([]*compute.Interconnect, 0)}
-	if err := handler.svcInterface.InterconnectsPages(aggListCall, ctx, func(page *compute.InterconnectList) error {
+	if err := handler.svcInterface.InterconnectsPages(ctx, aggListCall, func(page *compute.InterconnectList) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)
 

@@ -19,6 +19,7 @@ type myGcpComputeRoutesItemsContainer struct {
 	Items []*compute.Route `json:"items"`
 }
 
+// GcpComputeRoutesColumns returns the list of columns for gcp_compute_route
 func (handler *GcpComputeHandler) GcpComputeRoutesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -49,6 +50,7 @@ func (handler *GcpComputeHandler) GcpComputeRoutesColumns() []table.ColumnDefini
 	}
 }
 
+// GcpComputeRoutesGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeRoutesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -78,7 +80,7 @@ func (handler *GcpComputeHandler) getGcpComputeRoutesNewServiceForAccount(ctx co
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -104,12 +106,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeRoutes(ctx context.Con
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewRoutesService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewRoutesService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewRoutesService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.RoutesList(myApiService, projectID)
+	aggListCall := handler.svcInterface.RoutesList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_route",
@@ -118,7 +120,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeRoutes(ctx context.Con
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeRoutesItemsContainer{Items: make([]*compute.Route, 0)}
-	if err := handler.svcInterface.RoutesPages(aggListCall, ctx, func(page *compute.RouteList) error {
+	if err := handler.svcInterface.RoutesPages(ctx, aggListCall, func(page *compute.RouteList) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)
 

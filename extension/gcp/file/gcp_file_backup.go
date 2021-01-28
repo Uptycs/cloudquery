@@ -19,6 +19,7 @@ type myGcpFileBackupsItemsContainer struct {
 	Items []*gcpfile.Backup `json:"items"`
 }
 
+// GcpFileBackupsColumns returns the list of columns for gcp_file_backup
 func GcpFileBackupsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -36,6 +37,7 @@ func GcpFileBackupsColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpFileBackupsGenerate returns the rows in the table for all configured accounts
 func GcpFileBackupsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -65,7 +67,7 @@ func getGcpFileBackupsNewServiceForAccount(ctx context.Context, account *utiliti
 	var service *gcpfile.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpfile.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

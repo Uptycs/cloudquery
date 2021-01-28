@@ -14,10 +14,11 @@ import (
 	storage "cloud.google.com/go/storage"
 )
 
-type ItemsContainer struct {
+type myGcpStorageBucketItemsContainer struct {
 	Items []*storage.BucketAttrs `json:"items"`
 }
 
+// GcpStorageBucketColumns returns the list of columns for gcp_storage_bucket
 func (handler *GcpStorageHandler) GcpStorageBucketColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -185,6 +186,7 @@ func (handler *GcpStorageHandler) GcpStorageBucketColumns() []table.ColumnDefini
 	}
 }
 
+// GcpStorageBucketGenerate returns the rows in the table for all configured accounts
 func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -214,7 +216,7 @@ func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx co
 	var service *storage.Client
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -258,7 +260,7 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 	}
 	p := handler.svcInterface.BucketsNewPager(listCall, 10, "")
 	for {
-		var container = ItemsContainer{}
+		var container = myGcpStorageBucketItemsContainer{}
 		pageToken, err := p.NextPage(&container.Items)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{

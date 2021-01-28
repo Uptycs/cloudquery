@@ -108,7 +108,7 @@ func processGlobalListPolicies(tableConfig *utilities.TableConfig, account *util
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

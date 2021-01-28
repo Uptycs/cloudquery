@@ -8,8 +8,6 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-type Logger = *log.Logger
-
 var (
 	stdoutOnce         sync.Once
 	logsingleton       *log.Logger
@@ -70,7 +68,6 @@ func createLogger(isDebug bool, maxSize int, maxBackups int, maxAge int, logFile
 func GetLogger() *log.Logger {
 	if logsingleton != nil {
 		return logsingleton
-	} else {
-		return stdoutLogSingleton
 	}
+	return stdoutLogSingleton
 }

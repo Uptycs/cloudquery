@@ -68,7 +68,7 @@ func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, a
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

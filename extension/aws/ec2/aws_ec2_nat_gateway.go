@@ -157,7 +157,7 @@ func processRegionDescribeNatGateways(tableConfig *utilities.TableConfig, accoun
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

@@ -19,6 +19,7 @@ type myGcpIamServiceAccountsItemsContainer struct {
 	Items []*gcpiam.ServiceAccount `json:"items"`
 }
 
+// GcpIamServiceAccountsColumns returns the list of columns for gcp_iam_service_account
 func GcpIamServiceAccountsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("description"),
@@ -33,6 +34,7 @@ func GcpIamServiceAccountsColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpIamServiceAccountsGenerate returns the rows in the table for all configured accounts
 func GcpIamServiceAccountsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -62,7 +64,7 @@ func getGcpIamServiceAccountsNewServiceForAccount(ctx context.Context, account *
 	var service *gcpiam.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpiam.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

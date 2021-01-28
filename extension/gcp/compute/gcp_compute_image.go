@@ -19,6 +19,7 @@ type myGcpComputeImagesItemsContainer struct {
 	Items []*compute.Image `json:"items"`
 }
 
+// GcpComputeImagesColumns returns the list of columns for gcp_compute_image
 func (handler *GcpComputeHandler) GcpComputeImagesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -92,6 +93,7 @@ func (handler *GcpComputeHandler) GcpComputeImagesColumns() []table.ColumnDefini
 	}
 }
 
+// GcpComputeImagesGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeImagesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -121,7 +123,7 @@ func (handler *GcpComputeHandler) getGcpComputeImagesNewServiceForAccount(ctx co
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -147,12 +149,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeImages(ctx context.Con
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewImagesService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewImagesService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewImagesService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.ImagesList(myApiService, projectID)
+	aggListCall := handler.svcInterface.ImagesList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_image",
@@ -161,7 +163,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeImages(ctx context.Con
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeImagesItemsContainer{Items: make([]*compute.Image, 0)}
-	if err := handler.svcInterface.ImagesPages(aggListCall, ctx, func(page *compute.ImageList) error {
+	if err := handler.svcInterface.ImagesPages(ctx, aggListCall, func(page *compute.ImageList) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)
 

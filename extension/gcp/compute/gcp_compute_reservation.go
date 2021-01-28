@@ -20,6 +20,7 @@ type myGcpComputeReservationsItemsContainer struct {
 	Items []*compute.Reservation `json:"items"`
 }
 
+// GcpComputeReservationsColumns returns the list of columns for gcp_compute_reservation
 func (handler *GcpComputeHandler) GcpComputeReservationsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -48,6 +49,7 @@ func (handler *GcpComputeHandler) GcpComputeReservationsColumns() []table.Column
 	}
 }
 
+// GcpComputeReservationsGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeReservationsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -77,7 +79,7 @@ func (handler *GcpComputeHandler) getGcpComputeReservationsNewServiceForAccount(
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -103,12 +105,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeReservations(ctx conte
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewReservationsService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewReservationsService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewReservationsService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.ReservationsAggregatedList(myApiService, projectID)
+	aggListCall := handler.svcInterface.ReservationsAggregatedList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_reservation",
@@ -117,7 +119,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeReservations(ctx conte
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeReservationsItemsContainer{Items: make([]*compute.Reservation, 0)}
-	if err := handler.svcInterface.ReservationsPages(aggListCall, ctx, func(page *compute.ReservationAggregatedList) error {
+	if err := handler.svcInterface.ReservationsPages(ctx, aggListCall, func(page *compute.ReservationAggregatedList) error {
 
 		for _, item := range page.Items {
 			for _, inst := range item.Reservations {

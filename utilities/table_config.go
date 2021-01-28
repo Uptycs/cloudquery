@@ -16,19 +16,19 @@ type ParsedAttributeConfig struct {
 type AwsConfig struct {
 	RegionAttribute     string `json:"regionAttribute"`
 	RegionCodeAttribute string `json:"regionCodeAttribute"`
-	AccountIdAttribute  string `json:"accountIdAttribute"`
+	AccountIDAttribute  string `json:"accountIdAttribute"`
 }
 
 // GcpConfig represents the additional attributes for GCP table
 type GcpConfig struct {
-	ProjectIdAttribute string `json:"projectIdAttribute,omitempty"`
+	ProjectIDAttribute string `json:"projectIdAttribute,omitempty"`
 	ZoneAttribute      string `json:"zoneAttribute,omitempty"`
 }
 
 // AzureConfig represents the additional attributes for Azure table
 type AzureConfig struct {
-	SubscriptionIdAttribute string `json:"subscriptionIdAttribute,omitempty"`
-	TenantIdAttribute       string `json:"tenantIdAttribute,omitempty"`
+	SubscriptionIDAttribute string `json:"subscriptionIdAttribute,omitempty"`
+	TenantIDAttribute       string `json:"tenantIdAttribute,omitempty"`
 	ResourceGroupAttribute  string `json:"resourceGroupAttribute,omitempty"`
 }
 
@@ -36,7 +36,7 @@ type AzureConfig struct {
 type TableConfig struct {
 	Imports          []string                `json:"imports"`
 	MaxLevel         int                     `json:"maxLevel"`
-	Api              string                  `json:"api"`
+	API              string                  `json:"api"`
 	Paginated        bool                    `json:"paginated"`
 	TemplateFile     string                  `json:"templateFile"`
 	Aws              AwsConfig               `json:"aws"`

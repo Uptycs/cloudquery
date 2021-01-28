@@ -19,6 +19,7 @@ type myGcpComputeVpnGatewaysItemsContainer struct {
 	Items []*compute.VpnGateway `json:"items"`
 }
 
+// GcpComputeVpnGatewaysColumns returns the list of columns for gcp_compute_vpn_gateway
 func (handler *GcpComputeHandler) GcpComputeVpnGatewaysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -39,6 +40,7 @@ func (handler *GcpComputeHandler) GcpComputeVpnGatewaysColumns() []table.ColumnD
 	}
 }
 
+// GcpComputeVpnGatewaysGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeVpnGatewaysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -68,7 +70,7 @@ func (handler *GcpComputeHandler) getGcpComputeVpnGatewaysNewServiceForAccount(c
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -94,12 +96,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeVpnGateways(ctx contex
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewVpnGatewaysService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewVpnGatewaysService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewVpnGatewaysService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.VpnGatewaysAggregatedList(myApiService, projectID)
+	aggListCall := handler.svcInterface.VpnGatewaysAggregatedList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_vpn_gateway",
@@ -108,7 +110,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeVpnGateways(ctx contex
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeVpnGatewaysItemsContainer{Items: make([]*compute.VpnGateway, 0)}
-	if err := handler.svcInterface.VpnGatewaysPages(aggListCall, ctx, func(page *compute.VpnGatewayAggregatedList) error {
+	if err := handler.svcInterface.VpnGatewaysPages(ctx, aggListCall, func(page *compute.VpnGatewayAggregatedList) error {
 
 		for _, item := range page.Items {
 

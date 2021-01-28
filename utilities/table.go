@@ -9,7 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Each row is map of key->value pair
+// Table holds data rows. Each row is map of key->value pair
 type Table struct {
 	Rows                     []map[string]interface{}
 	MaxLevel                 int
@@ -112,9 +112,8 @@ func (tab *Table) addRowsAndFlatten(newRows []map[string]interface{}) {
 func getKey(prefix, key string) string {
 	if len(prefix) != 0 {
 		return prefix + "_" + key
-	} else {
-		return key
 	}
+	return key
 }
 
 // Flatten takes a map and returns a new one where nested maps are replaced

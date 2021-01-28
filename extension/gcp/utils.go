@@ -9,8 +9,8 @@ import (
 func RowToMap(row map[string]interface{}, projectID string, zone string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
-	if len(tableConfig.Gcp.ProjectIdAttribute) != 0 {
-		result[tableConfig.Gcp.ProjectIdAttribute] = projectID
+	if len(tableConfig.Gcp.ProjectIDAttribute) != 0 {
+		result[tableConfig.Gcp.ProjectIDAttribute] = projectID
 	}
 	if len(tableConfig.Gcp.ZoneAttribute) != 0 {
 		result[tableConfig.Gcp.ZoneAttribute] = zone

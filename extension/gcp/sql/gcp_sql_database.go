@@ -15,11 +15,12 @@ import (
 	gcpsql "google.golang.org/api/sqladmin/v1beta4"
 )
 
-type myGcpSqlDatabasesItemsContainer struct {
+type myGcpSQLDatabasesItemsContainer struct {
 	Items []*gcpsql.Database `json:"items"`
 }
 
-func GcpSqlDatabasesColumns() []table.ColumnDefinition {
+// GcpSQLDatabasesColumns returns the list of columns for gcp_sql_database
+func GcpSQLDatabasesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("charset"),
@@ -37,7 +38,8 @@ func GcpSqlDatabasesColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpSqlDatabasesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// GcpSQLDatabasesGenerate returns the rows in the table for all configured accounts
+func GcpSQLDatabasesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -45,13 +47,13 @@ func GcpSqlDatabasesGenerate(osqCtx context.Context, queryContext table.QueryCon
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpSqlDatabases(ctx, nil)
+		results, err := processAccountGcpSQLDatabases(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpSqlDatabases(ctx, &account)
+			results, err := processAccountGcpSQLDatabases(ctx, &account)
 			if err != nil {
 				continue
 			}
@@ -61,12 +63,12 @@ func GcpSqlDatabasesGenerate(osqCtx context.Context, queryContext table.QueryCon
 	return resultMap, nil
 }
 
-func getGcpSqlDatabasesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
+func getGcpSQLDatabasesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
 	var projectID = ""
 	var service *gcpsql.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpsql.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -83,7 +85,7 @@ func getGcpSqlDatabasesNewServiceForAccount(ctx context.Context, account *utilit
 	return service, projectID
 }
 
-func getGcpSqlDatabasesKeys(service *gcpsql.Service, projectID string) ([]string, error) {
+func getGcpSQLDatabasesKeys(service *gcpsql.Service, projectID string) ([]string, error) {
 	resultList := make([]string, 0)
 	listCall := service.Instances.List(projectID)
 	if listCall == nil {
@@ -108,17 +110,17 @@ func getGcpSqlDatabasesKeys(service *gcpsql.Service, projectID string) ([]string
 	return resultList, nil
 }
 
-func processAccountGcpSqlDatabases(ctx context.Context,
+func processAccountGcpSQLDatabases(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpSqlDatabasesNewServiceForAccount(ctx, account)
+	service, projectID := getGcpSQLDatabasesNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize gcpsql.Service")
 	}
 
-	keys, err := getGcpSqlDatabasesKeys(service, projectID)
+	keys, err := getGcpSQLDatabasesKeys(service, projectID)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_sql_database",
@@ -129,13 +131,13 @@ func processAccountGcpSqlDatabases(ctx context.Context,
 	}
 
 	for _, key := range keys {
-		getGcpSqlDatabasesRowsForKey(ctx, resultMap, service, projectID, key)
+		getGcpSQLDatabasesRowsForKey(ctx, resultMap, service, projectID, key)
 	}
 
 	return resultMap, nil
 }
 
-func getGcpSqlDatabasesRowsForKey(ctx context.Context, resultMap []map[string]string, service *gcpsql.Service, projectID string, key string) ([]map[string]string, error) {
+func getGcpSQLDatabasesRowsForKey(ctx context.Context, resultMap []map[string]string, service *gcpsql.Service, projectID string, key string) ([]map[string]string, error) {
 	listCall := service.Databases.List(projectID, key)
 	if listCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
@@ -155,7 +157,7 @@ func getGcpSqlDatabasesRowsForKey(ctx context.Context, resultMap []map[string]st
 		}).Error("failed to List.Do()")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpSqlDatabasesItemsContainer{Items: rsp.Items}
+	itemsContainer := myGcpSQLDatabasesItemsContainer{Items: rsp.Items}
 	byteArr, err := json.Marshal(itemsContainer)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{

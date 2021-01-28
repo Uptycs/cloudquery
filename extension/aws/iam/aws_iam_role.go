@@ -114,7 +114,7 @@ func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utiliti
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

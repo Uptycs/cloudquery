@@ -32,7 +32,7 @@ func TestGcpComputeNetworkGenerate(t *testing.T) {
 			Name: "Test2",
 		},
 	}
-	mockSvc.AddNetworks(nwkList)
+	mockSvc.addNetworks(nwkList)
 
 	result, err := myGcpTest.GcpComputeNetworksGenerate(ctx, qCtx)
 	assert.Nil(t, err)
@@ -44,5 +44,5 @@ func TestGcpComputeNetworkGenerate(t *testing.T) {
 	expectedSubNetworksVal := "[\"" + strings.Join(nwkList[0].Subnetworks, "\",\"") + "\"]"
 	assert.Equal(t, expectedSubNetworksVal, result[0]["subnetworks"])
 
-	mockSvc.ClearNetworks()
+	mockSvc.clearNetworks()
 }

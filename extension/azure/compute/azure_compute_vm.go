@@ -241,7 +241,7 @@ func VirtualMachinesGenerate(osqCtx context.Context, queryContext table.QueryCon
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "azure_compute_vm",
-				"account":   account.SubscriptionId,
+				"account":   account.SubscriptionID,
 			}).Info("processing account")
 			results, err := processAccountVirtualMachines(&account)
 			if err != nil {

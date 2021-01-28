@@ -72,11 +72,11 @@ func GetAuthSession(account *utilities.ExtensionConfigurationAzureAccount) (*Azu
 // If configured it will copy some metadata vaues into appropriate columns
 func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string, resourceGroup string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
-	if len(tableConfig.Azure.SubscriptionIdAttribute) != 0 {
-		result[tableConfig.Azure.SubscriptionIdAttribute] = subscriptionId
+	if len(tableConfig.Azure.SubscriptionIDAttribute) != 0 {
+		result[tableConfig.Azure.SubscriptionIDAttribute] = subscriptionId
 	}
-	if len(tableConfig.Azure.TenantIdAttribute) != 0 {
-		result[tableConfig.Azure.TenantIdAttribute] = tenantId
+	if len(tableConfig.Azure.TenantIDAttribute) != 0 {
+		result[tableConfig.Azure.TenantIDAttribute] = tenantId
 	}
 	if len(tableConfig.Azure.ResourceGroupAttribute) != 0 {
 		result[tableConfig.Azure.ResourceGroupAttribute] = resourceGroup

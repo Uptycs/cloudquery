@@ -61,7 +61,7 @@ func readProjectIDFromCredentialFile(filePath string) string {
 }
 
 func readExtensionConfigurations(filePath string) error {
-	utilities.AwsAccountId = os.Getenv("AWS_ACCOUNT_ID")
+	utilities.AwsAccountID = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("failed to read configuration file %s. err:%v\n", filePath, err)
@@ -79,7 +79,7 @@ func readExtensionConfigurations(filePath string) error {
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
 		projectID := readProjectIDFromCredentialFile(keyFilePath)
-		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectId = projectID
+		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
 	}
 
 	// Read project ID from ADC
@@ -180,11 +180,11 @@ func registerPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("gcp_iam_role", gcpiam.GcpIamRolesColumns(), gcpiam.GcpIamRolesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_iam_service_account", gcpiam.GcpIamServiceAccountsColumns(), gcpiam.GcpIamServiceAccountsGenerate))
 	// GCP SQL
-	server.RegisterPlugin(table.NewPlugin("gcp_sql_instance", gcpsql.GcpSqlInstancesColumns(), gcpsql.GcpSqlInstancesGenerate))
-	server.RegisterPlugin(table.NewPlugin("gcp_sql_database", gcpsql.GcpSqlDatabasesColumns(), gcpsql.GcpSqlDatabasesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_sql_instance", gcpsql.GcpSQLInstancesColumns(), gcpsql.GcpSQLInstancesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_sql_database", gcpsql.GcpSQLDatabasesColumns(), gcpsql.GcpSQLDatabasesGenerate))
 	// GCP DNS
-	server.RegisterPlugin(table.NewPlugin("gcp_dns_managed_zone", gcpdns.GcpDnsManagedZonesColumns(), gcpdns.GcpDnsManagedZonesGenerate))
-	server.RegisterPlugin(table.NewPlugin("gcp_dns_policy", gcpdns.GcpDnsPoliciesColumns(), gcpdns.GcpDnsPoliciesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_dns_managed_zone", gcpdns.GcpDNSManagedZonesColumns(), gcpdns.GcpDNSManagedZonesGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_dns_policy", gcpdns.GcpDNSPoliciesColumns(), gcpdns.GcpDNSPoliciesGenerate))
 	// GCP File
 	server.RegisterPlugin(table.NewPlugin("gcp_file_instance", gcpfile.GcpFileInstancesColumns(), gcpfile.GcpFileInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_file_backup", gcpfile.GcpFileBackupsColumns(), gcpfile.GcpFileBackupsGenerate))

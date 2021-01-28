@@ -19,6 +19,7 @@ type myGcpComputeVpnTunnelsItemsContainer struct {
 	Items []*compute.VpnTunnel `json:"items"`
 }
 
+// GcpComputeVpnTunnelsColumns returns the list of columns for gcp_compute_vpn_tunnel
 func (handler *GcpComputeHandler) GcpComputeVpnTunnelsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -47,6 +48,7 @@ func (handler *GcpComputeHandler) GcpComputeVpnTunnelsColumns() []table.ColumnDe
 	}
 }
 
+// GcpComputeVpnTunnelsGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeVpnTunnelsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -76,7 +78,7 @@ func (handler *GcpComputeHandler) getGcpComputeVpnTunnelsNewServiceForAccount(ct
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -102,12 +104,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeVpnTunnels(ctx context
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewVpnTunnelsService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewVpnTunnelsService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewVpnTunnelsService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.VpnTunnelsAggregatedList(myApiService, projectID)
+	aggListCall := handler.svcInterface.VpnTunnelsAggregatedList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_vpn_tunnel",
@@ -116,7 +118,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeVpnTunnels(ctx context
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeVpnTunnelsItemsContainer{Items: make([]*compute.VpnTunnel, 0)}
-	if err := handler.svcInterface.VpnTunnelsPages(aggListCall, ctx, func(page *compute.VpnTunnelAggregatedList) error {
+	if err := handler.svcInterface.VpnTunnelsPages(ctx, aggListCall, func(page *compute.VpnTunnelAggregatedList) error {
 
 		for _, item := range page.Items {
 

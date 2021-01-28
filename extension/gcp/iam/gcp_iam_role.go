@@ -19,6 +19,7 @@ type myGcpIamRolesItemsContainer struct {
 	Items []*gcpiam.Role `json:"items"`
 }
 
+// GcpIamRolesColumns returns the list of columns for gcp_iam_role
 func GcpIamRolesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -32,6 +33,7 @@ func GcpIamRolesColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpIamRolesGenerate returns the rows in the table for all configured accounts
 func GcpIamRolesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -61,7 +63,7 @@ func getGcpIamRolesNewServiceForAccount(ctx context.Context, account *utilities.
 	var service *gcpiam.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpiam.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

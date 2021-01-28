@@ -82,7 +82,7 @@ func processGlobalListGroups(tableConfig *utilities.TableConfig, account *utilit
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}
