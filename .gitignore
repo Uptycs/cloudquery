@@ -1,6 +1,5 @@
 .idea
 .vscode
-bin/
-node_modules/
+/cloudquery
+vendor
 extension/extension_config.json
-go

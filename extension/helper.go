@@ -1,4 +1,13 @@
-package main
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
+package extension
 
 import (
 	"encoding/json"
@@ -25,7 +34,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func initializeLogger() {
+// InitializeLogger TODO
+func InitializeLogger(verbose *bool) {
 	utilities.CreateLogger(*verbose, utilities.ExtConfiguration.ExtConfLog.MaxSize,
 		utilities.ExtConfiguration.ExtConfLog.MaxBackups, utilities.ExtConfiguration.ExtConfLog.MaxAge,
 		utilities.ExtConfiguration.ExtConfLog.FileName)
@@ -60,8 +70,9 @@ func readProjectIDFromCredentialFile(filePath string) string {
 	return ""
 }
 
-func readExtensionConfigurations(filePath string) error {
-	utilities.AwsAccountID = os.Getenv("AWS_ACCOUNT_ID")
+// ReadExtensionConfigurations TODO
+func ReadExtensionConfigurations(filePath string) error {
+	utilities.AwsAccountId = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("failed to read configuration file %s. err:%v\n", filePath, err)
@@ -74,7 +85,6 @@ func readExtensionConfigurations(filePath string) error {
 	}
 	utilities.ExtConfiguration = extConfig
 
-	initializeLogger()
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
@@ -101,7 +111,8 @@ func readExtensionConfigurations(filePath string) error {
 	return nil
 }
 
-func readTableConfigurations(homeDir string) {
+// ReadTableConfigurations TODO
+func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
 	var gcpConfigFileList = []string{"gcp/compute/table_config.json", "gcp/storage/table_config.json", "gcp/iam/table_config.json", "gcp/sql/table_config.json", "gcp/dns/table_config.json", "gcp/file/table_config.json"}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
@@ -138,7 +149,8 @@ func readTableConfigurations(homeDir string) {
 var gcpComputeHandler = compute.NewGcpComputeHandler(compute.NewGcpComputeImpl())
 var gcpStorageHandler = storage.NewGcpStorageHandler(storage.NewGcpStorageImpl())
 
-func registerPlugins(server *osquery.ExtensionManagerServer) {
+// RegisterPlugins TODO
+func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))

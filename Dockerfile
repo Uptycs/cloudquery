@@ -1,69 +1,58 @@
-FROM ubuntu:20.04 AS build
-
-COPY . /cloudquery/
-WORKDIR /cloudquery
-
-RUN set -ex; \
-  export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update -y \
-  && apt-get upgrade -y \
-  && apt-get install -y \
-  tzdata \
-  git \
-  golang \
-  build-essential \
-  && mkdir -p /cloudquery/bin \
-  && go build -ldflags="-s -w" -o bin ./extension \
-  && make install
+# Copyright (c) 2020-present, The cloudquery authors
+#
+# This source code is licensed as defined by the LICENSE file found in the
+# root directory of this source tree.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
 
 FROM ubuntu:20.04
 
+ARG OSQUERY_VERSION=4.6.0
+ARG CLOUDQUERY_VERSION
+
 LABEL \
-  com.uptycs.description="Uptycs cloudquery container image" \
-  com.uptycs.name="cloudquery" \
-  com.uptycs.version="1.0" \
-  com.uptycs.schema-version="1.0" \
-  com.uptycs.url="https://www.uptycs.com" \
-  com.uptycs.vendor="Uptycs Inc"
-# CHROOT_DIR is the docker directory which points to the host's "/"
-# SOFTWARE_DIR will be the location on host where Osquery files will be copied to
-ENV \
-  CHROOT_DIR="/host" \
-  SOFTWARE_DIR="/etc/osquery" \
-  CLOUDQUERY_DIR="/cloudquery/extension" \
-  OLD_DIR="/cloudquery/extension" \
-  CLOUDQUERY_EXT_HOME="/cloudquery/extension" \
-  CLOUDQUERY_EXE="/cloudquery/bin/extension"
+  name="cloudquery" \
+  description="cloudquery powered by Osquery" \
+  version="${CLOUDQUERY_VERSION}" \
+  url="https://github.com/Uptycs/cloudquery"
 
-COPY --from=build /cloudquery/bin/extension ${CLOUDQUERY_EXE}
-COPY --from=build ${OLD_DIR}/aws/ec2/table_config.json ${CLOUDQUERY_DIR}/aws/ec2/
-COPY --from=build ${OLD_DIR}/aws/s3/table_config.json ${CLOUDQUERY_DIR}/aws/s3/
-COPY --from=build ${OLD_DIR}/gcp/compute/table_config.json ${CLOUDQUERY_DIR}/gcp/compute/
-COPY --from=build ${OLD_DIR}/gcp/storage/table_config.json ${CLOUDQUERY_DIR}/gcp/storage/
-COPY --from=build ${OLD_DIR}/azure/compute/table_config.json ${CLOUDQUERY_DIR}/azure/compute/
+ADD https://pkg.osquery.io/deb/osquery_${OSQUERY_VERSION}-1.linux_amd64.deb /tmp/osquery.deb
+ADD cloudquery /usr/bin/cloudquery.ext
 
-    
-
-WORKDIR ${CLOUDQUERY_DIR}
-COPY  entrypoint.sh ${CLOUDQUERY_DIR}/
 RUN set -ex; \
-  DEBIAN_FRONTEND=noninteractive apt-get update -y && \
-  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-  apt-get install -y tzdata; \
-  apt update;  \
-  apt-get install -y wget; \
-  wget -O /tmp/osquery.deb  https://pkg.osquery.io/deb/osquery_4.6.0-1.linux_amd64.deb; \
-  apt-get update; \
-  dpkg -i /tmp/osquery.deb && \
-  /etc/init.d/osqueryd stop && \
-  mkdir -p /cloudquery/extension/config; \
-  chmod 700 ${CLOUDQUERY_EXE}; \
-  apt-get purge -y wget; \
-  apt-get install -y supervisor; \
-  chmod 755 ${CLOUDQUERY_DIR}/entrypoint.sh; \ 
-  rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/*;
+    DEBIAN_FRONTEND=noninteractive apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends curl jq -y && \
+    dpkg -i /tmp/osquery.deb && \
+    /etc/init.d/osqueryd stop && \
+    rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/* && \
+    groupadd -g 1000 cloudquery && \
+    useradd -m -g cloudquery -u 1000 -d /opt/cloudquery -s /bin/bash cloudquery && \
+    mkdir /opt/cloudquery/etc /opt/cloudquery/var && \
+    echo "/usr/bin/cloudquery.ext" > /opt/cloudquery/etc/autoload.exts && \
+    chmod 700 /usr/bin/cloudquery.ext && \
+    chown cloudquery:cloudquery /usr/bin/osquery? /usr/bin/cloudquery.ext /opt/cloudquery/autoload.exts /opt/cloudquery/etc /opt/cloudquery/var
 
-COPY osquery.flags ${SOFTWARE_DIR}/ 
-COPY osqueryd_script.conf /etc/supervisor/conf.d/
-ENTRYPOINT ["/cloudquery/extension/entrypoint.sh"]
-CMD ["osqueryi", "--nodisable_extensions", "--extension", "/cloudquery/bin/extension"]
+USER cloudquery
+
+ENV CLOUDQUERY_EXT_HOME /opt/cloudquery
+
+WORKDIR /opt/cloudquery
+
+COPY osquery.flags /opt/cloudquery/etc/
+COPY osquery.conf  /opt/cloudquery/etc/
+
+COPY extension/aws/ec2/table_config.json        /opt/cloudquery/aws/ec2/
+COPY extension/aws/s3/table_config.json         /opt/cloudquery/aws/s3/
+COPY extension/gcp/compute/table_config.json    /opt/cloudquery/gcp/compute/
+COPY extension/gcp/storage/table_config.json    /opt/cloudquery/gcp/storage/
+COPY extension/azure/compute/table_config.json  /opt/cloudquery/azure/compute/
+
+ENTRYPOINT ["/usr/bin/osqueryd", \
+    "--flagfile=/opt/cloudquery/etc/osquery.flags", \
+    "--config_path=/opt/cloudquery/etc/osquery.conf", \
+    "--ephemeral", \
+    "--disable_logging", \
+    "--database_path=/opt/cloudquery/osquery.db", \
+    "--extensions_socket=/opt/cloudquery/var/osquery.em", \
+    "--extensions_autoload=/opt/cloudquery/etc/autoload.exts"]

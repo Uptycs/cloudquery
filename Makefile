@@ -1,45 +1,33 @@
-all: build
-BIN-DIR=bin
-EXTENSION-DIR=extension
-INSTALL-DIR?=/etc/cloudquery
+#!/usr/bin/make -f
 
-build: extension
+# Copyright (c) 2020-present, The cloudquery authors
+#
+# This source code is licensed as defined by the LICENSE file found in the
+# root directory of this source tree.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
 
-extension: $(shell find . -type f)
-	mkdir -p ${BIN-DIR}
-	go build -o ${BIN-DIR} ./${EXTENSION-DIR}
+INSTALL-DIR ?= /etc/cloudquery
 
-install:
-	mkdir -p ${INSTALL-DIR}/aws/ec2
-	mkdir -p ${INSTALL-DIR}/aws/s3
-	mkdir -p ${INSTALL-DIR}/gcp/compute
-	mkdir -p ${INSTALL-DIR}/gcp/storage
-	mkdir -p ${INSTALL-DIR}/gcp/iam
-	mkdir -p ${INSTALL-DIR}/gcp/sql
-	mkdir -p ${INSTALL-DIR}/gcp/dns
-	mkdir -p ${INSTALL-DIR}/gcp/file
-	mkdir -p ${INSTALL-DIR}/azure/compute
-	mkdir -p ${INSTALL-DIR}/config
-	cp ${BIN-DIR}/extension ${INSTALL-DIR}/cloudquery.ext
-	cp extension/aws/ec2/table_config.json ${INSTALL-DIR}/aws/ec2
-	cp extension/aws/s3/table_config.json ${INSTALL-DIR}/aws/s3
-	cp extension/gcp/compute/table_config.json ${INSTALL-DIR}/gcp/compute
-	cp extension/gcp/storage/table_config.json ${INSTALL-DIR}/gcp/storage
-	cp extension/gcp/iam/table_config.json ${INSTALL-DIR}/gcp/iam
-	cp extension/gcp/sql/table_config.json ${INSTALL-DIR}/gcp/sql
-	cp extension/gcp/dns/table_config.json ${INSTALL-DIR}/gcp/dns
-	cp extension/gcp/file/table_config.json ${INSTALL-DIR}/gcp/file
-	cp extension/azure/compute/table_config.json ${INSTALL-DIR}/azure/compute
+all: deps test build
+
+deps:
+	@go mod download
 
 test:
-	@set -x; \
-	cd ${EXTENSION-DIR}; \
-	go test -v ./...
-	@set -x; \
-	cd utilities; \
-	go test -v ./...
+	@go test -v -race -cover ./...
+
+build:
+	@go build -ldflags="-s -w" -o . ./...
+
+install:
+	@for f in $$(find extension -name table_config.json); do \
+		DIR=$$(echo $$f | cut -d / -f 2-3) ; \
+		mkdir -p ${INSTALL-DIR}/$${DIR}   ; \
+		cp $$f ${INSTALL-DIR}/$${DIR}/    ; \
+	done
 
 clean:
-	rm -rf ${BIN-DIR}/*
+	@rm -f cloudquery
 
 .PHONY: all
