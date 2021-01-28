@@ -181,17 +181,26 @@ func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 	tab.addRowsAndFlatten(newTable.Rows)
 }
 
-func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
+func getAdjustedValue(value reflect.Value) reflect.Value {
 	for value.Kind() == reflect.Ptr {
-		value = value.Elem()
+		return value.Elem()
 	}
+	return value
+}
 
+func (tab *Table) addAttributeForPrefix(prefix string, value reflect.Value) {
 	if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
 		byteArr, err := json.Marshal(value)
 		if err == nil {
 			tab.addAttribute(prefix, string(byteArr))
 		}
 	}
+}
+
+func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
+	value = getAdjustedValue(value)
+	tab.addAttributeForPrefix(prefix, value)
+
 	if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 		// Don't flatten further
 		return
