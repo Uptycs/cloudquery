@@ -197,6 +197,16 @@ func (tab *Table) addAttributeForPrefix(prefix string, value reflect.Value) {
 	}
 }
 
+func isUnexportedField(name string, f reflect.Value) bool {
+	if name[0:1] == strings.ToLower(name[0:1]) {
+		return true // unexported fields
+	}
+	if (f.Kind() == reflect.Ptr || f.Kind() == reflect.Slice || f.Kind() == reflect.Map) && f.IsNil() {
+		return true // unset fields
+	}
+	return false
+}
+
 func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 	value = getAdjustedValue(value)
 	tab.addAttributeForPrefix(prefix, value)
@@ -212,11 +222,8 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 		for i := 0; i < value.Type().NumField(); i++ {
 			name := value.Type().Field(i).Name
 			f := value.Field(i)
-			if name[0:1] == strings.ToLower(name[0:1]) {
-				continue // ignore unexported fields
-			}
-			if (f.Kind() == reflect.Ptr || f.Kind() == reflect.Slice || f.Kind() == reflect.Map) && f.IsNil() {
-				continue // ignore unset fields
+			if isUnexportedField(name, f) {
+				continue
 			}
 			names = append(names, name)
 		}
