@@ -2,4 +2,4 @@
 .vscode
 /cloudquery
 vendor
-extension/extension_config.json
+extension/config/
