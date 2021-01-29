@@ -55,8 +55,7 @@ func main() {
 		log.Fatalf("Error creating extension: %s\n", err)
 	}
 
-	extension.InitializeLogger(verbose)
-	extension.ReadExtensionConfigurations(homeDirectory + string(os.PathSeparator) + "config" + string(os.PathSeparator) + "extension_config.json")
+	extension.ReadExtensionConfigurations(homeDirectory+string(os.PathSeparator)+"config"+string(os.PathSeparator)+"extension_config.json", *verbose)
 	extension.ReadTableConfigurations(homeDirectory)
 	extension.RegisterPlugins(server)
 	if err := server.Run(); err != nil {

@@ -35,8 +35,8 @@ import (
 )
 
 // InitializeLogger TODO
-func InitializeLogger(verbose *bool) {
-	utilities.CreateLogger(*verbose, utilities.ExtConfiguration.ExtConfLog.MaxSize,
+func InitializeLogger(verbose bool) {
+	utilities.CreateLogger(verbose, utilities.ExtConfiguration.ExtConfLog.MaxSize,
 		utilities.ExtConfiguration.ExtConfLog.MaxBackups, utilities.ExtConfiguration.ExtConfLog.MaxAge,
 		utilities.ExtConfiguration.ExtConfLog.FileName)
 }
@@ -71,7 +71,7 @@ func readProjectIDFromCredentialFile(filePath string) string {
 }
 
 // ReadExtensionConfigurations TODO
-func ReadExtensionConfigurations(filePath string) error {
+func ReadExtensionConfigurations(filePath string, verbose bool) error {
 	utilities.AwsAccountID = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -84,6 +84,9 @@ func ReadExtensionConfigurations(filePath string) error {
 		return errUnmarshal
 	}
 	utilities.ExtConfiguration = extConfig
+
+	// Log config is read. Init the logger now.
+	InitializeLogger(verbose)
 
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
