@@ -72,7 +72,7 @@ func readProjectIDFromCredentialFile(filePath string) string {
 
 // ReadExtensionConfigurations TODO
 func ReadExtensionConfigurations(filePath string) error {
-	utilities.AwsAccountId = os.Getenv("AWS_ACCOUNT_ID")
+	utilities.AwsAccountID = os.Getenv("AWS_ACCOUNT_ID")
 	reader, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("failed to read configuration file %s. err:%v\n", filePath, err)
