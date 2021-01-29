@@ -7,7 +7,7 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
 
-INSTALL-DIR ?= /etc/osquery/cloudquery
+INSTALL-DIR ?= /opt/cloudquery
 
 all: deps test build
 
@@ -21,7 +21,7 @@ build:
 	@go build -ldflags="-s -w" -o . ./...
 
 install:
-	@cp cloudquery /usr/bin/cloudquery.ext ; \
+	@cp cloudquery /usr/local/bin/cloudquery.ext ; \
 	mkdir -p ${INSTALL-DIR}/config ; \
 	cp extension/extension_config.json.sample ${INSTALL-DIR}/config/extension_config.json ; \
 	for f in $$(find extension -name table_config.json); do \

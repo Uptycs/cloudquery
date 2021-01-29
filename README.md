@@ -64,9 +64,9 @@ one can add support for new tables easily, and configurable so that one can chan
   make build
   sudo make install
   ```
-- Edit (or create) `/etc/osquery/extensions.load` file and append the following line: `/usr/bin/cloudquery.ext`
-- Edit `/etc/osquery/cloudquery/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider. Change logging path and other parameters to suit your needs.
-- Add following flags to /etc/osquery/osquery.flags
+- Edit (or create) `/etc/osquery/extensions.load` file and append the following line: `/usr/local/bin/cloudquery.ext`
+- Edit `/opt/cloudquery/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider. Change logging path and other parameters to suit your needs.
+- Add following flags to `/etc/osquery/osquery.flags` (your flag file path could be different)
 ```
 --extensions_autoload=/etc/osquery/extensions.load
 --disable_extensions=false
