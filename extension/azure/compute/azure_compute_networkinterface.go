@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -16,6 +25,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/services/network/mgmt/2018-01-01/network"
 )
 
+// InterfacesColumns returns the list of columns in the table
 func InterfacesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("subscription_id"),
@@ -54,6 +64,7 @@ func InterfacesColumns() []table.ColumnDefinition {
 	}
 }
 
+// InterfacesGenerate returns the rows in the table for all configured accounts
 func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAzure.Accounts) == 0 {
@@ -70,7 +81,7 @@ func InterfacesGenerate(osqCtx context.Context, queryContext table.QueryContext)
 		for _, account := range utilities.ExtConfiguration.ExtConfAzure.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "azure_compute_networkinterface",
-				"account":   account.SubscriptionId,
+				"account":   account.SubscriptionID,
 			}).Info("processing account")
 			results, err := processAccountInterfaces(&account)
 			if err != nil {

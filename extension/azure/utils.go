@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package azure
 
 import (
@@ -42,6 +51,9 @@ func readJSON(path string) (*map[string]interface{}, error) {
 	return &contents, err
 }
 
+// GetAuthSession creates an authorizer for the given account
+// If account is nil, it creates an authorizer for the default account,
+// by locating the auth file by reading "AZURE_AUTH_LOCATION" env variable
 func GetAuthSession(account *utilities.ExtensionConfigurationAzureAccount) (*AzureSession, error) {
 	authGeneratorMutex.Lock()
 	defer authGeneratorMutex.Unlock()
@@ -69,11 +81,11 @@ func GetAuthSession(account *utilities.ExtensionConfigurationAzureAccount) (*Azu
 // If configured it will copy some metadata vaues into appropriate columns
 func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string, resourceGroup string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
-	if len(tableConfig.Azure.SubscriptionIdAttribute) != 0 {
-		result[tableConfig.Azure.SubscriptionIdAttribute] = subscriptionId
+	if len(tableConfig.Azure.SubscriptionIDAttribute) != 0 {
+		result[tableConfig.Azure.SubscriptionIDAttribute] = subscriptionId
 	}
-	if len(tableConfig.Azure.TenantIdAttribute) != 0 {
-		result[tableConfig.Azure.TenantIdAttribute] = tenantId
+	if len(tableConfig.Azure.TenantIDAttribute) != 0 {
+		result[tableConfig.Azure.TenantIDAttribute] = tenantId
 	}
 	if len(tableConfig.Azure.ResourceGroupAttribute) != 0 {
 		result[tableConfig.Azure.ResourceGroupAttribute] = resourceGroup
@@ -83,6 +95,7 @@ func RowToMap(row map[string]interface{}, subscriptionId string, tenantId string
 	return result
 }
 
+// GetGroups returns the list of resource groups for given azure session
 func GetGroups(session *AzureSession) ([]string, error) {
 	tab := make([]string, 0)
 	var err error

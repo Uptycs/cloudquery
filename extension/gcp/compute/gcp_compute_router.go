@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -19,6 +28,7 @@ type myGcpComputeRoutersItemsContainer struct {
 	Items []*compute.Router `json:"items"`
 }
 
+// GcpComputeRoutersColumns returns the list of columns for gcp_compute_router
 func (handler *GcpComputeHandler) GcpComputeRoutersColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -79,6 +89,7 @@ func (handler *GcpComputeHandler) GcpComputeRoutersColumns() []table.ColumnDefin
 	}
 }
 
+// GcpComputeRoutersGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeRoutersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -104,11 +115,11 @@ func (handler *GcpComputeHandler) GcpComputeRoutersGenerate(osqCtx context.Conte
 }
 
 func (handler *GcpComputeHandler) getGcpComputeRoutersNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -134,12 +145,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeRouters(ctx context.Co
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewRoutersService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewRoutersService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewRoutersService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.RoutersAggregatedList(myApiService, projectID)
+	aggListCall := handler.svcInterface.RoutersAggregatedList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_router",
@@ -148,7 +159,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeRouters(ctx context.Co
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeRoutersItemsContainer{Items: make([]*compute.Router, 0)}
-	if err := handler.svcInterface.RoutersPages(aggListCall, ctx, func(page *compute.RouterAggregatedList) error {
+	if err := handler.svcInterface.RoutersPages(ctx, aggListCall, func(page *compute.RouterAggregatedList) error {
 
 		for _, item := range page.Items {
 

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package ec2
 
 import (
@@ -14,6 +23,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeAddressesColumns returns the list of columns in the table
 func DescribeAddressesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -38,6 +48,7 @@ func DescribeAddressesColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeAddressesGenerate returns the rows in the table for all configured accounts
 func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
@@ -74,7 +85,7 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

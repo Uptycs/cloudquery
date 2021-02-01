@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package utilities
 
 import (
@@ -9,12 +18,14 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// Table holds data rows. Each row is map of key->value pair
 type Table struct {
 	Rows                     []map[string]interface{}
 	MaxLevel                 int
 	ParsedAttributeConfigMap map[string]ParsedAttributeConfig
 }
 
+// NewTable creates a table from given data (in json form) and table configuration
 func NewTable(jsonStr []byte, tableConfig *TableConfig) Table {
 	tab := Table{}
 	tab.init(jsonStr, tableConfig.MaxLevel, tableConfig.getParsedAttributeConfigMap())
@@ -110,9 +121,8 @@ func (tab *Table) addRowsAndFlatten(newRows []map[string]interface{}) {
 func getKey(prefix, key string) string {
 	if len(prefix) != 0 {
 		return prefix + "_" + key
-	} else {
-		return key
 	}
+	return key
 }
 
 // Flatten takes a map and returns a new one where nested maps are replaced
@@ -180,17 +190,36 @@ func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 	tab.addRowsAndFlatten(newTable.Rows)
 }
 
-func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
+func getAdjustedValue(value reflect.Value) reflect.Value {
 	for value.Kind() == reflect.Ptr {
-		value = value.Elem()
+		return value.Elem()
 	}
+	return value
+}
 
+func (tab *Table) addAttributeForPrefix(prefix string, value reflect.Value) {
 	if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
 		byteArr, err := json.Marshal(value)
 		if err == nil {
 			tab.addAttribute(prefix, string(byteArr))
 		}
 	}
+}
+
+func isUnexportedField(name string, f reflect.Value) bool {
+	if name[0:1] == strings.ToLower(name[0:1]) {
+		return true // unexported fields
+	}
+	if (f.Kind() == reflect.Ptr || f.Kind() == reflect.Slice || f.Kind() == reflect.Map) && f.IsNil() {
+		return true // unset fields
+	}
+	return false
+}
+
+func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
+	value = getAdjustedValue(value)
+	tab.addAttributeForPrefix(prefix, value)
+
 	if tab.MaxLevel > 0 && level >= tab.MaxLevel {
 		// Don't flatten further
 		return
@@ -202,11 +231,8 @@ func (tab *Table) flattenValue(level int, prefix string, value reflect.Value) {
 		for i := 0; i < value.Type().NumField(); i++ {
 			name := value.Type().Field(i).Name
 			f := value.Field(i)
-			if name[0:1] == strings.ToLower(name[0:1]) {
-				continue // ignore unexported fields
-			}
-			if (f.Kind() == reflect.Ptr || f.Kind() == reflect.Slice || f.Kind() == reflect.Map) && f.IsNil() {
-				continue // ignore unset fields
+			if isUnexportedField(name, f) {
+				continue
 			}
 			names = append(names, name)
 		}

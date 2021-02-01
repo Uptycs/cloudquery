@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -19,6 +28,7 @@ type myGcpComputeNetworksItemsContainer struct {
 	Items []*compute.Network `json:"items"`
 }
 
+// GcpComputeNetworksColumns returns the list of columns for gcp_compute_network
 func (handler *GcpComputeHandler) GcpComputeNetworksColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -50,6 +60,7 @@ func (handler *GcpComputeHandler) GcpComputeNetworksColumns() []table.ColumnDefi
 	}
 }
 
+// GcpComputeNetworksGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeNetworksGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -75,11 +86,11 @@ func (handler *GcpComputeHandler) GcpComputeNetworksGenerate(osqCtx context.Cont
 }
 
 func (handler *GcpComputeHandler) getGcpComputeNetworksNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*compute.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *compute.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -105,12 +116,12 @@ func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.C
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize compute.Service")
 	}
-	myApiService := handler.svcInterface.NewNetworksService(service)
-	if myApiService == nil {
+	myAPIService := handler.svcInterface.NewNetworksService(service)
+	if myAPIService == nil {
 		return resultMap, fmt.Errorf("NewNetworksService() returned nil")
 	}
 
-	aggListCall := handler.svcInterface.NetworksList(myApiService, projectID)
+	aggListCall := handler.svcInterface.NetworksList(myAPIService, projectID)
 	if aggListCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "gcp_compute_network",
@@ -119,7 +130,7 @@ func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.C
 		return resultMap, nil
 	}
 	itemsContainer := myGcpComputeNetworksItemsContainer{Items: make([]*compute.Network, 0)}
-	if err := handler.svcInterface.NetworksPages(aggListCall, ctx, func(page *compute.NetworkList) error {
+	if err := handler.svcInterface.NetworksPages(ctx, aggListCall, func(page *compute.NetworkList) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)
 

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package file
 
 import (
@@ -19,6 +28,7 @@ type myGcpFileInstancesItemsContainer struct {
 	Items []*gcpfile.Instance `json:"items"`
 }
 
+// GcpFileInstancesColumns returns the list of columns for gcp_file_instance
 func GcpFileInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -48,6 +58,7 @@ func GcpFileInstancesColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpFileInstancesGenerate returns the rows in the table for all configured accounts
 func GcpFileInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -73,11 +84,11 @@ func GcpFileInstancesGenerate(osqCtx context.Context, queryContext table.QueryCo
 }
 
 func getGcpFileInstancesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpfile.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpfile.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpfile.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

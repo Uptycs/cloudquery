@@ -157,6 +157,226 @@
       }
     ]
   },
+  "aws_ec2_flowlog": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "FlowLogs_CreationTime",
+        "targetName": "creation_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_ext",
+        "targetName": "creation_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc",
+        "targetName": "creation_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheEnd",
+        "targetName": "creation_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheStart",
+        "targetName": "creation_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheZone",
+        "targetName": "creation_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheZone_isDST",
+        "targetName": "creation_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheZone_name",
+        "targetName": "creation_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_cacheZone_offset",
+        "targetName": "creation_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_name",
+        "targetName": "creation_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_tx",
+        "targetName": "creation_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_tx_index",
+        "targetName": "creation_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_tx_isstd",
+        "targetName": "creation_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_tx_isutc",
+        "targetName": "creation_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_tx_when",
+        "targetName": "creation_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_zone",
+        "targetName": "creation_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_zone_isDST",
+        "targetName": "creation_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_zone_name",
+        "targetName": "creation_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_loc_zone_offset",
+        "targetName": "creation_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_CreationTime_wall",
+        "targetName": "creation_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_DeliverLogsErrorMessage",
+        "targetName": "deliver_logs_error_message",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_DeliverLogsPermissionArn",
+        "targetName": "deliver_logs_permission_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_DeliverLogsStatus",
+        "targetName": "deliver_logs_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_FlowLogId",
+        "targetName": "flow_log_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_FlowLogStatus",
+        "targetName": "flow_log_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_LogDestination",
+        "targetName": "log_destination",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_LogDestinationType",
+        "targetName": "log_destination_type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_LogFormat",
+        "targetName": "log_format",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_LogGroupName",
+        "targetName": "log_group_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_MaxAggregationInterval",
+        "targetName": "max_aggregation_interval",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_ResourceId",
+        "targetName": "resource_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FlowLogs_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FlowLogs_TrafficType",
+        "targetName": "traffic_type",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
   "aws_ec2_image": {
     "aws": {
       "regionCodeAttribute": "region_code",
@@ -1333,6 +1553,52 @@
       },
       {
         "sourceName": "InternetGateways_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  },
+  "aws_ec2_keypair": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "KeyPairs_KeyFingerprint",
+        "targetName": "key_fingerprint",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "KeyPairs_KeyName",
+        "targetName": "key_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "KeyPairs_KeyPairId",
+        "targetName": "key_pair_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "KeyPairs_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "KeyPairs_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "KeyPairs_Tags_Value",
         "targetName": "tags_value",
         "targetType": "TEXT",
         "enabled": false
@@ -2609,6 +2875,226 @@
       }
     ]
   },
+  "aws_ec2_snapshot": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Snapshots_DataEncryptionKeyId",
+        "targetName": "data_encryption_key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_Encrypted",
+        "targetName": "encrypted",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_KmsKeyId",
+        "targetName": "kms_key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_OwnerAlias",
+        "targetName": "owner_alias",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_OwnerId",
+        "targetName": "owner_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_Progress",
+        "targetName": "progress",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_SnapshotId",
+        "targetName": "snapshot_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_StartTime",
+        "targetName": "start_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_StartTime_ext",
+        "targetName": "start_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc",
+        "targetName": "start_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheEnd",
+        "targetName": "start_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheStart",
+        "targetName": "start_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheZone",
+        "targetName": "start_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheZone_isDST",
+        "targetName": "start_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheZone_name",
+        "targetName": "start_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_cacheZone_offset",
+        "targetName": "start_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_name",
+        "targetName": "start_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_tx",
+        "targetName": "start_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_tx_index",
+        "targetName": "start_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_tx_isstd",
+        "targetName": "start_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_tx_isutc",
+        "targetName": "start_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_tx_when",
+        "targetName": "start_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_zone",
+        "targetName": "start_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_zone_isDST",
+        "targetName": "start_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_zone_name",
+        "targetName": "start_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_loc_zone_offset",
+        "targetName": "start_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_StartTime_wall",
+        "targetName": "start_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_StateMessage",
+        "targetName": "state_message",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Snapshots_VolumeId",
+        "targetName": "volume_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Snapshots_VolumeSize",
+        "targetName": "volume_size",
+        "targetType": "BIGINT",
+        "enabled": true
+      }
+    ]
+  },
   "aws_ec2_subnet": {
     "aws": {
       "regionCodeAttribute": "region_code",
@@ -2792,6 +3278,388 @@
       {
         "sourceName": "Tags_Value",
         "targetName": "value",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
+  "aws_ec2_volume": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Volumes_Attachments",
+        "targetName": "attachments",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime",
+        "targetName": "attachments_attach_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_ext",
+        "targetName": "attachments_attach_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc",
+        "targetName": "attachments_attach_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheEnd",
+        "targetName": "attachments_attach_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheStart",
+        "targetName": "attachments_attach_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheZone",
+        "targetName": "attachments_attach_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheZone_isDST",
+        "targetName": "attachments_attach_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheZone_name",
+        "targetName": "attachments_attach_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_cacheZone_offset",
+        "targetName": "attachments_attach_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_name",
+        "targetName": "attachments_attach_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_tx",
+        "targetName": "attachments_attach_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_tx_index",
+        "targetName": "attachments_attach_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_tx_isstd",
+        "targetName": "attachments_attach_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_tx_isutc",
+        "targetName": "attachments_attach_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_tx_when",
+        "targetName": "attachments_attach_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_zone",
+        "targetName": "attachments_attach_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_zone_isDST",
+        "targetName": "attachments_attach_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_zone_name",
+        "targetName": "attachments_attach_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_loc_zone_offset",
+        "targetName": "attachments_attach_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_AttachTime_wall",
+        "targetName": "attachments_attach_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_DeleteOnTermination",
+        "targetName": "attachments_delete_on_termination",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_Device",
+        "targetName": "attachments_device",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_InstanceId",
+        "targetName": "attachments_instance_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_State",
+        "targetName": "attachments_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Attachments_VolumeId",
+        "targetName": "attachments_volume_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_AvailabilityZone",
+        "targetName": "availability_zone",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_CreateTime",
+        "targetName": "create_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_CreateTime_ext",
+        "targetName": "create_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc",
+        "targetName": "create_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheEnd",
+        "targetName": "create_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheStart",
+        "targetName": "create_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheZone",
+        "targetName": "create_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheZone_isDST",
+        "targetName": "create_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheZone_name",
+        "targetName": "create_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_cacheZone_offset",
+        "targetName": "create_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_name",
+        "targetName": "create_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_tx",
+        "targetName": "create_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_tx_index",
+        "targetName": "create_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_tx_isstd",
+        "targetName": "create_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_tx_isutc",
+        "targetName": "create_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_tx_when",
+        "targetName": "create_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_zone",
+        "targetName": "create_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_zone_isDST",
+        "targetName": "create_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_zone_name",
+        "targetName": "create_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_loc_zone_offset",
+        "targetName": "create_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_CreateTime_wall",
+        "targetName": "create_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Encrypted",
+        "targetName": "encrypted",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_FastRestored",
+        "targetName": "fast_restored",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_Iops",
+        "targetName": "iops",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_KmsKeyId",
+        "targetName": "kms_key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_MultiAttachEnabled",
+        "targetName": "multi_attach_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_OutpostArn",
+        "targetName": "outpost_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_Size",
+        "targetName": "size",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_SnapshotId",
+        "targetName": "snapshot_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Volumes_Throughput",
+        "targetName": "throughput",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_VolumeId",
+        "targetName": "volume_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Volumes_VolumeType",
+        "targetName": "volume_type",
         "targetType": "TEXT",
         "enabled": true
       }

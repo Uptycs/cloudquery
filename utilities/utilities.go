@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package utilities
 
 import (
@@ -9,10 +18,14 @@ import (
 )
 
 var (
+	// TableConfigurationMap is the map of tableName->TableConfig
 	TableConfigurationMap = map[string]*TableConfig{}
-	AwsAccountId          string
-	ExtConfiguration      ExtensionConfiguration
-	DefaultGcpProjectID   string
+	// AwsAccountID is read from env variable AWS_ACCOUNT_ID
+	AwsAccountID string
+	// ExtConfiguration holds extension's config data including credential files` path
+	ExtConfiguration ExtensionConfiguration
+	// DefaultGcpProjectID is projectID read from file set in env var GOOGLE_APPLICATION_CREDENTIALS
+	DefaultGcpProjectID string
 )
 
 // ReadTableConfig parses json encoded data to read list TableConfig entries

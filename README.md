@@ -1,113 +1,141 @@
+[![Build](https://github.com/Uptycs/cloudquery/workflows/Build/badge.svg?branch=master)](https://github.com/Uptycs/cloudquery/actions?query=workflow%3ABuild)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Uptycs/cloudquery)](https://goreportcard.com/report/github.com/Uptycs/cloudquery)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+---
+
 # cloudquery powered by Osquery
 
-cloudquery is Osquery extension to fetch cloud telemetry from AWS, GCP, and Azure. It is extensible so that  
+cloudquery is Osquery extension to fetch cloud telemetry from AWS, GCP, and Azure. It is extensible so that
 one can add support for new tables easily, and configurable so that one can change the table schema as well.
 
-## Getting started
+## Contents
+
+- [Working with extension](#build-and-test-extension)
+  * [Build](#build)
+  * [Test](#test)
+    + [Test with osqueryi](#with-osqueryi)
+    + [Test with osqueryd](#with-osqueryd)
+- [Working with docker](#test-with-docker)
+  * [Setup](#setup-credentials)
+  * [Test with osqueryi](#run-osqueryi-from-cloudquery-container)
+  * [Test with osqueryd](#run-osqueryd-from-cloudquery-container)
+- [Supported tables](#supported-tables)
+
+---
+
+## Build and test extension
 
 ### Build
 
-- Checkout the code
 - Install prerequisites
+  - make
   - [go](https://golang.org/doc/install#install)
-- Set environment varibale for extension home (it shoud be path-to-repo/cloudquery/extension)  
-  `export CLOUDQUERY_EXT_HOME=/home/user/work/code/cloudquery/extension`
-- Build extension binary.  
-  `make`
-- To install at default osquery directory (`/etc/osquery/`), run:  
-  `make install`
+- Set environment variable for extension home (it shoud be path-to-repo/cloudquery/extension)
+  ```sh
+  export CLOUDQUERY_EXT_HOME=/home/user/work/cloudquery/extension
+  ```
+- Build the extension:
+  ```sh
+  make
+  ````
 
 ### Test
 
 #### With osqueryi
 
-- Start osqueryi  
-  `osqueryi --nodisable_extensions`
-- Note down the socket path  
-  `.socket`
-- `cp ${CLOUDQUERY_EXT_HOME}/extension_config.json.sample ${CLOUDQUERY_EXT_HOME}/config/extension_config.json`
-- Edit `${CLOUDQUERY_EXT_HOME}/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider
-- Change fileName value from `"fileName": "/var/log/cloudquery.log"` to something else if you want (like `"fileName": "~/cloudquery.log"`)
-- In another terminal, start extension  
-  `./bin/extension --socket /path/to/socket --home-directory ${CLOUDQUERY_EXT_HOME}`
-- Note that extention may fail if it cannot create the log file. So make sure that log file path exists and it can access the path. Path like `/var/log/` is accessible only to root user and hence in that case either you need to run extension as root/sudo, or change th path.
-- Query data  
-  `select account_id, region_code,image_id,image_type from aws_ec2_image;`
+- Copy extension configuration sample file:
+  ```sh
+  cp ${CLOUDQUERY_EXT_HOME}/extension_config.json.sample ${CLOUDQUERY_EXT_HOME}/config/extension_config.json
+  ```
+- Edit `${CLOUDQUERY_EXT_HOME}/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider. Change logging path and other parameters to suit your needs. Make sure log path is writable.
+- Start osqueryi
+  ```sh
+  osqueryi --nodisable_extensions --extension ${CLOUDQUERY_EXT_HOME}/../cloudquery
+  ```
+- Query data:
+  ```sql
+  SELECT account_id, region_code, image_id, image_type FROM aws_ec2_image;
+  ```
 
-#### With osquery
+#### With osqueryd
 
-- Build and install cloudquery
-- Edit (or create if does't exist) file `/etc/osquery/extensions.load` and add the following line:
-- `/etc/osquery/cloudquery.ext`
-- Add following lines to `/etc/osquery/osquery.flags`  
-  `--disable_extensions=false`  
-  `--extensions_autoload=/etc/osquery/extensions.load`  
-  `--extensions_timeout=3`  
-  `--extensions_interval=3`
-- Copy extension config file to `/etc/osquery/cloudquery`
-  - `sudo cp ${CLOUDQUERY_EXT_HOME}/extension_config.json.sample /etc/osquery/cloudquery/config/extension_config.json`
-- Edit `/etc/osquery/cloudquery/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider
-  - `sudo vi /etc/osquery/cloudquery/config/extension_config.json`
-- Restart osquery service.
-  - `sudo service osqueryd restart`
+- Build and install cloudquery:
+  ```sh
+  make build
+  sudo make install
+  ```
+- Edit (or create) `/etc/osquery/extensions.load` file and append the following line: `/usr/local/bin/cloudquery.ext`
+- Edit `/opt/cloudquery/config/extension_config.json` with your cloud accounts. You can add multiple accounts for each cloud provider. Change logging path and other parameters to suit your needs.
+- Add following flags to `/etc/osquery/osquery.flags` (your flag file path could be different)
+```
+--extensions_autoload=/etc/osquery/extensions.load
+--disable_extensions=false
+```
+- Restart osquery service:
+  ```sh
+  sudo service osqueryd restart
+  ```
 
-### Clodquery with osqueryi Docker Container
+---
 
-#### Create cloud configurations directory
+## Test with docker
 
-- Create a config directory on host to hold the credentials for your cloud accounts (~/config is an example, but this could be any directory):
+### Setup credentials
 
+> Setup credentials before proceeding to testing with `osqueryi` or `osqueryd`
 
-  - `mkdir ~/config` on the machine where docker container is started
-  - ~/config from the host would be mounted to /cloudquery/extension/config inside container 
-- Copy `extension_config.json.sample` to your new config directory on your host:
-  - Sample config file is here: [extension_config.json.sample](extension/extension_config.json.sample)
-  - `cp extension/extension_config.json.sample ~/config/extension_config.json`
-  -  Edit `~/config/extension_config.json` to reflect your credentials
+- Create a config directory on the host to hold the credentials for your cloud accounts (~/config is an example, but this could be any directory).
 
-- If using aws, copy your aws credentials:
-  - `cp ~/.aws/credentials ~/config`
-  - Edit credentialFile field  under aws section inside ~/config/extension_config.json and set to /cloudquery/extension/config/credentials
-  - Edit id field under aws section inside ~/config/extension_config.json and set to your account id
-  - Edit profileName  field under aws section inside ~/config/extension_config.json and set to your  profile name
+- Make a copy of [extension_config.json.sample](extension/extension_config.json.sample) as `extension_config.json` in a directory called `config` (can be anywhere on your machine)
+- Copy cloud credentials to the `config` directory
+  - For AWS: `$HOME/.aws/credentials`
+  - For GCP: `your-serviceAccount.json` or any JSON file that contains GCP credentials
+  - For Azure: `my.auth` or any file that holds Azure credentials
+
+- If using AWS cloud, update the following fields in `aws` section in `config/extension_config.json` file:
+  - `credentialFile` should be set to `/opt/cloudquery/etc/config/credentials`
+  - `id` should match AWS account ID
+  - `profileName` should be same as the profile in your `.aws/credentials` file
   - Guide to create AWS credentials: https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html
 
-- If using Google Cloud, copy your json key file your-serviceAccount.json (cloud be any name) for your service account to `~/config`
-  - `cp ~/your-serviceAccount.json ~/config`
-  - Edit keyFile field under gcp section inside ~/config/extension_config.json and set to /cloudquery/extension/config/your-serviceAccount.json
+- If using Google cloud, update `keyFile` in `gcp` section in `extension_config.json` file. It should be changed to `/opt/cloudquery/etc/config/your-serviceAccount.json` where `your-serviceAccount.json` is the JSON key file that contains GCP credentials
   - Guide to create GCP credentials: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 
-- If using Azure, copy the my.auth (cloud be any name) file for you account to `~/config`
-  - `cp ~/my.auth ~/config`
-  - Edit authFile  field under azure section inside ~/config/extension_config.json and set to /cloudquery/extension/config/my.auth
-  - Edit subscriptionId and tenantId fields under azure section inside ~/config/extension_config.json and set to actual values
+- If using Azure, update the following fields in `azure` section in `extension_config.json` file:
+  - `authFile` should be set to `/opt/cloudquery/etc/config/my.auth`. `my.auth` should be the name of the file that contains your Azure credentials.
+  - `subscriptionId` and `tenantId` fields should be changed to values from your Azure account
   - Guide to create Azure credentials: https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest
 
+### Run osqueryi inside cloudquery container
 
-#### Run container with osqueryi
+```sh
+docker run --rm -it --name cloudquery \
+  -v <absolute path to host config directory>:/opt/cloudquery/etc/config \
+  uptycs/cloudquery:latest \
+  osqueryi --extension /usr/local/bin/cloudquery.ext
+```
 
-`sudo docker run -it --rm -v ~/config:/cloudquery/extension/config --name cloudquery uptycsdev/cloudconnector:t8`
+### Run osqueryd from cloudquery container
 
-Press enter to get osquery prompt
+Following files and directories can be mounted from the host:
+- `/opt/cloudquery/logs`              - Directory that contains the logs
+- `/opt/cloudquery/etc/osquery.flags` - Osquery flags file
+- `/opt/cloudquery/etc/osquery.conf`  - Osquery configuration JSON file
+- `/opt/cloudquery/etc/config`        - Directory that contains Cloud provider credentials and cloudquery configuration JSON
 
-### Clodquery with osqueryd Docker Container
-
-#### Repeat Configuration under `"Create cloud configurations directory"`
-
-And identify list of scheduled queries and their intervals and place them in `osqyery.conf` inside ~/config on the host. Example osquery.conf is given below.
-
+Sample Osquery configuration with scheduled queries that can be overwritten via `osquery.conf`:
 ```json
 {
   "schedule": {
-    "GCP_COMP_NET": {
-      "query": "SELECT * FROM  gcp_compute_network;",
+    "gcp_compute_network": {
+      "query": "SELECT * FROM gcp_compute_network;",
       "interval": 120
     },
-    "AWS_S3_BUCK": {
+    "aws_s3_bucket": {
       "query": "SELECT * FROM aws_s3_bucket;",
       "interval": 120
     },
-    "AZURE_COMPUTE_VM": {
+    "azure_compute_vm": {
       "query": "SELECT * FROM azure_compute_vm;",
       "interval": 120
     }
@@ -115,32 +143,15 @@ And identify list of scheduled queries and their intervals and place them in `os
 }
 ```
 
+```sh
+docker run --rm -d --name cloudquery \
+  -v <absolute path to host config directory>:/opt/cloudquery/etc/config \
+  uptycs/cloudquery:latest
+```
 
-Once all all the required files under config, run the following commands.
-
-`mkdir ~/query-results` on your host
-
-`sudo docker run -d --rm -v ~/config:/cloudquery/extension/config -v ~/query-results:/var/log/osquery --name cloudquery uptycsdev/cloudconnector:t8 osqueryd`
-
-Now query results can be seen in ~/query-results
+---
 
 ### Supported tables
-
-#### AWS
-
-- [EC2](extension/aws/ec2/tables.md)
-- [Storage](extension/aws/s3/tables.md)
-- [IAM](extension/aws/iam/tables.md)
-
-#### GCP
-
-- [Compute](extension/gcp/compute/tables.md)
-- [Storage](extension/gcp/storage/tables.md)
-
-#### Azure
-
-- [Compute](extension/azure/compute/tables.md)
-
-### Re-configuring a table
-
-TODO
+- [AWS](extension/aws/tables.md)
+- [GCP](extension/gcp/tables.md)
+- [Azure](extension/azure/tables.md)

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -32,7 +41,7 @@ func TestGcpComputeNetworkGenerate(t *testing.T) {
 			Name: "Test2",
 		},
 	}
-	mockSvc.AddNetworks(nwkList)
+	mockSvc.addNetworks(nwkList)
 
 	result, err := myGcpTest.GcpComputeNetworksGenerate(ctx, qCtx)
 	assert.Nil(t, err)
@@ -44,5 +53,5 @@ func TestGcpComputeNetworkGenerate(t *testing.T) {
 	expectedSubNetworksVal := "[\"" + strings.Join(nwkList[0].Subnetworks, "\",\"") + "\"]"
 	assert.Equal(t, expectedSubNetworksVal, result[0]["subnetworks"])
 
-	mockSvc.ClearNetworks()
+	mockSvc.clearNetworks()
 }

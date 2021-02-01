@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package dns
 
 import (
@@ -15,11 +24,12 @@ import (
 	gcpdns "google.golang.org/api/dns/v1beta2"
 )
 
-type myGcpDnsManagedZonesItemsContainer struct {
+type myGcpDNSManagedZonesItemsContainer struct {
 	Items []*gcpdns.ManagedZone `json:"items"`
 }
 
-func GcpDnsManagedZonesColumns() []table.ColumnDefinition {
+// GcpDNSManagedZonesColumns returns the list of columns for gcp_dns_managed_zone
+func GcpDNSManagedZonesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("creation_time"),
@@ -69,7 +79,8 @@ func GcpDnsManagedZonesColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpDnsManagedZonesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// GcpDNSManagedZonesGenerate returns the rows in the table for all configured accounts
+func GcpDNSManagedZonesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -77,13 +88,13 @@ func GcpDnsManagedZonesGenerate(osqCtx context.Context, queryContext table.Query
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpDnsManagedZones(ctx, nil)
+		results, err := processAccountGcpDNSManagedZones(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpDnsManagedZones(ctx, &account)
+			results, err := processAccountGcpDNSManagedZones(ctx, &account)
 			if err != nil {
 				continue
 			}
@@ -93,12 +104,12 @@ func GcpDnsManagedZonesGenerate(osqCtx context.Context, queryContext table.Query
 	return resultMap, nil
 }
 
-func getGcpDnsManagedZonesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
-	var projectID = ""
+func getGcpDNSManagedZonesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
+	var projectID string
 	var service *gcpdns.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpdns.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -115,12 +126,12 @@ func getGcpDnsManagedZonesNewServiceForAccount(ctx context.Context, account *uti
 	return service, projectID
 }
 
-func processAccountGcpDnsManagedZones(ctx context.Context,
+func processAccountGcpDNSManagedZones(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpDnsManagedZonesNewServiceForAccount(ctx, account)
+	service, projectID := getGcpDNSManagedZonesNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize gcpdns.Service")
 	}
@@ -133,7 +144,7 @@ func processAccountGcpDnsManagedZones(ctx context.Context,
 		}).Debug("list call is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpDnsManagedZonesItemsContainer{Items: make([]*gcpdns.ManagedZone, 0)}
+	itemsContainer := myGcpDNSManagedZonesItemsContainer{Items: make([]*gcpdns.ManagedZone, 0)}
 	if err := listCall.Pages(ctx, func(page *gcpdns.ManagedZonesListResponse) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.ManagedZones...)

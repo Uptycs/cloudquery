@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -30,7 +39,7 @@ func TestGcpComputeInstanceGenerate(t *testing.T) {
 			CanIpForward: false,
 		},
 	}
-	mockSvc.AddInstances(instList)
+	mockSvc.addInstances(instList)
 
 	result, err := myGcpTest.GcpComputeInstancesGenerate(ctx, qCtx)
 	assert.Nil(t, err)
@@ -41,5 +50,5 @@ func TestGcpComputeInstanceGenerate(t *testing.T) {
 	assert.Equal(t, strconv.FormatBool(instList[0].CanIpForward), result[0]["can_ip_forward"])
 	//assert.Equal(t, strconv.FormatBool(instList[1].CanIpForward), result[1]["can_ip_forward"])
 
-	mockSvc.ClearInstances()
+	mockSvc.clearInstances()
 }

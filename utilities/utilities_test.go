@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package utilities
 
 import (
@@ -171,5 +180,28 @@ func TestReadTableConfig_missingAttrProperties(t *testing.T) {
 	for _, testJSON := range tableConfigJSONBadList {
 		readErr := ReadTableConfig([]byte(testJSON))
 		assert.NotNil(t, readErr)
+	}
+}
+
+type myTest struct {
+	In       interface{}
+	Expected string
+}
+
+func TestGetStringValue(t *testing.T) {
+	list := []myTest{
+		{12, "12"},
+		{1000002, "1.000002e+06"},
+		{10.00002, "10.00002"},
+		{"astring", "astring"},
+		{true, "true"},
+		{0.1, "0.1"},
+		{-10.1, "-10.1"},
+		{+10.1, "10.1"},
+		{"\"withquotes\"", "withquotes"},
+	}
+	for _, entry := range list {
+		strVal := getStringValue(entry.In)
+		assert.Equal(t, entry.Expected, strVal)
 	}
 }

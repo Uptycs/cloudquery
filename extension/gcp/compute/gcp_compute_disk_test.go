@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package compute
 
 import (
@@ -27,7 +36,7 @@ func TestGcpComputeDiskGenerate(t *testing.T) {
 			Description: "Test2",
 		},
 	}
-	mockSvc.AddDisks(diskList)
+	mockSvc.addDisks(diskList)
 
 	result, err := myGcpTest.GcpComputeDisksGenerate(ctx, qCtx)
 	assert.Nil(t, err)
@@ -36,5 +45,5 @@ func TestGcpComputeDiskGenerate(t *testing.T) {
 	assert.Equal(t, diskList[0].Name, result[0]["name"])
 	assert.Equal(t, strconv.FormatInt(diskList[0].SizeGb, 10), result[0]["size_gb"])
 
-	mockSvc.ClearDisks()
+	mockSvc.clearDisks()
 }

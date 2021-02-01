@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package ec2
 
 import (
@@ -13,6 +22,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// DescribeImagesColumns returns the list of columns in the table
 func DescribeImagesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -64,6 +74,7 @@ func DescribeImagesColumns() []table.ColumnDefinition {
 	}
 }
 
+// DescribeImagesGenerate returns the rows in the table for all configured accounts
 func DescribeImagesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
@@ -134,7 +145,7 @@ func processDescribeImages(tableConfig *utilities.TableConfig, accountId string,
 func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC2, region *ec2.Region, filters map[*string]bool) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	params := &ec2.DescribeImagesInput{}
-	for key, _ := range filters {
+	for key := range filters {
 		params.ImageIds = append(params.ImageIds, key)
 		if len(params.ImageIds) >= 50 {
 			result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
@@ -163,7 +174,7 @@ func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *ut
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

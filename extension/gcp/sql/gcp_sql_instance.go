@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package sql
 
 import (
@@ -15,11 +24,12 @@ import (
 	gcpsql "google.golang.org/api/sqladmin/v1beta4"
 )
 
-type myGcpSqlInstancesItemsContainer struct {
+type myGcpSQLInstancesItemsContainer struct {
 	Items []*gcpsql.DatabaseInstance `json:"items"`
 }
 
-func GcpSqlInstancesColumns() []table.ColumnDefinition {
+// GcpSQLInstancesColumns returns the list of columns for gcp_sql_instance
+func GcpSQLInstancesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("backend_type"),
@@ -161,7 +171,8 @@ func GcpSqlInstancesColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpSqlInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// GcpSQLInstancesGenerate returns the rows in the table for all configured accounts
+func GcpSQLInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -169,13 +180,13 @@ func GcpSqlInstancesGenerate(osqCtx context.Context, queryContext table.QueryCon
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpSqlInstances(ctx, nil)
+		results, err := processAccountGcpSQLInstances(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpSqlInstances(ctx, &account)
+			results, err := processAccountGcpSQLInstances(ctx, &account)
 			if err != nil {
 				continue
 			}
@@ -185,12 +196,12 @@ func GcpSqlInstancesGenerate(osqCtx context.Context, queryContext table.QueryCon
 	return resultMap, nil
 }
 
-func getGcpSqlInstancesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
-	var projectID = ""
+func getGcpSQLInstancesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpsql.Service, string) {
+	var projectID string
 	var service *gcpsql.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpsql.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -207,12 +218,12 @@ func getGcpSqlInstancesNewServiceForAccount(ctx context.Context, account *utilit
 	return service, projectID
 }
 
-func processAccountGcpSqlInstances(ctx context.Context,
+func processAccountGcpSQLInstances(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpSqlInstancesNewServiceForAccount(ctx, account)
+	service, projectID := getGcpSQLInstancesNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize gcpsql.Service")
 	}
@@ -225,7 +236,7 @@ func processAccountGcpSqlInstances(ctx context.Context,
 		}).Debug("list call is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpSqlInstancesItemsContainer{Items: make([]*gcpsql.DatabaseInstance, 0)}
+	itemsContainer := myGcpSQLInstancesItemsContainer{Items: make([]*gcpsql.DatabaseInstance, 0)}
 	if err := listCall.Pages(ctx, func(page *gcpsql.InstancesListResponse) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Items...)

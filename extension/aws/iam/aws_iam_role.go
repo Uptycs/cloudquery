@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package iam
 
 import (
@@ -14,6 +23,7 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
+// ListRolesColumns returns the list of columns in the table
 func ListRolesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
@@ -76,6 +86,7 @@ func ListRolesColumns() []table.ColumnDefinition {
 	}
 }
 
+// ListRolesGenerate returns the rows in the table for all configured accounts
 func ListRolesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
@@ -112,7 +123,7 @@ func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utiliti
 		return resultMap, err
 	}
 
-	accountId := utilities.AwsAccountId
+	accountId := utilities.AwsAccountID
 	if account != nil {
 		accountId = account.ID
 	}

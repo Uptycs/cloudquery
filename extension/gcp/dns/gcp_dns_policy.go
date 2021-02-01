@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package dns
 
 import (
@@ -15,11 +24,12 @@ import (
 	gcpdns "google.golang.org/api/dns/v1beta2"
 )
 
-type myGcpDnsPoliciesItemsContainer struct {
+type myGcpDNSPoliciesItemsContainer struct {
 	Items []*gcpdns.Policy `json:"items"`
 }
 
-func GcpDnsPoliciesColumns() []table.ColumnDefinition {
+// GcpDNSPoliciesColumns returns the list of columns for gcp_dns_policy
+func GcpDNSPoliciesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
 		table.TextColumn("alternative_name_server_config"),
@@ -41,7 +51,8 @@ func GcpDnsPoliciesColumns() []table.ColumnDefinition {
 	}
 }
 
-func GcpDnsPoliciesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// GcpDNSPoliciesGenerate returns the rows in the table for all configured accounts
+func GcpDNSPoliciesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
@@ -49,13 +60,13 @@ func GcpDnsPoliciesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpDnsPolicies(ctx, nil)
+		results, err := processAccountGcpDNSPolicies(ctx, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpDnsPolicies(ctx, &account)
+			results, err := processAccountGcpDNSPolicies(ctx, &account)
 			if err != nil {
 				continue
 			}
@@ -65,12 +76,12 @@ func GcpDnsPoliciesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func getGcpDnsPoliciesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
-	var projectID = ""
+func getGcpDNSPoliciesNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpdns.Service, string) {
+	var projectID string
 	var service *gcpdns.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpdns.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -87,12 +98,12 @@ func getGcpDnsPoliciesNewServiceForAccount(ctx context.Context, account *utiliti
 	return service, projectID
 }
 
-func processAccountGcpDnsPolicies(ctx context.Context,
+func processAccountGcpDNSPolicies(ctx context.Context,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
 
-	service, projectID := getGcpDnsPoliciesNewServiceForAccount(ctx, account)
+	service, projectID := getGcpDNSPoliciesNewServiceForAccount(ctx, account)
 	if service == nil {
 		return resultMap, fmt.Errorf("failed to initialize gcpdns.Service")
 	}
@@ -105,7 +116,7 @@ func processAccountGcpDnsPolicies(ctx context.Context,
 		}).Debug("list call is nil")
 		return resultMap, nil
 	}
-	itemsContainer := myGcpDnsPoliciesItemsContainer{Items: make([]*gcpdns.Policy, 0)}
+	itemsContainer := myGcpDNSPoliciesItemsContainer{Items: make([]*gcpdns.Policy, 0)}
 	if err := listCall.Pages(ctx, func(page *gcpdns.PoliciesListResponse) error {
 
 		itemsContainer.Items = append(itemsContainer.Items, page.Policies...)

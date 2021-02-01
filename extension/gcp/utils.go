@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package gcp
 
 import (
@@ -9,8 +18,8 @@ import (
 func RowToMap(row map[string]interface{}, projectID string, zone string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 
-	if len(tableConfig.Gcp.ProjectIdAttribute) != 0 {
-		result[tableConfig.Gcp.ProjectIdAttribute] = projectID
+	if len(tableConfig.Gcp.ProjectIDAttribute) != 0 {
+		result[tableConfig.Gcp.ProjectIDAttribute] = projectID
 	}
 	if len(tableConfig.Gcp.ZoneAttribute) != 0 {
 		result[tableConfig.Gcp.ZoneAttribute] = zone

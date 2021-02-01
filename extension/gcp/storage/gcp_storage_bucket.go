@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package storage
 
 import (
@@ -14,10 +23,11 @@ import (
 	storage "cloud.google.com/go/storage"
 )
 
-type ItemsContainer struct {
+type myGcpStorageBucketItemsContainer struct {
 	Items []*storage.BucketAttrs `json:"items"`
 }
 
+// GcpStorageBucketColumns returns the list of columns for gcp_storage_bucket
 func (handler *GcpStorageHandler) GcpStorageBucketColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -185,6 +195,7 @@ func (handler *GcpStorageHandler) GcpStorageBucketColumns() []table.ColumnDefini
 	}
 }
 
+// GcpStorageBucketGenerate returns the rows in the table for all configured accounts
 func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -210,11 +221,11 @@ func (handler *GcpStorageHandler) GcpStorageBucketGenerate(osqCtx context.Contex
 }
 
 func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*storage.Client, string) {
-	var projectID = ""
+	var projectID string
 	var service *storage.Client
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
@@ -258,7 +269,7 @@ func (handler *GcpStorageHandler) processAccountGcpStorageBucket(ctx context.Con
 	}
 	p := handler.svcInterface.BucketsNewPager(listCall, 10, "")
 	for {
-		var container = ItemsContainer{}
+		var container = myGcpStorageBucketItemsContainer{}
 		pageToken, err := p.NextPage(&container.Items)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
