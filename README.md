@@ -112,7 +112,7 @@ one can add support for new tables easily, and configurable so that one can chan
 docker run --rm -it --name cloudquery \
   -v <absolute path to host config directory>:/opt/cloudquery/etc/config \
   uptycs/cloudquery:latest \
-  osqueryi --extension /usr/bin/cloudquery.ext
+  osqueryi --extension /usr/local/bin/cloudquery.ext
 ```
 
 ### Run osqueryd from cloudquery container
