@@ -1,9 +1,19 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package container
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	log "github.com/sirupsen/logrus"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
@@ -19,6 +29,7 @@ type myGcpContainerClustersItemsContainer struct {
 	Items []*gcpcontainer.Cluster `json:"items"`
 }
 
+// GcpContainerClustersColumns returns the list of columns for gcp_container_cluster
 func GcpContainerClustersColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -328,6 +339,7 @@ func GcpContainerClustersColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpContainerClustersGenerate returns the rows in the table for all configured accounts
 func GcpContainerClustersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -353,11 +365,11 @@ func GcpContainerClustersGenerate(osqCtx context.Context, queryContext table.Que
 }
 
 func getGcpContainerClustersNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpcontainer.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpcontainer.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpcontainer.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

@@ -219,7 +219,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// GCP Container
 	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpcontainer.GcpContainerClustersColumns(), gcpcontainer.GcpContainerClustersGenerate))
 	// GCP Cloud Function
-	server.RegisterPlugin(table.NewPlugin("gcp_container_cluster", gcpfunction.GcpCloudFunctionsColumns(), gcpfunction.GcpCloudFunctionsGenerate))
+	server.RegisterPlugin(table.NewPlugin("gcp_cloud_function", gcpfunction.GcpCloudFunctionsColumns(), gcpfunction.GcpCloudFunctionsGenerate))
 	// GCP Cloud Run
 	server.RegisterPlugin(table.NewPlugin("gcp_cloud_run_service", gcprun.GcpCloudRunServicesColumns(), gcprun.GcpCloudRunServicesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_cloud_run_revision", gcprun.GcpCloudRunRevisionsColumns(), gcprun.GcpCloudRunRevisionsGenerate))

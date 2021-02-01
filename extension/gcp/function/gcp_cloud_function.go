@@ -1,9 +1,19 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package function
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	log "github.com/sirupsen/logrus"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
@@ -19,6 +29,7 @@ type myGcpCloudFunctionsItemsContainer struct {
 	Items []*gcpfunction.CloudFunction `json:"items"`
 }
 
+// GcpCloudFunctionsColumns returns the list of columns for gcp_cloud_function
 func GcpCloudFunctionsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -58,6 +69,7 @@ func GcpCloudFunctionsColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpCloudFunctionsGenerate returns the rows in the table for all configured accounts
 func GcpCloudFunctionsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -83,11 +95,11 @@ func GcpCloudFunctionsGenerate(osqCtx context.Context, queryContext table.QueryC
 }
 
 func getGcpCloudFunctionsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcpfunction.Service, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcpfunction.Service
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcpfunction.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID

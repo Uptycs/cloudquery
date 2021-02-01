@@ -1,9 +1,19 @@
+/**
+ * Copyright (c) 2020-present, The cloudquery authors
+ *
+ * This source code is licensed as defined by the LICENSE file found in the
+ * root directory of this source tree.
+ *
+ * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
+ */
+
 package run
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	log "github.com/sirupsen/logrus"
 
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
@@ -19,6 +29,7 @@ type myGcpCloudRunRevisionsItemsContainer struct {
 	Items []*gcprun.Revision `json:"items"`
 }
 
+// GcpCloudRunRevisionsColumns returns the list of columns for gcp_cloud_run_revision
 func GcpCloudRunRevisionsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("project_id"),
@@ -171,6 +182,7 @@ func GcpCloudRunRevisionsColumns() []table.ColumnDefinition {
 	}
 }
 
+// GcpCloudRunRevisionsGenerate returns the rows in the table for all configured accounts
 func GcpCloudRunRevisionsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
@@ -196,11 +208,11 @@ func GcpCloudRunRevisionsGenerate(osqCtx context.Context, queryContext table.Que
 }
 
 func getGcpCloudRunRevisionsNewServiceForAccount(ctx context.Context, account *utilities.ExtensionConfigurationGcpAccount) (*gcprun.APIService, string) {
-	var projectID = ""
+	var projectID string
 	var service *gcprun.APIService
 	var err error
 	if account != nil {
-		projectID = account.ProjectId
+		projectID = account.ProjectID
 		service, err = gcprun.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
 	} else {
 		projectID = utilities.DefaultGcpProjectID
