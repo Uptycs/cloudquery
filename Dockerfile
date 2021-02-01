@@ -17,7 +17,7 @@ LABEL \
   url="https://github.com/Uptycs/cloudquery"
 
 ADD https://pkg.osquery.io/deb/osquery_${OSQUERY_VERSION}-1.linux_amd64.deb /tmp/osquery.deb
-COPY cloudquery /usr/bin/cloudquery.ext
+COPY cloudquery /usr/local/bin/cloudquery.ext
 
 RUN set -ex; \
     DEBIAN_FRONTEND=noninteractive apt-get update -y && \
@@ -29,9 +29,9 @@ RUN set -ex; \
     groupadd -g 1000 cloudquery && \
     useradd -m -g cloudquery -u 1000 -d /opt/cloudquery -s /bin/bash cloudquery && \
     mkdir /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var && \
-    echo "/usr/bin/cloudquery.ext" > /opt/cloudquery/etc/extensions.load && \
-    chmod 700 /usr/bin/cloudquery.ext && \
-    chown cloudquery:cloudquery /usr/bin/osquery? /usr/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var
+    echo "/usr/local/bin/cloudquery.ext" > /opt/cloudquery/etc/extensions.load && \
+    chmod 700 /usr/local/bin/cloudquery.ext && \
+    chown cloudquery:cloudquery /usr/bin/osquery? /usr/local/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var
 
 USER cloudquery
 
