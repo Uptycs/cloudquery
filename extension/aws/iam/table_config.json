@@ -1,4 +1,73 @@
 {
+  "aws_iam_account_password_policy": {
+    "aws": {
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "PasswordPolicy_AllowUsersToChangePassword",
+        "targetName": "allow_users_to_change_password",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_ExpirePasswords",
+        "targetName": "expire_passwords",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_HardExpiry",
+        "targetName": "hard_expiry",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_MaxPasswordAge",
+        "targetName": "max_password_age",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_MinimumPasswordLength",
+        "targetName": "minimum_password_length",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_PasswordReusePrevention",
+        "targetName": "password_reuse_prevention",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_RequireLowercaseCharacters",
+        "targetName": "require_lowercase_characters",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_RequireNumbers",
+        "targetName": "require_numbers",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_RequireSymbols",
+        "targetName": "require_symbols",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "PasswordPolicy_RequireUppercaseCharacters",
+        "targetName": "require_uppercase_characters",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
   "aws_iam_group": {
     "aws": {
       "accountIdAttribute": "account_id"

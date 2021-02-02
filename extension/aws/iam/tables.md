@@ -1,3 +1,4 @@
+- aws_iam_account_password_policy
 - aws_iam_group
 - aws_iam_policy
 - aws_iam_role
