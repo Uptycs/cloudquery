@@ -37,6 +37,9 @@ func GetAwsConfig(account *utilities.ExtensionConfigurationAwsAccount, regionCod
 	} else if len(account.RoleArn) != 0 {
 		utilities.GetLogger().Debug("creating session using roleArn")
 		return getAwsConfigForRole(account, regionCode)
+	} else {
+		utilities.GetLogger().Debug("creating default session")
+		return getDefaultAwsConfig(regionCode)
 	}
 	return nil, nil
 }
