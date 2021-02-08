@@ -19,7 +19,7 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/iam"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
@@ -72,7 +72,7 @@ func GetAccountPasswordPolicyGenerate(osqCtx context.Context, queryContext table
 
 func processGlobalGetAccountPasswordPolicy(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, "aws-global")
+	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
 		return resultMap, err
 	}
@@ -88,10 +88,10 @@ func processGlobalGetAccountPasswordPolicy(tableConfig *utilities.TableConfig, a
 		"region":    "aws-global",
 	}).Debug("processing region")
 
-	svc := iam.New(sess)
+	svc := iam.NewFromConfig(*sess)
 	params := &iam.GetAccountPasswordPolicyInput{}
 
-	result, err := svc.GetAccountPasswordPolicy(params)
+	result, err := svc.GetAccountPasswordPolicy(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_account_password_policy",

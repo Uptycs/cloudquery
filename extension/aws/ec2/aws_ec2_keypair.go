@@ -19,7 +19,8 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
@@ -68,9 +69,9 @@ func DescribeKeyPairsGenerate(osqCtx context.Context, queryContext table.QueryCo
 	return resultMap, nil
 }
 
-func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
+func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, *region.RegionName)
+	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
 		return resultMap, err
 	}
@@ -86,10 +87,10 @@ func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := ec2.New(sess)
+	svc := ec2.NewFromConfig(*sess)
 	params := &ec2.DescribeKeyPairsInput{}
 
-	result, err := svc.DescribeKeyPairs(params)
+	result, err := svc.DescribeKeyPairs(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_keypair",
@@ -121,11 +122,11 @@ func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *
 
 func processAccountDescribeKeyPairs(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
+	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(awsSession)
+	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
 	if err != nil {
 		return resultMap, err
 	}

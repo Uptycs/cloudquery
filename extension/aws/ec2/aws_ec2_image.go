@@ -18,7 +18,8 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
@@ -112,9 +113,9 @@ func updateFilters(page *ec2.DescribeInstancesOutput, filters map[*string]bool) 
 	}
 }
 
-func processDescribeImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC2, region *ec2.Region, params *ec2.DescribeImagesInput) ([]map[string]string, error) {
+func processDescribeImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, params *ec2.DescribeImagesInput) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	output, err := svc.DescribeImages(params)
+	output, err := svc.DescribeImages(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_image",
@@ -142,11 +143,11 @@ func processDescribeImages(tableConfig *utilities.TableConfig, accountId string,
 	return resultMap, nil
 }
 
-func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC2, region *ec2.Region, filters map[*string]bool) ([]map[string]string, error) {
+func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, filters map[*string]bool) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	params := &ec2.DescribeImagesInput{}
 	for key := range filters {
-		params.ImageIds = append(params.ImageIds, key)
+		params.ImageIds = append(params.ImageIds, *key)
 		if len(params.ImageIds) >= 50 {
 			result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
 			if err != nil {
@@ -167,9 +168,9 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.EC
 	return resultMap, nil
 }
 
-func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
+func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, *region.RegionName)
+	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
 		return resultMap, err
 	}
@@ -178,35 +179,41 @@ func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *ut
 	if account != nil {
 		accountId = account.ID
 	}
-	svc := ec2.New(sess)
+	svc := ec2.NewFromConfig(*sess)
 	params := &ec2.DescribeInstancesInput{}
 
 	filters := make(map[*string]bool)
-	err = svc.DescribeInstancesPages(params,
-		func(page *ec2.DescribeInstancesOutput, lastPage bool) bool {
-			updateFilters(page, filters)
-			return lastPage
-		})
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_image",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"errString": err.Error(),
-		}).Error("failed to get image list")
-		return resultMap, err
+	paginator := ec2.NewDescribeInstancesPaginator(svc, params)
+
+	for {
+		page, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_ec2_image",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "DescribeInstances",
+				"errString": err.Error(),
+			}).Error("failed to process region")
+			return resultMap, err
+		}
+		updateFilters(page, filters)
+		if !paginator.HasMorePages() {
+			break
+		}
 	}
-	resultMap, err = getImages(tableConfig, accountId, svc, region, filters)
+
+	resultMap, err = getImages(tableConfig, accountId, svc, &region, filters)
 	return resultMap, err
 }
 
 func processAccountDescribeImages(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
+	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(awsSession)
+	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
 	if err != nil {
 		return resultMap, err
 	}

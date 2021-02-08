@@ -10,46 +10,27 @@
 package aws
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/aws/aws-sdk-go/aws/credentials"
-
 	"github.com/Uptycs/cloudquery/utilities"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	log "github.com/sirupsen/logrus"
 )
 
 // GetAwsSession creates an AWS session for given account.
 // If account is nil, it creates a default session
-func GetAwsSession(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*session.Session, error) {
+func GetAwsConfig(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*aws.Config, error) {
 	if account == nil {
 		utilities.GetLogger().Debug("creating default session")
-		return getDefaultAwsSession(regionCode)
+		return getDefaultAwsConfig(regionCode)
 	}
 
 	if len(account.ProfileName) != 0 {
-		utilities.GetLogger().WithFields(log.Fields{
-			"account": account.ID,
-			"region":  regionCode,
-			"profile": account.ProfileName,
-		}).Debug("creating session")
-		var enable bool = true
-		sess, err := session.NewSession(&aws.Config{
-			EnableEndpointDiscovery: &enable,
-			Region:                  aws.String(regionCode),
-			Credentials:             credentials.NewSharedCredentials(account.CredentialFile, account.ProfileName),
-		})
-		if err != nil {
-			utilities.GetLogger().WithFields(log.Fields{
-				"account":   account.ID,
-				"profile":   account.ProfileName,
-				"errString": err.Error(),
-			}).Error("failed to create session")
-			return nil, err
-		}
-		return sess, nil
+		return getAwsConfigForProfile(account, regionCode)
 	} else if len(account.RoleArn) != 0 {
 		// TODO: Get token from STS
 		utilities.GetLogger().WithFields(log.Fields{
@@ -62,25 +43,49 @@ func GetAwsSession(account *utilities.ExtensionConfigurationAwsAccount, regionCo
 	return nil, nil
 }
 
-func getDefaultAwsSession(regionCode string) (*session.Session, error) {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(regionCode),
-	})
+func getAwsConfigForProfile(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*aws.Config, error) {
+	utilities.GetLogger().WithFields(log.Fields{
+		"account": account.ID,
+		"region":  regionCode,
+		"profile": account.ProfileName,
+	}).Debug("creating config")
+	credentialFiles := make([]string, 0)
+	credentialFiles = append(credentialFiles, account.CredentialFile)
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion(regionCode),
+		config.WithSharedCredentialsFiles(credentialFiles),
+		config.WithSharedConfigProfile(account.ProfileName),
+	)
+	if err != nil {
+		utilities.GetLogger().WithFields(log.Fields{
+			"account":   account.ID,
+			"profile":   account.ProfileName,
+			"errString": err.Error(),
+		}).Error("failed to create config")
+		return nil, err
+	}
+	return &cfg, nil
+}
+
+func getDefaultAwsConfig(regionCode string) (*aws.Config, error) {
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion(regionCode),
+	)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"account":   "default",
 			"region":    regionCode,
 			"errString": err.Error(),
-		}).Error("failed to create session")
+		}).Error("failed to create config")
 		return nil, err
 	}
-	return sess, nil
+	return &cfg, nil
 }
 
-// FetchRegions returns the list of regions for given AWS session
-func FetchRegions(awsSession *session.Session) ([]*ec2.Region, error) {
-	svc := ec2.New(awsSession)
-	awsRegions, err := svc.DescribeRegions(&ec2.DescribeRegionsInput{})
+// FetchRegions returns the list of regions for given AWS config
+func FetchRegions(ctx context.Context, awsConfig *aws.Config) ([]types.Region, error) {
+	svc := ec2.NewFromConfig(*awsConfig)
+	awsRegions, err := svc.DescribeRegions(ctx, &ec2.DescribeRegionsInput{})
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"errString": err.Error(),

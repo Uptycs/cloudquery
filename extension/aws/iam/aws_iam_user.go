@@ -19,7 +19,7 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/iam"
+	"github.com/aws/aws-sdk-go-v2/service/iam"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
@@ -112,7 +112,7 @@ func ListUsersGenerate(osqCtx context.Context, queryContext table.QueryContext) 
 
 func processGlobalListUsers(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, "aws-global")
+	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
 		return resultMap, err
 	}
@@ -128,37 +128,42 @@ func processGlobalListUsers(tableConfig *utilities.TableConfig, account *utiliti
 		"region":    "aws-global",
 	}).Debug("processing region")
 
-	svc := iam.New(sess)
+	svc := iam.NewFromConfig(*sess)
 	params := &iam.ListUsersInput{}
 
-	err = svc.ListUsersPages(params,
-		func(page *iam.ListUsersOutput, lastPage bool) bool {
-			byteArr, err := json.Marshal(page)
-			if err != nil {
-				utilities.GetLogger().WithFields(log.Fields{
-					"tableName": "aws_iam_user",
-					"account":   accountId,
-					"region":    "aws-global",
-					"errString": err.Error(),
-				}).Error("failed to marshal response")
-				return lastPage
-			}
-			table := utilities.NewTable(byteArr, tableConfig)
-			for _, row := range table.Rows {
-				result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
-				resultMap = append(resultMap, result)
-			}
-			return lastPage
-		})
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_iam_user",
-			"account":   accountId,
-			"region":    "aws-global",
-			"task":      "ListUsers",
-			"errString": err.Error(),
-		}).Error("failed to process region")
-		return resultMap, err
+	paginator := iam.NewListUsersPaginator(svc, params)
+
+	for {
+		page, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_iam_user",
+				"account":   accountId,
+				"region":    "aws-global",
+				"task":      "ListUsers",
+				"errString": err.Error(),
+			}).Error("failed to process region")
+			return resultMap, err
+		}
+		byteArr, err := json.Marshal(page)
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_iam_user",
+				"account":   accountId,
+				"region":    "aws-global",
+				"task":      "ListUsers",
+				"errString": err.Error(),
+			}).Error("failed to marshal response")
+			return nil, err
+		}
+		table := utilities.NewTable(byteArr, tableConfig)
+		for _, row := range table.Rows {
+			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
+			resultMap = append(resultMap, result)
+		}
+		if !paginator.HasMorePages() {
+			break
+		}
 	}
 	return resultMap, nil
 }

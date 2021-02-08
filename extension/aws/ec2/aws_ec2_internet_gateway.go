@@ -19,7 +19,8 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
@@ -70,9 +71,9 @@ func DescribeInternetGatewaysGenerate(osqCtx context.Context, queryContext table
 	return resultMap, nil
 }
 
-func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region *ec2.Region) ([]map[string]string, error) {
+func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, *region.RegionName)
+	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
 		return resultMap, err
 	}
@@ -88,48 +89,53 @@ func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, a
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := ec2.New(sess)
+	svc := ec2.NewFromConfig(*sess)
 	params := &ec2.DescribeInternetGatewaysInput{}
 
-	err = svc.DescribeInternetGatewaysPages(params,
-		func(page *ec2.DescribeInternetGatewaysOutput, lastPage bool) bool {
-			byteArr, err := json.Marshal(page)
-			if err != nil {
-				utilities.GetLogger().WithFields(log.Fields{
-					"tableName": "aws_ec2_internet_gateway",
-					"account":   accountId,
-					"region":    *region.RegionName,
-					"errString": err.Error(),
-				}).Error("failed to marshal response")
-				return lastPage
-			}
-			table := utilities.NewTable(byteArr, tableConfig)
-			for _, row := range table.Rows {
-				result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
-				resultMap = append(resultMap, result)
-			}
-			return lastPage
-		})
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_internet_gateway",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"task":      "DescribeInternetGateways",
-			"errString": err.Error(),
-		}).Error("failed to process region")
-		return resultMap, err
+	paginator := ec2.NewDescribeInternetGatewaysPaginator(svc, params)
+
+	for {
+		page, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_ec2_internet_gateway",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "DescribeInternetGateways",
+				"errString": err.Error(),
+			}).Error("failed to process region")
+			return resultMap, err
+		}
+		byteArr, err := json.Marshal(page)
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_ec2_internet_gateway",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "DescribeInternetGateways",
+				"errString": err.Error(),
+			}).Error("failed to marshal response")
+			return nil, err
+		}
+		table := utilities.NewTable(byteArr, tableConfig)
+		for _, row := range table.Rows {
+			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
+			resultMap = append(resultMap, result)
+		}
+		if !paginator.HasMorePages() {
+			break
+		}
 	}
 	return resultMap, nil
 }
 
 func processAccountDescribeInternetGateways(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	awsSession, err := extaws.GetAwsSession(account, "us-east-1")
+	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(awsSession)
+	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
 	if err != nil {
 		return resultMap, err
 	}

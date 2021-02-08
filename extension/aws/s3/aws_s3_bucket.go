@@ -14,34 +14,34 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Uptycs/cloudquery/utilities"
-	"strings"
 
 	log "github.com/sirupsen/logrus"
 
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
 type s3BucketInfo struct {
 	Name                              string
 	CreationTime                      string
-	ServerSideEncryptionConfiguration *s3.ServerSideEncryptionConfiguration
-	MfaDelete                         *string
-	VersioningStatus                  *string
-	AclOwner                          *s3.Owner
-	AclGrants                         []*s3.Grant
+	ServerSideEncryptionConfiguration *types.ServerSideEncryptionConfiguration
+	MfaDelete                         string
+	VersioningStatus                  string
+	AclOwner                          *types.Owner
+	AclGrants                         []types.Grant
 	WebsiteEnabled                    bool
-	WebsiteRedirection                *s3.RedirectAllRequestsTo
-	PublicAccessBlockConfig           *s3.PublicAccessBlockConfiguration
-	PolicyStatus                      *s3.PolicyStatus
-	AccelerateConfigurationStatus     *string
+	WebsiteRedirection                *types.RedirectAllRequestsTo
+	PublicAccessBlockConfig           *types.PublicAccessBlockConfiguration
+	PolicyStatus                      *types.PolicyStatus
+	AccelerateConfigurationStatus     string
 	ObjectLockConfigurationEnabled    bool
 	LifecycleConfigurationEnabled     bool
 	NotificationEnabled               bool
 	CorsEnabled                       bool
 	Policy                            *string
-	Tags                              []*s3.Tag
+	Tags                              []types.Tag
 }
 
 type s3BucketInfoList struct {
@@ -110,9 +110,9 @@ func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext
 	return resultMap, nil
 }
 
-func getBucketLocation(svc *s3.S3, bucketName *string) (string, error) {
+func getBucketLocation(svc *s3.Client, bucketName *string) (string, error) {
 	bucketLocationInput := s3.GetBucketLocationInput{Bucket: bucketName}
-	getBucketLocationOutput, err := svc.GetBucketLocation(&bucketLocationInput)
+	getBucketLocationOutput, err := svc.GetBucketLocation(context.TODO(), &bucketLocationInput)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_s3_bucket",
@@ -121,17 +121,17 @@ func getBucketLocation(svc *s3.S3, bucketName *string) (string, error) {
 		}).Error("failed to get bucket location")
 		return "", err
 	}
-	if getBucketLocationOutput.LocationConstraint == nil || len(*getBucketLocationOutput.LocationConstraint) == 0 {
+	if len(getBucketLocationOutput.LocationConstraint) == 0 {
 		// Default is us-east-1
 		return "us-east-1", nil
-	} else if strings.EqualFold(*getBucketLocationOutput.LocationConstraint, "EU") {
+	} else if getBucketLocationOutput.LocationConstraint == types.BucketLocationConstraintEu {
 		return "us-west-1", nil
 	} else {
-		return *getBucketLocationOutput.LocationConstraint, nil
+		return string(getBucketLocationOutput.LocationConstraint), nil
 	}
 }
 
-func addBucketToRegionBucketList(svc *s3.S3, bucket *s3.Bucket) error {
+func addBucketToRegionBucketList(svc *s3.Client, bucket types.Bucket) error {
 	bucketRegion, err := getBucketLocation(svc, bucket.Name)
 	if err != nil {
 		return err
@@ -150,28 +150,28 @@ func addBucketToRegionBucketList(svc *s3.S3, bucket *s3.Bucket) error {
 	return nil
 }
 
-func (bucket *s3BucketInfo) getBucketEncryption(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketEncryption(svc *s3.Client) {
 	input := s3.GetBucketEncryptionInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketEncryption(&input)
+	output, err := svc.GetBucketEncryption(context.TODO(), &input)
 	if err != nil {
 		return
 	}
 	bucket.ServerSideEncryptionConfiguration = output.ServerSideEncryptionConfiguration
 }
 
-func (bucket *s3BucketInfo) getBucketVersioning(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketVersioning(svc *s3.Client) {
 	input := s3.GetBucketVersioningInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketVersioning(&input)
+	output, err := svc.GetBucketVersioning(context.TODO(), &input)
 	if err != nil {
 		return
 	}
-	bucket.MfaDelete = output.MFADelete
-	bucket.VersioningStatus = output.Status
+	bucket.MfaDelete = string(output.MFADelete)
+	bucket.VersioningStatus = string(output.Status)
 }
 
-func (bucket *s3BucketInfo) getBucketAcl(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketAcl(svc *s3.Client) {
 	input := s3.GetBucketAclInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketAcl(&input)
+	output, err := svc.GetBucketAcl(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -179,10 +179,10 @@ func (bucket *s3BucketInfo) getBucketAcl(svc *s3.S3) {
 	bucket.AclGrants = output.Grants
 }
 
-func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.Client) {
 	bucket.WebsiteEnabled = false
 	input := s3.GetBucketWebsiteInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketWebsite(&input)
+	output, err := svc.GetBucketWebsite(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -192,37 +192,37 @@ func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.S3) {
 	bucket.WebsiteRedirection = output.RedirectAllRequestsTo
 }
 
-func (bucket *s3BucketInfo) getBucketPublicAccessBlock(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketPublicAccessBlock(svc *s3.Client) {
 	input := s3.GetPublicAccessBlockInput{Bucket: &bucket.Name}
-	output, err := svc.GetPublicAccessBlock(&input)
+	output, err := svc.GetPublicAccessBlock(context.TODO(), &input)
 	if err != nil {
 		return
 	}
 	bucket.PublicAccessBlockConfig = output.PublicAccessBlockConfiguration
 }
 
-func (bucket *s3BucketInfo) getBucketPolicyStatus(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketPolicyStatus(svc *s3.Client) {
 	input := s3.GetBucketPolicyStatusInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketPolicyStatus(&input)
+	output, err := svc.GetBucketPolicyStatus(context.TODO(), &input)
 	if err != nil {
 		return
 	}
 	bucket.PolicyStatus = output.PolicyStatus
 }
 
-func (bucket *s3BucketInfo) getBucketAccelerateConfiguration(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketAccelerateConfiguration(svc *s3.Client) {
 	input := s3.GetBucketAccelerateConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketAccelerateConfiguration(&input)
+	output, err := svc.GetBucketAccelerateConfiguration(context.TODO(), &input)
 	if err != nil {
 		return
 	}
-	bucket.AccelerateConfigurationStatus = output.Status
+	bucket.AccelerateConfigurationStatus = string(output.Status)
 }
 
-func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.S3) {
+func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.Client) {
 	bucket.ObjectLockConfigurationEnabled = false
 	input := s3.GetObjectLockConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetObjectLockConfiguration(&input)
+	output, err := svc.GetObjectLockConfiguration(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -231,10 +231,10 @@ func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.S3) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.Client) {
 	bucket.LifecycleConfigurationEnabled = false
 	input := s3.GetBucketLifecycleConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketLifecycleConfiguration(&input)
+	output, err := svc.GetBucketLifecycleConfiguration(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -243,19 +243,19 @@ func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.S3) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketTags(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketTags(svc *s3.Client) {
 	input := s3.GetBucketTaggingInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketTagging(&input)
+	output, err := svc.GetBucketTagging(context.TODO(), &input)
 	if err != nil {
 		return
 	}
 	bucket.Tags = output.TagSet
 }
 
-func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.Client) {
 	bucket.NotificationEnabled = false
-	input := s3.GetBucketNotificationConfigurationRequest{Bucket: &bucket.Name}
-	output, err := svc.GetBucketNotificationConfiguration(&input)
+	input := s3.GetBucketNotificationConfigurationInput{Bucket: &bucket.Name}
+	output, err := svc.GetBucketNotificationConfiguration(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -264,10 +264,10 @@ func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.S3) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.Client) {
 	bucket.CorsEnabled = false
 	input := s3.GetBucketCorsInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketCors(&input)
+	output, err := svc.GetBucketCors(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -276,9 +276,9 @@ func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.S3) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketPolicy(svc *s3.S3) {
+func (bucket *s3BucketInfo) getBucketPolicy(svc *s3.Client) {
 	input := s3.GetBucketPolicyInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketPolicy(&input)
+	output, err := svc.GetBucketPolicy(context.TODO(), &input)
 	if err != nil {
 		return
 	}
@@ -287,7 +287,7 @@ func (bucket *s3BucketInfo) getBucketPolicy(svc *s3.S3) {
 
 func processBucket(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region string, bucket *s3BucketInfo) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, region)
+	sess, err := extaws.GetAwsConfig(account, region)
 	if err != nil {
 		return resultMap, err
 	}
@@ -295,7 +295,7 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 	if account != nil {
 		accountId = account.ID
 	}
-	svc := s3.New(sess)
+	svc := s3.NewFromConfig(*sess)
 	utilities.GetLogger().WithFields(log.Fields{
 		"tableName": "aws_s3_bucket",
 		"bucket":    bucket.Name,
@@ -334,12 +334,12 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 
 func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	sess, err := extaws.GetAwsSession(account, "us-west-1")
+	sess, err := extaws.GetAwsConfig(account, "us-west-1")
 	if err != nil {
 		return resultMap, err
 	}
 
-	svc := s3.New(sess)
+	svc := s3.NewFromConfig(*sess)
 	params := &s3.ListBucketsInput{}
 
 	accountId := utilities.AwsAccountID
@@ -348,7 +348,7 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	}
 
 	// Get list of buckets
-	output, err := svc.ListBuckets(params)
+	output, err := svc.ListBuckets(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_s3_bucket",
