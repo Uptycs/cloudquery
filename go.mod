@@ -11,9 +11,11 @@ require (
 	github.com/Azure/go-autorest/autorest/validation v0.3.1 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.1.0
 	github.com/aws/aws-sdk-go-v2/config v1.1.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.1.0
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.1.0
 	github.com/aws/aws-sdk-go-v2/service/iam v1.1.0
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.1.0
+	github.com/aws/aws-sdk-go-v2/service/sts v1.1.0
 	github.com/kolide/osquery-go v0.0.0-20200604192029-b019be7063ac
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.7.0

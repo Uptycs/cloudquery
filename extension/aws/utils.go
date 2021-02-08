@@ -11,13 +11,15 @@ package aws
 
 import (
 	"context"
-	"fmt"
+	"time"
 
 	"github.com/Uptycs/cloudquery/utilities"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials/stscreds"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	"github.com/aws/aws-sdk-go-v2/service/sts"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -29,16 +31,12 @@ func GetAwsConfig(account *utilities.ExtensionConfigurationAwsAccount, regionCod
 		return getDefaultAwsConfig(regionCode)
 	}
 
-	if len(account.ProfileName) != 0 {
+	if len(account.ProfileName) != 0 && len(account.RoleArn) == 0 {
+		utilities.GetLogger().Debug("creating session using profile")
 		return getAwsConfigForProfile(account, regionCode)
 	} else if len(account.RoleArn) != 0 {
-		// TODO: Get token from STS
-		utilities.GetLogger().WithFields(log.Fields{
-			"account":   account.ID,
-			"profile":   account.ProfileName,
-			"errString": "role arn is not yet supported",
-		}).Error("failed to create session")
-		return nil, fmt.Errorf("role arn is not yet supported")
+		utilities.GetLogger().Debug("creating session using roleArn")
+		return getAwsConfigForRole(account, regionCode)
 	}
 	return nil, nil
 }
@@ -64,6 +62,39 @@ func getAwsConfigForProfile(account *utilities.ExtensionConfigurationAwsAccount,
 		}).Error("failed to create config")
 		return nil, err
 	}
+	return &cfg, nil
+}
+
+func getAwsConfigForRole(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*aws.Config, error) {
+	utilities.GetLogger().WithFields(log.Fields{
+		"account": account.ID,
+		"region":  regionCode,
+		"profile": account.ProfileName,
+		"role":    account.RoleArn,
+	}).Debug("creating config")
+	credentialFiles := make([]string, 0)
+	credentialFiles = append(credentialFiles, account.CredentialFile)
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion(regionCode),
+		config.WithSharedCredentialsFiles(credentialFiles),
+		config.WithSharedConfigProfile(account.ProfileName),
+	)
+	if err != nil {
+		utilities.GetLogger().WithFields(log.Fields{
+			"account":   account.ID,
+			"role":      account.RoleArn,
+			"errString": err.Error(),
+		}).Error("failed to create config")
+		return nil, err
+	}
+	// Create the credentials from AssumeRoleProvider to assume the role
+	// referenced by the role ARN.
+	stsSvc := sts.NewFromConfig(cfg)
+	creds := stscreds.NewAssumeRoleProvider(stsSvc, account.RoleArn, func(options *stscreds.AssumeRoleOptions) {
+		options.Duration = time.Duration(60) * time.Minute
+		options.ExternalID = &account.ExternalID
+	})
+	cfg.Credentials = aws.NewCredentialsCache(creds)
 	return &cfg, nil
 }
 
