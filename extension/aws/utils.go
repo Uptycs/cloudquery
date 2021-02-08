@@ -23,8 +23,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// GetAwsSession creates an AWS session for given account.
-// If account is nil, it creates a default session
+// GetAwsConfig creates an AWS Config for given account.
+// If account is nil, it creates a default config
 func GetAwsConfig(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*aws.Config, error) {
 	if account == nil {
 		utilities.GetLogger().Debug("creating default session")
@@ -41,7 +41,6 @@ func GetAwsConfig(account *utilities.ExtensionConfigurationAwsAccount, regionCod
 		utilities.GetLogger().Debug("creating default session")
 		return getDefaultAwsConfig(regionCode)
 	}
-	return nil, nil
 }
 
 func getAwsConfigForProfile(account *utilities.ExtensionConfigurationAwsAccount, regionCode string) (*aws.Config, error) {
