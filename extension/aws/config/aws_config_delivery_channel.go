@@ -30,7 +30,7 @@ func DescribeDeliveryChannelsColumns() []table.ColumnDefinition {
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
 		table.TextColumn("config_snapshot_delivery_properties"),
-		table.TextColumn("config_snapshot_delivery_properties_delivery_frequency"),
+		//table.TextColumn("config_snapshot_delivery_properties_delivery_frequency"),
 		table.TextColumn("name"),
 		table.TextColumn("s3_bucket_name"),
 		table.TextColumn("s3_key_prefix"),

@@ -24,26 +24,32 @@ import (
 	"github.com/kolide/osquery-go/plugin/table"
 )
 
-// ListEventBusesColumns returns the list of columns in the table
-func ListEventBusesColumns() []table.ColumnDefinition {
+// ListRulesColumns returns the list of columns in the table
+func ListRulesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
 		table.TextColumn("arn"),
+		table.TextColumn("description"),
+		table.TextColumn("event_bus_name"),
+		table.TextColumn("event_pattern"),
+		table.TextColumn("managed_by"),
 		table.TextColumn("name"),
-		table.TextColumn("policy"),
+		table.TextColumn("role_arn"),
+		table.TextColumn("schedule_expression"),
+		table.TextColumn("state"),
 	}
 }
 
-// ListEventBusesGenerate returns the rows in the table for all configured accounts
-func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// ListRulesGenerate returns the rows in the table for all configured accounts
+func ListRulesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_buses",
+			"tableName": "aws_cloudwatch_event_rule",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListEventBuses(nil)
+		results, err := processAccountListRules(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -51,10 +57,10 @@ func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudwatch_event_buses",
+				"tableName": "aws_cloudwatch_event_rule",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListEventBuses(&account)
+			results, err := processAccountListRules(&account)
 			if err != nil {
 				continue
 			}
@@ -65,7 +71,7 @@ func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListRules(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -78,21 +84,21 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudwatch_event_buses",
+		"tableName": "aws_cloudwatch_event_rule",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
 	svc := cloudwatchevents.NewFromConfig(*sess)
-	params := &cloudwatchevents.ListEventBusesInput{}
+	params := &cloudwatchevents.ListRulesInput{}
 
-	result, err := svc.ListEventBuses(context.TODO(), params)
+	result, err := svc.ListRules(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_buses",
+			"tableName": "aws_cloudwatch_event_rule",
 			"account":   accountId,
 			"region":    *region.RegionName,
-			"task":      "ListEventBuses",
+			"task":      "ListRules",
 			"errString": err.Error(),
 		}).Error("failed to process region")
 		return resultMap, err
@@ -101,7 +107,7 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_buses",
+			"tableName": "aws_cloudwatch_event_rule",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"errString": err.Error(),
@@ -116,7 +122,7 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	return resultMap, nil
 }
 
-func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListRules(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
@@ -126,15 +132,15 @@ func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudwatch_event_buses"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudwatch_event_rule"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_buses",
+			"tableName": "aws_cloudwatch_event_rule",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListEventBuses(tableConfig, account, region)
+		result, err := processRegionListRules(tableConfig, account, region)
 		if err != nil {
 			return resultMap, err
 		}

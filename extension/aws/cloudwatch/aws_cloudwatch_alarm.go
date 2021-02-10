@@ -33,25 +33,25 @@ func DescribeAlarmsColumns() []table.ColumnDefinition {
 		table.TextColumn("alarm_actions"),
 		table.TextColumn("alarm_arn"),
 		table.TextColumn("alarm_configuration_updated_timestamp"),
-		table.BigIntColumn("alarm_configuration_updated_timestamp_ext"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc"),
-		table.BigIntColumn("alarm_configuration_updated_timestamp_loc_cache_end"),
-		table.BigIntColumn("alarm_configuration_updated_timestamp_loc_cache_start"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone_is_dst"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone_name"),
-		table.IntegerColumn("alarm_configuration_updated_timestamp_loc_cache_zone_offset"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_name"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_tx"),
-		table.IntegerColumn("alarm_configuration_updated_timestamp_loc_tx_index"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_tx_isstd"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_tx_isutc"),
-		table.BigIntColumn("alarm_configuration_updated_timestamp_loc_tx_when"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_zone"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_zone_is_dst"),
-		table.TextColumn("alarm_configuration_updated_timestamp_loc_zone_name"),
-		table.IntegerColumn("alarm_configuration_updated_timestamp_loc_zone_offset"),
-		table.BigIntColumn("alarm_configuration_updated_timestamp_wall"),
+		//table.BigIntColumn("alarm_configuration_updated_timestamp_ext"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc"),
+		//table.BigIntColumn("alarm_configuration_updated_timestamp_loc_cache_end"),
+		//table.BigIntColumn("alarm_configuration_updated_timestamp_loc_cache_start"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone_is_dst"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_cache_zone_name"),
+		//table.IntegerColumn("alarm_configuration_updated_timestamp_loc_cache_zone_offset"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_name"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_tx"),
+		//table.IntegerColumn("alarm_configuration_updated_timestamp_loc_tx_index"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_tx_isstd"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_tx_isutc"),
+		//table.BigIntColumn("alarm_configuration_updated_timestamp_loc_tx_when"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_zone"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_zone_is_dst"),
+		//table.TextColumn("alarm_configuration_updated_timestamp_loc_zone_name"),
+		//table.IntegerColumn("alarm_configuration_updated_timestamp_loc_zone_offset"),
+		//table.BigIntColumn("alarm_configuration_updated_timestamp_wall"),
 		table.TextColumn("alarm_description"),
 		table.TextColumn("alarm_name"),
 		table.TextColumn("comparison_operator"),
@@ -65,16 +65,16 @@ func DescribeAlarmsColumns() []table.ColumnDefinition {
 		table.TextColumn("insufficient_data_actions"),
 		table.TextColumn("metric_name"),
 		table.TextColumn("metrics"),
-		table.TextColumn("metrics_expression"),
-		table.TextColumn("metrics_id"),
+		//table.TextColumn("metrics_expression"),
+		//table.TextColumn("metrics_id"),
 		table.TextColumn("metrics_label"),
 		table.TextColumn("metrics_metric_stat"),
-		table.TextColumn("metrics_metric_stat_metric"),
-		table.TextColumn("metrics_metric_stat_metric_dimensions"),
-		table.TextColumn("metrics_metric_stat_metric_dimensions_name"),
-		table.TextColumn("metrics_metric_stat_metric_dimensions_value"),
-		table.TextColumn("metrics_metric_stat_metric_metric_name"),
-		table.TextColumn("metrics_metric_stat_metric_namespace"),
+		//table.TextColumn("metrics_metric_stat_metric"),
+		//table.TextColumn("metrics_metric_stat_metric_dimensions"),
+		//table.TextColumn("metrics_metric_stat_metric_dimensions_name"),
+		//table.TextColumn("metrics_metric_stat_metric_dimensions_value"),
+		//table.TextColumn("metrics_metric_stat_metric_metric_name"),
+		//table.TextColumn("metrics_metric_stat_metric_namespace"),
 		table.BigIntColumn("metrics_metric_stat_period"),
 		table.TextColumn("metrics_metric_stat_stat"),
 		table.TextColumn("metrics_metric_stat_unit"),
@@ -86,24 +86,24 @@ func DescribeAlarmsColumns() []table.ColumnDefinition {
 		table.TextColumn("state_reason"),
 		table.TextColumn("state_reason_data"),
 		table.TextColumn("state_updated_timestamp"),
-		table.BigIntColumn("state_updated_timestamp_ext"),
-		table.TextColumn("state_updated_timestamp_loc"),
-		table.BigIntColumn("state_updated_timestamp_loc_cache_end"),
-		table.BigIntColumn("state_updated_timestamp_loc_cache_start"),
-		table.TextColumn("state_updated_timestamp_loc_cache_zone"),
-		table.TextColumn("state_updated_timestamp_loc_cache_zone_is_dst"),
-		table.TextColumn("state_updated_timestamp_loc_cache_zone_name"),
-		table.IntegerColumn("state_updated_timestamp_loc_cache_zone_offset"),
-		table.TextColumn("state_updated_timestamp_loc_name"),
-		table.TextColumn("state_updated_timestamp_loc_tx"),
-		table.IntegerColumn("state_updated_timestamp_loc_tx_index"),
-		table.TextColumn("state_updated_timestamp_loc_tx_isstd"),
-		table.TextColumn("state_updated_timestamp_loc_tx_isutc"),
-		table.BigIntColumn("state_updated_timestamp_loc_tx_when"),
-		table.TextColumn("state_updated_timestamp_loc_zone"),
-		table.TextColumn("state_updated_timestamp_loc_zone_is_dst"),
-		table.TextColumn("state_updated_timestamp_loc_zone_name"),
-		table.IntegerColumn("state_updated_timestamp_loc_zone_offset"),
+		//table.BigIntColumn("state_updated_timestamp_ext"),
+		//table.TextColumn("state_updated_timestamp_loc"),
+		//table.BigIntColumn("state_updated_timestamp_loc_cache_end"),
+		//table.BigIntColumn("state_updated_timestamp_loc_cache_start"),
+		//table.TextColumn("state_updated_timestamp_loc_cache_zone"),
+		//table.TextColumn("state_updated_timestamp_loc_cache_zone_is_dst"),
+		//table.TextColumn("state_updated_timestamp_loc_cache_zone_name"),
+		//table.IntegerColumn("state_updated_timestamp_loc_cache_zone_offset"),
+		//table.TextColumn("state_updated_timestamp_loc_name"),
+		//table.TextColumn("state_updated_timestamp_loc_tx"),
+		//table.IntegerColumn("state_updated_timestamp_loc_tx_index"),
+		//table.TextColumn("state_updated_timestamp_loc_tx_isstd"),
+		//table.TextColumn("state_updated_timestamp_loc_tx_isutc"),
+		//table.BigIntColumn("state_updated_timestamp_loc_tx_when"),
+		//table.TextColumn("state_updated_timestamp_loc_zone"),
+		//table.TextColumn("state_updated_timestamp_loc_zone_is_dst"),
+		//table.TextColumn("state_updated_timestamp_loc_zone_name"),
+		//table.IntegerColumn("state_updated_timestamp_loc_zone_offset"),
 		table.BigIntColumn("state_updated_timestamp_wall"),
 		table.TextColumn("state_value"),
 		table.TextColumn("statistic"),
@@ -119,7 +119,7 @@ func DescribeAlarmsGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_alarms",
+			"tableName": "aws_cloudwatch_alarm",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeAlarms(nil)
@@ -130,7 +130,7 @@ func DescribeAlarmsGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudwatch_alarms",
+				"tableName": "aws_cloudwatch_alarm",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeAlarms(&account)
@@ -157,7 +157,7 @@ func processRegionDescribeAlarms(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudwatch_alarms",
+		"tableName": "aws_cloudwatch_alarm",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -171,7 +171,7 @@ func processRegionDescribeAlarms(tableConfig *utilities.TableConfig, account *ut
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudwatch_alarms",
+				"tableName": "aws_cloudwatch_alarm",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeAlarms",
@@ -182,7 +182,7 @@ func processRegionDescribeAlarms(tableConfig *utilities.TableConfig, account *ut
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudwatch_alarms",
+				"tableName": "aws_cloudwatch_alarm",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeAlarms",
@@ -212,10 +212,10 @@ func processAccountDescribeAlarms(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudwatch_alarms"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudwatch_alarm"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_alarms",
+			"tableName": "aws_cloudwatch_alarm",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

@@ -196,9 +196,9 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_iam_account_password_policy", iam.GetAccountPasswordPolicyColumns(), iam.GetAccountPasswordPolicyGenerate))
 
 	// aws cloudwatch
-	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_alarms", cloudwatch.DescribeAlarmsColumns(), cloudwatch.DescribeAlarmsGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_buses", cloudwatch.ListEventBusesColumns(), cloudwatch.ListEventBusesGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_rules", cloudwatch.ListRulesColumns(), cloudwatch.ListRulesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_alarm", cloudwatch.DescribeAlarmsColumns(), cloudwatch.DescribeAlarmsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_bus", cloudwatch.ListEventBusesColumns(), cloudwatch.ListEventBusesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_rule", cloudwatch.ListRulesColumns(), cloudwatch.ListRulesGenerate))
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))

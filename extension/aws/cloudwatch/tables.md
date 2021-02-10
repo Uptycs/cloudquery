@@ -1,3 +1,3 @@
-- aws_cloudwatch_alarms
-- aws_cloudwatch_event_buses
-- aws_cloudwatch_event_rules
+- aws_cloudwatch_alarm
+- aws_cloudwatch_event_bus
+- aws_cloudwatch_event_rule
