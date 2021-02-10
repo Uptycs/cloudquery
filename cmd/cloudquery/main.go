@@ -15,8 +15,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/cloudquery/extension"
-	"github.com/kolide/osquery-go"
 )
 
 var (

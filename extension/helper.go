@@ -32,8 +32,8 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/kolide/osquery-go"
-	"github.com/kolide/osquery-go/plugin/table"
+	"github.com/Uptycs/basequery-go"
+	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
 
