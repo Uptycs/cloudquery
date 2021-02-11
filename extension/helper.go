@@ -15,6 +15,8 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/Uptycs/cloudquery/extension/aws/acm"
+
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
 
 	"github.com/Uptycs/cloudquery/utilities"
@@ -119,7 +121,7 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
-	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
+	var awsConfigFileList = []string{"aws/acm/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
 	var gcpConfigFileList = []string{
 		"gcp/compute/table_config.json",
 		"gcp/storage/table_config.json",
@@ -167,6 +169,8 @@ var gcpStorageHandler = storage.NewGcpStorageHandler(storage.NewGcpStorageImpl()
 
 // RegisterPlugins TODO
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
+	// AWS ACM
+	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
