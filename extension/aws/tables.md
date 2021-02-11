@@ -21,3 +21,8 @@
   - aws_iam_role
   - aws_iam_user
   - aws_s3_bucket
+  - aws_cloudwatch_alarm
+  - aws_cloudwatch_event_bus
+  - aws_cloudwatch_event_rule
+  - aws_config_recorder
+  - aws_config_delivery_channel
