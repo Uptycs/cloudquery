@@ -1,7 +1,6 @@
 {
   "aws_acm_certificate": {
     "aws": {
-      "regionAttribute": "region",
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
     },
@@ -24,7 +23,7 @@
         "sourceName": "ResultMetadata_values",
         "targetName": "values",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       }
     ]
   }
