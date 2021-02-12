@@ -15,12 +15,8 @@ import (
 	"io/ioutil"
 	"os"
 
-
-	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
-	"github.com/Uptycs/cloudquery/extension/aws/config"
-
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
-  "github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
+	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
@@ -128,9 +124,7 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
 
-	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json", "aws/cloudwatch/table_config.json", "aws/config/table_config.json"}
-
-	var awsConfigFileList = []string{"aws/acm/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json","aws/cloudwatch/table_config.json", "aws/config/table_config.json"}
+	var awsConfigFileList = []string{"aws/acm/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json", "aws/cloudwatch/table_config.json", "aws/config/table_config.json"}
 
 	var gcpConfigFileList = []string{
 		"gcp/compute/table_config.json",
