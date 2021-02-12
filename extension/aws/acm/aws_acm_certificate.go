@@ -29,10 +29,10 @@ func ListCertificatesColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("region"),
 		table.TextColumn("certificate_arn"),
 		table.TextColumn("domain_name"),
-		table.TextColumn("values"),
+		//table.TextColumn("values"),
+
 	}
 }
 
