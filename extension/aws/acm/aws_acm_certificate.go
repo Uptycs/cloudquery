@@ -21,7 +21,7 @@ import (
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/acm"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/kolide/osquery-go/plugin/table"
+	"github.com/Uptycs/basequery-go/plugin/table"
 )
 
 // ListCertificatesColumns returns the list of columns in the table

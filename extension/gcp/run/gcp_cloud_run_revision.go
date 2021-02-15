@@ -16,9 +16,9 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"github.com/Uptycs/cloudquery/utilities"
-	"github.com/kolide/osquery-go/plugin/table"
 
 	"google.golang.org/api/option"
 

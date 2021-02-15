@@ -17,7 +17,7 @@ import (
 	"github.com/Uptycs/cloudquery/utilities"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/kolide/osquery-go/plugin/table"
+	"github.com/Uptycs/basequery-go/plugin/table"
 	"google.golang.org/api/option"
 
 	storage "cloud.google.com/go/storage"

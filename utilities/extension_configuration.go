@@ -17,13 +17,20 @@ type ExtensionConfigurationLogging struct {
 	MaxAge     int    `json:"maxAge"`
 }
 
+type CtS3Bucket struct {
+	Name   string `json:"name"`
+	Region string `json:"region"`
+	Prefix string `json:"prefix"`
+}
+
 // ExtensionConfigurationAwsAccount represents configuration of an AWS account
 type ExtensionConfigurationAwsAccount struct {
-	ID             string `json:"id"`
-	CredentialFile string `json:"credentialFile"`
-	ProfileName    string `json:"profileName"`
-	RoleArn        string `json:"roleArn"`
-	ExternalID     string `json:"externalId"`
+	ID             string       `json:"id"`
+	CredentialFile string       `json:"credentialFile"`
+	ProfileName    string       `json:"profileName"`
+	RoleArn        string       `json:"roleArn"`
+	ExternalID     string       `json:"externalId"`
+	CtS3Buckets    []CtS3Bucket `json:"ctS3Buckets"`
 }
 
 // ExtensionConfigurationAws holds Accounts which is a list of AWS account configurations
