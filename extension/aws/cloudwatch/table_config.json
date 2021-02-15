@@ -1,0 +1,596 @@
+{
+  "aws_cloudwatch_alarm": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "MetricAlarms_ActionsEnabled",
+        "targetName": "actions_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmActions",
+        "targetName": "alarm_actions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmArn",
+        "targetName": "alarm_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp",
+        "targetName": "alarm_configuration_updated_timestamp",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_ext",
+        "targetName": "alarm_configuration_updated_timestamp_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc",
+        "targetName": "alarm_configuration_updated_timestamp_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheEnd",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheStart",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheZone",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheZone_isDST",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheZone_name",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_cacheZone_offset",
+        "targetName": "alarm_configuration_updated_timestamp_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_name",
+        "targetName": "alarm_configuration_updated_timestamp_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_tx",
+        "targetName": "alarm_configuration_updated_timestamp_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_tx_index",
+        "targetName": "alarm_configuration_updated_timestamp_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_tx_isstd",
+        "targetName": "alarm_configuration_updated_timestamp_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_tx_isutc",
+        "targetName": "alarm_configuration_updated_timestamp_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_tx_when",
+        "targetName": "alarm_configuration_updated_timestamp_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_zone",
+        "targetName": "alarm_configuration_updated_timestamp_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_zone_isDST",
+        "targetName": "alarm_configuration_updated_timestamp_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_zone_name",
+        "targetName": "alarm_configuration_updated_timestamp_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_loc_zone_offset",
+        "targetName": "alarm_configuration_updated_timestamp_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmConfigurationUpdatedTimestamp_wall",
+        "targetName": "alarm_configuration_updated_timestamp_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmDescription",
+        "targetName": "alarm_description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_AlarmName",
+        "targetName": "alarm_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_ComparisonOperator",
+        "targetName": "comparison_operator",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_DatapointsToAlarm",
+        "targetName": "datapoints_to_alarm",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Dimensions",
+        "targetName": "dimensions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Dimensions_Name",
+        "targetName": "dimensions_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Dimensions_Value",
+        "targetName": "dimensions_value",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_EvaluateLowSampleCountPercentile",
+        "targetName": "evaluate_low_sample_count_percentile",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_EvaluationPeriods",
+        "targetName": "evaluation_periods",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_ExtendedStatistic",
+        "targetName": "extended_statistic",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_InsufficientDataActions",
+        "targetName": "insufficient_data_actions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_MetricName",
+        "targetName": "metric_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics",
+        "targetName": "metrics",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_Expression",
+        "targetName": "metrics_expression",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_Id",
+        "targetName": "metrics_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_Label",
+        "targetName": "metrics_label",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat",
+        "targetName": "metrics_metric_stat",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric",
+        "targetName": "metrics_metric_stat_metric",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric_Dimensions",
+        "targetName": "metrics_metric_stat_metric_dimensions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric_Dimensions_Name",
+        "targetName": "metrics_metric_stat_metric_dimensions_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric_Dimensions_Value",
+        "targetName": "metrics_metric_stat_metric_dimensions_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric_MetricName",
+        "targetName": "metrics_metric_stat_metric_metric_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Metric_Namespace",
+        "targetName": "metrics_metric_stat_metric_namespace",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Period",
+        "targetName": "metrics_metric_stat_period",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Stat",
+        "targetName": "metrics_metric_stat_stat",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_MetricStat_Unit",
+        "targetName": "metrics_metric_stat_unit",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_Period",
+        "targetName": "metrics_period",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Metrics_ReturnData",
+        "targetName": "metrics_return_data",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Namespace",
+        "targetName": "namespace",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_OKActions",
+        "targetName": "ok_actions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Period",
+        "targetName": "period",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_StateReason",
+        "targetName": "state_reason",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_StateReasonData",
+        "targetName": "state_reason_data",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp",
+        "targetName": "state_updated_timestamp",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_ext",
+        "targetName": "state_updated_timestamp_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc",
+        "targetName": "state_updated_timestamp_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheEnd",
+        "targetName": "state_updated_timestamp_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheStart",
+        "targetName": "state_updated_timestamp_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheZone",
+        "targetName": "state_updated_timestamp_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheZone_isDST",
+        "targetName": "state_updated_timestamp_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheZone_name",
+        "targetName": "state_updated_timestamp_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_cacheZone_offset",
+        "targetName": "state_updated_timestamp_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_name",
+        "targetName": "state_updated_timestamp_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_tx",
+        "targetName": "state_updated_timestamp_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_tx_index",
+        "targetName": "state_updated_timestamp_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_tx_isstd",
+        "targetName": "state_updated_timestamp_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_tx_isutc",
+        "targetName": "state_updated_timestamp_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_tx_when",
+        "targetName": "state_updated_timestamp_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_zone",
+        "targetName": "state_updated_timestamp_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_zone_isDST",
+        "targetName": "state_updated_timestamp_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_zone_name",
+        "targetName": "state_updated_timestamp_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_loc_zone_offset",
+        "targetName": "state_updated_timestamp_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "MetricAlarms_StateUpdatedTimestamp_wall",
+        "targetName": "state_updated_timestamp_wall",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_StateValue",
+        "targetName": "state_value",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Statistic",
+        "targetName": "statistic",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Threshold",
+        "targetName": "threshold",
+        "targetType": "DOUBLE",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_ThresholdMetricId",
+        "targetName": "threshold_metric_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_TreatMissingData",
+        "targetName": "treat_missing_data",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "MetricAlarms_Unit",
+        "targetName": "unit",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
+  "aws_cloudwatch_event_bus": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "EventBuses_Arn",
+        "targetName": "arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "EventBuses_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "EventBuses_Policy",
+        "targetName": "policy",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
+  "aws_cloudwatch_event_rule": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Rules_Arn",
+        "targetName": "arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_EventBusName",
+        "targetName": "event_bus_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_EventPattern",
+        "targetName": "event_pattern",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_ManagedBy",
+        "targetName": "managed_by",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_RoleArn",
+        "targetName": "role_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_ScheduleExpression",
+        "targetName": "schedule_expression",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Rules_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

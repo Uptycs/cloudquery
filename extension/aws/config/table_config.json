@@ -1,0 +1,94 @@
+{
+  "aws_config_delivery_channel": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "DeliveryChannels_ConfigSnapshotDeliveryProperties",
+        "targetName": "config_snapshot_delivery_properties",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DeliveryChannels_ConfigSnapshotDeliveryProperties_DeliveryFrequency",
+        "targetName": "config_snapshot_delivery_properties_delivery_frequency",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DeliveryChannels_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DeliveryChannels_S3BucketName",
+        "targetName": "s3_bucket_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DeliveryChannels_S3KeyPrefix",
+        "targetName": "s3_key_prefix",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DeliveryChannels_SnsTopicARN",
+        "targetName": "sns_topic_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  },
+  "aws_config_recorder": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "ConfigurationRecorders_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ConfigurationRecorders_RecordingGroup",
+        "targetName": "recording_group",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ConfigurationRecorders_RecordingGroup_AllSupported",
+        "targetName": "recording_group_all_supported",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ConfigurationRecorders_RecordingGroup_IncludeGlobalResourceTypes",
+        "targetName": "recording_group_include_global_resource_types",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ConfigurationRecorders_RecordingGroup_ResourceTypes",
+        "targetName": "recording_group_resource_types",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ConfigurationRecorders_RoleARN",
+        "targetName": "role_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

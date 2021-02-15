@@ -1,0 +1,30 @@
+{
+  "aws_acm_certificate": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "CertificateSummaryList_CertificateArn",
+        "targetName": "certificate_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "CertificateSummaryList_DomainName",
+        "targetName": "domain_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}
