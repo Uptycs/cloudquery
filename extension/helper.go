@@ -15,7 +15,10 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
+	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
+	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
 
 	"github.com/Uptycs/cloudquery/utilities"
@@ -120,7 +123,9 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
-	var awsConfigFileList = []string{"aws/cloudformation/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
+
+	var awsConfigFileList = []string{"aws/acm/table_config.json", "aws/cloudformation/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json", "aws/cloudwatch/table_config.json", "aws/config/table_config.json"}
+
 	var gcpConfigFileList = []string{
 		"gcp/compute/table_config.json",
 		"gcp/storage/table_config.json",
@@ -170,6 +175,8 @@ var gcpStorageHandler = storage.NewGcpStorageHandler(storage.NewGcpStorageImpl()
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//AWS CLOUDFORMATION
 	server.RegisterPlugin(table.NewPlugin("aws_cloudformation", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
+	// AWS ACM
+	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
@@ -195,6 +202,14 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_iam_group", iam.ListGroupsColumns(), iam.ListGroupsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_policy", iam.ListPoliciesColumns(), iam.ListPoliciesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_account_password_policy", iam.GetAccountPasswordPolicyColumns(), iam.GetAccountPasswordPolicyGenerate))
+
+	// aws cloudwatch
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_alarm", cloudwatch.DescribeAlarmsColumns(), cloudwatch.DescribeAlarmsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_bus", cloudwatch.ListEventBusesColumns(), cloudwatch.ListEventBusesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_rule", cloudwatch.ListRulesColumns(), cloudwatch.ListRulesGenerate))
+	//aws config
+	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

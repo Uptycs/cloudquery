@@ -1,5 +1,6 @@
 * AWS
   - aws_cloudformation
+  - aws_acm_certificate
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
   - aws_ec2_flowlog
@@ -22,3 +23,8 @@
   - aws_iam_role
   - aws_iam_user
   - aws_s3_bucket
+  - aws_cloudwatch_alarm
+  - aws_cloudwatch_event_bus
+  - aws_cloudwatch_event_rule
+  - aws_config_recorder
+  - aws_config_delivery_channel
