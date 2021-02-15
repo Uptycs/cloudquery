@@ -18,9 +18,8 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
-
+	"github.com/Uptycs/cloudquery/extension/aws/directoryservice"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
-
 	"github.com/Uptycs/cloudquery/utilities"
 
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
@@ -36,7 +35,7 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/Uptycs/basequery-go"
+	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
@@ -124,6 +123,7 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{
+		"aws/directoryservice/table_config.json",
 		"aws/ec2/table_config.json",
 		"aws/s3/table_config.json",
 		"aws/iam/table_config.json",
@@ -188,6 +188,8 @@ func registerEventTables(server *osquery.ExtensionManagerServer) {
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
+	// AWS DIRECTORY
+	server.RegisterPlugin(table.NewPlugin("aws_directory", directoryservice.DescribeDirectoriesColumns(), directoryservice.DescribeDirectoriesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
