@@ -48,6 +48,7 @@ type CloudTrailEventTable struct {
 	// objects which we have processed in last 1 hour
 	objectCache *cache.Cache
 	client      *osquery.ExtensionManagerClient
+	ctx         context.Context
 }
 
 type CloudTrailEventRecords struct {
@@ -107,8 +108,8 @@ func (ct *CloudTrailEventTable) GetGenFunction() table.GenerateFunc {
 	return ct.LookupEventsGenerate
 }
 
-func (ct *CloudTrailEventTable) initialize(socket string, timeout time.Duration) {
-	// TODO: Initialize from file system
+func (ct *CloudTrailEventTable) initialize(ctx context.Context, socket string, timeout time.Duration) {
+	ct.ctx = ctx
 	ct.markerDelayMinutes = MARKER_DELAY_MINUTES
 	ct.objectCache = cache.New(time.Duration(CACHE_TIMEOUT_MINUTES)*time.Minute, time.Duration(CACHE_TIMEOUT_MINUTES)*time.Minute)
 	ct.markerMap = make(map[string]*ObjectMarker)
@@ -127,7 +128,7 @@ func (ct *CloudTrailEventTable) Start(ctx context.Context, wg *sync.WaitGroup, s
 	utilities.GetLogger().Info("Starting event loop")
 	wg.Add(1)
 	defer wg.Done()
-	ct.initialize(socket, timeout)
+	ct.initialize(ctx, socket, timeout)
 	timer1 := time.NewTimer(time.Duration(LOOP_TIMER_SECONDS) * time.Second)
 
 	for {
@@ -255,7 +256,7 @@ func (ct *CloudTrailEventTable) processSingleObject(svc *s3.Client, account *uti
 		Bucket: &bucket.Name,
 		Key:    obj.Key,
 	}
-	output, err := svc.GetObject(context.TODO(), &params)
+	output, err := svc.GetObject(ct.ctx, &params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": TABLE_NAME,
@@ -293,7 +294,7 @@ func (ct *CloudTrailEventTable) processSingleObject(svc *s3.Client, account *uti
 		}).Error("failed to read S3 object data")
 		return fmt.Errorf("buffer size too small")
 	}
-	if err != io.EOF {
+	if err != nil && err != io.EOF {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": TABLE_NAME,
 			"account":   account.ID,
@@ -363,7 +364,7 @@ func (ct *CloudTrailEventTable) getS3Objects(svc *s3.Client, accountId string, b
 	paginator := s3.NewListObjectsV2Paginator(svc, &params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(ct.ctx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": TABLE_NAME,

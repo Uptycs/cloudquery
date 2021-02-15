@@ -67,7 +67,6 @@ github.com/Azure/go-autorest/tracing v0.6.0/go.mod h1:+vhtPC754Xsa23ID7GlGsrdKBp
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/Microsoft/go-winio v0.4.9/go.mod h1:VhR8bwka0BXejwEJY73c50VrPtXAaKcyvVC4A4RozmA=
 github.com/Microsoft/go-winio v0.4.16 h1:FtSW/jqD+l4ba5iPBj9CODVtgfYAD8w2wS923g/cFDk=
 github.com/Microsoft/go-winio v0.4.16/go.mod h1:XB6nPKklQyQ7GC9LdcBEcBl8PF76WugXOPRXwdLnMv0=
 github.com/Uptycs/basequery-go v0.2.0 h1:Nw4CrQAbOs5T33zAFO7VUftqQKzEo5pb0LLib60wSno=
@@ -104,8 +103,6 @@ github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.0.1 h1:U78TX1VNmbtb7Me
 github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.0.1/go.mod h1:IQF5AljyiiUz/CnLbe1FeE3hZZ/Kr87gJ1+/yEYel3I=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.1.0 h1:d3PK2s3MB8ikznU/tChWoWQM2EVHo+4ZymURcl9WVE4=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.1.0/go.mod h1:FunhqiuImyH0bxYm3xESmYTwq4dcESZQeaSAO4GjnTc=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.1.1 h1:7KkZoTdApfXlU7boQG3/DpdfsbYJiJKIpglGitlGL0o=
-github.com/aws/aws-sdk-go-v2/service/ssm v1.1.1/go.mod h1:351FC4X3HnrPJ8/RwHuFRr6uLq1LrXFfh8V5vBhT6/Q=
 github.com/aws/aws-sdk-go-v2/service/sso v1.1.0 h1:oQ/FE7bk1MldOs6RBTr+D7uMv1RfQ8WxxBRuH4lYEEo=
 github.com/aws/aws-sdk-go-v2/service/sso v1.1.0/go.mod h1:VnS0vieB4YxutHFP9ROJ3ciT3T/XJZjxxv9L39eo8OQ=
 github.com/aws/aws-sdk-go-v2/service/sts v1.1.0 h1:X9oTTSm14wc0ef4dit7aIB02UIw1kVi/imV7zLhFDdM=
@@ -209,8 +206,6 @@ github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1
 github.com/jstemmer/go-junit-report v0.9.1 h1:6QPYqodiu3GuPL+7mfx+NwDdp2eTkp9IfEUpgAwUN0o=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
-github.com/kolide/osquery-go v0.0.0-20200604192029-b019be7063ac h1:TI5z/itepBADxlaodO5U9mmrMHPu8Wb8Jt9Gea6vK4Y=
-github.com/kolide/osquery-go v0.0.0-20200604192029-b019be7063ac/go.mod h1:rp36fokOKgd/5mOgbvv4fkpdaucQ43mnvb+8BR62Xo8=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
@@ -221,7 +216,6 @@ github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG
 github.com/mitchellh/go-homedir v1.1.0/go.mod h1:SfyaCUpYCn1Vlf4IUYiD9fPX4A5wJrkLzIz1N1q0pr0=
 github.com/patrickmn/go-cache v2.1.0+incompatible h1:HRMgzkcYKYpi3C8ajMPV8OFXaaRUnok+kx1WdO15EQc=
 github.com/patrickmn/go-cache v2.1.0+incompatible/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=
-github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -349,7 +343,6 @@ golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a/go.mod h1:RxMgew5VJxzue5/jJ
 golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
-golang.org/x/sys v0.0.0-20180815093151-14742f9018cd/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
