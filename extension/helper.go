@@ -119,7 +119,12 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
-	var awsConfigFileList = []string{"aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json"}
+	var awsConfigFileList = []string{
+		"aws/ec2/table_config.json",
+		"aws/s3/table_config.json",
+		"aws/iam/table_config.json",
+		"aws/cloudtrail/table_config.json",
+	}
 	var gcpConfigFileList = []string{
 		"gcp/compute/table_config.json",
 		"gcp/storage/table_config.json",
@@ -165,7 +170,13 @@ func ReadTableConfigurations(homeDir string) {
 var gcpComputeHandler = compute.NewGcpComputeHandler(compute.NewGcpComputeImpl())
 var gcpStorageHandler = storage.NewGcpStorageHandler(storage.NewGcpStorageImpl())
 
-// RegisterPlugins TODO
+func registerEventTables(server *osquery.ExtensionManagerServer) {
+	for _, eventTable := range GetEventTables() {
+		server.RegisterPlugin(table.NewPlugin(eventTable.GetName(), eventTable.GetColumns(), eventTable.GetGenFunction()))
+	}
+}
+
+// RegisterPlugins
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
@@ -179,7 +190,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_route_table", ec2.DescribeRouteTablesColumns(), ec2.DescribeRouteTablesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_security_group", ec2.DescribeSecurityGroupsColumns(), ec2.DescribeSecurityGroupsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_tag", ec2.DescribeTagsColumns(), ec2.DescribeTagsGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_ec2_address", ec2.DescribeAddressesColumns(), ec2.DescribeAddressesGenerate))
+	//server.RegisterPlugin(table.NewPlugin("aws_ec2_address", ec2.DescribeAddressesColumns(), ec2.DescribeAddressesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_flowlog", ec2.DescribeFlowLogsColumns(), ec2.DescribeFlowLogsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_keypair", ec2.DescribeKeyPairsColumns(), ec2.DescribeKeyPairsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_snapshot", ec2.DescribeSnapshotsColumns(), ec2.DescribeSnapshotsGenerate))
@@ -227,4 +238,6 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
+	// Event tables
+	registerEventTables(server)
 }
