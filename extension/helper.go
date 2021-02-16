@@ -18,6 +18,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
+	"github.com/Uptycs/cloudquery/extension/aws/efs"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
 
@@ -36,7 +37,7 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/Uptycs/basequery-go"
+	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
@@ -131,6 +132,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/acm/table_config.json",
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
+		"aws/efs/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -221,6 +223,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_efs", efs.DescribeFileSystemsColumns(), efs.DescribeFileSystemsGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
