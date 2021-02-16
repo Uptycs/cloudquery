@@ -143,6 +143,7 @@ func ReadTableConfigurations(homeDir string) {
 		"gcp/container/table_config.json",
 		"gcp/function/table_config.json",
 		"gcp/run/table_config.json",
+		"gcp/cloudlog/table_config.json",
 	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
