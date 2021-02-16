@@ -25,6 +25,7 @@ import (
 
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
+	"github.com/Uptycs/cloudquery/extension/aws/organizations"
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
@@ -36,7 +37,7 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/Uptycs/basequery-go"
+	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
@@ -131,6 +132,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/acm/table_config.json",
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
+		"aws/organizations/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -213,7 +215,11 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_iam_group", iam.ListGroupsColumns(), iam.ListGroupsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_policy", iam.ListPoliciesColumns(), iam.ListPoliciesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_account_password_policy", iam.GetAccountPasswordPolicyColumns(), iam.GetAccountPasswordPolicyGenerate))
-
+	// AWS organizations
+	server.RegisterPlugin(table.NewPlugin("aws_organizations_describe_organizations", organizations.DescribeOrganizationColumns(), organizations.DescribeOrganizationGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_organizations_list_accounts", organizations.ListAccountsColumns(), organizations.ListAccountsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_organizations_list_roots", organizations.ListRootsColumns(), organizations.ListRootsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_organizations_delegated_administrator", organizations.ListDelegatedAdministratorsColumns(), organizations.ListDelegatedAdministratorsGenerate))
 	// aws cloudwatch
 	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_alarm", cloudwatch.DescribeAlarmsColumns(), cloudwatch.DescribeAlarmsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_bus", cloudwatch.ListEventBusesColumns(), cloudwatch.ListEventBusesGenerate))
