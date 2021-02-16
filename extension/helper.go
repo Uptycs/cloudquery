@@ -17,6 +17,7 @@ import (
 
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
+	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
@@ -36,7 +37,7 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/Uptycs/basequery-go"
+	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
@@ -131,6 +132,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/acm/table_config.json",
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
+		"aws/codedeploy/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -188,6 +190,8 @@ func registerEventTables(server *osquery.ExtensionManagerServer) {
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
+	// AWS CODEDEPLOY
+	server.RegisterPlugin(table.NewPlugin("aws_code_deploy_list_application", codedeploy.ListApplicationsColumns(), codedeploy.ListApplicationsGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
