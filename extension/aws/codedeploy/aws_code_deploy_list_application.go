@@ -18,10 +18,10 @@ import (
 
 	"github.com/Uptycs/cloudquery/utilities"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/codedeploy"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/kolide/osquery-go/plugin/table"
 )
 
 // ListApplicationsColumns returns the list of columns in the table
@@ -145,7 +145,9 @@ func processAccountListApplications(account *utilities.ExtensionConfigurationAws
 	for _, region := range regions {
 		result, err := processRegionListApplications(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_code_deploy_list_application",
+			}).Error(resultMap, err)
 		}
 		resultMap = append(resultMap, result...)
 	}
