@@ -33,6 +33,7 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/Uptycs/basequery-go/plugin/table"
+	"google.golang.org/api/logging/v2"
 )
 
 type ObjectMarker struct {
@@ -54,10 +55,10 @@ type CloudLogEventTable struct {
 }
 
 var (
-	MARKER_DELAY_MINUTES  = 20
-	LOOKBACK_MINUTES      = 100
-	CACHE_TIMEOUT_MINUTES = 120
-	LOOP_TIMER_SECONDS    = 120
+	MARKER_DELAY_MINUTES  = 120         // 2 Hours
+	LOOKBACK_MINUTES      = 120         // 2 Hours
+	CACHE_TIMEOUT_MINUTES = 2 * 24 * 60 // 2 Days
+	LOOP_TIMER_SECONDS    = 15 * 60     // 15 Minutes
 	TABLE_NAME            = "gcp_cloud_log_events"
 )
 
@@ -70,22 +71,15 @@ func (cl *CloudLogEventTable) GetColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("http_request"),
 		table.TextColumn("insert_id"),
-		table.TextColumn("json_payload"),
 		table.TextColumn("labels"),
 		table.TextColumn("log_name"),
 		table.TextColumn("metadata"),
-		table.TextColumn("operation_first"),
-		table.TextColumn("operation_id"),
-		table.TextColumn("operation_last"),
-		table.TextColumn("operation_producer"),
+		table.TextColumn("operation"),
 		table.TextColumn("proto_payload"),
 		table.TextColumn("receive_timestamp"),
-		table.TextColumn("resource_labels"),
-		table.TextColumn("resource_type"),
+		table.TextColumn("resource"),
 		table.TextColumn("severity"),
-		table.TextColumn("source_location_file"),
-		table.TextColumn("source_location_function"),
-		table.TextColumn("source_location_line"),
+		table.TextColumn("source_location"),
 		table.TextColumn("span_id"),
 		table.TextColumn("text_payload"),
 		table.TextColumn("timestamp"),
@@ -126,7 +120,6 @@ func (cl *CloudLogEventTable) Start(ctx context.Context, wg *sync.WaitGroup, soc
 
 	for {
 		select {
-
 		case <-ctx.Done():
 			// Shutdown
 			timer1.Stop()
@@ -159,14 +152,44 @@ func (cl *CloudLogEventTable) runEventLoop() {
 Dir: <logName>/YYYY/MM/DD/
 FileName: HH:00:00_HH:59:59_S0.json
 */
-func (cl *CloudLogEventTable) getDirPath(bucket utilities.CloudLogStorageBucket, logName string, startTime time.Time) string {
+func (cl *CloudLogEventTable) getDirPath(logName string, startTime time.Time) string {
 	dirStr := fmt.Sprintf("%04d", startTime.Year()) + "/" + fmt.Sprintf("%02d", startTime.Month()) + "/" + fmt.Sprintf("%02d", startTime.Day())
 	return logName + "/" + dirStr
 }
 
+func getJSONStr(prop interface{}) string {
+	bytes, err := json.Marshal(prop)
+	if err != nil {
+		utilities.GetLogger().Info("unmarshal failed", err.Error())
+		return ""
+	}
+	return string(bytes)
+}
+
+func logEntryToEventRow(entry logging.LogEntry) map[string]string {
+	event := make(map[string]string)
+	event["http_request"] = getJSONStr(entry.HttpRequest)
+	event["insert_id"] = entry.InsertId
+	event["labels"] = getJSONStr(entry.Labels)
+	event["log_name"] = entry.LogName
+	event["metadata"] = getJSONStr(entry.Metadata)
+	event["operation"] = getJSONStr(entry.Operation)
+	event["proto_payload"] = getJSONStr(entry.ProtoPayload)
+	event["receive_timestamp"] = entry.ReceiveTimestamp
+	event["resource"] = getJSONStr(entry.Resource)
+	event["severity"] = entry.Severity
+	event["source_location"] = getJSONStr(entry.SourceLocation)
+	event["span_id"] = entry.SpanId
+	event["text_payload"] = entry.TextPayload
+	event["timestamp"] = entry.Timestamp
+	event["trace"] = entry.Trace
+	event["trace_sampled"] = utilities.GetStringValue(entry.TraceSampled)
+	return event
+}
+
 func (cl *CloudLogEventTable) processRecords(account *utilities.ExtensionConfigurationGcpAccount, bucket utilities.CloudLogStorageBucket,
 	logName string, key string, jsonData string, outEvents []map[string]string) []map[string]string {
-	jsonObj := make(map[string]interface{})
+	jsonObj := logging.LogEntry{}
 	err := json.Unmarshal([]byte(jsonData), &jsonObj)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
@@ -182,13 +205,7 @@ func (cl *CloudLogEventTable) processRecords(account *utilities.ExtensionConfigu
 		return outEvents
 	}
 
-	event := make(map[string]string)
-	for key, value := range jsonObj {
-		//event[utilities.GetSnakeCase(key)] = utilities.GetStringValue(value)
-		event[utilities.GetSnakeCase(key)] = fmt.Sprintf("%+v", value)
-	}
-
-	return append(outEvents, event)
+	return append(outEvents, logEntryToEventRow(jsonObj))
 }
 
 func (cl *CloudLogEventTable) getObjectReader(account *utilities.ExtensionConfigurationGcpAccount, bucket utilities.CloudLogStorageBucket,
@@ -404,8 +421,8 @@ func (cl *CloudLogEventTable) processBucket(account *utilities.ExtensionConfigur
 
 	for _, logName := range bucket.LogNames {
 		currentTime := time.Now()
-		dirPath := cl.getDirPath(bucket, logName, currentTime)
-		pastDirPath := cl.getDirPath(bucket, logName, currentTime.Add(-time.Duration(cl.markerDelayMinutes)*time.Minute))
+		dirPath := cl.getDirPath(logName, currentTime)
+		pastDirPath := cl.getDirPath(logName, currentTime.Add(-time.Duration(cl.markerDelayMinutes)*time.Minute))
 		if dirPath != pastDirPath {
 			// we just moved to new day, but we need to process last few files in past day as well
 			storageObjects := cl.getObjectList(client, bucket.Name, pastDirPath)
