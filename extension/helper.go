@@ -18,6 +18,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
+	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
 
@@ -36,7 +37,7 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/Uptycs/basequery-go"
+	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
@@ -131,6 +132,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/acm/table_config.json",
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
+		"aws/guardduty/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -207,6 +209,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_volume", ec2.DescribeVolumesColumns(), ec2.DescribeVolumesGenerate))
 	// AWS S3
 	server.RegisterPlugin(table.NewPlugin("aws_s3_bucket", s3.ListBucketsColumns(), s3.ListBucketsGenerate))
+	// AWS GUARDDUTY
+	server.RegisterPlugin(table.NewPlugin("aws_guardduty_list_detector", guardduty.ListDetectorsColumns(), guardduty.ListDetectorsGenerate))
 	// AWS IAM
 	server.RegisterPlugin(table.NewPlugin("aws_iam_user", iam.ListUsersColumns(), iam.ListUsersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_role", iam.ListRolesColumns(), iam.ListRolesGenerate))

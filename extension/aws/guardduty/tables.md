@@ -1,0 +1,1 @@
+- aws_guardduty_list_detector
