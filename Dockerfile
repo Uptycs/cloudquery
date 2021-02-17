@@ -43,6 +43,10 @@ COPY osquery.flags osquery.conf                 /opt/cloudquery/etc/
 COPY extension/aws/ec2/table_config.json        /opt/cloudquery/etc/aws/ec2/
 COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/
 COPY extension/aws/s3/table_config.json         /opt/cloudquery/etc/aws/s3/
+COPY extension/aws/cloudtrail/table_config.json /opt/cloudquery/etc/aws/cloudtrail/
+COPY extension/aws/acm/table_config.json        /opt/cloudquery/etc/aws/acm/
+COPY extension/aws/cloudwatch/table_config.json /opt/cloudquery/etc/aws/cloudwatch/
+COPY extension/aws/config/table_config.json     /opt/cloudquery/etc/aws/config/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/gcp/compute/table_config.json    /opt/cloudquery/etc/gcp/compute/
 COPY extension/gcp/dns/table_config.json        /opt/cloudquery/etc/gcp/dns/
@@ -50,6 +54,10 @@ COPY extension/gcp/file/table_config.json       /opt/cloudquery/etc/gcp/file/
 COPY extension/gcp/iam/table_config.json        /opt/cloudquery/etc/gcp/iam/
 COPY extension/gcp/storage/table_config.json    /opt/cloudquery/etc/gcp/storage/
 COPY extension/gcp/sql/table_config.json        /opt/cloudquery/etc/gcp/sql/
+COPY extension/gcp/container/table_config.json  /opt/cloudquery/etc/gcp/container/
+COPY extension/gcp/function/table_config.json   /opt/cloudquery/etc/gcp/function/
+COPY extension/gcp/run/table_config.json        /opt/cloudquery/etc/gcp/run/
+COPY extension/gcp/cloudlog/table_config.json   /opt/cloudquery/etc/gcp/cloudlog/
 
 CMD ["/usr/bin/osqueryd", \
     "--flagfile=/opt/cloudquery/etc/osquery.flags", \
