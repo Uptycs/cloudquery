@@ -164,7 +164,7 @@ func processAccountDescribeVpcs(account *utilities.ExtensionConfigurationAwsAcco
 	for _, region := range regions {
 		result, err := processRegionDescribeVpcs(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

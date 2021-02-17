@@ -173,7 +173,7 @@ func processAccountDescribeRouteTables(account *utilities.ExtensionConfiguration
 	for _, region := range regions {
 		result, err := processRegionDescribeRouteTables(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
