@@ -164,7 +164,7 @@ func processAccountDescribeNetworkAcls(account *utilities.ExtensionConfiguration
 	for _, region := range regions {
 		result, err := processRegionDescribeNetworkAcls(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
