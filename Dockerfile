@@ -28,10 +28,10 @@ RUN set -ex; \
     rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/* && \
     groupadd -g 1000 cloudquery && \
     useradd -m -g cloudquery -u 1000 -d /opt/cloudquery -s /bin/bash cloudquery && \
-    mkdir /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var && \
+    mkdir /opt/cloudquery/etc /opt/cloudquery/etc/config /opt/cloudquery/logs /opt/cloudquery/var && \
     echo "/usr/local/bin/cloudquery.ext" > /opt/cloudquery/etc/extensions.load && \
     chmod 700 /usr/local/bin/cloudquery.ext && \
-    chown cloudquery:cloudquery /usr/bin/osquery? /usr/local/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var
+    chown cloudquery:cloudquery /usr/bin/osquery? /usr/local/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/etc/config /opt/cloudquery/logs /opt/cloudquery/var
 
 USER cloudquery
 
@@ -39,6 +39,7 @@ ENV CLOUDQUERY_EXT_HOME /opt/cloudquery/etc
 
 WORKDIR /opt/cloudquery
 
+COPY extension_config.json                      /opt/cloudquery/etc/config
 COPY osquery.flags osquery.conf                 /opt/cloudquery/etc/
 COPY extension/aws/ec2/table_config.json        /opt/cloudquery/etc/aws/ec2/
 COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/

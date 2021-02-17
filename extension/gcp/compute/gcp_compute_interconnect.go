@@ -97,9 +97,12 @@ func (handler *GcpComputeHandler) getGcpComputeInterconnectsNewServiceForAccount
 	var projectID string
 	var service *compute.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = handler.svcInterface.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = handler.svcInterface.NewService(ctx)

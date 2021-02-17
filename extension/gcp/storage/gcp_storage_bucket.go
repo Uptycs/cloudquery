@@ -224,9 +224,12 @@ func (handler *GcpStorageHandler) getGcpStorageBucketNewServiceForAccount(ctx co
 	var projectID string
 	var service *storage.Client
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewClient(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = handler.svcInterface.NewClient(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = handler.svcInterface.NewClient(ctx)

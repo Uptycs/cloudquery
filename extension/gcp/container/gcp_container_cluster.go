@@ -368,9 +368,12 @@ func getGcpContainerClustersNewServiceForAccount(ctx context.Context, account *u
 	var projectID string
 	var service *gcpcontainer.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = gcpcontainer.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = gcpcontainer.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpcontainer.NewService(ctx)
