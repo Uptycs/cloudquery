@@ -7,7 +7,7 @@
 
 FROM ubuntu:20.04
 
-ARG OSQUERY_VERSION=4.6.0
+ARG BASEQUERY_VERSION=4.6.0
 ARG CLOUDQUERY_VERSION
 
 LABEL \
@@ -16,22 +16,22 @@ LABEL \
   version="${CLOUDQUERY_VERSION}" \
   url="https://github.com/Uptycs/cloudquery"
 
-ADD https://pkg.osquery.io/deb/osquery_${OSQUERY_VERSION}-1.linux_amd64.deb /tmp/osquery.deb
+ADD https://uptycs-basequery.s3.amazonaws.com/${BASEQUERY_VERSION}/basequery_${BASEQUERY_VERSION}-1.linux_amd64.deb /tmp/basequery.deb
 COPY cloudquery /usr/local/bin/cloudquery.ext
 
 RUN set -ex; \
     DEBIAN_FRONTEND=noninteractive apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates && \
-    dpkg -i /tmp/osquery.deb && \
+    dpkg -i /tmp/basequery.deb && \
     /etc/init.d/osqueryd stop && \
     rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/* && \
     groupadd -g 1000 cloudquery && \
     useradd -m -g cloudquery -u 1000 -d /opt/cloudquery -s /bin/bash cloudquery && \
-    mkdir /opt/cloudquery/etc /opt/cloudquery/etc/config /opt/cloudquery/logs /opt/cloudquery/var && \
+    mkdir /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var && \
     echo "/usr/local/bin/cloudquery.ext" > /opt/cloudquery/etc/extensions.load && \
     chmod 700 /usr/local/bin/cloudquery.ext && \
-    chown cloudquery:cloudquery /usr/bin/osquery? /usr/local/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/etc/config /opt/cloudquery/logs /opt/cloudquery/var
+    chown cloudquery:cloudquery /usr/bin/osquery? /usr/local/bin/cloudquery.ext /opt/cloudquery/etc/extensions.load /opt/cloudquery/etc /opt/cloudquery/logs /opt/cloudquery/var
 
 USER cloudquery
 
@@ -39,7 +39,6 @@ ENV CLOUDQUERY_EXT_HOME /opt/cloudquery/etc
 
 WORKDIR /opt/cloudquery
 
-COPY extension_config.json                      /opt/cloudquery/etc/config
 COPY osquery.flags osquery.conf                 /opt/cloudquery/etc/
 COPY extension/aws/ec2/table_config.json        /opt/cloudquery/etc/aws/ec2/
 COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/
