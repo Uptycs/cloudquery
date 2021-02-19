@@ -1,0 +1,18 @@
+{
+  "aws_eks": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Clusters",
+        "targetName": "clusters",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}
