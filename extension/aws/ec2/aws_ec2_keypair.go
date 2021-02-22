@@ -140,7 +140,7 @@ func processAccountDescribeKeyPairs(account *utilities.ExtensionConfigurationAws
 	for _, region := range regions {
 		result, err := processRegionDescribeKeyPairs(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

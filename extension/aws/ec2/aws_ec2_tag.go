@@ -144,7 +144,7 @@ func processAccountDescribeTags(account *utilities.ExtensionConfigurationAwsAcco
 	for _, region := range regions {
 		result, err := processRegionDescribeTags(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

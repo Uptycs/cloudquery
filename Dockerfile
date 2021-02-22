@@ -7,7 +7,7 @@
 
 FROM ubuntu:20.04
 
-ARG OSQUERY_VERSION=4.6.0
+ARG BASEQUERY_VERSION=4.6.0
 ARG CLOUDQUERY_VERSION
 
 LABEL \
@@ -16,14 +16,14 @@ LABEL \
   version="${CLOUDQUERY_VERSION}" \
   url="https://github.com/Uptycs/cloudquery"
 
-ADD https://pkg.osquery.io/deb/osquery_${OSQUERY_VERSION}-1.linux_amd64.deb /tmp/osquery.deb
+ADD https://uptycs-basequery.s3.amazonaws.com/${BASEQUERY_VERSION}/basequery_${BASEQUERY_VERSION}-1.linux_amd64.deb /tmp/basequery.deb
 COPY cloudquery /usr/local/bin/cloudquery.ext
 
 RUN set -ex; \
     DEBIAN_FRONTEND=noninteractive apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates && \
-    dpkg -i /tmp/osquery.deb && \
+    dpkg -i /tmp/basequery.deb && \
     /etc/init.d/osqueryd stop && \
     rm -rf /var/osquery/* /var/log/osquery/* /var/lib/apt/lists/* /var/cache/apt/* /tmp/* && \
     groupadd -g 1000 cloudquery && \
@@ -43,6 +43,10 @@ COPY osquery.flags osquery.conf                 /opt/cloudquery/etc/
 COPY extension/aws/ec2/table_config.json        /opt/cloudquery/etc/aws/ec2/
 COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/
 COPY extension/aws/s3/table_config.json         /opt/cloudquery/etc/aws/s3/
+COPY extension/aws/cloudtrail/table_config.json /opt/cloudquery/etc/aws/cloudtrail/
+COPY extension/aws/acm/table_config.json        /opt/cloudquery/etc/aws/acm/
+COPY extension/aws/cloudwatch/table_config.json /opt/cloudquery/etc/aws/cloudwatch/
+COPY extension/aws/config/table_config.json     /opt/cloudquery/etc/aws/config/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/gcp/compute/table_config.json    /opt/cloudquery/etc/gcp/compute/
 COPY extension/gcp/dns/table_config.json        /opt/cloudquery/etc/gcp/dns/
@@ -50,6 +54,10 @@ COPY extension/gcp/file/table_config.json       /opt/cloudquery/etc/gcp/file/
 COPY extension/gcp/iam/table_config.json        /opt/cloudquery/etc/gcp/iam/
 COPY extension/gcp/storage/table_config.json    /opt/cloudquery/etc/gcp/storage/
 COPY extension/gcp/sql/table_config.json        /opt/cloudquery/etc/gcp/sql/
+COPY extension/gcp/container/table_config.json  /opt/cloudquery/etc/gcp/container/
+COPY extension/gcp/function/table_config.json   /opt/cloudquery/etc/gcp/function/
+COPY extension/gcp/run/table_config.json        /opt/cloudquery/etc/gcp/run/
+COPY extension/gcp/cloudlog/table_config.json   /opt/cloudquery/etc/gcp/cloudlog/
 
 CMD ["/usr/bin/osqueryd", \
     "--flagfile=/opt/cloudquery/etc/osquery.flags", \
