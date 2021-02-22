@@ -145,9 +145,7 @@ func processAccountListApplications(account *utilities.ExtensionConfigurationAws
 	for _, region := range regions {
 		result, err := processRegionListApplications(tableConfig, account, region)
 		if err != nil {
-			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_deploy_list_application",
-			}).Error(resultMap, err)
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
