@@ -37,8 +37,8 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
-	"github.com/kolide/osquery-go"
-	"github.com/kolide/osquery-go/plugin/table"
+	"github.com/Uptycs/basequery-go"
+	"github.com/Uptycs/basequery-go/plugin/table"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -99,8 +99,17 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
-		projectID := readProjectIDFromCredentialFile(keyFilePath)
-		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		if keyFilePath != "" {
+			projectID := readProjectIDFromCredentialFile(keyFilePath)
+			// Read ProjectID from keyFile
+			utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		} else {
+			// This is case where we are not using shared credentials.
+			// ProjectID must be set in config.
+			if utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID == "" {
+				utilities.GetLogger().Error("GCP account is missing projectId setting")
+			}
+		}
 	}
 
 	// Read project ID from ADC
@@ -125,7 +134,16 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
 
-	var awsConfigFileList = []string{"aws/acm/table_config.json", "aws/codecommit/table_config.json", "aws/ec2/table_config.json", "aws/s3/table_config.json", "aws/iam/table_config.json", "aws/cloudwatch/table_config.json", "aws/config/table_config.json"}
+	var awsConfigFileList = []string{
+		"aws/ec2/table_config.json",
+		"aws/codecommit/table_config.json",
+		"aws/s3/table_config.json",
+		"aws/iam/table_config.json",
+		"aws/cloudtrail/table_config.json",
+		"aws/acm/table_config.json",
+		"aws/cloudwatch/table_config.json",
+		"aws/config/table_config.json",
+	}
 
 	var gcpConfigFileList = []string{
 		"gcp/compute/table_config.json",
@@ -137,6 +155,7 @@ func ReadTableConfigurations(homeDir string) {
 		"gcp/container/table_config.json",
 		"gcp/function/table_config.json",
 		"gcp/run/table_config.json",
+		"gcp/cloudlog/table_config.json",
 	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
@@ -172,7 +191,13 @@ func ReadTableConfigurations(homeDir string) {
 var gcpComputeHandler = compute.NewGcpComputeHandler(compute.NewGcpComputeImpl())
 var gcpStorageHandler = storage.NewGcpStorageHandler(storage.NewGcpStorageImpl())
 
-// RegisterPlugins TODO
+func registerEventTables(server *osquery.ExtensionManagerServer) {
+	for _, eventTable := range GetEventTables() {
+		server.RegisterPlugin(table.NewPlugin(eventTable.GetName(), eventTable.GetColumns(), eventTable.GetGenFunction()))
+	}
+}
+
+// RegisterPlugins
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
@@ -190,7 +215,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_route_table", ec2.DescribeRouteTablesColumns(), ec2.DescribeRouteTablesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_security_group", ec2.DescribeSecurityGroupsColumns(), ec2.DescribeSecurityGroupsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_tag", ec2.DescribeTagsColumns(), ec2.DescribeTagsGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_ec2_address", ec2.DescribeAddressesColumns(), ec2.DescribeAddressesGenerate))
+	//server.RegisterPlugin(table.NewPlugin("aws_ec2_address", ec2.DescribeAddressesColumns(), ec2.DescribeAddressesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_flowlog", ec2.DescribeFlowLogsColumns(), ec2.DescribeFlowLogsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_keypair", ec2.DescribeKeyPairsColumns(), ec2.DescribeKeyPairsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_snapshot", ec2.DescribeSnapshotsColumns(), ec2.DescribeSnapshotsGenerate))
@@ -246,4 +271,6 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// Azure Compute
 	server.RegisterPlugin(table.NewPlugin("azure_compute_vm", azurecompute.VirtualMachinesColumns(), azurecompute.VirtualMachinesGenerate))
 	server.RegisterPlugin(table.NewPlugin("azure_compute_networkinterface", azurecompute.InterfacesColumns(), azurecompute.InterfacesGenerate))
+	// Event tables
+	registerEventTables(server)
 }

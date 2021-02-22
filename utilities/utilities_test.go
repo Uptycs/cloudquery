@@ -201,7 +201,23 @@ func TestGetStringValue(t *testing.T) {
 		{"\"withquotes\"", "withquotes"},
 	}
 	for _, entry := range list {
-		strVal := getStringValue(entry.In)
+		strVal := GetStringValue(entry.In)
+		assert.Equal(t, entry.Expected, strVal)
+	}
+}
+
+func TestGetSnakeCase(t *testing.T) {
+	list := []myTest{
+		{"id", "id"},
+		{"ID", "id"},
+		{"requestId", "request_id"},
+		{"thisIsSnakeCase", "this_is_snake_case"},
+		{"ThisIsSnakeCase", "this_is_snake_case"},
+		{"srcIPAddress", "src_ip_address"},
+		{"snake_case", "snake_case"},
+	}
+	for _, entry := range list {
+		strVal := GetSnakeCase(entry.In.(string))
 		assert.Equal(t, entry.Expected, strVal)
 	}
 }

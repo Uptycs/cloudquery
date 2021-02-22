@@ -14,7 +14,8 @@ import (
 	"strconv"
 )
 
-func getStringValue(value interface{}) string {
+// GetStringValue returns the string representation of given interface
+func GetStringValue(value interface{}) string {
 	if value == nil {
 		return ""
 	}
