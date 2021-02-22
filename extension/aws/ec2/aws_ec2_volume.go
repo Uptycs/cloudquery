@@ -202,7 +202,7 @@ func processAccountDescribeVolumes(account *utilities.ExtensionConfigurationAwsA
 	for _, region := range regions {
 		result, err := processRegionDescribeVolumes(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

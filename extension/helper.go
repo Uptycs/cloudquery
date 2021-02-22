@@ -99,8 +99,17 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
-		projectID := readProjectIDFromCredentialFile(keyFilePath)
-		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		if keyFilePath != "" {
+			projectID := readProjectIDFromCredentialFile(keyFilePath)
+			// Read ProjectID from keyFile
+			utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		} else {
+			// This is case where we are not using shared credentials.
+			// ProjectID must be set in config.
+			if utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID == "" {
+				utilities.GetLogger().Error("GCP account is missing projectId setting")
+			}
+		}
 	}
 
 	// Read project ID from ADC
@@ -146,6 +155,7 @@ func ReadTableConfigurations(homeDir string) {
 		"gcp/container/table_config.json",
 		"gcp/function/table_config.json",
 		"gcp/run/table_config.json",
+		"gcp/cloudlog/table_config.json",
 	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
