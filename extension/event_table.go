@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Uptycs/basequery-go/plugin/table"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudtrail"
+	"github.com/Uptycs/cloudquery/extension/gcp/cloudlog"
 	"sync"
 	"time"
 )
@@ -26,6 +27,7 @@ func GetEventTables() []EventTable {
 	once.Do(func() {
 		eventTableList = []EventTable{
 			&cloudtrail.CloudTrailEventTable{},
+			&cloudlog.CloudLogEventTable{},
 		}
 	})
 	return eventTableList

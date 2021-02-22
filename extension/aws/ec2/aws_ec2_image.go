@@ -227,7 +227,7 @@ func processAccountDescribeImages(account *utilities.ExtensionConfigurationAwsAc
 	for _, region := range regions {
 		result, err := processRegionDescribeImages(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

@@ -1,0 +1,11 @@
+{
+  "gcp_cloud_log_events": {
+    "aws": {},
+    "gcp": {
+      "projectIdAttribute": "project_id"
+    },
+    "azure": {},
+    "parsedAttributes": [
+    ]
+  }
+}
