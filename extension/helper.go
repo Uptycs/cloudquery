@@ -199,7 +199,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS DIRECTORY
-	server.RegisterPlugin(table.NewPlugin("aws_directory", directoryservice.DescribeDirectoriesColumns(), directoryservice.DescribeDirectoriesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_directory_describe_directories", directoryservice.DescribeDirectoriesColumns(), directoryservice.DescribeDirectoriesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))

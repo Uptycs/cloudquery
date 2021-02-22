@@ -32,12 +32,12 @@ func DescribeDirectoriesColumns() []table.ColumnDefinition {
 		table.TextColumn("access_url"),
 		table.TextColumn("alias"),
 		table.TextColumn("connect_settings"),
-		table.TextColumn("connect_settings_availability_zones"),
-		table.TextColumn("connect_settings_connect_ips"),
-		table.TextColumn("connect_settings_customer_user_name"),
-		table.TextColumn("connect_settings_security_group_id"),
-		table.TextColumn("connect_settings_subnet_ids"),
-		table.TextColumn("connect_settings_vpc_id"),
+		//table.TextColumn("connect_settings_availability_zones"),
+		//table.TextColumn("connect_settings_connect_ips"),
+		//table.TextColumn("connect_settings_customer_user_name"),
+		//table.TextColumn("connect_settings_security_group_id"),
+		//table.TextColumn("connect_settings_subnet_ids"),
+		//table.TextColumn("connect_settings_vpc_id"),
 		table.TextColumn("description"),
 		table.IntegerColumn("desired_number_of_domain_controllers"),
 		table.TextColumn("directory_id"),
@@ -66,37 +66,37 @@ func DescribeDirectoriesColumns() []table.ColumnDefinition {
 		//table.BigIntColumn("launch_time_wall"),
 		table.TextColumn("name"),
 		table.TextColumn("owner_directory_description"),
-		table.TextColumn("owner_directory_description_account_id"),
-		table.TextColumn("owner_directory_description_directory_id"),
-		table.TextColumn("owner_directory_description_dns_ip_addrs"),
-		table.TextColumn("owner_directory_description_radius_settings"),
-		table.TextColumn("owner_directory_description_radius_settings_authentication_protocol"),
-		table.TextColumn("owner_directory_description_radius_settings_display_label"),
-		table.IntegerColumn("owner_directory_description_radius_settings_radius_port"),
-		table.IntegerColumn("owner_directory_description_radius_settings_radius_retries"),
-		table.TextColumn("owner_directory_description_radius_settings_radius_servers"),
-		table.IntegerColumn("owner_directory_description_radius_settings_radius_timeout"),
-		table.TextColumn("owner_directory_description_radius_settings_shared_secret"),
-		table.TextColumn("owner_directory_description_radius_settings_use_same_username"),
-		table.TextColumn("owner_directory_description_radius_status"),
-		table.TextColumn("owner_directory_description_vpc_settings"),
-		table.TextColumn("owner_directory_description_vpc_settings_availability_zones"),
-		table.TextColumn("owner_directory_description_vpc_settings_security_group_id"),
-		table.TextColumn("owner_directory_description_vpc_settings_subnet_ids"),
-		table.TextColumn("owner_directory_description_vpc_settings_vpc_id"),
+		//table.TextColumn("owner_directory_description_account_id"),
+		//table.TextColumn("owner_directory_description_directory_id"),
+		//table.TextColumn("owner_directory_description_dns_ip_addrs"),
+		//table.TextColumn("owner_directory_description_radius_settings"),
+		//table.TextColumn("owner_directory_description_radius_settings_authentication_protocol"),
+		//table.TextColumn("owner_directory_description_radius_settings_display_label"),
+		//table.IntegerColumn("owner_directory_description_radius_settings_radius_port"),
+		//table.IntegerColumn("owner_directory_description_radius_settings_radius_retries"),
+		//table.TextColumn("owner_directory_description_radius_settings_radius_servers"),
+		//table.IntegerColumn("owner_directory_description_radius_settings_radius_timeout"),
+		//table.TextColumn("owner_directory_description_radius_settings_shared_secret"),
+		//table.TextColumn("owner_directory_description_radius_settings_use_same_username"),
+		//table.TextColumn("owner_directory_description_radius_status"),
+		//table.TextColumn("owner_directory_description_vpc_settings"),
+		//table.TextColumn("owner_directory_description_vpc_settings_availability_zones"),
+		//table.TextColumn("owner_directory_description_vpc_settings_security_group_id"),
+		//table.TextColumn("owner_directory_description_vpc_settings_subnet_ids"),
+		//table.TextColumn("owner_directory_description_vpc_settings_vpc_id"),
 		table.TextColumn("radius_settings"),
-		table.TextColumn("radius_settings_authentication_protocol"),
-		table.TextColumn("radius_settings_display_label"),
-		table.IntegerColumn("radius_settings_radius_port"),
-		table.IntegerColumn("radius_settings_radius_retries"),
-		table.TextColumn("radius_settings_radius_servers"),
-		table.IntegerColumn("radius_settings_radius_timeout"),
-		table.TextColumn("radius_settings_shared_secret"),
-		table.TextColumn("radius_settings_use_same_username"),
+		//table.TextColumn("radius_settings_authentication_protocol"),
+		//table.TextColumn("radius_settings_display_label"),
+		//table.IntegerColumn("radius_settings_radius_port"),
+		//table.IntegerColumn("radius_settings_radius_retries"),
+		//table.TextColumn("radius_settings_radius_servers"),
+		//table.IntegerColumn("radius_settings_radius_timeout"),
+		//table.TextColumn("radius_settings_shared_secret"),
+		//table.TextColumn("radius_settings_use_same_username"),
 		table.TextColumn("radius_status"),
 		table.TextColumn("regions_info"),
-		table.TextColumn("regions_info_additional_regions"),
-		table.TextColumn("regions_info_primary_region"),
+		//table.TextColumn("regions_info_additional_regions"),
+		//table.TextColumn("regions_info_primary_region"),
 		table.TextColumn("share_method"),
 		table.TextColumn("share_notes"),
 		table.TextColumn("share_status"),
@@ -104,7 +104,7 @@ func DescribeDirectoriesColumns() []table.ColumnDefinition {
 		table.TextColumn("size"),
 		table.TextColumn("sso_enabled"),
 		table.TextColumn("stage"),
-		table.TextColumn("stage_last_updated_date_time"),
+		//table.TextColumn("stage_last_updated_date_time"),
 		//table.BigIntColumn("stage_last_updated_date_time_ext"),
 		//table.TextColumn("stage_last_updated_date_time_loc"),
 		//table.BigIntColumn("stage_last_updated_date_time_loc_cache_end"),
@@ -125,13 +125,13 @@ func DescribeDirectoriesColumns() []table.ColumnDefinition {
 		//table.TextColumn("stage_last_updated_date_time_loc_zone_name"),
 		//table.IntegerColumn("stage_last_updated_date_time_loc_zone_offset"),
 		//table.BigIntColumn("stage_last_updated_date_time_wall"),
-		table.TextColumn("stage_reason"),
+		//table.TextColumn("stage_reason"),
 		table.TextColumn("type"),
 		table.TextColumn("vpc_settings"),
-		table.TextColumn("vpc_settings_availability_zones"),
-		table.TextColumn("vpc_settings_security_group_id"),
-		table.TextColumn("vpc_settings_subnet_ids"),
-		table.TextColumn("vpc_settings_vpc_id"),
+		//table.TextColumn("vpc_settings_availability_zones"),
+		//table.TextColumn("vpc_settings_security_group_id"),
+		//table.TextColumn("vpc_settings_subnet_ids"),
+		//table.TextColumn("vpc_settings_vpc_id"),
 		//table.TextColumn("values"),
 
 	}
@@ -142,7 +142,7 @@ func DescribeDirectoriesGenerate(osqCtx context.Context, queryContext table.Quer
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory",
+			"tableName": "aws_directory_describe_directories",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeDirectories(nil)
@@ -153,7 +153,7 @@ func DescribeDirectoriesGenerate(osqCtx context.Context, queryContext table.Quer
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_directory",
+				"tableName": "aws_directory_describe_directories",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeDirectories(&account)
@@ -180,7 +180,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_directory",
+		"tableName": "aws_directory_describe_directories",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -191,7 +191,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	result, err := svc.DescribeDirectories(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory",
+			"tableName": "aws_directory_describe_directories",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"task":      "DescribeDirectories",
@@ -203,7 +203,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory",
+			"tableName": "aws_directory_describe_directories",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"errString": err.Error(),
@@ -228,17 +228,17 @@ func processAccountDescribeDirectories(account *utilities.ExtensionConfiguration
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_directory"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_directory_describe_directories"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory",
+			"tableName": "aws_directory_describe_directories",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
 		result, err := processRegionDescribeDirectories(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

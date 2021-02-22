@@ -1,5 +1,5 @@
 {
-  "aws_directory": {
+  "aws_directory_describe_directories": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
@@ -29,37 +29,37 @@
         "sourceName": "DirectoryDescriptions_ConnectSettings_AvailabilityZones",
         "targetName": "connect_settings_availability_zones",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ConnectSettings_ConnectIps",
         "targetName": "connect_settings_connect_ips",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ConnectSettings_CustomerUserName",
         "targetName": "connect_settings_customer_user_name",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ConnectSettings_SecurityGroupId",
         "targetName": "connect_settings_security_group_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ConnectSettings_SubnetIds",
         "targetName": "connect_settings_subnet_ids",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ConnectSettings_VpcId",
         "targetName": "connect_settings_vpc_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_Description",
@@ -233,109 +233,109 @@
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_AccountId",
         "targetName": "owner_directory_description_account_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_DirectoryId",
         "targetName": "owner_directory_description_directory_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_DnsIpAddrs",
         "targetName": "owner_directory_description_dns_ip_addrs",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings",
         "targetName": "owner_directory_description_radius_settings",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_AuthenticationProtocol",
         "targetName": "owner_directory_description_radius_settings_authentication_protocol",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_DisplayLabel",
         "targetName": "owner_directory_description_radius_settings_display_label",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusPort",
         "targetName": "owner_directory_description_radius_settings_radius_port",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusRetries",
         "targetName": "owner_directory_description_radius_settings_radius_retries",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusServers",
         "targetName": "owner_directory_description_radius_settings_radius_servers",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusTimeout",
         "targetName": "owner_directory_description_radius_settings_radius_timeout",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_SharedSecret",
         "targetName": "owner_directory_description_radius_settings_shared_secret",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_UseSameUsername",
         "targetName": "owner_directory_description_radius_settings_use_same_username",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusStatus",
         "targetName": "owner_directory_description_radius_status",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings",
         "targetName": "owner_directory_description_vpc_settings",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_AvailabilityZones",
         "targetName": "owner_directory_description_vpc_settings_availability_zones",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_SecurityGroupId",
         "targetName": "owner_directory_description_vpc_settings_security_group_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_SubnetIds",
         "targetName": "owner_directory_description_vpc_settings_subnet_ids",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_VpcId",
         "targetName": "owner_directory_description_vpc_settings_vpc_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings",
@@ -347,49 +347,49 @@
         "sourceName": "DirectoryDescriptions_RadiusSettings_AuthenticationProtocol",
         "targetName": "radius_settings_authentication_protocol",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_DisplayLabel",
         "targetName": "radius_settings_display_label",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusPort",
         "targetName": "radius_settings_radius_port",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusRetries",
         "targetName": "radius_settings_radius_retries",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusServers",
         "targetName": "radius_settings_radius_servers",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusTimeout",
         "targetName": "radius_settings_radius_timeout",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_SharedSecret",
         "targetName": "radius_settings_shared_secret",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusSettings_UseSameUsername",
         "targetName": "radius_settings_use_same_username",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RadiusStatus",
@@ -407,13 +407,13 @@
         "sourceName": "DirectoryDescriptions_RegionsInfo_AdditionalRegions",
         "targetName": "regions_info_additional_regions",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_RegionsInfo_PrimaryRegion",
         "targetName": "regions_info_primary_region",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_ShareMethod",
@@ -461,7 +461,7 @@
         "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime",
         "targetName": "stage_last_updated_date_time",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_ext",
@@ -587,7 +587,7 @@
         "sourceName": "DirectoryDescriptions_StageReason",
         "targetName": "stage_reason",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_Type",
@@ -605,25 +605,25 @@
         "sourceName": "DirectoryDescriptions_VpcSettings_AvailabilityZones",
         "targetName": "vpc_settings_availability_zones",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_VpcSettings_SecurityGroupId",
         "targetName": "vpc_settings_security_group_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_VpcSettings_SubnetIds",
         "targetName": "vpc_settings_subnet_ids",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "DirectoryDescriptions_VpcSettings_VpcId",
         "targetName": "vpc_settings_vpc_id",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "ResultMetadata_values",

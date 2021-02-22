@@ -1,1 +1,1 @@
-- aws_directory
+- aws_directory_describe_directories
