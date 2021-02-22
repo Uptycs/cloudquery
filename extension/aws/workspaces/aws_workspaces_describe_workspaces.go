@@ -37,8 +37,8 @@ func DescribeWorkspacesColumns() []table.ColumnDefinition {
 		table.TextColumn("error_message"),
 		table.TextColumn("ip_address"),
 		table.TextColumn("modification_states"),
-		table.TextColumn("modification_states_resource"),
-		table.TextColumn("modification_states_state"),
+		//table.TextColumn("modification_states_resource"),
+		//table.TextColumn("modification_states_state"),
 		table.TextColumn("root_volume_encryption_enabled"),
 		table.TextColumn("state"),
 		table.TextColumn("subnet_id"),
@@ -47,11 +47,12 @@ func DescribeWorkspacesColumns() []table.ColumnDefinition {
 		table.TextColumn("volume_encryption_key"),
 		table.TextColumn("workspace_id"),
 		table.TextColumn("workspace_properties"),
-		table.TextColumn("workspace_properties_compute_type_name"),
-		table.IntegerColumn("workspace_properties_root_volume_size_gib"),
-		table.TextColumn("workspace_properties_running_mode"),
-		table.IntegerColumn("workspace_properties_running_mode_auto_stop_timeout_in_minutes"),
-		table.IntegerColumn("workspace_properties_user_volume_size_gib"),
+		//table.TextColumn("workspace_properties_compute_type_name"),
+		//table.IntegerColumn("workspace_properties_root_volume_size_gib"),
+		//table.TextColumn("workspace_properties_running_mode"),
+		//table.IntegerColumn("workspace_properties_running_mode_auto_stop_timeout_in_minutes"),
+		//table.IntegerColumn("workspace_properties_user_volume_size_gib"),
+
 	}
 }
 
@@ -163,9 +164,7 @@ func processAccountDescribeWorkspaces(account *utilities.ExtensionConfigurationA
 	for _, region := range regions {
 		result, err := processRegionDescribeWorkspaces(tableConfig, account, region)
 		if err != nil {
-			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_workspaces_describe_workspaces",
-			}).Error("failed to get table for region " + *region.RegionName)
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

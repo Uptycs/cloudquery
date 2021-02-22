@@ -59,13 +59,13 @@
         "sourceName": "Workspaces_ModificationStates_Resource",
         "targetName": "modification_states_resource",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_ModificationStates_State",
         "targetName": "modification_states_state",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_RootVolumeEncryptionEnabled",
@@ -119,31 +119,31 @@
         "sourceName": "Workspaces_WorkspaceProperties_ComputeTypeName",
         "targetName": "workspace_properties_compute_type_name",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_WorkspaceProperties_RootVolumeSizeGib",
         "targetName": "workspace_properties_root_volume_size_gib",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_WorkspaceProperties_RunningMode",
         "targetName": "workspace_properties_running_mode",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_WorkspaceProperties_RunningModeAutoStopTimeoutInMinutes",
         "targetName": "workspace_properties_running_mode_auto_stop_timeout_in_minutes",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Workspaces_WorkspaceProperties_UserVolumeSizeGib",
         "targetName": "workspace_properties_user_volume_size_gib",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       }
     ]
   }
