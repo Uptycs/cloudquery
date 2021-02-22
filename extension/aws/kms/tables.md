@@ -1,1 +1,1 @@
-- aws_kms_keys
+- aws_kms_key

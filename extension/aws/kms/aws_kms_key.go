@@ -40,7 +40,7 @@ func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) (
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_kms_keys",
+			"tableName": "aws_kms_key",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountListKeys(nil)
@@ -51,7 +51,7 @@ func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) (
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_kms_keys",
+				"tableName": "aws_kms_key",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountListKeys(&account)
@@ -78,7 +78,7 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_kms_keys",
+		"tableName": "aws_kms_key",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -92,7 +92,7 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_kms_keys",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListKeys",
@@ -103,7 +103,7 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_kms_keys",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListKeys",
@@ -133,10 +133,10 @@ func processAccountListKeys(account *utilities.ExtensionConfigurationAwsAccount)
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_kms_keys"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_kms_key"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_kms_keys",
+			"tableName": "aws_kms_key",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

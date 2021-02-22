@@ -223,7 +223,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_kms_keys", kms.ListKeysColumns(), kms.ListKeysGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
