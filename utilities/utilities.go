@@ -11,6 +11,7 @@ package utilities
 
 import (
 	"encoding/json"
+	"unicode"
 
 	"fmt"
 
@@ -55,8 +56,24 @@ func ReadTableConfig(jsonEncoded []byte) error {
 func RowToMap(inMap map[string]string, row map[string]interface{}, tableConfig *TableConfig) map[string]string {
 	for key, value := range tableConfig.getParsedAttributeConfigMap() {
 		if row[key] != nil {
-			inMap[value.TargetName] = getStringValue(row[key])
+			inMap[value.TargetName] = GetStringValue(row[key])
 		}
 	}
 	return inMap
+}
+
+// GetSnakeCase converts a string into snakecase string
+func GetSnakeCase(source string) string {
+	runes := []rune(source)
+	length := len(runes)
+
+	var out []rune
+	for i := 0; i < length; i++ {
+		if i > 0 && unicode.IsUpper(runes[i]) &&
+			((i+1 < length && unicode.IsLower(runes[i+1])) || unicode.IsLower(runes[i-1])) && runes[i-1] != '_' {
+			out = append(out, '_')
+		}
+		out = append(out, unicode.ToLower(runes[i]))
+	}
+	return string(out)
 }

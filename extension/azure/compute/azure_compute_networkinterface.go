@@ -19,8 +19,8 @@ import (
 	"github.com/Uptycs/cloudquery/extension/azure"
 	extazure "github.com/Uptycs/cloudquery/extension/azure"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	"github.com/Uptycs/cloudquery/utilities"
-	"github.com/kolide/osquery-go/plugin/table"
 
 	"github.com/Azure/azure-sdk-for-go/services/network/mgmt/2018-01-01/network"
 )

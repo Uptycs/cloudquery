@@ -18,10 +18,10 @@ import (
 
 	"github.com/Uptycs/cloudquery/utilities"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/kolide/osquery-go/plugin/table"
 )
 
 // DescribeFlowLogsColumns returns the list of columns in the table
@@ -175,7 +175,7 @@ func processAccountDescribeFlowLogs(account *utilities.ExtensionConfigurationAws
 	for _, region := range regions {
 		result, err := processRegionDescribeFlowLogs(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

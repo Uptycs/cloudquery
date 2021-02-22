@@ -17,10 +17,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
-	"github.com/kolide/osquery-go/plugin/table"
 )
 
 type s3BucketInfo struct {

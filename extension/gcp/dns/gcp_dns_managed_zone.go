@@ -15,9 +15,9 @@ import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"github.com/Uptycs/cloudquery/utilities"
-	"github.com/kolide/osquery-go/plugin/table"
 
 	"google.golang.org/api/option"
 
@@ -108,9 +108,12 @@ func getGcpDNSManagedZonesNewServiceForAccount(ctx context.Context, account *uti
 	var projectID string
 	var service *gcpdns.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = gcpdns.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = gcpdns.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpdns.NewService(ctx)
