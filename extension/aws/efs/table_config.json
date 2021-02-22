@@ -1,5 +1,5 @@
 {
-  "aws_efs": {
+  "aws_efs_file_system": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
@@ -17,7 +17,7 @@
         "sourceName": "FileSystems_CreationTime_ext",
         "targetName": "creation_time_ext",
         "targetType": "BIGINT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "FileSystems_CreationTime_loc",
@@ -347,19 +347,19 @@
         "sourceName": "FileSystems_Tags_Key",
         "targetName": "tags_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "FileSystems_Tags_Value",
         "targetName": "tags_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "FileSystems_ThroughputMode",
         "targetName": "throughput_mode",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       }
     ]
   }

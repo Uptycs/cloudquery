@@ -30,7 +30,7 @@ func DescribeFileSystemsColumns() []table.ColumnDefinition {
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
 		table.TextColumn("creation_time"),
-		table.BigIntColumn("creation_time_ext"),
+		//table.BigIntColumn("creation_time_ext"),
 		//table.TextColumn("creation_time_loc"),
 		//table.BigIntColumn("creation_time_loc_cache_end"),
 		//table.BigIntColumn("creation_time_loc_cache_start"),
@@ -85,9 +85,10 @@ func DescribeFileSystemsColumns() []table.ColumnDefinition {
 		//table.BigIntColumn("size_in_bytes_value_in_ia"),
 		//table.BigIntColumn("size_in_bytes_value_in_standard"),
 		table.TextColumn("tags"),
-		table.TextColumn("tags_key"),
-		table.TextColumn("tags_value"),
-		table.TextColumn("throughput_mode"),
+		//table.TextColumn("tags_key"),
+		//table.TextColumn("tags_value"),
+		//table.TextColumn("throughput_mode"),
+
 	}
 }
 
@@ -96,7 +97,7 @@ func DescribeFileSystemsGenerate(osqCtx context.Context, queryContext table.Quer
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_efs",
+			"tableName": "aws_efs_file_system",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeFileSystems(nil)
@@ -107,7 +108,7 @@ func DescribeFileSystemsGenerate(osqCtx context.Context, queryContext table.Quer
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_efs",
+				"tableName": "aws_efs_file_system",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeFileSystems(&account)
@@ -134,7 +135,7 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_efs",
+		"tableName": "aws_efs_file_system",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -148,7 +149,7 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_efs",
+				"tableName": "aws_efs_file_system",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeFileSystems",
@@ -159,7 +160,7 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_efs",
+				"tableName": "aws_efs_file_system",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeFileSystems",
@@ -189,10 +190,10 @@ func processAccountDescribeFileSystems(account *utilities.ExtensionConfiguration
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_efs"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_efs_file_system"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_efs",
+			"tableName": "aws_efs_file_system",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
