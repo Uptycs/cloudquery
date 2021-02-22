@@ -108,9 +108,6 @@ func processRegionGetRestApis(tableConfig *utilities.TableConfig, account *utili
 
 	accountId := utilities.AwsAccountID
 	if account != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "test1",
-		}).Info(*region.RegionName)
 		accountId = account.ID
 	}
 
@@ -123,39 +120,39 @@ func processRegionGetRestApis(tableConfig *utilities.TableConfig, account *utili
 	svc := apigateway.NewFromConfig(*sess)
 	params := &apigateway.GetRestApisInput{}
 
-	result, err := svc.GetRestApis(context.TODO(), params)
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_apigateway_rest_api",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"task":      "GetRestApis",
-			"errString": err.Error(),
-		}).Error("failed to process region")
-		return resultMap, err
-	}
+	paginator := apigateway.NewGetRestApisPaginator(svc, params)
 
-	byteArr, err := json.Marshal(result)
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_apigateway_rest_api",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"errString": err.Error(),
-		}).Error("failed to marshal response")
-		return resultMap, err
-	}
-	utilities.GetLogger().WithFields(log.Fields{
-		"account":   accountId,
-		"tableName": "test2",
-	}).Info(*region.RegionName)
-	table := utilities.NewTable(byteArr, tableConfig)
-	for _, row := range table.Rows {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "test3",
-		}).Info(*region.RegionName)
-		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
-		resultMap = append(resultMap, result)
+	for {
+		page, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_apigateway_rest_api",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "GetRestApis",
+				"errString": err.Error(),
+			}).Error("failed to process region")
+			return resultMap, err
+		}
+		byteArr, err := json.Marshal(page)
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_apigateway_rest_api",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "GetRestApis",
+				"errString": err.Error(),
+			}).Error("failed to marshal response")
+			return nil, err
+		}
+		table := utilities.NewTable(byteArr, tableConfig)
+		for _, row := range table.Rows {
+			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
+			resultMap = append(resultMap, result)
+		}
+		if !paginator.HasMorePages() {
+			break
+		}
 	}
 	return resultMap, nil
 }
