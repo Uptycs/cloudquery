@@ -72,9 +72,12 @@ func getGcpIamServiceAccountsNewServiceForAccount(ctx context.Context, account *
 	var projectID string
 	var service *gcpiam.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = gcpiam.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = gcpiam.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpiam.NewService(ctx)
