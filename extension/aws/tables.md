@@ -28,3 +28,4 @@
   - aws_config_recorder
   - aws_config_delivery_channel
   - aws_kms_key
+  - aws_elastic_file_system
