@@ -280,7 +280,7 @@ func processAccountDescribeInstances(account *utilities.ExtensionConfigurationAw
 	for _, region := range regions {
 		result, err := processRegionDescribeInstances(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

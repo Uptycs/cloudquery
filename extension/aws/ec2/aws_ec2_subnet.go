@@ -164,7 +164,7 @@ func processAccountDescribeSubnets(account *utilities.ExtensionConfigurationAwsA
 	for _, region := range regions {
 		result, err := processRegionDescribeSubnets(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
