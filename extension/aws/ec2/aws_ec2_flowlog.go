@@ -175,7 +175,7 @@ func processAccountDescribeFlowLogs(account *utilities.ExtensionConfigurationAws
 	for _, region := range regions {
 		result, err := processRegionDescribeFlowLogs(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

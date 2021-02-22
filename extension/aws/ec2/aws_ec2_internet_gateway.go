@@ -149,7 +149,7 @@ func processAccountDescribeInternetGateways(account *utilities.ExtensionConfigur
 	for _, region := range regions {
 		result, err := processRegionDescribeInternetGateways(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

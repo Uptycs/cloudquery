@@ -190,7 +190,7 @@ func processAccountDescribeSecurityGroups(account *utilities.ExtensionConfigurat
 	for _, region := range regions {
 		result, err := processRegionDescribeSecurityGroups(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
