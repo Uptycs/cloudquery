@@ -186,7 +186,7 @@ func processAccountListPipelines(account *utilities.ExtensionConfigurationAwsAcc
 	for _, region := range regions {
 		result, err := processRegionListPipelines(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
