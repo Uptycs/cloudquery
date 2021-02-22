@@ -43,7 +43,7 @@ COPY osquery.flags osquery.conf                 /opt/cloudquery/etc/
 COPY extension/aws/ec2/table_config.json        /opt/cloudquery/etc/aws/ec2/
 COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/
 COPY extension/aws/s3/table_config.json         /opt/cloudquery/etc/aws/s3/
-COPY extension/aws/efs/table_config.json        /opt/cloudquery/etc/aws/efs/
+COPY extension/aws/kms/table_config.json        /opt/cloudquery/etc/aws/kms/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/gcp/compute/table_config.json    /opt/cloudquery/etc/gcp/compute/
 COPY extension/gcp/dns/table_config.json        /opt/cloudquery/etc/gcp/dns/
