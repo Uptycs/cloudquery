@@ -145,9 +145,7 @@ func processAccountListDetectors(account *utilities.ExtensionConfigurationAwsAcc
 	for _, region := range regions {
 		result, err := processRegionListDetectors(tableConfig, account, region)
 		if err != nil {
-			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_guardduty_list_detector",
-			}).Error(resultMap, err)
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
