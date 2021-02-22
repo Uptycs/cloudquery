@@ -1,5 +1,5 @@
 {
-  "aws_cloudformation": {
+  "aws_cloudformation_describe_stacks": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
@@ -287,7 +287,7 @@
         "sourceName": "Stacks_DriftInformation_LastCheckTimestamp",
         "targetName": "drift_information_last_check_timestamp",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_ext",
@@ -407,7 +407,7 @@
         "sourceName": "Stacks_DriftInformation_StackDriftStatus",
         "targetName": "drift_information_stack_drift_status",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_EnableTerminationProtection",
@@ -551,25 +551,25 @@
         "sourceName": "Stacks_Outputs_Description",
         "targetName": "outputs_description",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Outputs_ExportName",
         "targetName": "outputs_export_name",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Outputs_OutputKey",
         "targetName": "outputs_output_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Outputs_OutputValue",
         "targetName": "outputs_output_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Parameters",
@@ -581,25 +581,25 @@
         "sourceName": "Stacks_Parameters_ParameterKey",
         "targetName": "parameters_parameter_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Parameters_ParameterValue",
         "targetName": "parameters_parameter_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Parameters_ResolvedValue",
         "targetName": "parameters_resolved_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Parameters_UsePreviousValue",
         "targetName": "parameters_use_previous_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_ParentId",
@@ -623,25 +623,25 @@
         "sourceName": "Stacks_RollbackConfiguration_MonitoringTimeInMinutes",
         "targetName": "rollback_configuration_monitoring_time_in_minutes",
         "targetType": "INTEGER",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers",
         "targetName": "rollback_configuration_rollback_triggers",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers_Arn",
         "targetName": "rollback_configuration_rollback_triggers_arn",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers_Type",
         "targetName": "rollback_configuration_rollback_triggers_type",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_RootId",
@@ -671,7 +671,7 @@
         "sourceName": "Stacks_StackStatusReason",
         "targetName": "stack_status_reason",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Tags",
@@ -683,13 +683,13 @@
         "sourceName": "Stacks_Tags_Key",
         "targetName": "tags_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_Tags_Value",
         "targetName": "tags_value",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Stacks_TimeoutInMinutes",

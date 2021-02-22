@@ -18,10 +18,10 @@ import (
 
 	"github.com/Uptycs/cloudquery/utilities"
 
+	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cloudformation"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/kolide/osquery-go/plugin/table"
 )
 
 // DescribeStacksColumns returns the list of columns in the table
@@ -75,7 +75,7 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 		table.TextColumn("description"),
 		table.TextColumn("disable_rollback"),
 		table.TextColumn("drift_information"),
-		table.TextColumn("drift_information_last_check_timestamp"),
+		//table.TextColumn("drift_information_last_check_timestamp"),
 		//table.BigIntColumn("drift_information_last_check_timestamp_ext"),
 		//table.TextColumn("drift_information_last_check_timestamp_loc"),
 		//table.BigIntColumn("drift_information_last_check_timestamp_loc_cache_end"),
@@ -95,7 +95,7 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 		//table.TextColumn("drift_information_last_check_timestamp_loc_zone_name"),
 		//table.IntegerColumn("drift_information_last_check_timestamp_loc_zone_offset"),
 		//table.BigIntColumn("drift_information_last_check_timestamp_wall"),
-		table.TextColumn("drift_information_stack_drift_status"),
+		//table.TextColumn("drift_information_stack_drift_status"),
 		table.TextColumn("enable_termination_protection"),
 		table.TextColumn("last_updated_time"),
 		//table.BigIntColumn("last_updated_time_ext"),
@@ -119,30 +119,30 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 		//table.BigIntColumn("last_updated_time_wall"),
 		table.TextColumn("notification_ar_ns"),
 		table.TextColumn("outputs"),
-		table.TextColumn("outputs_description"),
-		table.TextColumn("outputs_export_name"),
-		table.TextColumn("outputs_output_key"),
-		table.TextColumn("outputs_output_value"),
+		//table.TextColumn("outputs_description"),
+		//table.TextColumn("outputs_export_name"),
+		//table.TextColumn("outputs_output_key"),
+		//table.TextColumn("outputs_output_value"),
 		table.TextColumn("parameters"),
-		table.TextColumn("parameters_parameter_key"),
-		table.TextColumn("parameters_parameter_value"),
-		table.TextColumn("parameters_resolved_value"),
-		table.TextColumn("parameters_use_previous_value"),
+		//table.TextColumn("parameters_parameter_key"),
+		//table.TextColumn("parameters_parameter_value"),
+		//table.TextColumn("parameters_resolved_value"),
+		//table.TextColumn("parameters_use_previous_value"),
 		table.TextColumn("parent_id"),
 		table.TextColumn("role_arn"),
 		table.TextColumn("rollback_configuration"),
-		table.IntegerColumn("rollback_configuration_monitoring_time_in_minutes"),
-		table.TextColumn("rollback_configuration_rollback_triggers"),
-		table.TextColumn("rollback_configuration_rollback_triggers_arn"),
-		table.TextColumn("rollback_configuration_rollback_triggers_type"),
+		//table.IntegerColumn("rollback_configuration_monitoring_time_in_minutes"),
+		//table.TextColumn("rollback_configuration_rollback_triggers"),
+		//table.TextColumn("rollback_configuration_rollback_triggers_arn"),
+		//table.TextColumn("rollback_configuration_rollback_triggers_type"),
 		table.TextColumn("root_id"),
 		table.TextColumn("stack_id"),
 		table.TextColumn("stack_name"),
 		table.TextColumn("stack_status"),
-		table.TextColumn("stack_status_reason"),
+		//table.TextColumn("stack_status_reason"),
 		table.TextColumn("tags"),
-		table.TextColumn("tags_key"),
-		table.TextColumn("tags_value"),
+		//table.TextColumn("tags_key"),
+		//table.TextColumn("tags_value"),
 		table.IntegerColumn("timeout_in_minutes"),
 	}
 }
@@ -152,7 +152,7 @@ func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudformation",
+			"tableName": "aws_cloudformation_describe_stacks",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeStacks(nil)
@@ -163,7 +163,7 @@ func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation",
+				"tableName": "aws_cloudformation_describe_stacks",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeStacks(&account)
@@ -190,7 +190,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudformation",
+		"tableName": "aws_cloudformation_describe_stacks",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -204,7 +204,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation",
+				"tableName": "aws_cloudformation_describe_stacks",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeStacks",
@@ -215,7 +215,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation",
+				"tableName": "aws_cloudformation_describe_stacks",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeStacks",
@@ -245,17 +245,17 @@ func processAccountDescribeStacks(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudformation"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudformation_describe_stacks"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudformation",
+			"tableName": "aws_cloudformation_describe_stacks",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
 		result, err := processRegionDescribeStacks(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

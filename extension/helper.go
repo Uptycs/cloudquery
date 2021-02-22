@@ -198,7 +198,7 @@ func registerEventTables(server *osquery.ExtensionManagerServer) {
 // RegisterPlugins
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//AWS CLOUDFORMATION
-	server.RegisterPlugin(table.NewPlugin("aws_cloudformation", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_describe_stacks", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS EC2
