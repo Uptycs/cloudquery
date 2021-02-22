@@ -1,1 +1,1 @@
-- aws_cloudtrail
+- aws_cloudtrail_trail

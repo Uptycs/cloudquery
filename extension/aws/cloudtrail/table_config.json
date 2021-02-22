@@ -1,5 +1,5 @@
 {
-  "aws_cloudtrail": {
+  "aws_cloudtrail_trail": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

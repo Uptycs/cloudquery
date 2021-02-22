@@ -53,7 +53,7 @@ func DescribeTrailsGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudtrail",
+			"tableName": "aws_cloudtrail_trail",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeTrails(nil)
@@ -64,7 +64,7 @@ func DescribeTrailsGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudtrail",
+				"tableName": "aws_cloudtrail_trail",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeTrails(&account)
@@ -91,7 +91,7 @@ func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudtrail",
+		"tableName": "aws_cloudtrail_trail",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -102,7 +102,7 @@ func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *ut
 	result, err := svc.DescribeTrails(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudtrail",
+			"tableName": "aws_cloudtrail_trail",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"task":      "DescribeTrails",
@@ -114,7 +114,7 @@ func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *ut
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudtrail",
+			"tableName": "aws_cloudtrail_trail",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"errString": err.Error(),
@@ -139,10 +139,10 @@ func processAccountDescribeTrails(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudtrail"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudtrail_trail"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudtrail",
+			"tableName": "aws_cloudtrail_trail",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
