@@ -1,5 +1,5 @@
 {
-  "aws_cloudformation_describe_stacks": {
+  "aws_cloudformation_stack": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

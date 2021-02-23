@@ -1,1 +1,1 @@
-- aws_cloudformation_describe_stacks
+- aws_cloudformation_stack

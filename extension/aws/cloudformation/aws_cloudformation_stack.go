@@ -152,7 +152,7 @@ func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryCont
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudformation_describe_stacks",
+			"tableName": "aws_cloudformation_stack",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeStacks(nil)
@@ -163,7 +163,7 @@ func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation_describe_stacks",
+				"tableName": "aws_cloudformation_stack",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeStacks(&account)
@@ -190,7 +190,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudformation_describe_stacks",
+		"tableName": "aws_cloudformation_stack",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -204,7 +204,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation_describe_stacks",
+				"tableName": "aws_cloudformation_stack",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeStacks",
@@ -215,7 +215,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudformation_describe_stacks",
+				"tableName": "aws_cloudformation_stack",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeStacks",
@@ -245,10 +245,10 @@ func processAccountDescribeStacks(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudformation_describe_stacks"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudformation_stack"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudformation_describe_stacks",
+			"tableName": "aws_cloudformation_stack",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
