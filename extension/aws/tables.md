@@ -1,6 +1,6 @@
 * AWS
   - aws_acm_certificate
-  - aws_code_commit_list_repository
+  - aws_codecommit_repository
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
   - aws_ec2_flowlog

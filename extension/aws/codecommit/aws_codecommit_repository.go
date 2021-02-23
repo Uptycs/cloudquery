@@ -41,7 +41,7 @@ func ListRepositoriesGenerate(osqCtx context.Context, queryContext table.QueryCo
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_commit_list_repository",
+			"tableName": "aws_codecommit_repository",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountListRepositories(nil)
@@ -52,7 +52,7 @@ func ListRepositoriesGenerate(osqCtx context.Context, queryContext table.QueryCo
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_commit_list_repository",
+				"tableName": "aws_codecommit_repository",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountListRepositories(&account)
@@ -79,7 +79,7 @@ func processRegionListRepositories(tableConfig *utilities.TableConfig, account *
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_code_commit_list_repository",
+		"tableName": "aws_codecommit_repository",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -93,7 +93,7 @@ func processRegionListRepositories(tableConfig *utilities.TableConfig, account *
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_commit_list_repository",
+				"tableName": "aws_codecommit_repository",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListRepositories",
@@ -104,7 +104,7 @@ func processRegionListRepositories(tableConfig *utilities.TableConfig, account *
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_commit_list_repository",
+				"tableName": "aws_codecommit_repository",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListRepositories",
@@ -134,10 +134,10 @@ func processAccountListRepositories(account *utilities.ExtensionConfigurationAws
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_code_commit_list_repository"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_codecommit_repository"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_commit_list_repository",
+			"tableName": "aws_codecommit_repository",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

@@ -204,7 +204,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS CODECOMMIT
-	server.RegisterPlugin(table.NewPlugin("aws_code_commit_list_repository", codecommit.ListRepositoriesColumns(), codecommit.ListRepositoriesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_codecommit_repository", codecommit.ListRepositoriesColumns(), codecommit.ListRepositoriesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))

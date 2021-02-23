@@ -1,1 +1,1 @@
-- aws_code_commit_list_repository
+- aws_codecommit_repository
