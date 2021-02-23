@@ -1,5 +1,5 @@
 {
-  "aws_workspaces_describe_workspaces": {
+  "aws_workspaces_workspace": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
  */
 
-package workspaces
+package kms
 
 import (
 	"context"
@@ -21,50 +21,29 @@ import (
 	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/aws/aws-sdk-go-v2/service/workspaces"
+	"github.com/aws/aws-sdk-go-v2/service/kms"
 )
 
-// DescribeWorkspacesColumns returns the list of columns in the table
-func DescribeWorkspacesColumns() []table.ColumnDefinition {
+// ListKeysColumns returns the list of columns in the table
+func ListKeysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		//table.TextColumn("values"),
-		table.TextColumn("bundle_id"),
-		table.TextColumn("computer_name"),
-		table.TextColumn("directory_id"),
-		table.TextColumn("error_code"),
-		table.TextColumn("error_message"),
-		table.TextColumn("ip_address"),
-		table.TextColumn("modification_states"),
-		//table.TextColumn("modification_states_resource"),
-		//table.TextColumn("modification_states_state"),
-		table.TextColumn("root_volume_encryption_enabled"),
-		table.TextColumn("state"),
-		table.TextColumn("subnet_id"),
-		table.TextColumn("user_name"),
-		table.TextColumn("user_volume_encryption_enabled"),
-		table.TextColumn("volume_encryption_key"),
-		table.TextColumn("workspace_id"),
-		table.TextColumn("workspace_properties"),
-		//table.TextColumn("workspace_properties_compute_type_name"),
-		//table.IntegerColumn("workspace_properties_root_volume_size_gib"),
-		//table.TextColumn("workspace_properties_running_mode"),
-		//table.IntegerColumn("workspace_properties_running_mode_auto_stop_timeout_in_minutes"),
-		//table.IntegerColumn("workspace_properties_user_volume_size_gib"),
-
+		table.TextColumn("region"),
+		table.TextColumn("key_arn"),
+		table.TextColumn("key_id"),
 	}
 }
 
-// DescribeWorkspacesGenerate returns the rows in the table for all configured accounts
-func DescribeWorkspacesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// ListKeysGenerate returns the rows in the table for all configured accounts
+func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_workspaces_describe_workspaces",
+			"tableName": "aws_kms_key",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeWorkspaces(nil)
+		results, err := processAccountListKeys(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -72,10 +51,10 @@ func DescribeWorkspacesGenerate(osqCtx context.Context, queryContext table.Query
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_workspaces_describe_workspaces",
+				"tableName": "aws_kms_key",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeWorkspaces(&account)
+			results, err := processAccountListKeys(&account)
 			if err != nil {
 				continue
 			}
@@ -86,7 +65,7 @@ func DescribeWorkspacesGenerate(osqCtx context.Context, queryContext table.Query
 	return resultMap, nil
 }
 
-func processRegionDescribeWorkspaces(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -99,24 +78,24 @@ func processRegionDescribeWorkspaces(tableConfig *utilities.TableConfig, account
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_workspaces_describe_workspaces",
+		"tableName": "aws_kms_key",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := workspaces.NewFromConfig(*sess)
-	params := &workspaces.DescribeWorkspacesInput{}
+	svc := kms.NewFromConfig(*sess)
+	params := &kms.ListKeysInput{}
 
-	paginator := workspaces.NewDescribeWorkspacesPaginator(svc, params)
+	paginator := kms.NewListKeysPaginator(svc, params)
 
 	for {
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_workspaces_describe_workspaces",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "DescribeWorkspaces",
+				"task":      "ListKeys",
 				"errString": err.Error(),
 			}).Error("failed to process region")
 			return resultMap, err
@@ -124,10 +103,10 @@ func processRegionDescribeWorkspaces(tableConfig *utilities.TableConfig, account
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_workspaces_describe_workspaces",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "DescribeWorkspaces",
+				"task":      "ListKeys",
 				"errString": err.Error(),
 			}).Error("failed to marshal response")
 			return nil, err
@@ -144,7 +123,7 @@ func processRegionDescribeWorkspaces(tableConfig *utilities.TableConfig, account
 	return resultMap, nil
 }
 
-func processAccountDescribeWorkspaces(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListKeys(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
@@ -154,17 +133,17 @@ func processAccountDescribeWorkspaces(account *utilities.ExtensionConfigurationA
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_workspaces_describe_workspaces"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_kms_key"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_workspaces_describe_workspaces",
+			"tableName": "aws_kms_key",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeWorkspaces(tableConfig, account, region)
+		result, err := processRegionListKeys(tableConfig, account, region)
 		if err != nil {
-			continue
+			return resultMap, err
 		}
 		resultMap = append(resultMap, result...)
 	}

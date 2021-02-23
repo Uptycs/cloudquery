@@ -18,6 +18,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
+	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/workspaces"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
@@ -142,6 +143,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
 		"aws/workspaces/table_config.json",
+		"aws/kms/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -233,8 +235,11 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
-	// AWS WORKSPACES
-	server.RegisterPlugin(table.NewPlugin("aws_workspaces_describe_workspaces", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
+	//aws workspace
+	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
+
+	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
+
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
