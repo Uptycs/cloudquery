@@ -42,7 +42,7 @@ func ListDetectorsGenerate(osqCtx context.Context, queryContext table.QueryConte
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_guardduty_list_detector",
+			"tableName": "aws_guardduty_detector",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountListDetectors(nil)
@@ -53,7 +53,7 @@ func ListDetectorsGenerate(osqCtx context.Context, queryContext table.QueryConte
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_guardduty_list_detector",
+				"tableName": "aws_guardduty_detector",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountListDetectors(&account)
@@ -80,7 +80,7 @@ func processRegionListDetectors(tableConfig *utilities.TableConfig, account *uti
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_guardduty_list_detector",
+		"tableName": "aws_guardduty_detector",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -94,7 +94,7 @@ func processRegionListDetectors(tableConfig *utilities.TableConfig, account *uti
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_guardduty_list_detector",
+				"tableName": "aws_guardduty_detector",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListDetectors",
@@ -105,7 +105,7 @@ func processRegionListDetectors(tableConfig *utilities.TableConfig, account *uti
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_guardduty_list_detector",
+				"tableName": "aws_guardduty_detector",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListDetectors",
@@ -135,10 +135,10 @@ func processAccountListDetectors(account *utilities.ExtensionConfigurationAwsAcc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_guardduty_list_detector"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_guardduty_detector"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_guardduty_list_detector",
+			"tableName": "aws_guardduty_detector",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

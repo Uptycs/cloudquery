@@ -1,5 +1,5 @@
 {
-  "aws_guardduty_list_detector": {
+  "aws_guardduty_detector": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

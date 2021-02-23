@@ -1,1 +1,1 @@
-- aws_guardduty_list_detector
+- aws_guardduty_detector

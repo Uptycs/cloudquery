@@ -219,7 +219,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS S3
 	server.RegisterPlugin(table.NewPlugin("aws_s3_bucket", s3.ListBucketsColumns(), s3.ListBucketsGenerate))
 	// AWS GUARDDUTY
-	server.RegisterPlugin(table.NewPlugin("aws_guardduty_list_detector", guardduty.ListDetectorsColumns(), guardduty.ListDetectorsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_guardduty_detector", guardduty.ListDetectorsColumns(), guardduty.ListDetectorsGenerate))
 	// AWS IAM
 	server.RegisterPlugin(table.NewPlugin("aws_iam_user", iam.ListUsersColumns(), iam.ListUsersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_role", iam.ListRolesColumns(), iam.ListRolesGenerate))
