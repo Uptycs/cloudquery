@@ -18,14 +18,11 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
-	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
-
-	"github.com/Uptycs/cloudquery/extension/aws/s3"
-
-	"github.com/Uptycs/cloudquery/utilities"
-
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
+	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
+	"github.com/Uptycs/cloudquery/extension/aws/kms"
+	"github.com/Uptycs/cloudquery/extension/aws/s3"
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
@@ -36,6 +33,7 @@ import (
 	gcprun "github.com/Uptycs/cloudquery/extension/gcp/run"
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
+	"github.com/Uptycs/cloudquery/utilities"
 
 	osquery "github.com/Uptycs/basequery-go"
 	"github.com/Uptycs/basequery-go/plugin/table"
@@ -142,6 +140,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
 		"aws/guardduty/table_config.json",
+		"aws/kms/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -235,6 +234,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
