@@ -148,7 +148,7 @@ func processAccountDescribeEgressOnlyInternetGateways(account *utilities.Extensi
 	for _, region := range regions {
 		result, err := processRegionDescribeEgressOnlyInternetGateways(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

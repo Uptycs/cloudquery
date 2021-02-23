@@ -19,6 +19,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
+	"github.com/Uptycs/cloudquery/extension/aws/kms"
 
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
 
@@ -99,8 +100,17 @@ func ReadExtensionConfigurations(filePath string, verbose bool) error {
 	// Set projectID for GCP accounts
 	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
 		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
-		projectID := readProjectIDFromCredentialFile(keyFilePath)
-		utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		if keyFilePath != "" {
+			projectID := readProjectIDFromCredentialFile(keyFilePath)
+			// Read ProjectID from keyFile
+			utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
+		} else {
+			// This is case where we are not using shared credentials.
+			// ProjectID must be set in config.
+			if utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID == "" {
+				utilities.GetLogger().Error("GCP account is missing projectId setting")
+			}
+		}
 	}
 
 	// Read project ID from ADC
@@ -133,6 +143,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
 		"aws/codedeploy/table_config.json",
+		"aws/kms/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -145,6 +156,7 @@ func ReadTableConfigurations(homeDir string) {
 		"gcp/container/table_config.json",
 		"gcp/function/table_config.json",
 		"gcp/run/table_config.json",
+		"gcp/cloudlog/table_config.json",
 	}
 	var azureConfigFileList = []string{"azure/compute/table_config.json"}
 	var configFileList = append(awsConfigFileList, gcpConfigFileList...)
@@ -191,7 +203,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS CODEDEPLOY
-	server.RegisterPlugin(table.NewPlugin("aws_code_deploy_list_application", codedeploy.ListApplicationsColumns(), codedeploy.ListApplicationsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_codedeploy_application", codedeploy.ListApplicationsColumns(), codedeploy.ListApplicationsGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
@@ -225,6 +237,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

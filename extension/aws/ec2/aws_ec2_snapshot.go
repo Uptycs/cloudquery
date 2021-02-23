@@ -175,7 +175,7 @@ func processAccountDescribeSnapshots(account *utilities.ExtensionConfigurationAw
 	for _, region := range regions {
 		result, err := processRegionDescribeSnapshots(tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

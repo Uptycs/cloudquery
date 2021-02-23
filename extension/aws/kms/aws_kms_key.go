@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
  */
 
-package cloudwatch
+package kms
 
 import (
 	"context"
@@ -20,30 +20,30 @@ import (
 
 	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go-v2/service/cloudwatchevents"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	"github.com/aws/aws-sdk-go-v2/service/kms"
 )
 
-// ListEventBusesColumns returns the list of columns in the table
-func ListEventBusesColumns() []table.ColumnDefinition {
+// ListKeysColumns returns the list of columns in the table
+func ListKeysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("arn"),
-		table.TextColumn("name"),
-		table.TextColumn("policy"),
+		table.TextColumn("region"),
+		table.TextColumn("key_arn"),
+		table.TextColumn("key_id"),
 	}
 }
 
-// ListEventBusesGenerate returns the rows in the table for all configured accounts
-func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// ListKeysGenerate returns the rows in the table for all configured accounts
+func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_bus",
+			"tableName": "aws_kms_key",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListEventBuses(nil)
+		results, err := processAccountListKeys(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -51,10 +51,10 @@ func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_cloudwatch_event_bus",
+				"tableName": "aws_kms_key",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListEventBuses(&account)
+			results, err := processAccountListKeys(&account)
 			if err != nil {
 				continue
 			}
@@ -65,7 +65,7 @@ func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -78,45 +78,52 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_cloudwatch_event_bus",
+		"tableName": "aws_kms_key",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := cloudwatchevents.NewFromConfig(*sess)
-	params := &cloudwatchevents.ListEventBusesInput{}
+	svc := kms.NewFromConfig(*sess)
+	params := &kms.ListKeysInput{}
 
-	result, err := svc.ListEventBuses(context.TODO(), params)
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_bus",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"task":      "ListEventBuses",
-			"errString": err.Error(),
-		}).Error("failed to process region")
-		return resultMap, err
-	}
+	paginator := kms.NewListKeysPaginator(svc, params)
 
-	byteArr, err := json.Marshal(result)
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_bus",
-			"account":   accountId,
-			"region":    *region.RegionName,
-			"errString": err.Error(),
-		}).Error("failed to marshal response")
-		return resultMap, err
-	}
-	table := utilities.NewTable(byteArr, tableConfig)
-	for _, row := range table.Rows {
-		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
-		resultMap = append(resultMap, result)
+	for {
+		page, err := paginator.NextPage(context.TODO())
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_kms_key",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "ListKeys",
+				"errString": err.Error(),
+			}).Error("failed to process region")
+			return resultMap, err
+		}
+		byteArr, err := json.Marshal(page)
+		if err != nil {
+			utilities.GetLogger().WithFields(log.Fields{
+				"tableName": "aws_kms_key",
+				"account":   accountId,
+				"region":    *region.RegionName,
+				"task":      "ListKeys",
+				"errString": err.Error(),
+			}).Error("failed to marshal response")
+			return nil, err
+		}
+		table := utilities.NewTable(byteArr, tableConfig)
+		for _, row := range table.Rows {
+			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
+			resultMap = append(resultMap, result)
+		}
+		if !paginator.HasMorePages() {
+			break
+		}
 	}
 	return resultMap, nil
 }
 
-func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListKeys(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
@@ -126,17 +133,17 @@ func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_cloudwatch_event_bus"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_kms_key"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_cloudwatch_event_bus",
+			"tableName": "aws_kms_key",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListEventBuses(tableConfig, account, region)
+		result, err := processRegionListKeys(tableConfig, account, region)
 		if err != nil {
-			continue
+			return resultMap, err
 		}
 		resultMap = append(resultMap, result...)
 	}

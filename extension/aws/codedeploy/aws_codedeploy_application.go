@@ -42,7 +42,7 @@ func ListApplicationsGenerate(osqCtx context.Context, queryContext table.QueryCo
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_deploy_list_application",
+			"tableName": "aws_codedeploy_application",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountListApplications(nil)
@@ -53,7 +53,7 @@ func ListApplicationsGenerate(osqCtx context.Context, queryContext table.QueryCo
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_deploy_list_application",
+				"tableName": "aws_codedeploy_application",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountListApplications(&account)
@@ -80,7 +80,7 @@ func processRegionListApplications(tableConfig *utilities.TableConfig, account *
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_code_deploy_list_application",
+		"tableName": "aws_codedeploy_application",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -94,7 +94,7 @@ func processRegionListApplications(tableConfig *utilities.TableConfig, account *
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_deploy_list_application",
+				"tableName": "aws_codedeploy_application",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListApplications",
@@ -105,7 +105,7 @@ func processRegionListApplications(tableConfig *utilities.TableConfig, account *
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_deploy_list_application",
+				"tableName": "aws_codedeploy_application",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListApplications",
@@ -135,10 +135,10 @@ func processAccountListApplications(account *utilities.ExtensionConfigurationAws
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_code_deploy_list_application"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_codedeploy_application"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_deploy_list_application",
+			"tableName": "aws_codedeploy_application",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

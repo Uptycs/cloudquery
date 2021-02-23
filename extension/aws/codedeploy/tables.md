@@ -1,1 +1,1 @@
-- aws_code_deploy_list_application
+- aws_codedeploy_application
