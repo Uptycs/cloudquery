@@ -1,6 +1,6 @@
 * AWS
   - aws_acm_certificate
-  - aws_directory_describe_directories
+  - aws_directoryservice_directory
   - aws_cloudfront_list_distributions
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
@@ -29,3 +29,4 @@
   - aws_cloudwatch_event_rule
   - aws_config_recorder
   - aws_config_delivery_channel
+  - aws_kms_key

@@ -142,7 +142,7 @@ func DescribeDirectoriesGenerate(osqCtx context.Context, queryContext table.Quer
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory_describe_directories",
+			"tableName": "aws_directoryservice_directory",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeDirectories(nil)
@@ -153,7 +153,7 @@ func DescribeDirectoriesGenerate(osqCtx context.Context, queryContext table.Quer
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_directory_describe_directories",
+				"tableName": "aws_directoryservice_directory",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeDirectories(&account)
@@ -180,7 +180,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_directory_describe_directories",
+		"tableName": "aws_directoryservice_directory",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -191,7 +191,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	result, err := svc.DescribeDirectories(context.TODO(), params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory_describe_directories",
+			"tableName": "aws_directoryservice_directory",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"task":      "DescribeDirectories",
@@ -203,7 +203,7 @@ func processRegionDescribeDirectories(tableConfig *utilities.TableConfig, accoun
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory_describe_directories",
+			"tableName": "aws_directoryservice_directory",
 			"account":   accountId,
 			"region":    *region.RegionName,
 			"errString": err.Error(),
@@ -228,10 +228,10 @@ func processAccountDescribeDirectories(account *utilities.ExtensionConfiguration
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_directory_describe_directories"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_directoryservice_directory"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_directory_describe_directories",
+			"tableName": "aws_directoryservice_directory",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

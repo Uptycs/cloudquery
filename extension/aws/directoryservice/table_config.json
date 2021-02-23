@@ -1,5 +1,5 @@
 {
-  "aws_directory_describe_directories": {
+  "aws_directoryservice_directory": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
