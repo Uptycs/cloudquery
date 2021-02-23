@@ -83,7 +83,7 @@ func ListPipelinesGenerate(osqCtx context.Context, queryContext table.QueryConte
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_pipeline_list_pipeline",
+			"tableName": "aws_codepipeline_pipeline",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountListPipelines(nil)
@@ -94,7 +94,7 @@ func ListPipelinesGenerate(osqCtx context.Context, queryContext table.QueryConte
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_pipeline_list_pipeline",
+				"tableName": "aws_codepipeline_pipeline",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountListPipelines(&account)
@@ -121,7 +121,7 @@ func processRegionListPipelines(tableConfig *utilities.TableConfig, account *uti
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_code_pipeline_list_pipeline",
+		"tableName": "aws_codepipeline_pipeline",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -135,7 +135,7 @@ func processRegionListPipelines(tableConfig *utilities.TableConfig, account *uti
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_pipeline_list_pipeline",
+				"tableName": "aws_codepipeline_pipeline",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListPipelines",
@@ -146,7 +146,7 @@ func processRegionListPipelines(tableConfig *utilities.TableConfig, account *uti
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_code_pipeline_list_pipeline",
+				"tableName": "aws_codepipeline_pipeline",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListPipelines",
@@ -176,10 +176,10 @@ func processAccountListPipelines(account *utilities.ExtensionConfigurationAwsAcc
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_code_pipeline_list_pipeline"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_codepipeline_pipeline"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_code_pipeline_list_pipeline",
+			"tableName": "aws_codepipeline_pipeline",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}

@@ -1,1 +1,1 @@
-- aws_code_pipeline_list_pipeline
+- aws_codepipeline_pipeline
