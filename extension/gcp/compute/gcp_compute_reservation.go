@@ -87,12 +87,9 @@ func (handler *GcpComputeHandler) getGcpComputeReservationsNewServiceForAccount(
 	var projectID string
 	var service *compute.Service
 	var err error
-	if account != nil && account.KeyFile != "" {
+	if account != nil {
 		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	} else if account != nil && account.ProjectID != "" {
-		projectID = account.ProjectID
-		service, err = handler.svcInterface.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = handler.svcInterface.NewService(ctx)

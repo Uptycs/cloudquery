@@ -75,12 +75,9 @@ func getGcpFileBackupsNewServiceForAccount(ctx context.Context, account *utiliti
 	var projectID string
 	var service *gcpfile.Service
 	var err error
-	if account != nil && account.KeyFile != "" {
+	if account != nil {
 		projectID = account.ProjectID
 		service, err = gcpfile.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	} else if account != nil && account.ProjectID != "" {
-		projectID = account.ProjectID
-		service, err = gcpfile.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpfile.NewService(ctx)

@@ -211,12 +211,9 @@ func getGcpCloudRunRevisionsNewServiceForAccount(ctx context.Context, account *u
 	var projectID string
 	var service *gcprun.APIService
 	var err error
-	if account != nil && account.KeyFile != "" {
+	if account != nil {
 		projectID = account.ProjectID
 		service, err = gcprun.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	} else if account != nil && account.ProjectID != "" {
-		projectID = account.ProjectID
-		service, err = gcprun.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcprun.NewService(ctx)

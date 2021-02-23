@@ -41,23 +41,26 @@ func DescribeDeliveryChannelsColumns() []table.ColumnDefinition {
 // DescribeDeliveryChannelsGenerate returns the rows in the table for all configured accounts
 func DescribeDeliveryChannelsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_config_delivery_channel", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_config_delivery_channel",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeDeliveryChannels(nil)
+		results, err := processAccountDescribeDeliveryChannels(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_config_delivery_channel", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_config_delivery_channel",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeDeliveryChannels(&account)
+			results, err := processAccountDescribeDeliveryChannels(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -68,7 +71,7 @@ func DescribeDeliveryChannelsGenerate(osqCtx context.Context, queryContext table
 	return resultMap, nil
 }
 
-func processRegionDescribeDeliveryChannels(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeDeliveryChannels(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -89,7 +92,7 @@ func processRegionDescribeDeliveryChannels(tableConfig *utilities.TableConfig, a
 	svc := configservice.NewFromConfig(*sess)
 	params := &configservice.DescribeDeliveryChannelsInput{}
 
-	result, err := svc.DescribeDeliveryChannels(context.TODO(), params)
+	result, err := svc.DescribeDeliveryChannels(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_config_delivery_channel",
@@ -113,19 +116,22 @@ func processRegionDescribeDeliveryChannels(tableConfig *utilities.TableConfig, a
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_config_delivery_channel", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeDeliveryChannels(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeDeliveryChannels(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -137,7 +143,14 @@ func processAccountDescribeDeliveryChannels(account *utilities.ExtensionConfigur
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeDeliveryChannels(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_config_delivery_channel", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeDeliveryChannels(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

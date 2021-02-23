@@ -97,23 +97,26 @@ func DescribeVolumesColumns() []table.ColumnDefinition {
 // DescribeVolumesGenerate returns the rows in the table for all configured accounts
 func DescribeVolumesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_volume", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_volume",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeVolumes(nil)
+		results, err := processAccountDescribeVolumes(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_volume", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_volume",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeVolumes(&account)
+			results, err := processAccountDescribeVolumes(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -124,7 +127,7 @@ func DescribeVolumesGenerate(osqCtx context.Context, queryContext table.QueryCon
 	return resultMap, nil
 }
 
-func processRegionDescribeVolumes(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeVolumes(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -148,7 +151,7 @@ func processRegionDescribeVolumes(tableConfig *utilities.TableConfig, account *u
 	paginator := ec2.NewDescribeVolumesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_volume",
@@ -172,6 +175,9 @@ func processRegionDescribeVolumes(tableConfig *utilities.TableConfig, account *u
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_volume", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -182,13 +188,13 @@ func processRegionDescribeVolumes(tableConfig *utilities.TableConfig, account *u
 	return resultMap, nil
 }
 
-func processAccountDescribeVolumes(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeVolumes(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -200,7 +206,14 @@ func processAccountDescribeVolumes(account *utilities.ExtensionConfigurationAwsA
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeVolumes(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_volume", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeVolumes(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

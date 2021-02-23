@@ -76,12 +76,9 @@ func getGcpSQLDatabasesNewServiceForAccount(ctx context.Context, account *utilit
 	var projectID string
 	var service *gcpsql.Service
 	var err error
-	if account != nil && account.KeyFile != "" {
+	if account != nil {
 		projectID = account.ProjectID
 		service, err = gcpsql.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	} else if account != nil && account.ProjectID != "" {
-		projectID = account.ProjectID
-		service, err = gcpsql.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpsql.NewService(ctx)

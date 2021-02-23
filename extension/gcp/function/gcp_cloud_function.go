@@ -98,12 +98,9 @@ func getGcpCloudFunctionsNewServiceForAccount(ctx context.Context, account *util
 	var projectID string
 	var service *gcpfunction.Service
 	var err error
-	if account != nil && account.KeyFile != "" {
+	if account != nil {
 		projectID = account.ProjectID
 		service, err = gcpfunction.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
-	} else if account != nil && account.ProjectID != "" {
-		projectID = account.ProjectID
-		service, err = gcpfunction.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpfunction.NewService(ctx)
