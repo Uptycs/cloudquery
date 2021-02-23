@@ -28,3 +28,4 @@
   - aws_cloudwatch_event_rule
   - aws_config_recorder
   - aws_config_delivery_channel
+  - aws_kms_key
