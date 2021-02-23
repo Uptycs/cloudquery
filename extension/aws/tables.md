@@ -1,7 +1,6 @@
 * AWS
   - aws_acm_certificate
   - aws_directoryservice_directory
-  - aws_cloudfront_list_distributions
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
   - aws_ec2_flowlog
