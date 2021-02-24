@@ -48,20 +48,22 @@ func GcpFileBackupsColumns() []table.ColumnDefinition {
 
 // GcpFileBackupsGenerate returns the rows in the table for all configured accounts
 func GcpFileBackupsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpFileBackups(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_file_backup", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpFileBackups(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpFileBackups(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_file_backup", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpFileBackups(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -96,7 +98,7 @@ func getGcpFileBackupsNewServiceForAccount(ctx context.Context, account *utiliti
 	return service, projectID
 }
 
-func processAccountGcpFileBackups(ctx context.Context,
+func processAccountGcpFileBackups(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -146,6 +148,9 @@ func processAccountGcpFileBackups(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_file_backup", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

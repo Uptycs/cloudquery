@@ -537,7 +537,7 @@
       },
       {
         "sourceName": "Stacks_NotificationARNs",
-        "targetName": "notification_arn_s",
+        "targetName": "notification_arns",
         "targetType": "TEXT",
         "enabled": true
       },

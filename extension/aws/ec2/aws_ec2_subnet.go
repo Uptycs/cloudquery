@@ -59,23 +59,26 @@ func DescribeSubnetsColumns() []table.ColumnDefinition {
 // DescribeSubnetsGenerate returns the rows in the table for all configured accounts
 func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_subnet", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_subnet",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeSubnets(nil)
+		results, err := processAccountDescribeSubnets(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_subnet", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_subnet",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeSubnets(&account)
+			results, err := processAccountDescribeSubnets(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -86,7 +89,7 @@ func DescribeSubnetsGenerate(osqCtx context.Context, queryContext table.QueryCon
 	return resultMap, nil
 }
 
-func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeSubnets(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -110,7 +113,7 @@ func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *u
 	paginator := ec2.NewDescribeSubnetsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_subnet",
@@ -134,6 +137,9 @@ func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *u
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_subnet", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -144,13 +150,13 @@ func processRegionDescribeSubnets(tableConfig *utilities.TableConfig, account *u
 	return resultMap, nil
 }
 
-func processAccountDescribeSubnets(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeSubnets(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -162,7 +168,14 @@ func processAccountDescribeSubnets(account *utilities.ExtensionConfigurationAwsA
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeSubnets(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_subnet", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeSubnets(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

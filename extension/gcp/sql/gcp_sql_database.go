@@ -49,20 +49,22 @@ func GcpSQLDatabasesColumns() []table.ColumnDefinition {
 
 // GcpSQLDatabasesGenerate returns the rows in the table for all configured accounts
 func GcpSQLDatabasesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpSQLDatabases(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_sql_database", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpSQLDatabases(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpSQLDatabases(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_sql_database", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpSQLDatabases(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -122,7 +124,7 @@ func getGcpSQLDatabasesKeys(service *gcpsql.Service, projectID string) ([]string
 	return resultList, nil
 }
 
-func processAccountGcpSQLDatabases(ctx context.Context,
+func processAccountGcpSQLDatabases(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -143,13 +145,14 @@ func processAccountGcpSQLDatabases(ctx context.Context,
 	}
 
 	for _, key := range keys {
-		getGcpSQLDatabasesRowsForKey(ctx, resultMap, service, projectID, key)
+		getGcpSQLDatabasesRowsForKey(ctx, queryContext, resultMap, service, projectID, key)
 	}
 
 	return resultMap, nil
 }
 
-func getGcpSQLDatabasesRowsForKey(ctx context.Context, resultMap []map[string]string, service *gcpsql.Service, projectID string, key string) ([]map[string]string, error) {
+func getGcpSQLDatabasesRowsForKey(ctx context.Context, queryContext table.QueryContext, resultMap []map[string]string,
+	service *gcpsql.Service, projectID string, key string) ([]map[string]string, error) {
 	listCall := service.Databases.List(projectID, key)
 	if listCall == nil {
 		utilities.GetLogger().WithFields(log.Fields{
@@ -187,6 +190,9 @@ func getGcpSQLDatabasesRowsForKey(ctx context.Context, resultMap []map[string]st
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_sql_database", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

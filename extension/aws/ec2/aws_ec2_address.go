@@ -52,23 +52,26 @@ func DescribeAddressesColumns() []table.ColumnDefinition {
 // DescribeAddressesGenerate returns the rows in the table for all configured accounts
 func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_address", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_address",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeAddresses(nil)
+		results, err := processAccountDescribeAddresses(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_address", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_address",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeAddresses(&account)
+			results, err := processAccountDescribeAddresses(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -79,7 +82,7 @@ func DescribeAddressesGenerate(osqCtx context.Context, queryContext table.QueryC
 	return resultMap, nil
 }
 
-func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeAddresses(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -100,7 +103,7 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 	svc := ec2.NewFromConfig(*sess)
 	params := &ec2.DescribeAddressesInput{}
 
-	result, err := svc.DescribeAddresses(context.TODO(), params)
+	result, err := svc.DescribeAddresses(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_address",
@@ -124,19 +127,22 @@ func processRegionDescribeAddresses(tableConfig *utilities.TableConfig, account 
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_address", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeAddresses(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeAddresses(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -148,7 +154,14 @@ func processAccountDescribeAddresses(account *utilities.ExtensionConfigurationAw
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeAddresses(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_address", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeAddresses(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

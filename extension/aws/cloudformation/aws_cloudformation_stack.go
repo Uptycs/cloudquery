@@ -117,7 +117,7 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 		//table.TextColumn("last_updated_time_loc_zone_name"),
 		//table.IntegerColumn("last_updated_time_loc_zone_offset"),
 		//table.BigIntColumn("last_updated_time_wall"),
-		table.TextColumn("notification_arn_s"),
+		table.TextColumn("notification_arns"),
 		table.TextColumn("outputs"),
 		//table.TextColumn("outputs_description"),
 		//table.TextColumn("outputs_export_name"),
@@ -150,23 +150,26 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 // DescribeStacksGenerate returns the rows in the table for all configured accounts
 func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_cloudformation_stack", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudformation_stack",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeStacks(nil)
+		results, err := processAccountDescribeStacks(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_cloudformation_stack", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_cloudformation_stack",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeStacks(&account)
+			results, err := processAccountDescribeStacks(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -177,7 +180,7 @@ func DescribeStacksGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeStacks(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -201,7 +204,7 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 	paginator := cloudformation.NewDescribeStacksPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_cloudformation_stack",
@@ -225,6 +228,9 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_cloudformation_stack", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -235,13 +241,13 @@ func processRegionDescribeStacks(tableConfig *utilities.TableConfig, account *ut
 	return resultMap, nil
 }
 
-func processAccountDescribeStacks(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeStacks(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -253,7 +259,14 @@ func processAccountDescribeStacks(account *utilities.ExtensionConfigurationAwsAc
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeStacks(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_cloudformation_stack", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeStacks(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

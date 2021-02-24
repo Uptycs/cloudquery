@@ -10,18 +10,19 @@
 package extension
 
 import (
-	"encoding/json"
-	"fmt"
+	osquery "github.com/Uptycs/basequery-go"
+	"github.com/Uptycs/basequery-go/plugin/table"
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
-	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
-	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
+	"github.com/Uptycs/cloudquery/extension/gcp/storage"
+
+	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
 	gcpdns "github.com/Uptycs/cloudquery/extension/gcp/dns"
 	gcpfile "github.com/Uptycs/cloudquery/extension/gcp/file"
@@ -29,111 +30,16 @@ import (
 	gcpiam "github.com/Uptycs/cloudquery/extension/gcp/iam"
 	gcprun "github.com/Uptycs/cloudquery/extension/gcp/run"
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
-	"github.com/Uptycs/cloudquery/extension/gcp/storage"
-	"github.com/Uptycs/cloudquery/utilities"
-	"io/ioutil"
-	"os"
-
-	osquery "github.com/Uptycs/basequery-go"
-	"github.com/Uptycs/basequery-go/plugin/table"
 	"github.com/Uptycs/cloudquery/utilities"
 	log "github.com/sirupsen/logrus"
+	"io/ioutil"
+	"os"
 )
-
-// InitializeLogger TODO
-func InitializeLogger(verbose bool) {
-	utilities.CreateLogger(verbose, utilities.ExtConfiguration.ExtConfLog.MaxSize,
-		utilities.ExtConfiguration.ExtConfLog.MaxBackups, utilities.ExtConfiguration.ExtConfLog.MaxAge,
-		utilities.ExtConfiguration.ExtConfLog.FileName)
-}
-
-func readProjectIDFromCredentialFile(filePath string) string {
-	reader, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"fileName":  filePath,
-			"errString": err.Error(),
-		}).Info("failed to read default gcp credentials file")
-		return ""
-	}
-	var jsonObj map[string]interface{}
-	errUnmarshal := json.Unmarshal(reader, &jsonObj)
-	if errUnmarshal != nil {
-		utilities.GetLogger().WithFields(log.Fields{
-			"fileName":  filePath,
-			"errString": errUnmarshal.Error(),
-		}).Error("failed to unmarshal json")
-		return ""
-	}
-
-	if idIntfc, found := jsonObj["project_id"]; found {
-		return idIntfc.(string)
-	}
-
-	utilities.GetLogger().WithFields(log.Fields{
-		"fileName": filePath,
-	}).Error("failed to find project_id")
-	return ""
-}
-
-// ReadExtensionConfigurations TODO
-func ReadExtensionConfigurations(filePath string, verbose bool) error {
-	utilities.AwsAccountID = os.Getenv("AWS_ACCOUNT_ID")
-	reader, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		fmt.Printf("failed to read configuration file %s. err:%v\n", filePath, err)
-		return err
-	}
-	extConfig := utilities.ExtensionConfiguration{}
-	errUnmarshal := json.Unmarshal(reader, &extConfig)
-	if errUnmarshal != nil {
-		return errUnmarshal
-	}
-	utilities.ExtConfiguration = extConfig
-
-	// Log config is read. Init the logger now.
-	InitializeLogger(verbose)
-
-	// Set projectID for GCP accounts
-	for idx := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-		keyFilePath := utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].KeyFile
-		if keyFilePath != "" {
-			projectID := readProjectIDFromCredentialFile(keyFilePath)
-			// Read ProjectID from keyFile
-			utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID = projectID
-		} else {
-			// This is case where we are not using shared credentials.
-			// ProjectID must be set in config.
-			if utilities.ExtConfiguration.ExtConfGcp.Accounts[idx].ProjectID == "" {
-				utilities.GetLogger().Error("GCP account is missing projectId setting")
-			}
-		}
-	}
-
-	// Read project ID from ADC
-	adcFilePath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
-	if adcFilePath != "" {
-		utilities.DefaultGcpProjectID = readProjectIDFromCredentialFile(adcFilePath)
-	}
-
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		if adcFilePath == "" {
-			utilities.GetLogger().Warn("missing env GOOGLE_APPLICATION_CREDENTIALS")
-		} else if utilities.DefaultGcpProjectID == "" {
-			utilities.GetLogger().Warn("missing Default Project ID for GCP")
-		} else {
-			utilities.GetLogger().Warn("Gcp accounts not found in extension_config. Falling back to ADC\n")
-		}
-	}
-
-	return nil
-}
 
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{
 		"aws/ec2/table_config.json",
-		"aws/cloudformation/table_config.json",
 		"aws/s3/table_config.json",
 		"aws/iam/table_config.json",
 		"aws/cloudtrail/table_config.json",
@@ -197,8 +103,6 @@ func registerEventTables(server *osquery.ExtensionManagerServer) {
 
 // RegisterPlugins
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
-	//AWS CLOUDFORMATION
-	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_stack", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS EC2
@@ -234,7 +138,9 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	//aws config
 	server.RegisterPlugin(table.NewPlugin("aws_config_recorder", config.DescribeConfigurationRecordersColumns(), config.DescribeConfigurationRecordersGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
+	//aws kms
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
+
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

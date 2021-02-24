@@ -133,23 +133,26 @@ func DescribeNatGatewaysColumns() []table.ColumnDefinition {
 // DescribeNatGatewaysGenerate returns the rows in the table for all configured accounts
 func DescribeNatGatewaysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_nat_gateway", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_nat_gateway",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeNatGateways(nil)
+		results, err := processAccountDescribeNatGateways(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_nat_gateway", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_nat_gateway",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeNatGateways(&account)
+			results, err := processAccountDescribeNatGateways(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -160,7 +163,7 @@ func DescribeNatGatewaysGenerate(osqCtx context.Context, queryContext table.Quer
 	return resultMap, nil
 }
 
-func processRegionDescribeNatGateways(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeNatGateways(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -184,7 +187,7 @@ func processRegionDescribeNatGateways(tableConfig *utilities.TableConfig, accoun
 	paginator := ec2.NewDescribeNatGatewaysPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_nat_gateway",
@@ -208,6 +211,9 @@ func processRegionDescribeNatGateways(tableConfig *utilities.TableConfig, accoun
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_nat_gateway", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -218,13 +224,13 @@ func processRegionDescribeNatGateways(tableConfig *utilities.TableConfig, accoun
 	return resultMap, nil
 }
 
-func processAccountDescribeNatGateways(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeNatGateways(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -236,7 +242,14 @@ func processAccountDescribeNatGateways(account *utilities.ExtensionConfiguration
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeNatGateways(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_nat_gateway", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeNatGateways(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
