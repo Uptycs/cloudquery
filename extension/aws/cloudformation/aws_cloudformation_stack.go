@@ -117,7 +117,7 @@ func DescribeStacksColumns() []table.ColumnDefinition {
 		//table.TextColumn("last_updated_time_loc_zone_name"),
 		//table.IntegerColumn("last_updated_time_loc_zone_offset"),
 		//table.BigIntColumn("last_updated_time_wall"),
-		table.TextColumn("notification_ar_ns"),
+		table.TextColumn("notification_arn_s"),
 		table.TextColumn("outputs"),
 		//table.TextColumn("outputs_description"),
 		//table.TextColumn("outputs_export_name"),
