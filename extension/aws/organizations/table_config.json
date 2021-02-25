@@ -1,4 +1,175 @@
 {
+  "aws_organizations_account": {
+    "aws": {
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Accounts_Arn",
+        "targetName": "arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_Email",
+        "targetName": "email",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_Id",
+        "targetName": "id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_JoinedMethod",
+        "targetName": "joined_method",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp",
+        "targetName": "joined_timestamp",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_ext",
+        "targetName": "joined_timestamp_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc",
+        "targetName": "joined_timestamp_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheEnd",
+        "targetName": "joined_timestamp_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheStart",
+        "targetName": "joined_timestamp_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone",
+        "targetName": "joined_timestamp_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_isDST",
+        "targetName": "joined_timestamp_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_name",
+        "targetName": "joined_timestamp_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_offset",
+        "targetName": "joined_timestamp_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_name",
+        "targetName": "joined_timestamp_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_tx",
+        "targetName": "joined_timestamp_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_tx_index",
+        "targetName": "joined_timestamp_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_tx_isstd",
+        "targetName": "joined_timestamp_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_tx_isutc",
+        "targetName": "joined_timestamp_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_tx_when",
+        "targetName": "joined_timestamp_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_zone",
+        "targetName": "joined_timestamp_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_zone_isDST",
+        "targetName": "joined_timestamp_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_zone_name",
+        "targetName": "joined_timestamp_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_loc_zone_offset",
+        "targetName": "joined_timestamp_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_JoinedTimestamp_wall",
+        "targetName": "joined_timestamp_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Accounts_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Accounts_Status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  },
   "aws_organizations_delegated_administrator": {
     "aws": {
       "accountIdAttribute": "account_id"
@@ -290,7 +461,7 @@
       }
     ]
   },
-  "aws_organizations_describe_organizations": {
+  "aws_organizations_organization": {
     "aws": {
       "accountIdAttribute": "account_id"
     },
@@ -313,13 +484,13 @@
         "sourceName": "Organization_AvailablePolicyTypes_Status",
         "targetName": "available_policy_types_status",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Organization_AvailablePolicyTypes_Type",
         "targetName": "available_policy_types_type",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Organization_FeatureSet",
@@ -359,178 +530,7 @@
       }
     ]
   },
-  "aws_organizations_list_accounts": {
-    "aws": {
-      "accountIdAttribute": "account_id"
-    },
-    "gcp": {},
-    "azure": {},
-    "parsedAttributes": [
-      {
-        "sourceName": "Accounts_Arn",
-        "targetName": "arn",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_Email",
-        "targetName": "email",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_Id",
-        "targetName": "id",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_JoinedMethod",
-        "targetName": "joined_method",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp",
-        "targetName": "joined_timestamp",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_ext",
-        "targetName": "joined_timestamp_ext",
-        "targetType": "BIGINT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc",
-        "targetName": "joined_timestamp_loc",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheEnd",
-        "targetName": "joined_timestamp_loc_cache_end",
-        "targetType": "BIGINT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheStart",
-        "targetName": "joined_timestamp_loc_cache_start",
-        "targetType": "BIGINT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone",
-        "targetName": "joined_timestamp_loc_cache_zone",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_isDST",
-        "targetName": "joined_timestamp_loc_cache_zone_is_dst",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_name",
-        "targetName": "joined_timestamp_loc_cache_zone_name",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_cacheZone_offset",
-        "targetName": "joined_timestamp_loc_cache_zone_offset",
-        "targetType": "INTEGER",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_name",
-        "targetName": "joined_timestamp_loc_name",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_tx",
-        "targetName": "joined_timestamp_loc_tx",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_tx_index",
-        "targetName": "joined_timestamp_loc_tx_index",
-        "targetType": "INTEGER",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_tx_isstd",
-        "targetName": "joined_timestamp_loc_tx_isstd",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_tx_isutc",
-        "targetName": "joined_timestamp_loc_tx_isutc",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_tx_when",
-        "targetName": "joined_timestamp_loc_tx_when",
-        "targetType": "BIGINT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_zone",
-        "targetName": "joined_timestamp_loc_zone",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_zone_isDST",
-        "targetName": "joined_timestamp_loc_zone_is_dst",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_zone_name",
-        "targetName": "joined_timestamp_loc_zone_name",
-        "targetType": "TEXT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_loc_zone_offset",
-        "targetName": "joined_timestamp_loc_zone_offset",
-        "targetType": "INTEGER",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_JoinedTimestamp_wall",
-        "targetName": "joined_timestamp_wall",
-        "targetType": "BIGINT",
-        "enabled": false
-      },
-      {
-        "sourceName": "Accounts_Name",
-        "targetName": "name",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "Accounts_Status",
-        "targetName": "status",
-        "targetType": "TEXT",
-        "enabled": true
-      },
-      {
-        "sourceName": "ResultMetadata_values",
-        "targetName": "values",
-        "targetType": "TEXT",
-        "enabled": false
-      }
-    ]
-  },
-  "aws_organizations_list_roots": {
+  "aws_organizations_root": {
     "aws": {
       "accountIdAttribute": "account_id"
     },
@@ -571,7 +571,7 @@
         "sourceName": "Roots_PolicyTypes_Status",
         "targetName": "policy_types_status",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Roots_PolicyTypes_Type",

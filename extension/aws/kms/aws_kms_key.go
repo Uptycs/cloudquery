@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
  */
 
-package ec2
+package kms
 
 import (
 	"context"
@@ -20,65 +20,44 @@ import (
 
 	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
-	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
+	"github.com/aws/aws-sdk-go-v2/service/kms"
 )
 
-// DescribeNetworkAclsColumns returns the list of columns in the table
-func DescribeNetworkAclsColumns() []table.ColumnDefinition {
+// ListKeysColumns returns the list of columns in the table
+func ListKeysColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("associations"),
-		//table.TextColumn("associations_network_acl_association_id"),
-		//table.TextColumn("associations_network_acl_id"),
-		//table.TextColumn("associations_subnet_id"),
-		table.TextColumn("entries"),
-		//table.TextColumn("entries_cidr_block"),
-		//table.TextColumn("entries_egress"),
-		//table.TextColumn("entries_icmp_type_code"),
-		//table.BigIntColumn("entries_icmp_type_code_code"),
-		//table.BigIntColumn("entries_icmp_type_code_type"),
-		//table.TextColumn("entries_ipv6_cidr_block"),
-		//table.TextColumn("entries_port_range"),
-		//table.BigIntColumn("entries_port_range_from"),
-		//table.BigIntColumn("entries_port_range_to"),
-		//table.TextColumn("entries_protocol"),
-		//table.TextColumn("entries_rule_action"),
-		//table.BigIntColumn("entries_rule_number"),
-		table.TextColumn("is_default"),
-		table.TextColumn("network_acl_id"),
-		table.TextColumn("owner_id"),
-		table.TextColumn("tags"),
-		//table.TextColumn("tags_key"),
-		//table.TextColumn("tags_value"),
-		table.TextColumn("vpc_id"),
+		table.TextColumn("region"),
+		table.TextColumn("key_arn"),
+		table.TextColumn("key_id"),
 	}
 }
 
-// DescribeNetworkAclsGenerate returns the rows in the table for all configured accounts
-func DescribeNetworkAclsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// ListKeysGenerate returns the rows in the table for all configured accounts
+func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_network_acl", utilities.AwsAccountID) {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_kms_key", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_network_acl",
+			"tableName": "aws_kms_key",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeNetworkAcls(osqCtx, queryContext, nil)
+		results, err := processAccountListKeys(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			if !extaws.ShouldProcessAccount("aws_ec2_network_acl", account.ID) {
+			if !extaws.ShouldProcessAccount("aws_kms_key", account.ID) {
 				continue
 			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ec2_network_acl",
+				"tableName": "aws_kms_key",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeNetworkAcls(osqCtx, queryContext, &account)
+			results, err := processAccountListKeys(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -89,7 +68,7 @@ func DescribeNetworkAclsGenerate(osqCtx context.Context, queryContext table.Quer
 	return resultMap, nil
 }
 
-func processRegionDescribeNetworkAcls(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListKeys(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -102,24 +81,24 @@ func processRegionDescribeNetworkAcls(osqCtx context.Context, queryContext table
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_ec2_network_acl",
+		"tableName": "aws_kms_key",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := ec2.NewFromConfig(*sess)
-	params := &ec2.DescribeNetworkAclsInput{}
+	svc := kms.NewFromConfig(*sess)
+	params := &kms.ListKeysInput{}
 
-	paginator := ec2.NewDescribeNetworkAclsPaginator(svc, params)
+	paginator := kms.NewListKeysPaginator(svc, params)
 
 	for {
 		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ec2_network_acl",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "DescribeNetworkAcls",
+				"task":      "ListKeys",
 				"errString": err.Error(),
 			}).Error("failed to process region")
 			return resultMap, err
@@ -127,17 +106,17 @@ func processRegionDescribeNetworkAcls(osqCtx context.Context, queryContext table
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ec2_network_acl",
+				"tableName": "aws_kms_key",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "DescribeNetworkAcls",
+				"task":      "ListKeys",
 				"errString": err.Error(),
 			}).Error("failed to marshal response")
 			return nil, err
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
-			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_network_acl", accountId, *region.RegionName, row) {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_kms_key", accountId, *region.RegionName, row) {
 				continue
 			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
@@ -150,7 +129,7 @@ func processRegionDescribeNetworkAcls(osqCtx context.Context, queryContext table
 	return resultMap, nil
 }
 
-func processAccountDescribeNetworkAcls(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListKeys(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
@@ -160,10 +139,10 @@ func processAccountDescribeNetworkAcls(osqCtx context.Context, queryContext tabl
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_ec2_network_acl"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_kms_key"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ec2_network_acl",
+			"tableName": "aws_kms_key",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
@@ -172,10 +151,10 @@ func processAccountDescribeNetworkAcls(osqCtx context.Context, queryContext tabl
 		if account != nil {
 			accountId = account.ID
 		}
-		if !extaws.ShouldProcessRegion("aws_ec2_network_acl", accountId, *region.RegionName) {
+		if !extaws.ShouldProcessRegion("aws_kms_key", accountId, *region.RegionName) {
 			continue
 		}
-		result, err := processRegionDescribeNetworkAcls(osqCtx, queryContext, tableConfig, account, region)
+		result, err := processRegionListKeys(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

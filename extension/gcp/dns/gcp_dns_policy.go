@@ -53,20 +53,22 @@ func GcpDNSPoliciesColumns() []table.ColumnDefinition {
 
 // GcpDNSPoliciesGenerate returns the rows in the table for all configured accounts
 func GcpDNSPoliciesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpDNSPolicies(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_dns_policy", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpDNSPolicies(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpDNSPolicies(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_dns_policy", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpDNSPolicies(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -101,7 +103,7 @@ func getGcpDNSPoliciesNewServiceForAccount(ctx context.Context, account *utiliti
 	return service, projectID
 }
 
-func processAccountGcpDNSPolicies(ctx context.Context,
+func processAccountGcpDNSPolicies(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -151,6 +153,9 @@ func processAccountGcpDNSPolicies(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_dns_policy", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

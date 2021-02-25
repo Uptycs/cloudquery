@@ -21,13 +21,14 @@
   - aws_iam_policy
   - aws_iam_role
   - aws_iam_user
+  - aws_organizations_account
   - aws_organizations_delegated_administrator
-  - aws_organizations_describe_organizations
-  - aws_organizations_list_accounts
-  - aws_organizations_list_roots
+  - aws_organizations_organization
+  - aws_organizations_root
   - aws_s3_bucket
   - aws_cloudwatch_alarm
   - aws_cloudwatch_event_bus
   - aws_cloudwatch_event_rule
   - aws_config_recorder
   - aws_config_delivery_channel
+  - aws_kms_key

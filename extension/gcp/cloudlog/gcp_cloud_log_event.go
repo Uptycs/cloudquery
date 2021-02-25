@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	osquery "github.com/Uptycs/basequery-go"
+	extgcp "github.com/Uptycs/cloudquery/extension/gcp"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"sort"
@@ -139,6 +140,9 @@ func (cl *CloudLogEventTable) CloudLogGenerate(osqCtx context.Context, queryCont
 func (cl *CloudLogEventTable) runEventLoop() {
 	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) > 0 {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
+			if !extgcp.ShouldProcessProject(TABLE_NAME, account.ProjectID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": TABLE_NAME,
 				"projectID": account.ProjectID,
@@ -204,8 +208,11 @@ func (cl *CloudLogEventTable) processRecords(account *utilities.ExtensionConfigu
 		}).Error("failed to parse object data")
 		return outEvents
 	}
-
-	return append(outEvents, logEntryToEventRow(jsonObj))
+	event := logEntryToEventRow(jsonObj)
+	if !extgcp.ShouldProcessEvent(TABLE_NAME, account.ProjectID, bucket.Region, event) {
+		return outEvents
+	}
+	return append(outEvents, event)
 }
 
 func (cl *CloudLogEventTable) getObjectReader(account *utilities.ExtensionConfigurationGcpAccount, bucket utilities.CloudLogStorageBucket,

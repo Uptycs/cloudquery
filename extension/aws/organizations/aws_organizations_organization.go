@@ -29,8 +29,8 @@ func DescribeOrganizationColumns() []table.ColumnDefinition {
 		table.TextColumn("account_id"),
 		table.TextColumn("arn"),
 		table.TextColumn("available_policy_types"),
-		table.TextColumn("available_policy_types_status"),
-		table.TextColumn("available_policy_types_type"),
+		//table.TextColumn("available_policy_types_status"),
+		//table.TextColumn("available_policy_types_type"),
 		table.TextColumn("feature_set"),
 		table.TextColumn("id"),
 		table.TextColumn("master_account_arn"),
@@ -44,23 +44,26 @@ func DescribeOrganizationColumns() []table.ColumnDefinition {
 // DescribeOrganizationGenerate returns the rows in the table for all configured accounts
 func DescribeOrganizationGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_organizations_organization", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_describe_organizations",
+			"tableName": "aws_organizations_organization",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeOrganization(nil)
+		results, err := processAccountDescribeOrganization(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_organizations_organization", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_organizations_describe_organizations",
+				"tableName": "aws_organizations_organization",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeOrganization(&account)
+			results, err := processAccountDescribeOrganization(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -71,7 +74,7 @@ func DescribeOrganizationGenerate(osqCtx context.Context, queryContext table.Que
 	return resultMap, nil
 }
 
-func processGlobalDescribeOrganization(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalDescribeOrganization(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -84,7 +87,7 @@ func processGlobalDescribeOrganization(tableConfig *utilities.TableConfig, accou
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_organizations_describe_organizations",
+		"tableName": "aws_organizations_organization",
 		"account":   accountId,
 		"region":    "aws-global",
 	}).Debug("processing region")
@@ -92,10 +95,10 @@ func processGlobalDescribeOrganization(tableConfig *utilities.TableConfig, accou
 	svc := organizations.NewFromConfig(*sess)
 	params := &organizations.DescribeOrganizationInput{}
 
-	result, err := svc.DescribeOrganization(context.TODO(), params)
+	result, err := svc.DescribeOrganization(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_describe_organizations",
+			"tableName": "aws_organizations_organization",
 			"account":   accountId,
 			"region":    "aws-global",
 			"task":      "DescribeOrganization",
@@ -107,7 +110,7 @@ func processGlobalDescribeOrganization(tableConfig *utilities.TableConfig, accou
 	byteArr, err := json.Marshal(result)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_describe_organizations",
+			"tableName": "aws_organizations_organization",
 			"account":   accountId,
 			"region":    "aws-global",
 			"errString": err.Error(),
@@ -116,22 +119,25 @@ func processGlobalDescribeOrganization(tableConfig *utilities.TableConfig, accou
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_organizations_organization", accountId, "aws-global", row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeOrganization(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeOrganization(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	tableConfig, ok := utilities.TableConfigurationMap["aws_organizations_describe_organizations"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_organizations_organization"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_describe_organizations",
+			"tableName": "aws_organizations_organization",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalDescribeOrganization(tableConfig, account)
+	result, err := processGlobalDescribeOrganization(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}

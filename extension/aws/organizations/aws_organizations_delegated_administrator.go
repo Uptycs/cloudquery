@@ -81,23 +81,26 @@ func ListDelegatedAdministratorsColumns() []table.ColumnDefinition {
 // ListDelegatedAdministratorsGenerate returns the rows in the table for all configured accounts
 func ListDelegatedAdministratorsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_organizations_delegated_administrator", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_organizations_delegated_administrator",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListDelegatedAdministrators(nil)
+		results, err := processAccountListDelegatedAdministrators(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_organizations_delegated_administrator", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_organizations_delegated_administrator",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListDelegatedAdministrators(&account)
+			results, err := processAccountListDelegatedAdministrators(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -108,7 +111,7 @@ func ListDelegatedAdministratorsGenerate(osqCtx context.Context, queryContext ta
 	return resultMap, nil
 }
 
-func processGlobalListDelegatedAdministrators(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalListDelegatedAdministrators(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -132,7 +135,7 @@ func processGlobalListDelegatedAdministrators(tableConfig *utilities.TableConfig
 	paginator := organizations.NewListDelegatedAdministratorsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_organizations_delegated_administrator",
@@ -156,6 +159,9 @@ func processGlobalListDelegatedAdministrators(tableConfig *utilities.TableConfig
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_organizations_delegated_administrator", accountId, "aws-global", row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -166,7 +172,7 @@ func processGlobalListDelegatedAdministrators(tableConfig *utilities.TableConfig
 	return resultMap, nil
 }
 
-func processAccountListDelegatedAdministrators(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListDelegatedAdministrators(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_organizations_delegated_administrator"]
 	if !ok {
@@ -175,7 +181,7 @@ func processAccountListDelegatedAdministrators(account *utilities.ExtensionConfi
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalListDelegatedAdministrators(tableConfig, account)
+	result, err := processGlobalListDelegatedAdministrators(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}

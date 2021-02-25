@@ -61,23 +61,26 @@ func ListAccountsColumns() []table.ColumnDefinition {
 // ListAccountsGenerate returns the rows in the table for all configured accounts
 func ListAccountsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_organizations_account", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_list_accounts",
+			"tableName": "aws_organizations_account",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListAccounts(nil)
+		results, err := processAccountListAccounts(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_organizations_account", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_organizations_list_accounts",
+				"tableName": "aws_organizations_account",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListAccounts(&account)
+			results, err := processAccountListAccounts(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -88,7 +91,7 @@ func ListAccountsGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalListAccounts(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -101,7 +104,7 @@ func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *util
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_organizations_list_accounts",
+		"tableName": "aws_organizations_account",
 		"account":   accountId,
 		"region":    "aws-global",
 	}).Debug("processing region")
@@ -112,10 +115,10 @@ func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *util
 	paginator := organizations.NewListAccountsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_organizations_list_accounts",
+				"tableName": "aws_organizations_account",
 				"account":   accountId,
 				"region":    "aws-global",
 				"task":      "ListAccounts",
@@ -126,7 +129,7 @@ func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *util
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_organizations_list_accounts",
+				"tableName": "aws_organizations_account",
 				"account":   accountId,
 				"region":    "aws-global",
 				"task":      "ListAccounts",
@@ -136,6 +139,9 @@ func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *util
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_organizations_account", accountId, "aws-global", row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -146,16 +152,16 @@ func processGlobalListAccounts(tableConfig *utilities.TableConfig, account *util
 	return resultMap, nil
 }
 
-func processAccountListAccounts(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListAccounts(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	tableConfig, ok := utilities.TableConfigurationMap["aws_organizations_list_accounts"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_organizations_account"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_organizations_list_accounts",
+			"tableName": "aws_organizations_account",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalListAccounts(tableConfig, account)
+	result, err := processGlobalListAccounts(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}

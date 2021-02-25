@@ -83,23 +83,26 @@ func ListPoliciesColumns() []table.ColumnDefinition {
 // ListPoliciesGenerate returns the rows in the table for all configured accounts
 func ListPoliciesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_iam_policy", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_policy",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListPolicies(nil)
+		results, err := processAccountListPolicies(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_iam_policy", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_policy",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListPolicies(&account)
+			results, err := processAccountListPolicies(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -110,7 +113,7 @@ func ListPoliciesGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processGlobalListPolicies(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalListPolicies(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -134,7 +137,7 @@ func processGlobalListPolicies(tableConfig *utilities.TableConfig, account *util
 	paginator := iam.NewListPoliciesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_policy",
@@ -158,6 +161,9 @@ func processGlobalListPolicies(tableConfig *utilities.TableConfig, account *util
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_iam_policy", accountId, "aws-global", row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -168,7 +174,7 @@ func processGlobalListPolicies(tableConfig *utilities.TableConfig, account *util
 	return resultMap, nil
 }
 
-func processAccountListPolicies(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListPolicies(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_iam_policy"]
 	if !ok {
@@ -177,7 +183,7 @@ func processAccountListPolicies(account *utilities.ExtensionConfigurationAwsAcco
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalListPolicies(tableConfig, account)
+	result, err := processGlobalListPolicies(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}
