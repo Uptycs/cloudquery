@@ -12,10 +12,9 @@ package extension
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Uptycs/cloudquery/utilities"
 	"io/ioutil"
 	"os"
-
-	"github.com/Uptycs/cloudquery/utilities"
 
 	log "github.com/sirupsen/logrus"
 )
