@@ -57,23 +57,26 @@ func ListGroupsColumns() []table.ColumnDefinition {
 // ListGroupsGenerate returns the rows in the table for all configured accounts
 func ListGroupsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_iam_group", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_group",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListGroups(nil)
+		results, err := processAccountListGroups(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_iam_group", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_group",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListGroups(&account)
+			results, err := processAccountListGroups(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -84,7 +87,7 @@ func ListGroupsGenerate(osqCtx context.Context, queryContext table.QueryContext)
 	return resultMap, nil
 }
 
-func processGlobalListGroups(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalListGroups(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -108,7 +111,7 @@ func processGlobalListGroups(tableConfig *utilities.TableConfig, account *utilit
 	paginator := iam.NewListGroupsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_group",
@@ -132,6 +135,9 @@ func processGlobalListGroups(tableConfig *utilities.TableConfig, account *utilit
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_iam_group", accountId, "aws-global", row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -142,7 +148,7 @@ func processGlobalListGroups(tableConfig *utilities.TableConfig, account *utilit
 	return resultMap, nil
 }
 
-func processAccountListGroups(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListGroups(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_iam_group"]
 	if !ok {
@@ -151,7 +157,7 @@ func processAccountListGroups(account *utilities.ExtensionConfigurationAwsAccoun
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalListGroups(tableConfig, account)
+	result, err := processGlobalListGroups(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}
