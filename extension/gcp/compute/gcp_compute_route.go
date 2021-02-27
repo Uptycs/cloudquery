@@ -61,20 +61,22 @@ func (handler *GcpComputeHandler) GcpComputeRoutesColumns() []table.ColumnDefini
 
 // GcpComputeRoutesGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeRoutesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := handler.processAccountGcpComputeRoutes(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_compute_route", utilities.DefaultGcpProjectID) {
+		results, err := handler.processAccountGcpComputeRoutes(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := handler.processAccountGcpComputeRoutes(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_compute_route", account.ProjectID) {
+				continue
+			}
+			results, err := handler.processAccountGcpComputeRoutes(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -109,7 +111,7 @@ func (handler *GcpComputeHandler) getGcpComputeRoutesNewServiceForAccount(ctx co
 	return service, projectID
 }
 
-func (handler *GcpComputeHandler) processAccountGcpComputeRoutes(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeRoutes(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -163,6 +165,9 @@ func (handler *GcpComputeHandler) processAccountGcpComputeRoutes(ctx context.Con
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_compute_route", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

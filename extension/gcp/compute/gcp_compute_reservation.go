@@ -60,20 +60,22 @@ func (handler *GcpComputeHandler) GcpComputeReservationsColumns() []table.Column
 
 // GcpComputeReservationsGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeReservationsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := handler.processAccountGcpComputeReservations(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_compute_reservation", utilities.DefaultGcpProjectID) {
+		results, err := handler.processAccountGcpComputeReservations(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := handler.processAccountGcpComputeReservations(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_compute_reservation", account.ProjectID) {
+				continue
+			}
+			results, err := handler.processAccountGcpComputeReservations(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -108,7 +110,7 @@ func (handler *GcpComputeHandler) getGcpComputeReservationsNewServiceForAccount(
 	return service, projectID
 }
 
-func (handler *GcpComputeHandler) processAccountGcpComputeReservations(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeReservations(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -168,6 +170,9 @@ func (handler *GcpComputeHandler) processAccountGcpComputeReservations(ctx conte
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_compute_reservation", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

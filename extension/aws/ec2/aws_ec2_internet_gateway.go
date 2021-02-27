@@ -44,23 +44,26 @@ func DescribeInternetGatewaysColumns() []table.ColumnDefinition {
 // DescribeInternetGatewaysGenerate returns the rows in the table for all configured accounts
 func DescribeInternetGatewaysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_internet_gateway", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_internet_gateway",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeInternetGateways(nil)
+		results, err := processAccountDescribeInternetGateways(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_internet_gateway", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_internet_gateway",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeInternetGateways(&account)
+			results, err := processAccountDescribeInternetGateways(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -71,7 +74,7 @@ func DescribeInternetGatewaysGenerate(osqCtx context.Context, queryContext table
 	return resultMap, nil
 }
 
-func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeInternetGateways(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -95,7 +98,7 @@ func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, a
 	paginator := ec2.NewDescribeInternetGatewaysPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_internet_gateway",
@@ -119,6 +122,9 @@ func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, a
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_internet_gateway", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -129,13 +135,13 @@ func processRegionDescribeInternetGateways(tableConfig *utilities.TableConfig, a
 	return resultMap, nil
 }
 
-func processAccountDescribeInternetGateways(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeInternetGateways(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -147,7 +153,14 @@ func processAccountDescribeInternetGateways(account *utilities.ExtensionConfigur
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeInternetGateways(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_internet_gateway", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeInternetGateways(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

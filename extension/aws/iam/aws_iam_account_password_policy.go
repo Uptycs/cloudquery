@@ -43,23 +43,26 @@ func GetAccountPasswordPolicyColumns() []table.ColumnDefinition {
 // GetAccountPasswordPolicyGenerate returns the rows in the table for all configured accounts
 func GetAccountPasswordPolicyGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_iam_account_password_policy", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_account_password_policy",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountGetAccountPasswordPolicy(nil)
+		results, err := processAccountGetAccountPasswordPolicy(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_iam_account_password_policy", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_account_password_policy",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountGetAccountPasswordPolicy(&account)
+			results, err := processAccountGetAccountPasswordPolicy(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -70,7 +73,7 @@ func GetAccountPasswordPolicyGenerate(osqCtx context.Context, queryContext table
 	return resultMap, nil
 }
 
-func processGlobalGetAccountPasswordPolicy(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalGetAccountPasswordPolicy(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -91,7 +94,7 @@ func processGlobalGetAccountPasswordPolicy(tableConfig *utilities.TableConfig, a
 	svc := iam.NewFromConfig(*sess)
 	params := &iam.GetAccountPasswordPolicyInput{}
 
-	result, err := svc.GetAccountPasswordPolicy(context.TODO(), params)
+	result, err := svc.GetAccountPasswordPolicy(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_account_password_policy",
@@ -115,13 +118,16 @@ func processGlobalGetAccountPasswordPolicy(tableConfig *utilities.TableConfig, a
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_iam_account_password_policy", accountId, "aws-global", row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountGetAccountPasswordPolicy(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountGetAccountPasswordPolicy(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_iam_account_password_policy"]
 	if !ok {
@@ -130,7 +136,7 @@ func processAccountGetAccountPasswordPolicy(account *utilities.ExtensionConfigur
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalGetAccountPasswordPolicy(tableConfig, account)
+	result, err := processGlobalGetAccountPasswordPolicy(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}
