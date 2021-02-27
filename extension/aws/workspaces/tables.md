@@ -1,0 +1,1 @@
+- aws_workspaces_workspace
