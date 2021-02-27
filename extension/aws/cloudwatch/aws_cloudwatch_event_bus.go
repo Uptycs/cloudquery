@@ -38,23 +38,26 @@ func ListEventBusesColumns() []table.ColumnDefinition {
 // ListEventBusesGenerate returns the rows in the table for all configured accounts
 func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_cloudwatch_event_bus", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudwatch_event_bus",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListEventBuses(nil)
+		results, err := processAccountListEventBuses(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_cloudwatch_event_bus", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_cloudwatch_event_bus",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListEventBuses(&account)
+			results, err := processAccountListEventBuses(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -65,7 +68,7 @@ func ListEventBusesGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListEventBuses(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -86,7 +89,7 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	svc := cloudwatchevents.NewFromConfig(*sess)
 	params := &cloudwatchevents.ListEventBusesInput{}
 
-	result, err := svc.ListEventBuses(context.TODO(), params)
+	result, err := svc.ListEventBuses(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudwatch_event_bus",
@@ -110,19 +113,22 @@ func processRegionListEventBuses(tableConfig *utilities.TableConfig, account *ut
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_cloudwatch_event_bus", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListEventBuses(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -134,7 +140,14 @@ func processAccountListEventBuses(account *utilities.ExtensionConfigurationAwsAc
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListEventBuses(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_cloudwatch_event_bus", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListEventBuses(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

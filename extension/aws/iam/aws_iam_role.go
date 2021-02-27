@@ -89,23 +89,26 @@ func ListRolesColumns() []table.ColumnDefinition {
 // ListRolesGenerate returns the rows in the table for all configured accounts
 func ListRolesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_iam_role", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_iam_role",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListRoles(nil)
+		results, err := processAccountListRoles(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_iam_role", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_role",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListRoles(&account)
+			results, err := processAccountListRoles(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -116,7 +119,7 @@ func ListRolesGenerate(osqCtx context.Context, queryContext table.QueryContext) 
 	return resultMap, nil
 }
 
-func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processGlobalListRoles(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "aws-global")
 	if err != nil {
@@ -140,7 +143,7 @@ func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utiliti
 	paginator := iam.NewListRolesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_iam_role",
@@ -164,6 +167,9 @@ func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utiliti
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_iam_role", accountId, "aws-global", row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, "aws-global", tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -174,7 +180,7 @@ func processGlobalListRoles(tableConfig *utilities.TableConfig, account *utiliti
 	return resultMap, nil
 }
 
-func processAccountListRoles(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListRoles(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_iam_role"]
 	if !ok {
@@ -183,7 +189,7 @@ func processAccountListRoles(account *utilities.ExtensionConfigurationAwsAccount
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processGlobalListRoles(tableConfig, account)
+	result, err := processGlobalListRoles(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}

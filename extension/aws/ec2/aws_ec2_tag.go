@@ -39,23 +39,26 @@ func DescribeTagsColumns() []table.ColumnDefinition {
 // DescribeTagsGenerate returns the rows in the table for all configured accounts
 func DescribeTagsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_tag", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_tag",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeTags(nil)
+		results, err := processAccountDescribeTags(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_tag", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_tag",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeTags(&account)
+			results, err := processAccountDescribeTags(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -66,7 +69,7 @@ func DescribeTagsGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processRegionDescribeTags(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeTags(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -90,7 +93,7 @@ func processRegionDescribeTags(tableConfig *utilities.TableConfig, account *util
 	paginator := ec2.NewDescribeTagsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_tag",
@@ -114,6 +117,9 @@ func processRegionDescribeTags(tableConfig *utilities.TableConfig, account *util
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_tag", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -124,13 +130,13 @@ func processRegionDescribeTags(tableConfig *utilities.TableConfig, account *util
 	return resultMap, nil
 }
 
-func processAccountDescribeTags(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeTags(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -142,7 +148,14 @@ func processAccountDescribeTags(account *utilities.ExtensionConfigurationAwsAcco
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeTags(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_tag", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeTags(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
