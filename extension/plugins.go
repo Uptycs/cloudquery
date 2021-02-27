@@ -16,11 +16,14 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/apigateway"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
+	"github.com/Uptycs/cloudquery/extension/aws/codecommit"
+	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
+	"github.com/Uptycs/cloudquery/extension/aws/workspaces"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
 
@@ -44,6 +47,8 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/ec2/table_config.json",
 		"aws/apigateway/table_config.json",
 		"aws/cloudformation/table_config.json",
+		"aws/codedeploy/table_config.json",
+		"aws/codecommit/table_config.json",
 		"aws/s3/table_config.json",
 		"aws/iam/table_config.json",
 		"aws/cloudtrail/table_config.json",
@@ -51,6 +56,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/cloudwatch/table_config.json",
 		"aws/config/table_config.json",
 		"aws/kms/table_config.json",
+		"aws/workspaces/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -113,6 +119,10 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_stack", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
 	// AWS APIGATEWAY
 	server.RegisterPlugin(table.NewPlugin("aws_apigateway_rest_api", apigateway.GetRestApisColumns(), apigateway.GetRestApisGenerate))
+	// AWS CODEDEPLOY
+	server.RegisterPlugin(table.NewPlugin("aws_codedeploy_application", codedeploy.ListApplicationsColumns(), codedeploy.ListApplicationsGenerate))
+	// AWS CODECOMMIT
+	server.RegisterPlugin(table.NewPlugin("aws_codecommit_repository", codecommit.ListRepositoriesColumns(), codecommit.ListRepositoriesGenerate))
 	// AWS EC2
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_instance", ec2.DescribeInstancesColumns(), ec2.DescribeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_ec2_vpc", ec2.DescribeVpcsColumns(), ec2.DescribeVpcsGenerate))
@@ -148,7 +158,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_config_delivery_channel", config.DescribeDeliveryChannelsColumns(), config.DescribeDeliveryChannelsGenerate))
 	//aws kms
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
-
+	//aws workspace
+	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

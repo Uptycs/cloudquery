@@ -1,6 +1,8 @@
 * AWS
   - aws_acm_certificate
   - aws_apigateway_rest_api
+  - aws_codedeploy_application
+  - aws_codecommit_repository
   - aws_cloudformation_stack
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
@@ -29,4 +31,6 @@
   - aws_cloudwatch_event_rule
   - aws_config_recorder
   - aws_config_delivery_channel
+  - aws_workspaces_workspace
   - aws_kms_key
+
