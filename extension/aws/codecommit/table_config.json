@@ -1,0 +1,30 @@
+{
+  "aws_codecommit_repository": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Repositories_RepositoryId",
+        "targetName": "repository_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_RepositoryName",
+        "targetName": "repository_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}

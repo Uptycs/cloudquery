@@ -1,5 +1,6 @@
 * AWS
   - aws_acm_certificate
+  - aws_codecommit_repository
   - aws_cloudformation_stack
   - aws_ec2_address
   - aws_ec2_egress_only_internet_gateway
