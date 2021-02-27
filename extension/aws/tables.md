@@ -1,6 +1,7 @@
 * AWS
   - aws_acm_certificate
   - aws_codepipeline_pipeline
+  - aws_codedeploy_application
   - aws_codecommit_repository
   - aws_cloudformation_stack
   - aws_ec2_address
