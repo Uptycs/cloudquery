@@ -1,0 +1,150 @@
+{
+  "aws_workspaces_workspace": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_BundleId",
+        "targetName": "bundle_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_ComputerName",
+        "targetName": "computer_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_DirectoryId",
+        "targetName": "directory_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_ErrorCode",
+        "targetName": "error_code",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_ErrorMessage",
+        "targetName": "error_message",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_IpAddress",
+        "targetName": "ip_address",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_ModificationStates",
+        "targetName": "modification_states",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_ModificationStates_Resource",
+        "targetName": "modification_states_resource",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_ModificationStates_State",
+        "targetName": "modification_states_state",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_RootVolumeEncryptionEnabled",
+        "targetName": "root_volume_encryption_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_State",
+        "targetName": "state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_SubnetId",
+        "targetName": "subnet_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_UserName",
+        "targetName": "user_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_UserVolumeEncryptionEnabled",
+        "targetName": "user_volume_encryption_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_VolumeEncryptionKey",
+        "targetName": "volume_encryption_key",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceId",
+        "targetName": "workspace_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties",
+        "targetName": "workspace_properties",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties_ComputeTypeName",
+        "targetName": "workspace_properties_compute_type_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties_RootVolumeSizeGib",
+        "targetName": "workspace_properties_root_volume_size_gib",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties_RunningMode",
+        "targetName": "workspace_properties_running_mode",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties_RunningModeAutoStopTimeoutInMinutes",
+        "targetName": "workspace_properties_running_mode_auto_stop_timeout_in_minutes",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Workspaces_WorkspaceProperties_UserVolumeSizeGib",
+        "targetName": "workspace_properties_user_volume_size_gib",
+        "targetType": "INTEGER",
+        "enabled": false
+      }
+    ]
+  }
+}
