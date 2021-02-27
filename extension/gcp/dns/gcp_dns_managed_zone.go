@@ -81,20 +81,22 @@ func GcpDNSManagedZonesColumns() []table.ColumnDefinition {
 
 // GcpDNSManagedZonesGenerate returns the rows in the table for all configured accounts
 func GcpDNSManagedZonesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpDNSManagedZones(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_dns_managed_zone", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpDNSManagedZones(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpDNSManagedZones(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_dns_managed_zone", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpDNSManagedZones(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -129,7 +131,7 @@ func getGcpDNSManagedZonesNewServiceForAccount(ctx context.Context, account *uti
 	return service, projectID
 }
 
-func processAccountGcpDNSManagedZones(ctx context.Context,
+func processAccountGcpDNSManagedZones(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -179,6 +181,9 @@ func processAccountGcpDNSManagedZones(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_dns_managed_zone", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

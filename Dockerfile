@@ -48,6 +48,7 @@ COPY extension/aws/cloudtrail/table_config.json /opt/cloudquery/etc/aws/cloudtra
 COPY extension/aws/acm/table_config.json        /opt/cloudquery/etc/aws/acm/
 COPY extension/aws/cloudwatch/table_config.json /opt/cloudquery/etc/aws/cloudwatch/
 COPY extension/aws/config/table_config.json     /opt/cloudquery/etc/aws/config/
+COPY extension/aws/guardduty/table_config.json /opt/cloudquery/etc/aws/guardduty/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/gcp/compute/table_config.json    /opt/cloudquery/etc/gcp/compute/
 COPY extension/gcp/dns/table_config.json        /opt/cloudquery/etc/gcp/dns/
