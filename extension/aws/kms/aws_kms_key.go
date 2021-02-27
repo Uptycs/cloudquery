@@ -38,23 +38,26 @@ func ListKeysColumns() []table.ColumnDefinition {
 // ListKeysGenerate returns the rows in the table for all configured accounts
 func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_kms_key", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_kms_key",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListKeys(nil)
+		results, err := processAccountListKeys(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_kms_key", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_kms_key",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListKeys(&account)
+			results, err := processAccountListKeys(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -65,7 +68,7 @@ func ListKeysGenerate(osqCtx context.Context, queryContext table.QueryContext) (
 	return resultMap, nil
 }
 
-func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListKeys(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -89,7 +92,7 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 	paginator := kms.NewListKeysPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_kms_key",
@@ -113,6 +116,9 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_kms_key", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -123,13 +129,13 @@ func processRegionListKeys(tableConfig *utilities.TableConfig, account *utilitie
 	return resultMap, nil
 }
 
-func processAccountListKeys(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListKeys(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -141,9 +147,16 @@ func processAccountListKeys(account *utilities.ExtensionConfigurationAwsAccount)
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListKeys(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_kms_key", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListKeys(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

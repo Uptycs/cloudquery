@@ -39,23 +39,26 @@ func ListCertificatesColumns() []table.ColumnDefinition {
 // ListCertificatesGenerate returns the rows in the table for all configured accounts
 func ListCertificatesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_acm_certificate", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_acm_certificate",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListCertificates(nil)
+		results, err := processAccountListCertificates(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_acm_certificate", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_acm_certificate",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListCertificates(&account)
+			results, err := processAccountListCertificates(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -66,7 +69,7 @@ func ListCertificatesGenerate(osqCtx context.Context, queryContext table.QueryCo
 	return resultMap, nil
 }
 
-func processRegionListCertificates(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListCertificates(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -90,7 +93,7 @@ func processRegionListCertificates(tableConfig *utilities.TableConfig, account *
 	paginator := acm.NewListCertificatesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_acm_certificate",
@@ -114,6 +117,9 @@ func processRegionListCertificates(tableConfig *utilities.TableConfig, account *
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_acm_certificate", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -124,13 +130,13 @@ func processRegionListCertificates(tableConfig *utilities.TableConfig, account *
 	return resultMap, nil
 }
 
-func processAccountListCertificates(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListCertificates(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -142,7 +148,14 @@ func processAccountListCertificates(account *utilities.ExtensionConfigurationAws
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListCertificates(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_acm_certificate", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListCertificates(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
