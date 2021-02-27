@@ -15,11 +15,8 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
-<<<<<<< HEAD
-	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
-=======
 	"github.com/Uptycs/cloudquery/extension/aws/codecommit"
->>>>>>> remotes/origin/master
+	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
@@ -47,11 +44,8 @@ func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{
 		"aws/ec2/table_config.json",
 		"aws/cloudformation/table_config.json",
-<<<<<<< HEAD
 		"aws/codedeploy/table_config.json",
-=======
 		"aws/codecommit/table_config.json",
->>>>>>> remotes/origin/master
 		"aws/s3/table_config.json",
 		"aws/iam/table_config.json",
 		"aws/cloudtrail/table_config.json",
