@@ -78,23 +78,26 @@ func DescribeImagesColumns() []table.ColumnDefinition {
 // DescribeImagesGenerate returns the rows in the table for all configured accounts
 func DescribeImagesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_image", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_image",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeImages(nil)
+		results, err := processAccountDescribeImages(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_image", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_image",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeImages(&account)
+			results, err := processAccountDescribeImages(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -113,9 +116,9 @@ func updateFilters(page *ec2.DescribeInstancesOutput, filters map[*string]bool) 
 	}
 }
 
-func processDescribeImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, params *ec2.DescribeImagesInput) ([]map[string]string, error) {
+func processDescribeImages(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, params *ec2.DescribeImagesInput) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	output, err := svc.DescribeImages(context.TODO(), params)
+	output, err := svc.DescribeImages(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_image",
@@ -137,19 +140,22 @@ func processDescribeImages(tableConfig *utilities.TableConfig, accountId string,
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_image", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, filters map[*string]bool) ([]map[string]string, error) {
+func getImages(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, accountId string, svc *ec2.Client, region *types.Region, filters map[*string]bool) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	params := &ec2.DescribeImagesInput{}
 	for key := range filters {
 		params.ImageIds = append(params.ImageIds, *key)
 		if len(params.ImageIds) >= 50 {
-			result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
+			result, err := processDescribeImages(osqCtx, queryContext, tableConfig, accountId, svc, region, params)
 			if err != nil {
 				return resultMap, err
 			}
@@ -159,7 +165,7 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Cl
 		}
 	}
 	if len(params.ImageIds) > 0 {
-		result, err := processDescribeImages(tableConfig, accountId, svc, region, params)
+		result, err := processDescribeImages(osqCtx, queryContext, tableConfig, accountId, svc, region, params)
 		if err != nil {
 			return resultMap, err
 		}
@@ -168,7 +174,7 @@ func getImages(tableConfig *utilities.TableConfig, accountId string, svc *ec2.Cl
 	return resultMap, nil
 }
 
-func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeImages(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -186,7 +192,7 @@ func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *ut
 	paginator := ec2.NewDescribeInstancesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_image",
@@ -203,17 +209,17 @@ func processRegionDescribeImages(tableConfig *utilities.TableConfig, account *ut
 		}
 	}
 
-	resultMap, err = getImages(tableConfig, accountId, svc, &region, filters)
+	resultMap, err = getImages(osqCtx, queryContext, tableConfig, accountId, svc, &region, filters)
 	return resultMap, err
 }
 
-func processAccountDescribeImages(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeImages(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -225,7 +231,14 @@ func processAccountDescribeImages(account *utilities.ExtensionConfigurationAwsAc
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeImages(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_image", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeImages(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

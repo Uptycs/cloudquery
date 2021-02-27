@@ -175,23 +175,26 @@ func DescribeInstancesColumns() []table.ColumnDefinition {
 // DescribeInstancesGenerate returns the rows in the table for all configured accounts
 func DescribeInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_instance", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_instance",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeInstances(nil)
+		results, err := processAccountDescribeInstances(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_instance", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_instance",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeInstances(&account)
+			results, err := processAccountDescribeInstances(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -202,7 +205,7 @@ func DescribeInstancesGenerate(osqCtx context.Context, queryContext table.QueryC
 	return resultMap, nil
 }
 
-func processRegionDescribeInstances(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeInstances(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -226,7 +229,7 @@ func processRegionDescribeInstances(tableConfig *utilities.TableConfig, account 
 	paginator := ec2.NewDescribeInstancesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_instance",
@@ -250,6 +253,9 @@ func processRegionDescribeInstances(tableConfig *utilities.TableConfig, account 
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_instance", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -260,13 +266,13 @@ func processRegionDescribeInstances(tableConfig *utilities.TableConfig, account 
 	return resultMap, nil
 }
 
-func processAccountDescribeInstances(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeInstances(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -278,7 +284,14 @@ func processAccountDescribeInstances(account *utilities.ExtensionConfigurationAw
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeInstances(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_instance", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeInstances(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

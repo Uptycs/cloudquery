@@ -44,20 +44,22 @@ func GcpIamRolesColumns() []table.ColumnDefinition {
 
 // GcpIamRolesGenerate returns the rows in the table for all configured accounts
 func GcpIamRolesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpIamRoles(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_iam_role", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpIamRoles(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpIamRoles(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_iam_role", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpIamRoles(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -92,7 +94,7 @@ func getGcpIamRolesNewServiceForAccount(ctx context.Context, account *utilities.
 	return service, projectID
 }
 
-func processAccountGcpIamRoles(ctx context.Context,
+func processAccountGcpIamRoles(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -142,6 +144,9 @@ func processAccountGcpIamRoles(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_iam_role", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}
