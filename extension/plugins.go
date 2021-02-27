@@ -16,6 +16,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/codecommit"
+	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
@@ -44,6 +45,7 @@ func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{
 		"aws/ec2/table_config.json",
 		"aws/cloudformation/table_config.json",
+		"aws/codedeploy/table_config.json",
 		"aws/codecommit/table_config.json",
 		"aws/s3/table_config.json",
 		"aws/iam/table_config.json",
@@ -113,6 +115,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS CLOUDFORMATION
 	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_stack", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
+	// AWS CODEDEPLOY
+	server.RegisterPlugin(table.NewPlugin("aws_codedeploy_application", codedeploy.ListApplicationsColumns(), codedeploy.ListApplicationsGenerate))
 	// AWS CODECOMMIT
 	server.RegisterPlugin(table.NewPlugin("aws_codecommit_repository", codecommit.ListRepositoriesColumns(), codecommit.ListRepositoriesGenerate))
 	// AWS EC2
