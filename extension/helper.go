@@ -13,10 +13,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Uptycs/cloudquery/utilities"
+	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"
-
-	log "github.com/sirupsen/logrus"
 )
 
 // InitializeLogger TODO
