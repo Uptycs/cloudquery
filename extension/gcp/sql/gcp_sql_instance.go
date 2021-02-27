@@ -173,20 +173,22 @@ func GcpSQLInstancesColumns() []table.ColumnDefinition {
 
 // GcpSQLInstancesGenerate returns the rows in the table for all configured accounts
 func GcpSQLInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpSQLInstances(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_sql_instance", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpSQLInstances(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpSQLInstances(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_sql_instance", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpSQLInstances(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -221,7 +223,7 @@ func getGcpSQLInstancesNewServiceForAccount(ctx context.Context, account *utilit
 	return service, projectID
 }
 
-func processAccountGcpSQLInstances(ctx context.Context,
+func processAccountGcpSQLInstances(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -271,6 +273,9 @@ func processAccountGcpSQLInstances(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_sql_instance", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

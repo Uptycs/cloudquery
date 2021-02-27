@@ -41,23 +41,26 @@ func DescribeConfigurationRecordersColumns() []table.ColumnDefinition {
 // DescribeConfigurationRecordersGenerate returns the rows in the table for all configured accounts
 func DescribeConfigurationRecordersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_config_recorder", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_config_recorder",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeConfigurationRecorders(nil)
+		results, err := processAccountDescribeConfigurationRecorders(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_config_recorder", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_config_recorder",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeConfigurationRecorders(&account)
+			results, err := processAccountDescribeConfigurationRecorders(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -68,7 +71,7 @@ func DescribeConfigurationRecordersGenerate(osqCtx context.Context, queryContext
 	return resultMap, nil
 }
 
-func processRegionDescribeConfigurationRecorders(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeConfigurationRecorders(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -89,7 +92,7 @@ func processRegionDescribeConfigurationRecorders(tableConfig *utilities.TableCon
 	svc := configservice.NewFromConfig(*sess)
 	params := &configservice.DescribeConfigurationRecordersInput{}
 
-	result, err := svc.DescribeConfigurationRecorders(context.TODO(), params)
+	result, err := svc.DescribeConfigurationRecorders(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_config_recorder",
@@ -113,19 +116,22 @@ func processRegionDescribeConfigurationRecorders(tableConfig *utilities.TableCon
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_config_recorder", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeConfigurationRecorders(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeConfigurationRecorders(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -137,7 +143,14 @@ func processAccountDescribeConfigurationRecorders(account *utilities.ExtensionCo
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeConfigurationRecorders(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_config_recorder", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeConfigurationRecorders(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
