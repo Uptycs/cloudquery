@@ -184,20 +184,22 @@ func GcpCloudRunRevisionsColumns() []table.ColumnDefinition {
 
 // GcpCloudRunRevisionsGenerate returns the rows in the table for all configured accounts
 func GcpCloudRunRevisionsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpCloudRunRevisions(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_cloud_run_revision", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpCloudRunRevisions(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpCloudRunRevisions(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_cloud_run_revision", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpCloudRunRevisions(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -211,9 +213,12 @@ func getGcpCloudRunRevisionsNewServiceForAccount(ctx context.Context, account *u
 	var projectID string
 	var service *gcprun.APIService
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = gcprun.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = gcprun.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcprun.NewService(ctx)
@@ -229,7 +234,7 @@ func getGcpCloudRunRevisionsNewServiceForAccount(ctx context.Context, account *u
 	return service, projectID
 }
 
-func processAccountGcpCloudRunRevisions(ctx context.Context,
+func processAccountGcpCloudRunRevisions(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -277,6 +282,9 @@ func processAccountGcpCloudRunRevisions(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_cloud_run_revision", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

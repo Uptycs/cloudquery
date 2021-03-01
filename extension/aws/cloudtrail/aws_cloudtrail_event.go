@@ -155,6 +155,9 @@ func (ct *CloudTrailEventTable) runEventLoop() {
 	utilities.GetLogger().Info("Collecting events")
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) > 0 {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_acm_certificate", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": TABLE_NAME,
 				"account":   account.ID,
@@ -192,6 +195,9 @@ func (ct *CloudTrailEventTable) processRecords(account *utilities.ExtensionConfi
 		event := make(map[string]string)
 		for key, value := range record {
 			event[utilities.GetSnakeCase(key)] = utilities.GetStringValue(value)
+		}
+		if !extaws.ShouldProcessEvent(TABLE_NAME, account.ID, bucket.Region, event) {
+			continue
 		}
 		events = append(events, event)
 	}
