@@ -26,9 +26,13 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
+	"github.com/Uptycs/cloudquery/extension/aws/sns"
 	"github.com/Uptycs/cloudquery/extension/aws/workspaces"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
+
+	"io/ioutil"
+	"os"
 
 	azurecompute "github.com/Uptycs/cloudquery/extension/azure/compute"
 	gcpcontainer "github.com/Uptycs/cloudquery/extension/gcp/container"
@@ -40,8 +44,6 @@ import (
 	gcpsql "github.com/Uptycs/cloudquery/extension/gcp/sql"
 	"github.com/Uptycs/cloudquery/utilities"
 	log "github.com/sirupsen/logrus"
-	"io/ioutil"
-	"os"
 )
 
 // ReadTableConfigurations TODO
@@ -63,6 +65,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/config/table_config.json",
 		"aws/kms/table_config.json",
 		"aws/workspaces/table_config.json",
+		"aws/sns/table_config.json",
 	}
 
 	var gcpConfigFileList = []string{
@@ -171,6 +174,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	//aws workspace
 	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_sns_topic", sns.ListTopicsColumns(), sns.ListTopicsGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

@@ -36,4 +36,5 @@
   - aws_config_delivery_channel
   - aws_workspaces_workspace
   - aws_kms_key
+  - aws_sns_topic
 
