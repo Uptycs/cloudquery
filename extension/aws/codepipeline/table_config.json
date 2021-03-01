@@ -1,0 +1,282 @@
+{
+  "aws_codepipeline_pipeline": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Pipelines_Created",
+        "targetName": "created",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Pipelines_Created_ext",
+        "targetName": "created_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc",
+        "targetName": "created_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheEnd",
+        "targetName": "created_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheStart",
+        "targetName": "created_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheZone",
+        "targetName": "created_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheZone_isDST",
+        "targetName": "created_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheZone_name",
+        "targetName": "created_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_cacheZone_offset",
+        "targetName": "created_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_extend",
+        "targetName": "created_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_name",
+        "targetName": "created_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_tx",
+        "targetName": "created_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_tx_index",
+        "targetName": "created_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_tx_isstd",
+        "targetName": "created_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_tx_isutc",
+        "targetName": "created_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_tx_when",
+        "targetName": "created_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_zone",
+        "targetName": "created_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_zone_isDST",
+        "targetName": "created_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_zone_name",
+        "targetName": "created_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_loc_zone_offset",
+        "targetName": "created_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Created_wall",
+        "targetName": "created_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Pipelines_Updated",
+        "targetName": "updated",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Pipelines_Updated_ext",
+        "targetName": "updated_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc",
+        "targetName": "updated_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheEnd",
+        "targetName": "updated_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheStart",
+        "targetName": "updated_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheZone",
+        "targetName": "updated_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheZone_isDST",
+        "targetName": "updated_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheZone_name",
+        "targetName": "updated_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_cacheZone_offset",
+        "targetName": "updated_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_extend",
+        "targetName": "updated_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_name",
+        "targetName": "updated_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_tx",
+        "targetName": "updated_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_tx_index",
+        "targetName": "updated_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_tx_isstd",
+        "targetName": "updated_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_tx_isutc",
+        "targetName": "updated_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_tx_when",
+        "targetName": "updated_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_zone",
+        "targetName": "updated_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_zone_isDST",
+        "targetName": "updated_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_zone_name",
+        "targetName": "updated_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_loc_zone_offset",
+        "targetName": "updated_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Updated_wall",
+        "targetName": "updated_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Pipelines_Version",
+        "targetName": "version",
+        "targetType": "INTEGER",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}

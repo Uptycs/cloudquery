@@ -45,6 +45,7 @@ COPY extension/aws/iam/table_config.json        /opt/cloudquery/etc/aws/iam/
 COPY extension/aws/s3/table_config.json         /opt/cloudquery/etc/aws/s3/
 COPY extension/aws/kms/table_config.json        /opt/cloudquery/etc/aws/kms/
 COPY extension/aws/cloudtrail/table_config.json /opt/cloudquery/etc/aws/cloudtrail/
+COPY extension/aws/codepipeline/table_config.json /opt/cloudquery/etc/aws/codepipeline/
 COPY extension/aws/acm/table_config.json        /opt/cloudquery/etc/aws/acm/
 COPY extension/aws/codedeploy/table_config.json /opt/cloudquery/etc/aws/codedeploy/
 COPY extension/aws/cloudwatch/table_config.json /opt/cloudquery/etc/aws/cloudwatch/
@@ -52,6 +53,8 @@ COPY extension/aws/cloudformation/table_config.json /opt/cloudquery/etc/aws/clou
 COPY extension/aws/apigateway/table_config.json /opt/cloudquery/etc/aws/apigateway/
 COPY extension/aws/codecommit/table_config.json /opt/cloudquery/etc/aws/codecommit/
 COPY extension/aws/config/table_config.json     /opt/cloudquery/etc/aws/config/
+COPY extension/aws/directoryservice/table_config.json  /opt/cloudquery/etc/aws/directoryservice/
+COPY extension/aws/guardduty/table_config.json /opt/cloudquery/etc/aws/guardduty/
 COPY extension/aws/ecs/table_config.json        /opt/cloudquery/etc/aws/ecs/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/aws/workspaces/table_config.json /opt/cloudquery/etc/aws/workspaces/
