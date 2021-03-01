@@ -1,0 +1,636 @@
+{
+  "aws_directoryservice_directory": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "DirectoryDescriptions_AccessUrl",
+        "targetName": "access_url",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Alias",
+        "targetName": "alias",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings",
+        "targetName": "connect_settings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_AvailabilityZones",
+        "targetName": "connect_settings_availability_zones",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_ConnectIps",
+        "targetName": "connect_settings_connect_ips",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_CustomerUserName",
+        "targetName": "connect_settings_customer_user_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_SecurityGroupId",
+        "targetName": "connect_settings_security_group_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_SubnetIds",
+        "targetName": "connect_settings_subnet_ids",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ConnectSettings_VpcId",
+        "targetName": "connect_settings_vpc_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_DesiredNumberOfDomainControllers",
+        "targetName": "desired_number_of_domain_controllers",
+        "targetType": "INTEGER",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_DirectoryId",
+        "targetName": "directory_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_DnsIpAddrs",
+        "targetName": "dns_ip_addrs",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Edition",
+        "targetName": "edition",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime",
+        "targetName": "launch_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_ext",
+        "targetName": "launch_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc",
+        "targetName": "launch_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheEnd",
+        "targetName": "launch_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheStart",
+        "targetName": "launch_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheZone",
+        "targetName": "launch_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheZone_isDST",
+        "targetName": "launch_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheZone_name",
+        "targetName": "launch_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_cacheZone_offset",
+        "targetName": "launch_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_extend",
+        "targetName": "launch_time_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_name",
+        "targetName": "launch_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_tx",
+        "targetName": "launch_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_tx_index",
+        "targetName": "launch_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_tx_isstd",
+        "targetName": "launch_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_tx_isutc",
+        "targetName": "launch_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_tx_when",
+        "targetName": "launch_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_zone",
+        "targetName": "launch_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_zone_isDST",
+        "targetName": "launch_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_zone_name",
+        "targetName": "launch_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_loc_zone_offset",
+        "targetName": "launch_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_LaunchTime_wall",
+        "targetName": "launch_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription",
+        "targetName": "owner_directory_description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_AccountId",
+        "targetName": "owner_directory_description_account_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_DirectoryId",
+        "targetName": "owner_directory_description_directory_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_DnsIpAddrs",
+        "targetName": "owner_directory_description_dns_ip_addrs",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings",
+        "targetName": "owner_directory_description_radius_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_AuthenticationProtocol",
+        "targetName": "owner_directory_description_radius_settings_authentication_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_DisplayLabel",
+        "targetName": "owner_directory_description_radius_settings_display_label",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusPort",
+        "targetName": "owner_directory_description_radius_settings_radius_port",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusRetries",
+        "targetName": "owner_directory_description_radius_settings_radius_retries",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusServers",
+        "targetName": "owner_directory_description_radius_settings_radius_servers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_RadiusTimeout",
+        "targetName": "owner_directory_description_radius_settings_radius_timeout",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_SharedSecret",
+        "targetName": "owner_directory_description_radius_settings_shared_secret",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusSettings_UseSameUsername",
+        "targetName": "owner_directory_description_radius_settings_use_same_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_RadiusStatus",
+        "targetName": "owner_directory_description_radius_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings",
+        "targetName": "owner_directory_description_vpc_settings",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_AvailabilityZones",
+        "targetName": "owner_directory_description_vpc_settings_availability_zones",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_SecurityGroupId",
+        "targetName": "owner_directory_description_vpc_settings_security_group_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_SubnetIds",
+        "targetName": "owner_directory_description_vpc_settings_subnet_ids",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_OwnerDirectoryDescription_VpcSettings_VpcId",
+        "targetName": "owner_directory_description_vpc_settings_vpc_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings",
+        "targetName": "radius_settings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_AuthenticationProtocol",
+        "targetName": "radius_settings_authentication_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_DisplayLabel",
+        "targetName": "radius_settings_display_label",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusPort",
+        "targetName": "radius_settings_radius_port",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusRetries",
+        "targetName": "radius_settings_radius_retries",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusServers",
+        "targetName": "radius_settings_radius_servers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_RadiusTimeout",
+        "targetName": "radius_settings_radius_timeout",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_SharedSecret",
+        "targetName": "radius_settings_shared_secret",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusSettings_UseSameUsername",
+        "targetName": "radius_settings_use_same_username",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RadiusStatus",
+        "targetName": "radius_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RegionsInfo",
+        "targetName": "regions_info",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RegionsInfo_AdditionalRegions",
+        "targetName": "regions_info_additional_regions",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_RegionsInfo_PrimaryRegion",
+        "targetName": "regions_info_primary_region",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ShareMethod",
+        "targetName": "share_method",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ShareNotes",
+        "targetName": "share_notes",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ShareStatus",
+        "targetName": "share_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_ShortName",
+        "targetName": "short_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Size",
+        "targetName": "size",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_SsoEnabled",
+        "targetName": "sso_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Stage",
+        "targetName": "stage",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime",
+        "targetName": "stage_last_updated_date_time",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_ext",
+        "targetName": "stage_last_updated_date_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc",
+        "targetName": "stage_last_updated_date_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheEnd",
+        "targetName": "stage_last_updated_date_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheStart",
+        "targetName": "stage_last_updated_date_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheZone",
+        "targetName": "stage_last_updated_date_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheZone_isDST",
+        "targetName": "stage_last_updated_date_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheZone_name",
+        "targetName": "stage_last_updated_date_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_cacheZone_offset",
+        "targetName": "stage_last_updated_date_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_extend",
+        "targetName": "stage_last_updated_date_time_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_name",
+        "targetName": "stage_last_updated_date_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_tx",
+        "targetName": "stage_last_updated_date_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_tx_index",
+        "targetName": "stage_last_updated_date_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_tx_isstd",
+        "targetName": "stage_last_updated_date_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_tx_isutc",
+        "targetName": "stage_last_updated_date_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_tx_when",
+        "targetName": "stage_last_updated_date_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_zone",
+        "targetName": "stage_last_updated_date_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_zone_isDST",
+        "targetName": "stage_last_updated_date_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_zone_name",
+        "targetName": "stage_last_updated_date_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_loc_zone_offset",
+        "targetName": "stage_last_updated_date_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageLastUpdatedDateTime_wall",
+        "targetName": "stage_last_updated_date_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_StageReason",
+        "targetName": "stage_reason",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_Type",
+        "targetName": "type",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_VpcSettings",
+        "targetName": "vpc_settings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "DirectoryDescriptions_VpcSettings_AvailabilityZones",
+        "targetName": "vpc_settings_availability_zones",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_VpcSettings_SecurityGroupId",
+        "targetName": "vpc_settings_security_group_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_VpcSettings_SubnetIds",
+        "targetName": "vpc_settings_subnet_ids",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "DirectoryDescriptions_VpcSettings_VpcId",
+        "targetName": "vpc_settings_vpc_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}
