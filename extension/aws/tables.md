@@ -1,5 +1,6 @@
 * AWS
   - aws_acm_certificate
+  - aws_apigateway_rest_api
   - aws_codedeploy_application
   - aws_codecommit_repository
   - aws_cloudformation_stack
