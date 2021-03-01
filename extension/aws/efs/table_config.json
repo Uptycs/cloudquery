@@ -359,7 +359,7 @@
         "sourceName": "FileSystems_ThroughputMode",
         "targetName": "throughput_mode",
         "targetType": "TEXT",
-        "enabled": false
+        "enabled": true
       }
     ]
   }

@@ -87,8 +87,7 @@ func DescribeFileSystemsColumns() []table.ColumnDefinition {
 		table.TextColumn("tags"),
 		//table.TextColumn("tags_key"),
 		//table.TextColumn("tags_value"),
-		//table.TextColumn("throughput_mode"),
-
+		table.TextColumn("throughput_mode"),
 	}
 }
 
