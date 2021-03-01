@@ -19,6 +19,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/codecommit"
 	"github.com/Uptycs/cloudquery/extension/aws/codedeploy"
 	"github.com/Uptycs/cloudquery/extension/aws/config"
+	"github.com/Uptycs/cloudquery/extension/aws/directoryservice"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
@@ -47,6 +48,7 @@ import (
 // ReadTableConfigurations TODO
 func ReadTableConfigurations(homeDir string) {
 	var awsConfigFileList = []string{
+		"aws/directoryservice/table_config.json",
 		"aws/ec2/table_config.json",
 		"aws/apigateway/table_config.json",
 		"aws/cloudformation/table_config.json",
@@ -122,6 +124,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
 	// AWS CLOUDFORMATION
 	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_stack", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
+	// AWS DIRECTORY
+	server.RegisterPlugin(table.NewPlugin("aws_directoryservice_directory", directoryservice.DescribeDirectoriesColumns(), directoryservice.DescribeDirectoriesGenerate))
 	// AWS APIGATEWAY
 	server.RegisterPlugin(table.NewPlugin("aws_apigateway_rest_api", apigateway.GetRestApisColumns(), apigateway.GetRestApisGenerate))
 	// AWS CODEDEPLOY
