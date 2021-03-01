@@ -1,0 +1,36 @@
+{
+  "aws_guardduty_detector": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "DetectorIds",
+        "targetName": "detector_ids",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "NextToken",
+        "targetName": "next_token",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "ResultMetadata",
+        "targetName": "result_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "result_metadata_values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}
