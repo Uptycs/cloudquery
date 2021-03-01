@@ -21,6 +21,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
 	"github.com/Uptycs/cloudquery/extension/aws/efs"
+	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
@@ -52,6 +53,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/codedeploy/table_config.json",
 		"aws/codecommit/table_config.json",
 		"aws/s3/table_config.json",
+		"aws/guardduty/table_config.json",
 		"aws/iam/table_config.json",
 		"aws/cloudtrail/table_config.json",
 		"aws/acm/table_config.json",
@@ -151,7 +153,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_iam_group", iam.ListGroupsColumns(), iam.ListGroupsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_policy", iam.ListPoliciesColumns(), iam.ListPoliciesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_iam_account_password_policy", iam.GetAccountPasswordPolicyColumns(), iam.GetAccountPasswordPolicyGenerate))
-
+	// AWS GUARDDUTY
+	server.RegisterPlugin(table.NewPlugin("aws_guardduty_detector", guardduty.ListDetectorsColumns(), guardduty.ListDetectorsGenerate))
 	// aws cloudwatch
 	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_alarm", cloudwatch.DescribeAlarmsColumns(), cloudwatch.DescribeAlarmsGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_cloudwatch_event_bus", cloudwatch.ListEventBusesColumns(), cloudwatch.ListEventBusesGenerate))

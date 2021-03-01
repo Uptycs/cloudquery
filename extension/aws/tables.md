@@ -20,6 +20,7 @@
   - aws_ec2_tag
   - aws_ec2_volume
   - aws_ec2_vpc
+  - aws_guardduty_detector
   - aws_iam_account_password_policy
   - aws_iam_group
   - aws_iam_policy
