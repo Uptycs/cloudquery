@@ -129,7 +129,7 @@ func FetchRegions(ctx context.Context, awsConfig *aws.Config) ([]types.Region, e
 }
 
 // RowToMap converts JSON row into osquery row.
-// If configured it will copy some metadata vaues into appropriate columns
+// If configured it will copy some metadata values into appropriate columns
 func RowToMap(row map[string]interface{}, accountId string, region string, tableConfig *utilities.TableConfig) map[string]string {
 	result := make(map[string]string)
 

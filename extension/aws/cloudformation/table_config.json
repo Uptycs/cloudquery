@@ -1,0 +1,702 @@
+{
+  "aws_cloudformation_stack": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Capabilities",
+        "targetName": "capabilities",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_ChangeSetId",
+        "targetName": "change_set_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_CreationTime",
+        "targetName": "creation_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_CreationTime_ext",
+        "targetName": "creation_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc",
+        "targetName": "creation_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheEnd",
+        "targetName": "creation_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheStart",
+        "targetName": "creation_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheZone",
+        "targetName": "creation_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheZone_isDST",
+        "targetName": "creation_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheZone_name",
+        "targetName": "creation_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_cacheZone_offset",
+        "targetName": "creation_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_name",
+        "targetName": "creation_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_tx",
+        "targetName": "creation_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_tx_index",
+        "targetName": "creation_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_tx_isstd",
+        "targetName": "creation_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_tx_isutc",
+        "targetName": "creation_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_tx_when",
+        "targetName": "creation_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_zone",
+        "targetName": "creation_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_zone_isDST",
+        "targetName": "creation_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_zone_name",
+        "targetName": "creation_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_loc_zone_offset",
+        "targetName": "creation_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_CreationTime_wall",
+        "targetName": "creation_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime",
+        "targetName": "deletion_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_ext",
+        "targetName": "deletion_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc",
+        "targetName": "deletion_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheEnd",
+        "targetName": "deletion_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheStart",
+        "targetName": "deletion_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheZone",
+        "targetName": "deletion_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheZone_isDST",
+        "targetName": "deletion_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheZone_name",
+        "targetName": "deletion_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_cacheZone_offset",
+        "targetName": "deletion_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_name",
+        "targetName": "deletion_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_tx",
+        "targetName": "deletion_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_tx_index",
+        "targetName": "deletion_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_tx_isstd",
+        "targetName": "deletion_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_tx_isutc",
+        "targetName": "deletion_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_tx_when",
+        "targetName": "deletion_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_zone",
+        "targetName": "deletion_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_zone_isDST",
+        "targetName": "deletion_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_zone_name",
+        "targetName": "deletion_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_loc_zone_offset",
+        "targetName": "deletion_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DeletionTime_wall",
+        "targetName": "deletion_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_DisableRollback",
+        "targetName": "disable_rollback",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_DriftInformation",
+        "targetName": "drift_information",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp",
+        "targetName": "drift_information_last_check_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_ext",
+        "targetName": "drift_information_last_check_timestamp_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc",
+        "targetName": "drift_information_last_check_timestamp_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheEnd",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheStart",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheZone",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheZone_isDST",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheZone_name",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_cacheZone_offset",
+        "targetName": "drift_information_last_check_timestamp_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_name",
+        "targetName": "drift_information_last_check_timestamp_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_tx",
+        "targetName": "drift_information_last_check_timestamp_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_tx_index",
+        "targetName": "drift_information_last_check_timestamp_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_tx_isstd",
+        "targetName": "drift_information_last_check_timestamp_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_tx_isutc",
+        "targetName": "drift_information_last_check_timestamp_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_tx_when",
+        "targetName": "drift_information_last_check_timestamp_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_zone",
+        "targetName": "drift_information_last_check_timestamp_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_zone_isDST",
+        "targetName": "drift_information_last_check_timestamp_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_zone_name",
+        "targetName": "drift_information_last_check_timestamp_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_loc_zone_offset",
+        "targetName": "drift_information_last_check_timestamp_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_LastCheckTimestamp_wall",
+        "targetName": "drift_information_last_check_timestamp_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_DriftInformation_StackDriftStatus",
+        "targetName": "drift_information_stack_drift_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_EnableTerminationProtection",
+        "targetName": "enable_termination_protection",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime",
+        "targetName": "last_updated_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_ext",
+        "targetName": "last_updated_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc",
+        "targetName": "last_updated_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheEnd",
+        "targetName": "last_updated_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheStart",
+        "targetName": "last_updated_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheZone",
+        "targetName": "last_updated_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheZone_isDST",
+        "targetName": "last_updated_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheZone_name",
+        "targetName": "last_updated_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_cacheZone_offset",
+        "targetName": "last_updated_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_name",
+        "targetName": "last_updated_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_tx",
+        "targetName": "last_updated_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_tx_index",
+        "targetName": "last_updated_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_tx_isstd",
+        "targetName": "last_updated_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_tx_isutc",
+        "targetName": "last_updated_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_tx_when",
+        "targetName": "last_updated_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_zone",
+        "targetName": "last_updated_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_zone_isDST",
+        "targetName": "last_updated_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_zone_name",
+        "targetName": "last_updated_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_loc_zone_offset",
+        "targetName": "last_updated_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_LastUpdatedTime_wall",
+        "targetName": "last_updated_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_NotificationARNs",
+        "targetName": "notification_arns",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_Outputs",
+        "targetName": "outputs",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_Outputs_Description",
+        "targetName": "outputs_description",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Outputs_ExportName",
+        "targetName": "outputs_export_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Outputs_OutputKey",
+        "targetName": "outputs_output_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Outputs_OutputValue",
+        "targetName": "outputs_output_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Parameters",
+        "targetName": "parameters",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_Parameters_ParameterKey",
+        "targetName": "parameters_parameter_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Parameters_ParameterValue",
+        "targetName": "parameters_parameter_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Parameters_ResolvedValue",
+        "targetName": "parameters_resolved_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Parameters_UsePreviousValue",
+        "targetName": "parameters_use_previous_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_ParentId",
+        "targetName": "parent_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_RoleARN",
+        "targetName": "role_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_RollbackConfiguration",
+        "targetName": "rollback_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_RollbackConfiguration_MonitoringTimeInMinutes",
+        "targetName": "rollback_configuration_monitoring_time_in_minutes",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers",
+        "targetName": "rollback_configuration_rollback_triggers",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers_Arn",
+        "targetName": "rollback_configuration_rollback_triggers_arn",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_RollbackConfiguration_RollbackTriggers_Type",
+        "targetName": "rollback_configuration_rollback_triggers_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_RootId",
+        "targetName": "root_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_StackId",
+        "targetName": "stack_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_StackName",
+        "targetName": "stack_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_StackStatus",
+        "targetName": "stack_status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_StackStatusReason",
+        "targetName": "stack_status_reason",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Stacks_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Stacks_TimeoutInMinutes",
+        "targetName": "timeout_in_minutes",
+        "targetType": "INTEGER",
+        "enabled": true
+      }
+    ]
+  }
+}

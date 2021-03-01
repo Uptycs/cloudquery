@@ -44,23 +44,26 @@ func ListRulesColumns() []table.ColumnDefinition {
 // ListRulesGenerate returns the rows in the table for all configured accounts
 func ListRulesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_cloudwatch_event_rule", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudwatch_event_rule",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListRules(nil)
+		results, err := processAccountListRules(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_cloudwatch_event_rule", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_cloudwatch_event_rule",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListRules(&account)
+			results, err := processAccountListRules(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -71,7 +74,7 @@ func ListRulesGenerate(osqCtx context.Context, queryContext table.QueryContext) 
 	return resultMap, nil
 }
 
-func processRegionListRules(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListRules(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -92,7 +95,7 @@ func processRegionListRules(tableConfig *utilities.TableConfig, account *utiliti
 	svc := cloudwatchevents.NewFromConfig(*sess)
 	params := &cloudwatchevents.ListRulesInput{}
 
-	result, err := svc.ListRules(context.TODO(), params)
+	result, err := svc.ListRules(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudwatch_event_rule",
@@ -116,19 +119,22 @@ func processRegionListRules(tableConfig *utilities.TableConfig, account *utiliti
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_cloudwatch_event_rule", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountListRules(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListRules(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -140,7 +146,14 @@ func processAccountListRules(account *utilities.ExtensionConfigurationAwsAccount
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListRules(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_cloudwatch_event_rule", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListRules(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
