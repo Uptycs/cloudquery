@@ -1,5 +1,6 @@
 * AWS
   - aws_acm_certificate
+  - aws_codepipeline_pipeline
   - aws_directoryservice_directory
   - aws_apigateway_rest_api
   - aws_codedeploy_application
