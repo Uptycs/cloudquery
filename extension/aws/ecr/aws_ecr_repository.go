@@ -51,39 +51,43 @@ func DescribeRepositoriesColumns() []table.ColumnDefinition {
 		//table.IntegerColumn("created_at_loc_zone_offset"),
 		//table.BigIntColumn("created_at_wall"),
 		table.TextColumn("encryption_configuration"),
-		table.TextColumn("encryption_configuration_encryption_type"),
-		table.TextColumn("encryption_configuration_kms_key"),
+		//table.TextColumn("encryption_configuration_encryption_type"),
+		//table.TextColumn("encryption_configuration_kms_key"),
 		table.TextColumn("image_scanning_configuration"),
-		table.TextColumn("image_scanning_configuration_scan_on_push"),
+		//table.TextColumn("image_scanning_configuration_scan_on_push"),
 		table.TextColumn("image_tag_mutability"),
 		table.TextColumn("registry_id"),
 		table.TextColumn("repository_arn"),
 		table.TextColumn("repository_name"),
 		table.TextColumn("repository_uri"),
-		table.TextColumn("values"),
+		//table.TextColumn("values"),
+
 	}
 }
 
 // DescribeRepositoriesGenerate returns the rows in the table for all configured accounts
 func DescribeRepositoriesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ecr_repository", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ecr",
+			"tableName": "aws_ecr_repository",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeRepositories(nil)
+		results, err := processAccountDescribeRepositories(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ecr_repository", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ecr",
+				"tableName": "aws_ecr_repository",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeRepositories(&account)
+			results, err := processAccountDescribeRepositories(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -94,7 +98,7 @@ func DescribeRepositoriesGenerate(osqCtx context.Context, queryContext table.Que
 	return resultMap, nil
 }
 
-func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeRepositories(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -107,7 +111,7 @@ func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, accou
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_ecr",
+		"tableName": "aws_ecr_repository",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -118,10 +122,10 @@ func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, accou
 	paginator := ecr.NewDescribeRepositoriesPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ecr",
+				"tableName": "aws_ecr_repository",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeRepositories",
@@ -132,7 +136,7 @@ func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, accou
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_ecr",
+				"tableName": "aws_ecr_repository",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeRepositories",
@@ -142,6 +146,9 @@ func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, accou
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ecr_repository", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -152,25 +159,32 @@ func processRegionDescribeRepositories(tableConfig *utilities.TableConfig, accou
 	return resultMap, nil
 }
 
-func processAccountDescribeRepositories(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeRepositories(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_ecr"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_ecr_repository"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_ecr",
+			"tableName": "aws_ecr_repository",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeRepositories(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ecr_repository", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeRepositories(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

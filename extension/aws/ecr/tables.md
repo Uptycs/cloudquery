@@ -1,1 +1,1 @@
-- aws_ecr
+- aws_ecr_repository

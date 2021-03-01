@@ -1,5 +1,5 @@
 {
-  "aws_ecr": {
+  "aws_ecr_repository": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
@@ -143,13 +143,13 @@
         "sourceName": "Repositories_EncryptionConfiguration_EncryptionType",
         "targetName": "encryption_configuration_encryption_type",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Repositories_EncryptionConfiguration_KmsKey",
         "targetName": "encryption_configuration_kms_key",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Repositories_ImageScanningConfiguration",
@@ -161,7 +161,7 @@
         "sourceName": "Repositories_ImageScanningConfiguration_ScanOnPush",
         "targetName": "image_scanning_configuration_scan_on_push",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       },
       {
         "sourceName": "Repositories_ImageTagMutability",
@@ -197,7 +197,7 @@
         "sourceName": "ResultMetadata_values",
         "targetName": "values",
         "targetType": "TEXT",
-        "enabled": true
+        "enabled": false
       }
     ]
   }
