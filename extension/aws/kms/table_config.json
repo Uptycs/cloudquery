@@ -1,0 +1,25 @@
+{
+  "aws_kms_key": {
+    "aws": {
+      "regionAttribute": "region",
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Keys_KeyArn",
+        "targetName": "key_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Keys_KeyId",
+        "targetName": "key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

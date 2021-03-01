@@ -1,0 +1,228 @@
+{
+  "aws_apigateway_rest_api": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Items_ApiKeySource",
+        "targetName": "api_key_source",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_BinaryMediaTypes",
+        "targetName": "binary_media_types",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_CreatedDate",
+        "targetName": "created_date",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_CreatedDate_ext",
+        "targetName": "created_date_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc",
+        "targetName": "created_date_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheEnd",
+        "targetName": "created_date_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheStart",
+        "targetName": "created_date_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheZone",
+        "targetName": "created_date_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheZone_isDST",
+        "targetName": "created_date_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheZone_name",
+        "targetName": "created_date_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_cacheZone_offset",
+        "targetName": "created_date_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_extend",
+        "targetName": "created_date_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_name",
+        "targetName": "created_date_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_tx",
+        "targetName": "created_date_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_tx_index",
+        "targetName": "created_date_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_tx_isstd",
+        "targetName": "created_date_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_tx_isutc",
+        "targetName": "created_date_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_tx_when",
+        "targetName": "created_date_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_zone",
+        "targetName": "created_date_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_zone_isDST",
+        "targetName": "created_date_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_zone_name",
+        "targetName": "created_date_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_loc_zone_offset",
+        "targetName": "created_date_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_CreatedDate_wall",
+        "targetName": "created_date_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_Description",
+        "targetName": "description",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_DisableExecuteApiEndpoint",
+        "targetName": "disable_execute_api_endpoint",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_EndpointConfiguration",
+        "targetName": "endpoint_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_EndpointConfiguration_Types",
+        "targetName": "endpoint_configuration_types",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_EndpointConfiguration_VpcEndpointIds",
+        "targetName": "endpoint_configuration_vpc_endpoint_ids",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Items_Id",
+        "targetName": "id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_MinimumCompressionSize",
+        "targetName": "minimum_compression_size",
+        "targetType": "INTEGER",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Policy",
+        "targetName": "policy",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Version",
+        "targetName": "version",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Items_Warnings",
+        "targetName": "warnings",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}

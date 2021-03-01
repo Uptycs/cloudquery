@@ -36,23 +36,26 @@ func ListClustersColumns() []table.ColumnDefinition {
 // ListClustersGenerate returns the rows in the table for all configured accounts
 func ListClustersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_eks_cluster", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_eks",
+			"tableName": "aws_eks_cluster",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListClusters(nil)
+		results, err := processAccountListClusters(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_eks_cluster", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_eks",
+				"tableName": "aws_eks_cluster",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListClusters(&account)
+			results, err := processAccountListClusters(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -63,7 +66,7 @@ func ListClustersGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processRegionListClusters(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListClusters(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -76,7 +79,7 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_eks",
+		"tableName": "aws_eks_cluster",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -87,10 +90,10 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 	paginator := eks.NewListClustersPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_eks",
+				"tableName": "aws_eks_cluster",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListClusters",
@@ -101,7 +104,7 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_eks",
+				"tableName": "aws_eks_cluster",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListClusters",
@@ -111,6 +114,9 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_eks_cluster", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -121,25 +127,32 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 	return resultMap, nil
 }
 
-func processAccountListClusters(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListClusters(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_eks"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_eks_cluster"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_eks",
+			"tableName": "aws_eks_cluster",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListClusters(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_eks_cluster", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListClusters(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}

@@ -47,7 +47,7 @@ type CloudLogStorageBucket struct {
 // ExtensionConfigurationGcpAccount represents configuration of a GCP account
 type ExtensionConfigurationGcpAccount struct {
 	KeyFile                string                  `json:"keyFile"`
-	ProjectID              string                  `json:"-"`
+	ProjectID              string                  `json:"projectId"`
 	CloudLogStorageBuckets []CloudLogStorageBucket `json:"cloudLogStorageBuckets"`
 }
 

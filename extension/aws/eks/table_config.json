@@ -1,5 +1,5 @@
 {
-  "aws_eks": {
+  "aws_eks_cluster": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

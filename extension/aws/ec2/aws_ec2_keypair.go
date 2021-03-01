@@ -42,23 +42,26 @@ func DescribeKeyPairsColumns() []table.ColumnDefinition {
 // DescribeKeyPairsGenerate returns the rows in the table for all configured accounts
 func DescribeKeyPairsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_ec2_keypair", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_keypair",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeKeyPairs(nil)
+		results, err := processAccountDescribeKeyPairs(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_ec2_keypair", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_ec2_keypair",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeKeyPairs(&account)
+			results, err := processAccountDescribeKeyPairs(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -69,7 +72,7 @@ func DescribeKeyPairsGenerate(osqCtx context.Context, queryContext table.QueryCo
 	return resultMap, nil
 }
 
-func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeKeyPairs(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -90,7 +93,7 @@ func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *
 	svc := ec2.NewFromConfig(*sess)
 	params := &ec2.DescribeKeyPairsInput{}
 
-	result, err := svc.DescribeKeyPairs(context.TODO(), params)
+	result, err := svc.DescribeKeyPairs(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_ec2_keypair",
@@ -114,19 +117,22 @@ func processRegionDescribeKeyPairs(tableConfig *utilities.TableConfig, account *
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_ec2_keypair", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeKeyPairs(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeKeyPairs(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -138,7 +144,14 @@ func processAccountDescribeKeyPairs(account *utilities.ExtensionConfigurationAws
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeKeyPairs(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_ec2_keypair", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeKeyPairs(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
