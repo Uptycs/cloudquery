@@ -1,1 +1,1 @@
-- aws_s3_glacier
+- aws_s3_glacier_vault

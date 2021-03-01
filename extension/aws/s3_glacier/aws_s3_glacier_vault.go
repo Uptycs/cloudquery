@@ -41,23 +41,26 @@ func ListVaultsColumns() []table.ColumnDefinition {
 // ListVaultsGenerate returns the rows in the table for all configured accounts
 func ListVaultsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_s3_glacier_vault", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_s3_glacier",
+			"tableName": "aws_s3_glacier_vault",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListVaults(nil)
+		results, err := processAccountListVaults(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_s3_glacier_vault", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_s3_glacier",
+				"tableName": "aws_s3_glacier_vault",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListVaults(&account)
+			results, err := processAccountListVaults(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -68,7 +71,7 @@ func ListVaultsGenerate(osqCtx context.Context, queryContext table.QueryContext)
 	return resultMap, nil
 }
 
-func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListVaults(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -81,7 +84,7 @@ func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilit
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_s3_glacier",
+		"tableName": "aws_s3_glacier_vault",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
@@ -92,10 +95,10 @@ func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilit
 	paginator := glacier.NewListVaultsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_s3_glacier",
+				"tableName": "aws_s3_glacier_vault",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListVaults",
@@ -106,7 +109,7 @@ func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilit
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_s3_glacier",
+				"tableName": "aws_s3_glacier_vault",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "ListVaults",
@@ -116,6 +119,9 @@ func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilit
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_s3_glacier_vault", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -126,25 +132,32 @@ func processRegionListVaults(tableConfig *utilities.TableConfig, account *utilit
 	return resultMap, nil
 }
 
-func processAccountListVaults(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListVaults(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_s3_glacier"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_s3_glacier_vault"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_s3_glacier",
+			"tableName": "aws_s3_glacier_vault",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListVaults(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_s3_glacier_vault", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionListVaults(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
 			continue
 		}
