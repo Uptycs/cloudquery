@@ -174,7 +174,7 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	//aws workspace
 	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_elastic_file_system", efs.DescribeFileSystemsColumns(), efs.DescribeFileSystemsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_efs_file_system", efs.DescribeFileSystemsColumns(), efs.DescribeFileSystemsGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))
