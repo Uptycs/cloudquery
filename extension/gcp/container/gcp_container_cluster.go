@@ -341,20 +341,22 @@ func GcpContainerClustersColumns() []table.ColumnDefinition {
 
 // GcpContainerClustersGenerate returns the rows in the table for all configured accounts
 func GcpContainerClustersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpContainerClusters(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_container_cluster", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpContainerClusters(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpContainerClusters(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_container_cluster", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpContainerClusters(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -389,7 +391,7 @@ func getGcpContainerClustersNewServiceForAccount(ctx context.Context, account *u
 	return service, projectID
 }
 
-func processAccountGcpContainerClusters(ctx context.Context,
+func processAccountGcpContainerClusters(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -437,6 +439,9 @@ func processAccountGcpContainerClusters(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_container_cluster", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

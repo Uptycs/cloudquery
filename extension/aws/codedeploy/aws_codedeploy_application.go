@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
  */
 
-package ecs
+package codedeploy
 
 import (
 	"context"
@@ -20,28 +20,32 @@ import (
 
 	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
+	"github.com/aws/aws-sdk-go-v2/service/codedeploy"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/aws/aws-sdk-go-v2/service/ecs"
 )
 
-// ListClustersColumns returns the list of columns in the table
-func ListClustersColumns() []table.ColumnDefinition {
+// ListApplicationsColumns returns the list of columns in the table
+func ListApplicationsColumns() []table.ColumnDefinition {
 	return []table.ColumnDefinition{
 		table.TextColumn("account_id"),
 		table.TextColumn("region_code"),
-		table.TextColumn("cluster_arns"),
+		table.TextColumn("applications"),
+		//table.TextColumn("next_token"),
+		//table.TextColumn("result_metadata"),
+		//table.TextColumn("result_metadata_values"),
+
 	}
 }
 
-// ListClustersGenerate returns the rows in the table for all configured accounts
-func ListClustersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
+// ListApplicationsGenerate returns the rows in the table for all configured accounts
+func ListApplicationsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_elastic_container_service",
+			"tableName": "aws_codedeploy_application",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListClusters(nil)
+		results, err := processAccountListApplications(nil)
 		if err != nil {
 			return resultMap, err
 		}
@@ -49,10 +53,10 @@ func ListClustersGenerate(osqCtx context.Context, queryContext table.QueryContex
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_container_service",
+				"tableName": "aws_codedeploy_application",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListClusters(&account)
+			results, err := processAccountListApplications(&account)
 			if err != nil {
 				continue
 			}
@@ -63,7 +67,7 @@ func ListClustersGenerate(osqCtx context.Context, queryContext table.QueryContex
 	return resultMap, nil
 }
 
-func processRegionListClusters(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionListApplications(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -76,24 +80,24 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_elastic_container_service",
+		"tableName": "aws_codedeploy_application",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := ecs.NewFromConfig(*sess)
-	params := &ecs.ListClustersInput{}
+	svc := codedeploy.NewFromConfig(*sess)
+	params := &codedeploy.ListApplicationsInput{}
 
-	paginator := ecs.NewListClustersPaginator(svc, params)
+	paginator := codedeploy.NewListApplicationsPaginator(svc, params)
 
 	for {
 		page, err := paginator.NextPage(context.TODO())
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_container_service",
+				"tableName": "aws_codedeploy_application",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "ListClusters",
+				"task":      "ListApplications",
 				"errString": err.Error(),
 			}).Error("failed to process region")
 			return resultMap, err
@@ -101,10 +105,10 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_container_service",
+				"tableName": "aws_codedeploy_application",
 				"account":   accountId,
 				"region":    *region.RegionName,
-				"task":      "ListClusters",
+				"task":      "ListApplications",
 				"errString": err.Error(),
 			}).Error("failed to marshal response")
 			return nil, err
@@ -121,7 +125,7 @@ func processRegionListClusters(tableConfig *utilities.TableConfig, account *util
 	return resultMap, nil
 }
 
-func processAccountListClusters(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListApplications(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
@@ -131,15 +135,15 @@ func processAccountListClusters(account *utilities.ExtensionConfigurationAwsAcco
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_elastic_container_service"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_codedeploy_application"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_elastic_container_service",
+			"tableName": "aws_codedeploy_application",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionListClusters(tableConfig, account, region)
+		result, err := processRegionListApplications(tableConfig, account, region)
 		if err != nil {
 			continue
 		}

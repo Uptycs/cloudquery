@@ -1,1 +1,1 @@
-- aws_elastic_container_service
+- aws_ecs_cluster
