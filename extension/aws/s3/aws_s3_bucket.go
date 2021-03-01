@@ -83,23 +83,26 @@ func ListBucketsColumns() []table.ColumnDefinition {
 // ListBucketsGenerate returns the rows in the table for all configured accounts
 func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_s3_bucket", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_s3_bucket",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountListBuckets(nil)
+		results, err := processAccountListBuckets(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_s3_bucket", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_s3_bucket",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountListBuckets(&account)
+			results, err := processAccountListBuckets(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -110,9 +113,9 @@ func ListBucketsGenerate(osqCtx context.Context, queryContext table.QueryContext
 	return resultMap, nil
 }
 
-func getBucketLocation(svc *s3.Client, bucketName *string) (string, error) {
+func getBucketLocation(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client, bucketName *string) (string, error) {
 	bucketLocationInput := s3.GetBucketLocationInput{Bucket: bucketName}
-	getBucketLocationOutput, err := svc.GetBucketLocation(context.TODO(), &bucketLocationInput)
+	getBucketLocationOutput, err := svc.GetBucketLocation(osqCtx, &bucketLocationInput)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_s3_bucket",
@@ -131,8 +134,8 @@ func getBucketLocation(svc *s3.Client, bucketName *string) (string, error) {
 	}
 }
 
-func addBucketToRegionBucketList(svc *s3.Client, bucket types.Bucket) error {
-	bucketRegion, err := getBucketLocation(svc, bucket.Name)
+func addBucketToRegionBucketList(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client, bucket types.Bucket) error {
+	bucketRegion, err := getBucketLocation(osqCtx, queryContext, svc, bucket.Name)
 	if err != nil {
 		return err
 	}
@@ -150,18 +153,18 @@ func addBucketToRegionBucketList(svc *s3.Client, bucket types.Bucket) error {
 	return nil
 }
 
-func (bucket *s3BucketInfo) getBucketEncryption(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketEncryption(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketEncryptionInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketEncryption(context.TODO(), &input)
+	output, err := svc.GetBucketEncryption(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.ServerSideEncryptionConfiguration = output.ServerSideEncryptionConfiguration
 }
 
-func (bucket *s3BucketInfo) getBucketVersioning(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketVersioning(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketVersioningInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketVersioning(context.TODO(), &input)
+	output, err := svc.GetBucketVersioning(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -169,9 +172,9 @@ func (bucket *s3BucketInfo) getBucketVersioning(svc *s3.Client) {
 	bucket.VersioningStatus = string(output.Status)
 }
 
-func (bucket *s3BucketInfo) getBucketAcl(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketAcl(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketAclInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketAcl(context.TODO(), &input)
+	output, err := svc.GetBucketAcl(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -179,10 +182,10 @@ func (bucket *s3BucketInfo) getBucketAcl(svc *s3.Client) {
 	bucket.AclGrants = output.Grants
 }
 
-func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketWebsite(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	bucket.WebsiteEnabled = false
 	input := s3.GetBucketWebsiteInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketWebsite(context.TODO(), &input)
+	output, err := svc.GetBucketWebsite(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -192,37 +195,37 @@ func (bucket *s3BucketInfo) getBucketWebsite(svc *s3.Client) {
 	bucket.WebsiteRedirection = output.RedirectAllRequestsTo
 }
 
-func (bucket *s3BucketInfo) getBucketPublicAccessBlock(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketPublicAccessBlock(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetPublicAccessBlockInput{Bucket: &bucket.Name}
-	output, err := svc.GetPublicAccessBlock(context.TODO(), &input)
+	output, err := svc.GetPublicAccessBlock(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.PublicAccessBlockConfig = output.PublicAccessBlockConfiguration
 }
 
-func (bucket *s3BucketInfo) getBucketPolicyStatus(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketPolicyStatus(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketPolicyStatusInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketPolicyStatus(context.TODO(), &input)
+	output, err := svc.GetBucketPolicyStatus(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.PolicyStatus = output.PolicyStatus
 }
 
-func (bucket *s3BucketInfo) getBucketAccelerateConfiguration(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketAccelerateConfiguration(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketAccelerateConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketAccelerateConfiguration(context.TODO(), &input)
+	output, err := svc.GetBucketAccelerateConfiguration(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.AccelerateConfigurationStatus = string(output.Status)
 }
 
-func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.Client) {
+func (bucket *s3BucketInfo) getObjectLockConfiguration(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	bucket.ObjectLockConfigurationEnabled = false
 	input := s3.GetObjectLockConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetObjectLockConfiguration(context.TODO(), &input)
+	output, err := svc.GetObjectLockConfiguration(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -231,10 +234,10 @@ func (bucket *s3BucketInfo) getObjectLockConfiguration(svc *s3.Client) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	bucket.LifecycleConfigurationEnabled = false
 	input := s3.GetBucketLifecycleConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketLifecycleConfiguration(context.TODO(), &input)
+	output, err := svc.GetBucketLifecycleConfiguration(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -243,19 +246,19 @@ func (bucket *s3BucketInfo) getBucketLifecycleConfiguration(svc *s3.Client) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketTags(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketTags(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketTaggingInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketTagging(context.TODO(), &input)
+	output, err := svc.GetBucketTagging(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.Tags = output.TagSet
 }
 
-func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketNotificationConfiguration(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	bucket.NotificationEnabled = false
 	input := s3.GetBucketNotificationConfigurationInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketNotificationConfiguration(context.TODO(), &input)
+	output, err := svc.GetBucketNotificationConfiguration(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -264,10 +267,10 @@ func (bucket *s3BucketInfo) getBucketNotificationConfiguration(svc *s3.Client) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketCorsConfiguration(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	bucket.CorsEnabled = false
 	input := s3.GetBucketCorsInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketCors(context.TODO(), &input)
+	output, err := svc.GetBucketCors(osqCtx, &input)
 	if err != nil {
 		return
 	}
@@ -276,16 +279,16 @@ func (bucket *s3BucketInfo) getBucketCorsConfiguration(svc *s3.Client) {
 	}
 }
 
-func (bucket *s3BucketInfo) getBucketPolicy(svc *s3.Client) {
+func (bucket *s3BucketInfo) getBucketPolicy(osqCtx context.Context, queryContext table.QueryContext, svc *s3.Client) {
 	input := s3.GetBucketPolicyInput{Bucket: &bucket.Name}
-	output, err := svc.GetBucketPolicy(context.TODO(), &input)
+	output, err := svc.GetBucketPolicy(osqCtx, &input)
 	if err != nil {
 		return
 	}
 	bucket.Policy = output.Policy
 }
 
-func processBucket(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region string, bucket *s3BucketInfo) ([]map[string]string, error) {
+func processBucket(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region string, bucket *s3BucketInfo) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, region)
 	if err != nil {
@@ -300,19 +303,19 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 		"tableName": "aws_s3_bucket",
 		"bucket":    bucket.Name,
 	}).Debug("processing bucket")
-	bucket.getBucketAccelerateConfiguration(svc)
-	bucket.getBucketAcl(svc)
-	bucket.getBucketCorsConfiguration(svc)
-	bucket.getBucketEncryption(svc)
-	bucket.getBucketLifecycleConfiguration(svc)
-	bucket.getBucketNotificationConfiguration(svc)
-	bucket.getBucketPolicy(svc)
-	bucket.getBucketPolicyStatus(svc)
-	bucket.getBucketPublicAccessBlock(svc)
-	bucket.getBucketTags(svc)
-	bucket.getBucketVersioning(svc)
-	bucket.getBucketWebsite(svc)
-	bucket.getObjectLockConfiguration(svc)
+	bucket.getBucketAccelerateConfiguration(osqCtx, queryContext, svc)
+	bucket.getBucketAcl(osqCtx, queryContext, svc)
+	bucket.getBucketCorsConfiguration(osqCtx, queryContext, svc)
+	bucket.getBucketEncryption(osqCtx, queryContext, svc)
+	bucket.getBucketLifecycleConfiguration(osqCtx, queryContext, svc)
+	bucket.getBucketNotificationConfiguration(osqCtx, queryContext, svc)
+	bucket.getBucketPolicy(osqCtx, queryContext, svc)
+	bucket.getBucketPolicyStatus(osqCtx, queryContext, svc)
+	bucket.getBucketPublicAccessBlock(osqCtx, queryContext, svc)
+	bucket.getBucketTags(osqCtx, queryContext, svc)
+	bucket.getBucketVersioning(osqCtx, queryContext, svc)
+	bucket.getBucketWebsite(osqCtx, queryContext, svc)
+	bucket.getObjectLockConfiguration(osqCtx, queryContext, svc)
 	byteArr, err := json.Marshal(bucket)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
@@ -326,13 +329,16 @@ func processBucket(tableConfig *utilities.TableConfig, account *utilities.Extens
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_s3_bucket", accountId, region, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, region, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processListBuckets(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, "us-west-1")
 	if err != nil {
@@ -348,7 +354,7 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	}
 
 	// Get list of buckets
-	output, err := svc.ListBuckets(context.TODO(), params)
+	output, err := svc.ListBuckets(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_s3_bucket",
@@ -360,12 +366,19 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	regionBuckets = make(map[string]s3BucketInfoList)
 	// Get bucket region and put that bucket in that bucketList
 	for _, bucket := range output.Buckets {
-		addBucketToRegionBucketList(svc, bucket)
+		addBucketToRegionBucketList(osqCtx, queryContext, svc, bucket)
 	}
 	// Process all buckets
 	for region, regionBucketList := range regionBuckets {
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_s3_bucket", accountId, region) {
+			continue
+		}
 		for _, regionBucket := range regionBucketList.buckets {
-			result, err := processBucket(tableConfig, account, region, &regionBucket)
+			result, err := processBucket(osqCtx, queryContext, tableConfig, account, region, &regionBucket)
 			if err == nil {
 				resultMap = append(resultMap, result...)
 			}
@@ -374,7 +387,7 @@ func processListBuckets(tableConfig *utilities.TableConfig, account *utilities.E
 	return resultMap, nil
 }
 
-func processAccountListBuckets(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountListBuckets(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	tableConfig, ok := utilities.TableConfigurationMap["aws_s3_bucket"]
 	if !ok {
@@ -383,7 +396,7 @@ func processAccountListBuckets(account *utilities.ExtensionConfigurationAwsAccou
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
-	result, err := processListBuckets(tableConfig, account)
+	result, err := processListBuckets(osqCtx, queryContext, tableConfig, account)
 	if err != nil {
 		return resultMap, err
 	}
