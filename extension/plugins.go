@@ -22,11 +22,14 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/config"
 	"github.com/Uptycs/cloudquery/extension/aws/directoryservice"
 	"github.com/Uptycs/cloudquery/extension/aws/ec2"
+	"github.com/Uptycs/cloudquery/extension/aws/ecr"
+	"github.com/Uptycs/cloudquery/extension/aws/efs"
 	"github.com/Uptycs/cloudquery/extension/aws/eks"
 	"github.com/Uptycs/cloudquery/extension/aws/guardduty"
 	"github.com/Uptycs/cloudquery/extension/aws/iam"
 	"github.com/Uptycs/cloudquery/extension/aws/kms"
 	"github.com/Uptycs/cloudquery/extension/aws/s3"
+	glacier "github.com/Uptycs/cloudquery/extension/aws/s3_glacier"
 	"github.com/Uptycs/cloudquery/extension/aws/workspaces"
 	"github.com/Uptycs/cloudquery/extension/gcp/compute"
 	"github.com/Uptycs/cloudquery/extension/gcp/storage"
@@ -65,6 +68,9 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/config/table_config.json",
 		"aws/kms/table_config.json",
 		"aws/workspaces/table_config.json",
+		"aws/efs/table_config.json",
+		"aws/s3_glacier/table_config.json",
+		"aws/ecr/table_config.json",
 		"aws/eks/table_config.json",
 	}
 
@@ -174,6 +180,9 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	//aws workspace
 	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_efs_file_system", efs.DescribeFileSystemsColumns(), efs.DescribeFileSystemsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_s3_glacier_vault", glacier.ListVaultsColumns(), glacier.ListVaultsGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_ecr_repository", ecr.DescribeRepositoriesColumns(), ecr.DescribeRepositoriesGenerate))
 	server.RegisterPlugin(table.NewPlugin("aws_eks_cluster", eks.ListClustersColumns(), eks.ListClustersGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
