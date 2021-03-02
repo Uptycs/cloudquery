@@ -60,20 +60,22 @@ func GcpFileInstancesColumns() []table.ColumnDefinition {
 
 // GcpFileInstancesGenerate returns the rows in the table for all configured accounts
 func GcpFileInstancesGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := processAccountGcpFileInstances(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_file_instance", utilities.DefaultGcpProjectID) {
+		results, err := processAccountGcpFileInstances(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := processAccountGcpFileInstances(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_file_instance", account.ProjectID) {
+				continue
+			}
+			results, err := processAccountGcpFileInstances(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -87,9 +89,12 @@ func getGcpFileInstancesNewServiceForAccount(ctx context.Context, account *utili
 	var projectID string
 	var service *gcpfile.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = gcpfile.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = gcpfile.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = gcpfile.NewService(ctx)
@@ -105,7 +110,7 @@ func getGcpFileInstancesNewServiceForAccount(ctx context.Context, account *utili
 	return service, projectID
 }
 
-func processAccountGcpFileInstances(ctx context.Context,
+func processAccountGcpFileInstances(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -155,6 +160,9 @@ func processAccountGcpFileInstances(ctx context.Context,
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_file_instance", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

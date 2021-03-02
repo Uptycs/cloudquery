@@ -1,0 +1,36 @@
+{
+  "aws_codedeploy_application": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Applications",
+        "targetName": "applications",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "NextToken",
+        "targetName": "next_token",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "ResultMetadata",
+        "targetName": "result_metadata",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "result_metadata_values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}

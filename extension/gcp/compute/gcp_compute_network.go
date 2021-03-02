@@ -62,20 +62,22 @@ func (handler *GcpComputeHandler) GcpComputeNetworksColumns() []table.ColumnDefi
 
 // GcpComputeNetworksGenerate returns the rows in the table for all configured accounts
 func (handler *GcpComputeHandler) GcpComputeNetworksGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
-	var _ = queryContext
 	ctx, cancel := context.WithCancel(osqCtx)
 	defer cancel()
 
 	resultMap := make([]map[string]string, 0)
 
-	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 {
-		results, err := handler.processAccountGcpComputeNetworks(ctx, nil)
+	if len(utilities.ExtConfiguration.ExtConfGcp.Accounts) == 0 && extgcp.ShouldProcessProject("gcp_compute_network", utilities.DefaultGcpProjectID) {
+		results, err := handler.processAccountGcpComputeNetworks(ctx, queryContext, nil)
 		if err == nil {
 			resultMap = append(resultMap, results...)
 		}
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfGcp.Accounts {
-			results, err := handler.processAccountGcpComputeNetworks(ctx, &account)
+			if !extgcp.ShouldProcessProject("gcp_compute_network", account.ProjectID) {
+				continue
+			}
+			results, err := handler.processAccountGcpComputeNetworks(ctx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -89,9 +91,12 @@ func (handler *GcpComputeHandler) getGcpComputeNetworksNewServiceForAccount(ctx 
 	var projectID string
 	var service *compute.Service
 	var err error
-	if account != nil {
+	if account != nil && account.KeyFile != "" {
 		projectID = account.ProjectID
 		service, err = handler.svcInterface.NewService(ctx, option.WithCredentialsFile(account.KeyFile))
+	} else if account != nil && account.ProjectID != "" {
+		projectID = account.ProjectID
+		service, err = handler.svcInterface.NewService(ctx)
 	} else {
 		projectID = utilities.DefaultGcpProjectID
 		service, err = handler.svcInterface.NewService(ctx)
@@ -107,7 +112,7 @@ func (handler *GcpComputeHandler) getGcpComputeNetworksNewServiceForAccount(ctx 
 	return service, projectID
 }
 
-func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.Context,
+func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.Context, queryContext table.QueryContext,
 	account *utilities.ExtensionConfigurationGcpAccount) ([]map[string]string, error) {
 
 	resultMap := make([]map[string]string, 0)
@@ -161,6 +166,9 @@ func (handler *GcpComputeHandler) processAccountGcpComputeNetworks(ctx context.C
 	}
 	jsonTable := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range jsonTable.Rows {
+		if !extgcp.ShouldProcessRow(ctx, queryContext, "gcp_compute_network", projectID, "", row) {
+			continue
+		}
 		result := extgcp.RowToMap(row, projectID, "", tableConfig)
 		resultMap = append(resultMap, result)
 	}

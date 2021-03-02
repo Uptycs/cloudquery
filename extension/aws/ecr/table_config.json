@@ -1,0 +1,204 @@
+{
+  "aws_ecr_repository": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Repositories_CreatedAt",
+        "targetName": "created_at",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_ext",
+        "targetName": "created_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc",
+        "targetName": "created_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheEnd",
+        "targetName": "created_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheStart",
+        "targetName": "created_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheZone",
+        "targetName": "created_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheZone_isDST",
+        "targetName": "created_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheZone_name",
+        "targetName": "created_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_cacheZone_offset",
+        "targetName": "created_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_extend",
+        "targetName": "created_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_name",
+        "targetName": "created_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_tx",
+        "targetName": "created_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_tx_index",
+        "targetName": "created_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_tx_isstd",
+        "targetName": "created_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_tx_isutc",
+        "targetName": "created_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_tx_when",
+        "targetName": "created_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_zone",
+        "targetName": "created_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_zone_isDST",
+        "targetName": "created_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_zone_name",
+        "targetName": "created_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_loc_zone_offset",
+        "targetName": "created_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_CreatedAt_wall",
+        "targetName": "created_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_EncryptionConfiguration",
+        "targetName": "encryption_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_EncryptionConfiguration_EncryptionType",
+        "targetName": "encryption_configuration_encryption_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_EncryptionConfiguration_KmsKey",
+        "targetName": "encryption_configuration_kms_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_ImageScanningConfiguration",
+        "targetName": "image_scanning_configuration",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_ImageScanningConfiguration_ScanOnPush",
+        "targetName": "image_scanning_configuration_scan_on_push",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Repositories_ImageTagMutability",
+        "targetName": "image_tag_mutability",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_RegistryId",
+        "targetName": "registry_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_RepositoryArn",
+        "targetName": "repository_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_RepositoryName",
+        "targetName": "repository_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Repositories_RepositoryUri",
+        "targetName": "repository_uri",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      }
+    ]
+  }
+}
