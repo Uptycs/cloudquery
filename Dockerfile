@@ -56,8 +56,12 @@ COPY extension/aws/config/table_config.json     /opt/cloudquery/etc/aws/config/
 COPY extension/aws/directoryservice/table_config.json  /opt/cloudquery/etc/aws/directoryservice/
 COPY extension/aws/guardduty/table_config.json /opt/cloudquery/etc/aws/guardduty/
 COPY extension/aws/ecs/table_config.json        /opt/cloudquery/etc/aws/ecs/
+COPY extension/aws/ecr/table_config.json     /opt/cloudquery/etc/aws/ecr/
 COPY extension/azure/compute/table_config.json  /opt/cloudquery/etc/azure/compute/
 COPY extension/aws/workspaces/table_config.json /opt/cloudquery/etc/aws/workspaces/
+COPY extension/aws/efs/table_config.json        /opt/cloudquery/etc/aws/efs/
+COPY extension/aws/s3_glacier/table_config.json /opt/cloudquery/etc/aws/s3_glacier/
+COPY extension/aws/eks/table_config.json /opt/cloudquery/etc/aws/eks/
 COPY extension/gcp/compute/table_config.json    /opt/cloudquery/etc/gcp/compute/
 COPY extension/gcp/dns/table_config.json        /opt/cloudquery/etc/gcp/dns/
 COPY extension/gcp/file/table_config.json       /opt/cloudquery/etc/gcp/file/
