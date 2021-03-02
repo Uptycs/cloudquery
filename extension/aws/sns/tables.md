@@ -1,0 +1,1 @@
+- aws_sns_topic

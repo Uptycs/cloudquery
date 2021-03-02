@@ -1,0 +1,18 @@
+{
+  "aws_ecs_cluster": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "ClusterArns",
+        "targetName": "cluster_arns",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

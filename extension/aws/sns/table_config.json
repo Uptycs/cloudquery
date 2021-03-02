@@ -1,0 +1,19 @@
+{
+  "aws_sns_topic": {
+    "aws": {
+      "regionAttribute": "region",
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "Topics",
+        "targetName": "topic",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

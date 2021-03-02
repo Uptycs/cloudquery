@@ -1,0 +1,366 @@
+{
+  "aws_efs_file_system": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "FileSystems_CreationTime",
+        "targetName": "creation_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_ext",
+        "targetName": "creation_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc",
+        "targetName": "creation_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheEnd",
+        "targetName": "creation_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheStart",
+        "targetName": "creation_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheZone",
+        "targetName": "creation_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheZone_isDST",
+        "targetName": "creation_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheZone_name",
+        "targetName": "creation_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_cacheZone_offset",
+        "targetName": "creation_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_name",
+        "targetName": "creation_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_tx",
+        "targetName": "creation_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_tx_index",
+        "targetName": "creation_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_tx_isstd",
+        "targetName": "creation_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_tx_isutc",
+        "targetName": "creation_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_tx_when",
+        "targetName": "creation_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_zone",
+        "targetName": "creation_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_zone_isDST",
+        "targetName": "creation_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_zone_name",
+        "targetName": "creation_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_loc_zone_offset",
+        "targetName": "creation_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationTime_wall",
+        "targetName": "creation_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_CreationToken",
+        "targetName": "creation_token",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_Encrypted",
+        "targetName": "encrypted",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_FileSystemArn",
+        "targetName": "file_system_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_FileSystemId",
+        "targetName": "file_system_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_KmsKeyId",
+        "targetName": "kms_key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_LifeCycleState",
+        "targetName": "life_cycle_state",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_NumberOfMountTargets",
+        "targetName": "number_of_mount_targets",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_OwnerId",
+        "targetName": "owner_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_PerformanceMode",
+        "targetName": "performance_mode",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_ProvisionedThroughputInMibps",
+        "targetName": "provisioned_throughput_in_mibps",
+        "targetType": "DOUBLE",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes",
+        "targetName": "size_in_bytes",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp",
+        "targetName": "size_in_bytes_timestamp",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_ext",
+        "targetName": "size_in_bytes_timestamp_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc",
+        "targetName": "size_in_bytes_timestamp_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheEnd",
+        "targetName": "size_in_bytes_timestamp_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheStart",
+        "targetName": "size_in_bytes_timestamp_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheZone",
+        "targetName": "size_in_bytes_timestamp_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheZone_isDST",
+        "targetName": "size_in_bytes_timestamp_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheZone_name",
+        "targetName": "size_in_bytes_timestamp_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_cacheZone_offset",
+        "targetName": "size_in_bytes_timestamp_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_name",
+        "targetName": "size_in_bytes_timestamp_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_tx",
+        "targetName": "size_in_bytes_timestamp_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_tx_index",
+        "targetName": "size_in_bytes_timestamp_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_tx_isstd",
+        "targetName": "size_in_bytes_timestamp_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_tx_isutc",
+        "targetName": "size_in_bytes_timestamp_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_tx_when",
+        "targetName": "size_in_bytes_timestamp_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_zone",
+        "targetName": "size_in_bytes_timestamp_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_zone_isDST",
+        "targetName": "size_in_bytes_timestamp_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_zone_name",
+        "targetName": "size_in_bytes_timestamp_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_loc_zone_offset",
+        "targetName": "size_in_bytes_timestamp_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Timestamp_wall",
+        "targetName": "size_in_bytes_timestamp_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_Value",
+        "targetName": "size_in_bytes_value",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_ValueInIA",
+        "targetName": "size_in_bytes_value_in_ia",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_SizeInBytes_ValueInStandard",
+        "targetName": "size_in_bytes_value_in_standard",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_Tags",
+        "targetName": "tags",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "FileSystems_Tags_Key",
+        "targetName": "tags_key",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_Tags_Value",
+        "targetName": "tags_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "FileSystems_ThroughputMode",
+        "targetName": "throughput_mode",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}
