@@ -51,23 +51,26 @@ func DescribeTrailsColumns() []table.ColumnDefinition {
 // DescribeTrailsGenerate returns the rows in the table for all configured accounts
 func DescribeTrailsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_cloudtrail_trail", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudtrail_trail",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeTrails(nil)
+		results, err := processAccountDescribeTrails(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_cloudtrail_trail", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_cloudtrail_trail",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeTrails(&account)
+			results, err := processAccountDescribeTrails(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -78,7 +81,7 @@ func DescribeTrailsGenerate(osqCtx context.Context, queryContext table.QueryCont
 	return resultMap, nil
 }
 
-func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeTrails(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -99,7 +102,7 @@ func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *ut
 	svc := cloudtrail.NewFromConfig(*sess)
 	params := &cloudtrail.DescribeTrailsInput{}
 
-	result, err := svc.DescribeTrails(context.TODO(), params)
+	result, err := svc.DescribeTrails(osqCtx, params)
 	if err != nil {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_cloudtrail_trail",
@@ -123,19 +126,22 @@ func processRegionDescribeTrails(tableConfig *utilities.TableConfig, account *ut
 	}
 	table := utilities.NewTable(byteArr, tableConfig)
 	for _, row := range table.Rows {
+		if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_cloudtrail_trail", accountId, *region.RegionName, row) {
+			continue
+		}
 		result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 		resultMap = append(resultMap, result)
 	}
 	return resultMap, nil
 }
 
-func processAccountDescribeTrails(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeTrails(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -147,9 +153,16 @@ func processAccountDescribeTrails(account *utilities.ExtensionConfigurationAwsAc
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeTrails(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_cloudtrail_trail", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeTrails(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}

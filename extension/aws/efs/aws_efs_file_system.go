@@ -94,23 +94,26 @@ func DescribeFileSystemsColumns() []table.ColumnDefinition {
 // DescribeFileSystemsGenerate returns the rows in the table for all configured accounts
 func DescribeFileSystemsGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_efs_file_system", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
 			"tableName": "aws_efs_file_system",
 			"account":   "default",
 		}).Info("processing account")
-		results, err := processAccountDescribeFileSystems(nil)
+		results, err := processAccountDescribeFileSystems(osqCtx, queryContext, nil)
 		if err != nil {
 			return resultMap, err
 		}
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
+			if !extaws.ShouldProcessAccount("aws_efs_file_system", account.ID) {
+				continue
+			}
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_efs_file_system",
 				"account":   account.ID,
 			}).Info("processing account")
-			results, err := processAccountDescribeFileSystems(&account)
+			results, err := processAccountDescribeFileSystems(osqCtx, queryContext, &account)
 			if err != nil {
 				continue
 			}
@@ -121,7 +124,7 @@ func DescribeFileSystemsGenerate(osqCtx context.Context, queryContext table.Quer
 	return resultMap, nil
 }
 
-func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
+func processRegionDescribeFileSystems(osqCtx context.Context, queryContext table.QueryContext, tableConfig *utilities.TableConfig, account *utilities.ExtensionConfigurationAwsAccount, region types.Region) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	sess, err := extaws.GetAwsConfig(account, *region.RegionName)
 	if err != nil {
@@ -145,7 +148,7 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 	paginator := efs.NewDescribeFileSystemsPaginator(svc, params)
 
 	for {
-		page, err := paginator.NextPage(context.TODO())
+		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
 				"tableName": "aws_efs_file_system",
@@ -169,6 +172,9 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_efs_file_system", accountId, *region.RegionName, row) {
+				continue
+			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
 			resultMap = append(resultMap, result)
 		}
@@ -179,13 +185,13 @@ func processRegionDescribeFileSystems(tableConfig *utilities.TableConfig, accoun
 	return resultMap, nil
 }
 
-func processAccountDescribeFileSystems(account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
+func processAccountDescribeFileSystems(osqCtx context.Context, queryContext table.QueryContext, account *utilities.ExtensionConfigurationAwsAccount) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
 	awsSession, err := extaws.GetAwsConfig(account, "us-east-1")
 	if err != nil {
 		return resultMap, err
 	}
-	regions, err := extaws.FetchRegions(context.TODO(), awsSession)
+	regions, err := extaws.FetchRegions(osqCtx, awsSession)
 	if err != nil {
 		return resultMap, err
 	}
@@ -197,9 +203,16 @@ func processAccountDescribeFileSystems(account *utilities.ExtensionConfiguration
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
 	for _, region := range regions {
-		result, err := processRegionDescribeFileSystems(tableConfig, account, region)
+		accountId := utilities.AwsAccountID
+		if account != nil {
+			accountId = account.ID
+		}
+		if !extaws.ShouldProcessRegion("aws_efs_file_system", accountId, *region.RegionName) {
+			continue
+		}
+		result, err := processRegionDescribeFileSystems(osqCtx, queryContext, tableConfig, account, region)
 		if err != nil {
-			return resultMap, err
+			continue
 		}
 		resultMap = append(resultMap, result...)
 	}
