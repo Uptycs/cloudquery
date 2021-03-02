@@ -1,5 +1,5 @@
 {
-  "aws_elastic_loadbalancer_v2": {
+  "aws_elbv2_loadbalancer": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"

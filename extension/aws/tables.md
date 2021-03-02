@@ -36,6 +36,6 @@
   - aws_config_delivery_channel
   - aws_workspaces_workspace
   - aws_kms_key
-  - aws_classic_loadbalancer
-  - aws_elastic_loadbalancer_v2
+  - aws_elb_loadbalancer
+  - aws_elbv2_loadbalancer
 

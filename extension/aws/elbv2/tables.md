@@ -1,1 +1,1 @@
-- aws_elastic_loadbalancer_v2
+- aws_elbv2_loadbalancer

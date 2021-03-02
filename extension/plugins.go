@@ -176,8 +176,8 @@ func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	server.RegisterPlugin(table.NewPlugin("aws_kms_key", kms.ListKeysColumns(), kms.ListKeysGenerate))
 	//aws workspace
 	server.RegisterPlugin(table.NewPlugin("aws_workspaces_workspace", workspaces.DescribeWorkspacesColumns(), workspaces.DescribeWorkspacesGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_classic_loadbalancer", elb.DescribeLoadBalancersColumns(), elb.DescribeLoadBalancersGenerate))
-	server.RegisterPlugin(table.NewPlugin("aws_elastic_loadbalancer_v2", elbv2.DescribeLoadBalancersColumns(), elbv2.DescribeLoadBalancersGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_elb_loadbalancer", elb.DescribeLoadBalancersColumns(), elb.DescribeLoadBalancersGenerate))
+	server.RegisterPlugin(table.NewPlugin("aws_elbv2_loadbalancer", elbv2.DescribeLoadBalancersColumns(), elbv2.DescribeLoadBalancersGenerate))
 	// GCP Compute
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_instance", gcpComputeHandler.GcpComputeInstancesColumns(), gcpComputeHandler.GcpComputeInstancesGenerate))
 	server.RegisterPlugin(table.NewPlugin("gcp_compute_network", gcpComputeHandler.GcpComputeNetworksColumns(), gcpComputeHandler.GcpComputeNetworksGenerate))

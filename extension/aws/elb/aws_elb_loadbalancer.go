@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: (Apache-2.0 OR GPL-2.0-only)
  */
 
-package elbv2
+package elb
 
 import (
 	"context"
@@ -21,7 +21,7 @@ import (
 	"github.com/Uptycs/basequery-go/plugin/table"
 	extaws "github.com/Uptycs/cloudquery/extension/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
+	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
 )
 
 // DescribeLoadBalancersColumns returns the list of columns in the table
@@ -94,9 +94,9 @@ func DescribeLoadBalancersColumns() []table.ColumnDefinition {
 // DescribeLoadBalancersGenerate returns the rows in the table for all configured accounts
 func DescribeLoadBalancersGenerate(osqCtx context.Context, queryContext table.QueryContext) ([]map[string]string, error) {
 	resultMap := make([]map[string]string, 0)
-	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_elastic_loadbalancer_v2", utilities.AwsAccountID) {
+	if len(utilities.ExtConfiguration.ExtConfAws.Accounts) == 0 && extaws.ShouldProcessAccount("aws_elb_loadbalancer", utilities.AwsAccountID) {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_elastic_loadbalancer_v2",
+			"tableName": "aws_elb_loadbalancer",
 			"account":   "default",
 		}).Info("processing account")
 		results, err := processAccountDescribeLoadBalancers(osqCtx, queryContext, nil)
@@ -106,11 +106,11 @@ func DescribeLoadBalancersGenerate(osqCtx context.Context, queryContext table.Qu
 		resultMap = append(resultMap, results...)
 	} else {
 		for _, account := range utilities.ExtConfiguration.ExtConfAws.Accounts {
-			if !extaws.ShouldProcessAccount("aws_elastic_loadbalancer_v2", account.ID) {
+			if !extaws.ShouldProcessAccount("aws_elb_loadbalancer", account.ID) {
 				continue
 			}
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_loadbalancer_v2",
+				"tableName": "aws_elb_loadbalancer",
 				"account":   account.ID,
 			}).Info("processing account")
 			results, err := processAccountDescribeLoadBalancers(osqCtx, queryContext, &account)
@@ -137,21 +137,21 @@ func processRegionDescribeLoadBalancers(osqCtx context.Context, queryContext tab
 	}
 
 	utilities.GetLogger().WithFields(log.Fields{
-		"tableName": "aws_elastic_loadbalancer_v2",
+		"tableName": "aws_elb_loadbalancer",
 		"account":   accountId,
 		"region":    *region.RegionName,
 	}).Debug("processing region")
 
-	svc := elasticloadbalancingv2.NewFromConfig(*sess)
-	params := &elasticloadbalancingv2.DescribeLoadBalancersInput{}
+	svc := elasticloadbalancing.NewFromConfig(*sess)
+	params := &elasticloadbalancing.DescribeLoadBalancersInput{}
 
-	paginator := elasticloadbalancingv2.NewDescribeLoadBalancersPaginator(svc, params)
+	paginator := elasticloadbalancing.NewDescribeLoadBalancersPaginator(svc, params)
 
 	for {
 		page, err := paginator.NextPage(osqCtx)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_loadbalancer_v2",
+				"tableName": "aws_elb_loadbalancer",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeLoadBalancers",
@@ -162,7 +162,7 @@ func processRegionDescribeLoadBalancers(osqCtx context.Context, queryContext tab
 		byteArr, err := json.Marshal(page)
 		if err != nil {
 			utilities.GetLogger().WithFields(log.Fields{
-				"tableName": "aws_elastic_loadbalancer_v2",
+				"tableName": "aws_elb_loadbalancer",
 				"account":   accountId,
 				"region":    *region.RegionName,
 				"task":      "DescribeLoadBalancers",
@@ -172,7 +172,7 @@ func processRegionDescribeLoadBalancers(osqCtx context.Context, queryContext tab
 		}
 		table := utilities.NewTable(byteArr, tableConfig)
 		for _, row := range table.Rows {
-			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_elastic_loadbalancer_v2", accountId, *region.RegionName, row) {
+			if !extaws.ShouldProcessRow(osqCtx, queryContext, "aws_elb_loadbalancer", accountId, *region.RegionName, row) {
 				continue
 			}
 			result := extaws.RowToMap(row, accountId, *region.RegionName, tableConfig)
@@ -195,10 +195,10 @@ func processAccountDescribeLoadBalancers(osqCtx context.Context, queryContext ta
 	if err != nil {
 		return resultMap, err
 	}
-	tableConfig, ok := utilities.TableConfigurationMap["aws_elastic_loadbalancer_v2"]
+	tableConfig, ok := utilities.TableConfigurationMap["aws_elb_loadbalancer"]
 	if !ok {
 		utilities.GetLogger().WithFields(log.Fields{
-			"tableName": "aws_elastic_loadbalancer_v2",
+			"tableName": "aws_elb_loadbalancer",
 		}).Error("failed to get table configuration")
 		return resultMap, fmt.Errorf("table configuration not found")
 	}
@@ -207,7 +207,7 @@ func processAccountDescribeLoadBalancers(osqCtx context.Context, queryContext ta
 		if account != nil {
 			accountId = account.ID
 		}
-		if !extaws.ShouldProcessRegion("aws_elastic_loadbalancer_v2", accountId, *region.RegionName) {
+		if !extaws.ShouldProcessRegion("aws_elb_loadbalancer", accountId, *region.RegionName) {
 			continue
 		}
 		result, err := processRegionDescribeLoadBalancers(osqCtx, queryContext, tableConfig, account, region)

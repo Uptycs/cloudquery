@@ -1,1 +1,1 @@
-- aws_classic_loadbalancer
+- aws_elb_loadbalancer

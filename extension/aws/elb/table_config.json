@@ -1,5 +1,5 @@
 {
-  "aws_classic_loadbalancer": {
+  "aws_elb_loadbalancer": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
