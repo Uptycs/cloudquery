@@ -36,6 +36,12 @@
   - aws_config_delivery_channel
   - aws_workspaces_workspace
   - aws_kms_key
+  - aws_efs_file_system
+  - aws_s3_glacier
+  - aws_ecr_repository
+  - aws_eks_cluster
+  - aws_ecs_cluster
+  - aws_sns_topic
+  - aws_sqs_queue
   - aws_elb_loadbalancer
   - aws_elbv2_loadbalancer
-
