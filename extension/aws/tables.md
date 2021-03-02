@@ -1,5 +1,7 @@
 * AWS
   - aws_acm_certificate
+  - aws_codepipeline_pipeline
+  - aws_directoryservice_directory
   - aws_apigateway_rest_api
   - aws_codedeploy_application
   - aws_codecommit_repository
@@ -20,6 +22,7 @@
   - aws_ec2_tag
   - aws_ec2_volume
   - aws_ec2_vpc
+  - aws_guardduty_detector
   - aws_iam_account_password_policy
   - aws_iam_group
   - aws_iam_policy
@@ -33,5 +36,6 @@
   - aws_config_delivery_channel
   - aws_workspaces_workspace
   - aws_kms_key
+  - aws_efs_file_system
+  - aws_s3_glacier
   - aws_ecr_repository
-

@@ -1,0 +1,48 @@
+{
+  "aws_s3_glacier_vault": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "VaultList_CreationDate",
+        "targetName": "creation_date",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "VaultList_LastInventoryDate",
+        "targetName": "last_inventory_date",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "VaultList_NumberOfArchives",
+        "targetName": "number_of_archives",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "VaultList_SizeInBytes",
+        "targetName": "size_in_bytes",
+        "targetType": "BIGINT",
+        "enabled": true
+      },
+      {
+        "sourceName": "VaultList_VaultARN",
+        "targetName": "vault_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "VaultList_VaultName",
+        "targetName": "vault_name",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

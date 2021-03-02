@@ -1,0 +1,1 @@
+- aws_directoryservice_directory
