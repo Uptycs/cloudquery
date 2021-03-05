@@ -1,5 +1,5 @@
 {
-  "aws_cloudtrail_events": {
+  "aws_cloudtrail_trail": {
     "aws": {
       "regionCodeAttribute": "region_code",
       "accountIdAttribute": "account_id"
@@ -7,6 +7,102 @@
     "gcp": {},
     "azure": {},
     "parsedAttributes": [
+      {
+        "sourceName": "TrailList_CloudWatchLogsLogGroupArn",
+        "targetName": "cloud_watch_logs_log_group_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_CloudWatchLogsRoleArn",
+        "targetName": "cloud_watch_logs_role_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_HasCustomEventSelectors",
+        "targetName": "has_custom_event_selectors",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_HasInsightSelectors",
+        "targetName": "has_insight_selectors",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_HomeRegion",
+        "targetName": "home_region",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_IncludeGlobalServiceEvents",
+        "targetName": "include_global_service_events",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_IsMultiRegionTrail",
+        "targetName": "is_multi_region_trail",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_IsOrganizationTrail",
+        "targetName": "is_organization_trail",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_KmsKeyId",
+        "targetName": "kms_key_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_LogFileValidationEnabled",
+        "targetName": "log_file_validation_enabled",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_Name",
+        "targetName": "name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_S3BucketName",
+        "targetName": "s3_bucket_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_S3KeyPrefix",
+        "targetName": "s3_key_prefix",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_SnsTopicARN",
+        "targetName": "sns_topic_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_SnsTopicName",
+        "targetName": "sns_topic_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "TrailList_TrailARN",
+        "targetName": "trail_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      }
     ]
   }
 }

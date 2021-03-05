@@ -1,0 +1,19 @@
+{
+  "aws_sqs_queue": {
+    "aws": {
+      "regionAttribute": "region",
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "QueueUrls",
+        "targetName": "queue_urls",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}

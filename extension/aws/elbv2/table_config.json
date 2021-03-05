@@ -1,0 +1,366 @@
+{
+  "aws_elbv2_loadbalancer": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "LoadBalancerDescriptions_AvailabilityZones",
+        "targetName": "availability_zones",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_BackendServerDescriptions",
+        "targetName": "backend_server_descriptions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_BackendServerDescriptions_InstancePort",
+        "targetName": "backend_server_descriptions_instance_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_BackendServerDescriptions_PolicyNames",
+        "targetName": "backend_server_descriptions_policy_names",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CanonicalHostedZoneName",
+        "targetName": "canonical_hosted_zone_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CanonicalHostedZoneNameID",
+        "targetName": "canonical_hosted_zone_name_id",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime",
+        "targetName": "created_time",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_ext",
+        "targetName": "created_time_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc",
+        "targetName": "created_time_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheEnd",
+        "targetName": "created_time_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheStart",
+        "targetName": "created_time_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheZone",
+        "targetName": "created_time_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheZone_isDST",
+        "targetName": "created_time_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheZone_name",
+        "targetName": "created_time_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_cacheZone_offset",
+        "targetName": "created_time_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_name",
+        "targetName": "created_time_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_tx",
+        "targetName": "created_time_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_tx_index",
+        "targetName": "created_time_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_tx_isstd",
+        "targetName": "created_time_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_tx_isutc",
+        "targetName": "created_time_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_tx_when",
+        "targetName": "created_time_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_zone",
+        "targetName": "created_time_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_zone_isDST",
+        "targetName": "created_time_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_zone_name",
+        "targetName": "created_time_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_loc_zone_offset",
+        "targetName": "created_time_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_CreatedTime_wall",
+        "targetName": "created_time_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_DNSName",
+        "targetName": "dns_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck",
+        "targetName": "health_check",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck_HealthyThreshold",
+        "targetName": "health_check_healthy_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck_Interval",
+        "targetName": "health_check_interval",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck_Target",
+        "targetName": "health_check_target",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck_Timeout",
+        "targetName": "health_check_timeout",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_HealthCheck_UnhealthyThreshold",
+        "targetName": "health_check_unhealthy_threshold",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Instances",
+        "targetName": "instances",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Instances_InstanceId",
+        "targetName": "instances_instance_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions",
+        "targetName": "listener_descriptions",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener",
+        "targetName": "listener_descriptions_listener",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener_InstancePort",
+        "targetName": "listener_descriptions_listener_instance_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener_InstanceProtocol",
+        "targetName": "listener_descriptions_listener_instance_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener_LoadBalancerPort",
+        "targetName": "listener_descriptions_listener_load_balancer_port",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener_Protocol",
+        "targetName": "listener_descriptions_listener_protocol",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_Listener_SSLCertificateId",
+        "targetName": "listener_descriptions_listener_ssl_certificate_id",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_ListenerDescriptions_PolicyNames",
+        "targetName": "listener_descriptions_policy_names",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_LoadBalancerName",
+        "targetName": "load_balancer_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies",
+        "targetName": "policies",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_AppCookieStickinessPolicies",
+        "targetName": "policies_app_cookie_stickiness_policies",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_AppCookieStickinessPolicies_CookieName",
+        "targetName": "policies_app_cookie_stickiness_policies_cookie_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_AppCookieStickinessPolicies_PolicyName",
+        "targetName": "policies_app_cookie_stickiness_policies_policy_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_LBCookieStickinessPolicies",
+        "targetName": "policies_lb_cookie_stickiness_policies",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_LBCookieStickinessPolicies_CookieExpirationPeriod",
+        "targetName": "policies_lb_cookie_stickiness_policies_cookie_expiration_period",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_LBCookieStickinessPolicies_PolicyName",
+        "targetName": "policies_lb_cookie_stickiness_policies_policy_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Policies_OtherPolicies",
+        "targetName": "policies_other_policies",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Scheme",
+        "targetName": "scheme",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_SecurityGroups",
+        "targetName": "security_groups",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_SourceSecurityGroup",
+        "targetName": "source_security_group",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_SourceSecurityGroup_GroupName",
+        "targetName": "source_security_group_group_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_SourceSecurityGroup_OwnerAlias",
+        "targetName": "source_security_group_owner_alias",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_Subnets",
+        "targetName": "subnets",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "LoadBalancerDescriptions_VPCId",
+        "targetName": "vpc_id",
+        "targetType": "TEXT",
+        "enabled": true
+      }
+    ]
+  }
+}
