@@ -17,6 +17,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var tableJSON1 = `
+{
+	"attr1": "value1",
+	"attr2": {
+			"sourceName": {
+				"type": "text",
+				"size": 2
+			},
+			"attr4": [ 
+				{
+					"attr5": "val51"
+				},
+				{
+					"attr5": "val52"
+				}
+			]
+		},
+	"attr3": {
+		"key1": "val1",
+		"key2": "val2"
+	}
+}`
+
 var tableConfigJSON = `
 {
 	"test_table_1": {
@@ -58,6 +81,37 @@ var tableConfigJSON = `
 		},
 		"azure": {},
 		"parsedAttributes": []
+	},
+	"table_test_table_1": {
+    	"aws": {},
+		"gcp": {},
+		"azure": {},
+    	"parsedAttributes": [
+			{
+				"sourceName": "attr1",
+				"targetName": "attr1",
+				"targetType": "TEXT",
+				"enabled": true
+			},
+			{
+				"sourceName": "attr2_sourceName",
+				"targetName": "attr2_source_name",
+				"targetType": "TEXT",
+				"enabled": true
+			},
+			{
+				"sourceName": "attr3",
+				"targetName": "attr3",
+				"targetType": "TEXT",
+				"enabled": true
+			},
+			{
+				"sourceName": "attr2_attr4_attr5",
+				"targetName": "attr2_attr4_attr5",
+				"targetType": "TEXT",
+				"enabled": true
+			}
+		]
 	}
 }`
 
@@ -94,7 +148,7 @@ func TestReadTableConfig(t *testing.T) {
 		assert.Equal(t, len(v.parsedAttributeConfigMap), len(v.ParsedAttributes))
 	}
 
-	assert.Equal(t, 2, len(TableConfigurationMap))
+	assert.Equal(t, 3, len(TableConfigurationMap))
 }
 
 func TestRowToMap(t *testing.T) {
@@ -220,4 +274,18 @@ func TestGetSnakeCase(t *testing.T) {
 		strVal := GetSnakeCase(entry.In.(string))
 		assert.Equal(t, entry.Expected, strVal)
 	}
+}
+
+func TestNewTable(t *testing.T) {
+	readErr := ReadTableConfig([]byte(tableConfigJSON))
+	assert.Nil(t, readErr)
+
+	myTable1, found := TableConfigurationMap["table_test_table_1"]
+	assert.True(t, found)
+
+	tableWithConfig := NewTable([]byte(tableJSON1), myTable1)
+	assert.Equal(t, 2, len(tableWithConfig.Rows))
+
+	table := NewTable([]byte(tableJSON1), nil)
+	assert.Equal(t, 2, len(table.Rows))
 }
