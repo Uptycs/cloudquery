@@ -1,4 +1,14 @@
 {
+  "aws_cloudtrail_events": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+    ]
+  },
   "aws_cloudtrail_trail": {
     "aws": {
       "regionCodeAttribute": "region_code",
