@@ -28,14 +28,23 @@ type Table struct {
 // NewTable creates a table from given data (in json form) and table configuration
 func NewTable(jsonStr []byte, tableConfig *TableConfig) Table {
 	tab := Table{}
-	tab.init(jsonStr, tableConfig.MaxLevel, tableConfig.getParsedAttributeConfigMap())
+	maxLevel := 10
+	parsedAttributeConfigMap := make(map[string]ParsedAttributeConfig)
+	if tableConfig != nil {
+		maxLevel = tableConfig.MaxLevel
+		parsedAttributeConfigMap = tableConfig.getParsedAttributeConfigMap()
+	}
+	tab.init(jsonStr, maxLevel, parsedAttributeConfigMap)
 	return tab
 }
 
 func (tab *Table) init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap map[string]ParsedAttributeConfig) {
 	var fields interface{}
 	json.Unmarshal(jsonStr, &fields)
-	tab.MaxLevel = maxLevel + 1
+	tab.MaxLevel = maxLevel
+	if maxLevel != 0 {
+		tab.MaxLevel = maxLevel + 1
+	}
 	tab.ParsedAttributeConfigMap = parsedAttributeConfigMap
 	switch fields.(type) {
 	case map[string]interface{}:
@@ -57,19 +66,22 @@ func (tab *Table) init(jsonStr []byte, maxLevel int, parsedAttributeConfigMap ma
 }
 
 func (tab *Table) print() {
-	for _, row := range tab.Rows {
-		GetLogger().Info("===========================")
+	GetLogger().Info("===========================START-TABLE")
+	for index, row := range tab.Rows {
+		GetLogger().Info("===========================ROW ", index)
 		for key, value := range row {
 			logStr := fmt.Sprintf("%s=%v", key, value)
 			GetLogger().Info(logStr)
 		}
 	}
+	GetLogger().Info("===========================END-TABLE")
 }
 
 func (tab *Table) addAttribute(name string, value interface{}) {
-	// Add attribute only if it is configured
-	if attrConfig, ok := tab.ParsedAttributeConfigMap[name]; ok {
-		if attrConfig.Enabled {
+	// Add attribute only if it is configured. If attribute config map is empty, add everything
+	attrConfig, ok := tab.ParsedAttributeConfigMap[name]
+	if ok || (len(tab.ParsedAttributeConfigMap) == 0) {
+		if (len(tab.ParsedAttributeConfigMap) == 0) || attrConfig.Enabled {
 			if len(tab.Rows) == 0 {
 				row := make(map[string]interface{})
 				tab.Rows = append(tab.Rows, row)
@@ -129,7 +141,8 @@ func getKey(prefix, key string) string {
 // by dot-delimited keys.
 func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{}) {
 	for k, v := range m {
-		if _, ok := tab.ParsedAttributeConfigMap[getKey(prefix, k)]; ok {
+		_, ok := tab.ParsedAttributeConfigMap[getKey(prefix, k)]
+		if ok || (len(tab.ParsedAttributeConfigMap) == 0) {
 			byteArr, err := json.Marshal(v)
 			if err == nil {
 				tab.addAttribute(getKey(prefix, k), string(byteArr))
@@ -153,14 +166,14 @@ func (tab *Table) flattenMap(level int, prefix string, m map[string]interface{})
 }
 
 func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
-	newTable := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
+	newListTable := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 	for _, value := range list {
-		if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
-			scalarTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
+		newTable := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
+		_, ok := tab.ParsedAttributeConfigMap[prefix]
+		if ok || (len(tab.ParsedAttributeConfigMap) == 0) {
 			byteArr, err := json.Marshal(value)
 			if err == nil {
-				scalarTab.addAttribute(prefix, string(byteArr))
-				newTable.addRows(scalarTab.Rows)
+				newTable.addAttribute(prefix, string(byteArr))
 			}
 		}
 		if tab.MaxLevel > 0 && level >= tab.MaxLevel {
@@ -171,23 +184,21 @@ func (tab *Table) flattenList(level int, prefix string, list []interface{}) {
 		case map[string]interface{}:
 			mapTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			mapTab.flattenMap(level+1, prefix, child)
-			newTable.addRows(mapTab.Rows)
-			//tab.addRowsAndFlatten(newTab.Rows)
+			newTable.addRowsAndFlatten(mapTab.Rows)
 		case []interface{}:
 			listTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			listTab.flattenList(level+1, prefix, child)
-			newTable.addRows(listTab.Rows)
+			newTable.addRowsAndFlatten(listTab.Rows)
 		case reflect.Value:
 			valTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
 			valTab.flattenValue(level, prefix, child)
-			newTable.addRows(valTab.Rows)
+			newTable.addRowsAndFlatten(valTab.Rows)
 		default:
-			scalarTab := Table{MaxLevel: tab.MaxLevel, ParsedAttributeConfigMap: tab.ParsedAttributeConfigMap}
-			scalarTab.addAttribute(prefix, value)
-			newTable.addRows(scalarTab.Rows)
+			newTable.addAttribute(prefix, value)
 		}
+		newListTable.addRows(newTable.Rows)
 	}
-	tab.addRowsAndFlatten(newTable.Rows)
+	tab.addRowsAndFlatten(newListTable.Rows)
 }
 
 func getAdjustedValue(value reflect.Value) reflect.Value {
@@ -198,7 +209,8 @@ func getAdjustedValue(value reflect.Value) reflect.Value {
 }
 
 func (tab *Table) addAttributeForPrefix(prefix string, value reflect.Value) {
-	if _, ok := tab.ParsedAttributeConfigMap[prefix]; ok {
+	_, ok := tab.ParsedAttributeConfigMap[prefix]
+	if ok || (len(tab.ParsedAttributeConfigMap) == 0) {
 		byteArr, err := json.Marshal(value)
 		if err == nil {
 			tab.addAttribute(prefix, string(byteArr))
