@@ -15,6 +15,7 @@ import (
 	"github.com/Uptycs/cloudquery/extension/aws/acm"
 	"github.com/Uptycs/cloudquery/extension/aws/apigateway"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudformation"
+	"github.com/Uptycs/cloudquery/extension/aws/cloudfront"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudtrail"
 	"github.com/Uptycs/cloudquery/extension/aws/cloudwatch"
 	"github.com/Uptycs/cloudquery/extension/aws/codecommit"
@@ -67,6 +68,7 @@ func ReadTableConfigurations(homeDir string) {
 		"aws/codedeploy/table_config.json",
 		"aws/codecommit/table_config.json",
 		"aws/s3/table_config.json",
+		"aws/cloudfront/table_config.json",
 		"aws/guardduty/table_config.json",
 		"aws/iam/table_config.json",
 		"aws/organizations/table_config.json",
@@ -144,6 +146,8 @@ func registerEventTables(server *osquery.ExtensionManagerServer) {
 func RegisterPlugins(server *osquery.ExtensionManagerServer) {
 	// AWS ACM
 	server.RegisterPlugin(table.NewPlugin("aws_acm_certificate", acm.ListCertificatesColumns(), acm.ListCertificatesGenerate))
+	// AWS CLOUDFRONT
+	server.RegisterPlugin(table.NewPlugin("aws_cloudfront_distribution", cloudfront.ListDistributionsColumns(), cloudfront.ListDistributionsGenerate))
 	// AWS CLOUDFORMATION
 	server.RegisterPlugin(table.NewPlugin("aws_cloudformation_stack", cloudformation.DescribeStacksColumns(), cloudformation.DescribeStacksGenerate))
 	// AWS CODEPIPELINE
