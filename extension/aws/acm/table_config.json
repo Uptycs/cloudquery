@@ -8,14 +8,1154 @@
     "azure": {},
     "parsedAttributes": [
       {
-        "sourceName": "CertificateSummaryList_CertificateArn",
+        "sourceName": "Certificate_CertificateArn",
         "targetName": "certificate_arn",
         "targetType": "TEXT",
         "enabled": true
       },
       {
-        "sourceName": "CertificateSummaryList_DomainName",
+        "sourceName": "Certificate_CertificateAuthorityArn",
+        "targetName": "certificate_authority_arn",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_CreatedAt",
+        "targetName": "created_at",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_ext",
+        "targetName": "created_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc",
+        "targetName": "created_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheEnd",
+        "targetName": "created_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheStart",
+        "targetName": "created_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheZone",
+        "targetName": "created_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheZone_isDST",
+        "targetName": "created_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheZone_name",
+        "targetName": "created_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_cacheZone_offset",
+        "targetName": "created_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_extend",
+        "targetName": "created_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_name",
+        "targetName": "created_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_tx",
+        "targetName": "created_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_tx_index",
+        "targetName": "created_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_tx_isstd",
+        "targetName": "created_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_tx_isutc",
+        "targetName": "created_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_tx_when",
+        "targetName": "created_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_zone",
+        "targetName": "created_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_zone_isDST",
+        "targetName": "created_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_zone_name",
+        "targetName": "created_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_loc_zone_offset",
+        "targetName": "created_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_CreatedAt_wall",
+        "targetName": "created_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainName",
         "targetName": "domain_name",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions",
+        "targetName": "domain_validation_options",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_DomainName",
+        "targetName": "domain_validation_options_domain_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ResourceRecord",
+        "targetName": "domain_validation_options_resource_record",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ResourceRecord_Name",
+        "targetName": "domain_validation_options_resource_record_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ResourceRecord_Type",
+        "targetName": "domain_validation_options_resource_record_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ResourceRecord_Value",
+        "targetName": "domain_validation_options_resource_record_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ValidationDomain",
+        "targetName": "domain_validation_options_validation_domain",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ValidationEmails",
+        "targetName": "domain_validation_options_validation_emails",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ValidationMethod",
+        "targetName": "domain_validation_options_validation_method",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_DomainValidationOptions_ValidationStatus",
+        "targetName": "domain_validation_options_validation_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ExtendedKeyUsages",
+        "targetName": "extended_key_usages",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_ExtendedKeyUsages_Name",
+        "targetName": "extended_key_usages_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ExtendedKeyUsages_OID",
+        "targetName": "extended_key_usages_oid",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_FailureReason",
+        "targetName": "failure_reason",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_ImportedAt",
+        "targetName": "imported_at",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_ext",
+        "targetName": "imported_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc",
+        "targetName": "imported_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheEnd",
+        "targetName": "imported_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheStart",
+        "targetName": "imported_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheZone",
+        "targetName": "imported_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheZone_isDST",
+        "targetName": "imported_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheZone_name",
+        "targetName": "imported_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_cacheZone_offset",
+        "targetName": "imported_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_extend",
+        "targetName": "imported_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_name",
+        "targetName": "imported_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_tx",
+        "targetName": "imported_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_tx_index",
+        "targetName": "imported_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_tx_isstd",
+        "targetName": "imported_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_tx_isutc",
+        "targetName": "imported_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_tx_when",
+        "targetName": "imported_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_zone",
+        "targetName": "imported_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_zone_isDST",
+        "targetName": "imported_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_zone_name",
+        "targetName": "imported_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_loc_zone_offset",
+        "targetName": "imported_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_ImportedAt_wall",
+        "targetName": "imported_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_InUseBy",
+        "targetName": "in_use_by",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_IssuedAt",
+        "targetName": "issued_at",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_ext",
+        "targetName": "issued_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc",
+        "targetName": "issued_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheEnd",
+        "targetName": "issued_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheStart",
+        "targetName": "issued_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheZone",
+        "targetName": "issued_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheZone_isDST",
+        "targetName": "issued_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheZone_name",
+        "targetName": "issued_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_cacheZone_offset",
+        "targetName": "issued_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_extend",
+        "targetName": "issued_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_name",
+        "targetName": "issued_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_tx",
+        "targetName": "issued_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_tx_index",
+        "targetName": "issued_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_tx_isstd",
+        "targetName": "issued_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_tx_isutc",
+        "targetName": "issued_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_tx_when",
+        "targetName": "issued_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_zone",
+        "targetName": "issued_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_zone_isDST",
+        "targetName": "issued_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_zone_name",
+        "targetName": "issued_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_loc_zone_offset",
+        "targetName": "issued_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_IssuedAt_wall",
+        "targetName": "issued_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_Issuer",
+        "targetName": "issuer",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_KeyAlgorithm",
+        "targetName": "key_algorithm",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_KeyUsages",
+        "targetName": "key_usages",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_KeyUsages_Name",
+        "targetName": "key_usages_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter",
+        "targetName": "not_after",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_NotAfter_ext",
+        "targetName": "not_after_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc",
+        "targetName": "not_after_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheEnd",
+        "targetName": "not_after_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheStart",
+        "targetName": "not_after_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheZone",
+        "targetName": "not_after_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheZone_isDST",
+        "targetName": "not_after_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheZone_name",
+        "targetName": "not_after_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_cacheZone_offset",
+        "targetName": "not_after_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_extend",
+        "targetName": "not_after_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_name",
+        "targetName": "not_after_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_tx",
+        "targetName": "not_after_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_tx_index",
+        "targetName": "not_after_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_tx_isstd",
+        "targetName": "not_after_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_tx_isutc",
+        "targetName": "not_after_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_tx_when",
+        "targetName": "not_after_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_zone",
+        "targetName": "not_after_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_zone_isDST",
+        "targetName": "not_after_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_zone_name",
+        "targetName": "not_after_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_loc_zone_offset",
+        "targetName": "not_after_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotAfter_wall",
+        "targetName": "not_after_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore",
+        "targetName": "not_before",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_NotBefore_ext",
+        "targetName": "not_before_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc",
+        "targetName": "not_before_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheEnd",
+        "targetName": "not_before_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheStart",
+        "targetName": "not_before_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheZone",
+        "targetName": "not_before_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheZone_isDST",
+        "targetName": "not_before_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheZone_name",
+        "targetName": "not_before_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_cacheZone_offset",
+        "targetName": "not_before_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_extend",
+        "targetName": "not_before_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_name",
+        "targetName": "not_before_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_tx",
+        "targetName": "not_before_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_tx_index",
+        "targetName": "not_before_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_tx_isstd",
+        "targetName": "not_before_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_tx_isutc",
+        "targetName": "not_before_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_tx_when",
+        "targetName": "not_before_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_zone",
+        "targetName": "not_before_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_zone_isDST",
+        "targetName": "not_before_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_zone_name",
+        "targetName": "not_before_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_loc_zone_offset",
+        "targetName": "not_before_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_NotBefore_wall",
+        "targetName": "not_before_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_Options",
+        "targetName": "options",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_Options_CertificateTransparencyLoggingPreference",
+        "targetName": "options_certificate_transparency_logging_preference",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalEligibility",
+        "targetName": "renewal_eligibility",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary",
+        "targetName": "renewal_summary",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions",
+        "targetName": "renewal_summary_domain_validation_options",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_DomainName",
+        "targetName": "renewal_summary_domain_validation_options_domain_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ResourceRecord",
+        "targetName": "renewal_summary_domain_validation_options_resource_record",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ResourceRecord_Name",
+        "targetName": "renewal_summary_domain_validation_options_resource_record_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ResourceRecord_Type",
+        "targetName": "renewal_summary_domain_validation_options_resource_record_type",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ResourceRecord_Value",
+        "targetName": "renewal_summary_domain_validation_options_resource_record_value",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ValidationDomain",
+        "targetName": "renewal_summary_domain_validation_options_validation_domain",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ValidationEmails",
+        "targetName": "renewal_summary_domain_validation_options_validation_emails",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ValidationMethod",
+        "targetName": "renewal_summary_domain_validation_options_validation_method",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_DomainValidationOptions_ValidationStatus",
+        "targetName": "renewal_summary_domain_validation_options_validation_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_RenewalStatus",
+        "targetName": "renewal_summary_renewal_status",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_RenewalStatusReason",
+        "targetName": "renewal_summary_renewal_status_reason",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt",
+        "targetName": "renewal_summary_updated_at",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_ext",
+        "targetName": "renewal_summary_updated_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc",
+        "targetName": "renewal_summary_updated_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheEnd",
+        "targetName": "renewal_summary_updated_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheStart",
+        "targetName": "renewal_summary_updated_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheZone",
+        "targetName": "renewal_summary_updated_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheZone_isDST",
+        "targetName": "renewal_summary_updated_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheZone_name",
+        "targetName": "renewal_summary_updated_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_cacheZone_offset",
+        "targetName": "renewal_summary_updated_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_extend",
+        "targetName": "renewal_summary_updated_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_name",
+        "targetName": "renewal_summary_updated_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_tx",
+        "targetName": "renewal_summary_updated_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_tx_index",
+        "targetName": "renewal_summary_updated_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_tx_isstd",
+        "targetName": "renewal_summary_updated_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_tx_isutc",
+        "targetName": "renewal_summary_updated_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_tx_when",
+        "targetName": "renewal_summary_updated_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_zone",
+        "targetName": "renewal_summary_updated_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_zone_isDST",
+        "targetName": "renewal_summary_updated_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_zone_name",
+        "targetName": "renewal_summary_updated_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_loc_zone_offset",
+        "targetName": "renewal_summary_updated_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RenewalSummary_UpdatedAt_wall",
+        "targetName": "renewal_summary_updated_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevocationReason",
+        "targetName": "revocation_reason",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_RevokedAt",
+        "targetName": "revoked_at",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_ext",
+        "targetName": "revoked_at_ext",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc",
+        "targetName": "revoked_at_loc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheEnd",
+        "targetName": "revoked_at_loc_cache_end",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheStart",
+        "targetName": "revoked_at_loc_cache_start",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheZone",
+        "targetName": "revoked_at_loc_cache_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheZone_isDST",
+        "targetName": "revoked_at_loc_cache_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheZone_name",
+        "targetName": "revoked_at_loc_cache_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_cacheZone_offset",
+        "targetName": "revoked_at_loc_cache_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_extend",
+        "targetName": "revoked_at_loc_extend",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_name",
+        "targetName": "revoked_at_loc_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_tx",
+        "targetName": "revoked_at_loc_tx",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_tx_index",
+        "targetName": "revoked_at_loc_tx_index",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_tx_isstd",
+        "targetName": "revoked_at_loc_tx_isstd",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_tx_isutc",
+        "targetName": "revoked_at_loc_tx_isutc",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_tx_when",
+        "targetName": "revoked_at_loc_tx_when",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_zone",
+        "targetName": "revoked_at_loc_zone",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_zone_isDST",
+        "targetName": "revoked_at_loc_zone_is_dst",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_zone_name",
+        "targetName": "revoked_at_loc_zone_name",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_loc_zone_offset",
+        "targetName": "revoked_at_loc_zone_offset",
+        "targetType": "INTEGER",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_RevokedAt_wall",
+        "targetName": "revoked_at_wall",
+        "targetType": "BIGINT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_Serial",
+        "targetName": "serial",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_SignatureAlgorithm",
+        "targetName": "signature_algorithm",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_Status",
+        "targetName": "status",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_Subject",
+        "targetName": "subject",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Certificate_SubjectAlternativeNames",
+        "targetName": "subject_alternative_names",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Certificate_Type",
+        "targetName": "type",
         "targetType": "TEXT",
         "enabled": true
       },
@@ -24,6 +1164,34 @@
         "targetName": "values",
         "targetType": "TEXT",
         "enabled": false
+      }
+    ]
+  },
+  "aws_acm_tag": {
+    "aws": {
+      "regionCodeAttribute": "region_code",
+      "accountIdAttribute": "account_id"
+    },
+    "gcp": {},
+    "azure": {},
+    "parsedAttributes": [
+      {
+        "sourceName": "ResultMetadata_values",
+        "targetName": "values",
+        "targetType": "TEXT",
+        "enabled": false
+      },
+      {
+        "sourceName": "Tags_Key",
+        "targetName": "key",
+        "targetType": "TEXT",
+        "enabled": true
+      },
+      {
+        "sourceName": "Tags_Value",
+        "targetName": "value",
+        "targetType": "TEXT",
+        "enabled": true
       }
     ]
   }
